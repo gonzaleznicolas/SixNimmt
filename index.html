@@ -3,9 +3,21 @@
 <head>
 	<meta charset="utf-8" />
 	<title>6 Nimmt!</title>
-	<link rel="stylesheet" type="text/css" href="public/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<link rel="stylesheet" type="text/css" href="flickity/flickity.min.css" />
+	<script src='https://code.jquery.com/jquery-3.1.0.min.js' defer></script>
+	<script src="flickity/flickity.pkgd.min.js" defer></script>
+	<script src="js/models/sixNimmtModel.js" defer></script>
+	<script src="js/app.js" defer></script>
 </head>
 <body>
-	<canvas id="myCanvas" width="480" height="320"></canvas>
+	<div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "contain": true , "wrapAround": true}'>
+	  <div class="gallery-cell">
+		<canvas id="canvas1" width="480" height="320"></canvas>
+	  </div>
+	  <div class="gallery-cell">
+		<canvas id="canvas2" width="480" height="320"></canvas>
+	  </div>
+	</div>
 </body>
 </html>

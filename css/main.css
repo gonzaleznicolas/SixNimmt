@@ -1,4 +1,25 @@
-*{ 
-	padding: 0;
-	margin: 0;
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
+
+body { font-family: sans-serif; }
+
+.gallery {
+  background: #EEE;
+  width: 100%;
+}
+
+.gallery-cell {
+  width: 100%;
+  height: auto;
+  margin-right: 10px;
+  background: #8C8;
+  text-align: center;
+}
+
+canvas {
+	border: 1px solid black;
+}
+
+
