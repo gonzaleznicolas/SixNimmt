@@ -11,11 +11,13 @@ body { font-family: sans-serif; }
 }
 
 .gallery-cell {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
   width: 100%;
   height: auto;
   margin-right: 10px;
   background: #8C8;
-  text-align: center;
 }
 
 canvas {
