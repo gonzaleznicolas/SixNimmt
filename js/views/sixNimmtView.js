@@ -1,7 +1,12 @@
 class SixNimmtView {
   constructor(sixNimmtModel) {
+		
 		this._flickity = this.setUpFlickity();
-		this._$canvases = $('canvas');
+		
+		this._gameCanvas = $('#canvas0')[0];
+		this._handCanvas = $('#canvas1')[0];
+		this._gameCtx = this._gameCanvas.getContext("2d");
+		this._handCtx = this._handCanvas.getContext("2d");
     this.setCanvasSize();
   }
 	
@@ -12,7 +17,8 @@ class SixNimmtView {
 		return flickity;
 	}
 	
-	setCanvasSize(){
-		
+	setCanvasSize()
+	{
+		this._gameCanvas.width = 200;
 	}
 }
