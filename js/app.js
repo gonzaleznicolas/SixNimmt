@@ -1,5 +1,6 @@
 $(function () {
 	const sixNimmtModel = new SixNimmtModel();
+	const sixNimmtView = new SixNimmtView(sixNimmtModel);
 	
 	var canvas = document.getElementById("canvas1");
 	var ctx = canvas.getContext("2d");
