@@ -6,6 +6,7 @@
 .gallery {
 	background: #EEE;
 	width: 100%;
+	visibility: hidden;
 }
 
 .galleryCell {
