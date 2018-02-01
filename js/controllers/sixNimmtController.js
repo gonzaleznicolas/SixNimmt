@@ -1,5 +1,5 @@
 class SixNimmtController {
-  constructor() {
-    var i = 0;
-  }
+	constructor() {
+		var i = 0;
+	}
 }

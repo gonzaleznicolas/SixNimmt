@@ -1,14 +1,14 @@
 class SixNimmtView {
-  constructor(sixNimmtModel) {
+	constructor(sixNimmtModel) {
 		
 		this._flickity = this.setUpFlickity();
 		
-		this._gameCanvas = $('#canvas0')[0];
-		this._handCanvas = $('#canvas1')[0];
+		this._gameCanvas = $('#gameCanvas')[0];
+		this._handCanvas = $('#handCanvas')[0];
 		this._gameCtx = this._gameCanvas.getContext("2d");
 		this._handCtx = this._handCanvas.getContext("2d");
-    this.setCanvasSize();
-  }
+		this.setCanvasSize();
+	}
 	
 	setUpFlickity()
 	{
@@ -19,6 +19,8 @@ class SixNimmtView {
 	
 	setCanvasSize()
 	{
-		this._gameCanvas.width = 200;
+		let widthOfGalleryCell = $($(this._gameCanvas).parents(".galleryCell")[0]).width();
+		this._gameCanvas.width = widthOfGalleryCell - 130;
+		this._handCanvas.width = widthOfGalleryCell - 130;
 	}
 }
