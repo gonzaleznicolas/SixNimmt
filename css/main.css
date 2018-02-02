@@ -6,13 +6,12 @@
 .gallery {
 	background: #EEE;
 	width: 100%;
-	visibility: hidden;
+	margin: auto;
 }
 
 .galleryCell {
 	justify-content: center;
 	width: 100%;
-	height: auto;
 	background: #8C8;
 	border: 1px solid blue;
 }
