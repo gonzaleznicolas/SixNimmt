@@ -1,3 +1,9 @@
+// constants for determining game board size
+const cardHeightToWidthFactor = 5/6;
+const numberOfRows = 4;
+const numberOfCols = 7;
+const margin = 15; // pixels
+
 class SixNimmtView {
 	constructor(sixNimmtModel) {
 		this._gallery = $('.gallery')[0];
@@ -21,29 +27,30 @@ class SixNimmtView {
 		return flickity;
 	}
 	
+	/*
+	The reason I set canvasHeight = windowHeight*0.9 in case 2 whereas in case 1 i set galleryWidth = windowWidth,
+	is that if the width of the canvas is just right, it looks fine, but if the height is exactly right, its hard to
+	scroll perfectly to get the whole canvas in the window.
+	
+	Explanation of the formulas...?
+		See the constants cardHeightToWidthFactor, numberOfRows, numberOfCols, margin.
+		Those numbers will be set by the the user and the canvas and cards will be layed out acordingly.
+		
+		The dimensions of the canvas considering the number of cards and the dimensions of the cards can be derived this way:
+
+			cardWidth = cardHeight * cardHeightToWidthFactor
+			canvasWidth = (numberOfCols * cardWidth) + (numberOfCols + 1)*margin
+			canvasHeight = numberOfRows * cardHeight + (numberOfRows + 1)*margin
+			
+			For this function, we need to use the formulas above to relate canvasWidth and canvasHeight to eachother in terms of the constants.
+			(cancel out the unknowns cardWidth and cardHeight)
+			
+			The result is:
+				canvasHeight = ((numberOfRows*(canvasWidth - ((numberOfCols + 1)*margin)))/(numberOfCols * cardHeightToWidthFactor)) + ((numberOfRows + 1)*margin)
+				canvasWidth = ((numberOfCols * cardHeightToWidthFactor * (canvasHeight - ((numberOfRows + 1)*margin)))/numberOfRows) + ((numberOfCols + 1)*margin)
+	*/
 	setCanvasSize()
 	{
-		/*
-		The reason I set canvasHeight = windowHeight*0.9 in case 2 whereas in case 1 i set galleryWidth = windowWidth,
-		is that if the width of the canvas is just right, it looks fine, but if the height is exactly right, its hard to
-		scroll perfectly to get the whole canvas in the window.
-		
-		Why the ration 16:21?
-			The ratio of width:height of each card is going to be (3/4)x:1x
-			The game always has 4 rows
-			The game has at most 5 columns but i left space for 2 more columns: 1 for when the cards are placed in their
-				row just before collecting the 5 cards, and one column worth of space to put the cards that everyone played
-				right before putting them in the row that they belong in.
-			
-			So the dimensions of the canvas considering the number of cards and the dimensions of the cards (ignoring space between
-			cards, that is accounted for later) can be derived this way:
-				
-				canvasWidth = 7 (3/4)x
-				canvasHeight = 4x
-				
-				Therefore canvasHeight = 16/21 canvasWidth
-		
-		*/
 		
 		// Known variables
 		const windowWidth = $(window).width();
@@ -53,14 +60,14 @@ class SixNimmtView {
 		// CASE 1
 		let galleryWidth = windowWidth;
 		let canvasWidth = windowWidth - 2*spaceForOneFlickityArrow;
-		let canvasHeight = (16/21)*canvasWidth;
+		let canvasHeight = ((numberOfRows*(canvasWidth - ((numberOfCols + 1)*margin)))/(numberOfCols * cardHeightToWidthFactor)) + ((numberOfRows + 1)*margin);
 		
 		// if by setting galleryWidth = windowWidth and maintaining the ration we make the canvas taller than the screen
 		if (canvasHeight > windowHeight)
 		{
 				// CASE 2
 				canvasHeight = windowHeight*0.9;
-				canvasWidth = (21/16)*canvasHeight;
+				canvasWidth = ((numberOfCols * cardHeightToWidthFactor * (canvasHeight - ((numberOfRows + 1)*margin)))/numberOfRows) + ((numberOfCols + 1)*margin);
 				galleryWidth = canvasWidth + 2*spaceForOneFlickityArrow;
 		}
 		
