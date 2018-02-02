@@ -1,8 +1,10 @@
+"use strict";
+
 // constants for determining game board size
 const cardHeightToWidthFactor = 5/6;
 const numberOfRows = 4;
 const numberOfCols = 7;
-const margin = 15; // pixels
+const margin = 5; // pixels
 
 class SixNimmtView {
 	constructor(sixNimmtModel) {
@@ -13,12 +15,54 @@ class SixNimmtView {
 		this._gameCtx = this._gameCanvas.getContext("2d");
 		this._handCtx = this._handCanvas.getContext("2d");
 		
+		this._cardWidth = 20;
+		this._cardHeight = 30;
+		
 		this._resizeTimeout;
-		this.setCanvasSize();
+		this._cardCoordinates = [];	// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
+		this.redrawCanvases();
+		
 		$(window).on("resize", this.onResizeWindow.bind(this));	// i have to bind(this) because otherwise when onResizeWindow is called,
 															// 'this' will be window, not this object, and it wont find setCanvasSize.
 															// event handlers are by default called with 'this' set to the window object
 		$(window).on("orientationchange", this.onResizeWindow.bind(this));
+	}
+	
+	calculateCardCoordinates()
+	{
+		let x = margin;
+		let y = margin;
+		for (let row = 0; row < numberOfRows; row++)
+		{
+			x = margin;
+			this._cardCoordinates[row] = [];
+			for (let col = 0; col < numberOfCols; col++)
+			{
+				this._cardCoordinates[row][col] = {x: x, y: y};
+				x = x + this._cardWidth + margin;
+			}
+			y = y + this._cardHeight + margin;
+		}
+	}
+	
+	drawCards()
+	{
+		for (let row = 0; row < numberOfRows; row++)
+		{
+			for (let col = 0; col < numberOfCols; col++)
+			{
+				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y);
+			}
+		}
+	}
+	
+	drawCard(x, y)
+	{
+		this._gameCtx.beginPath();
+		this._gameCtx.rect(x, y, this._cardWidth, this._cardHeight);
+		this._gameCtx.fillStyle = "#0095DD";
+		this._gameCtx.fill();
+		this._gameCtx.closePath();
 	}
 	
 	setUpFlickity()
@@ -27,7 +71,22 @@ class SixNimmtView {
 		return flickity;
 	}
 	
-	/*
+	redrawCanvases()
+	{
+		$(this._gallery).css("visibility", "hidden"); 
+		this.setCanvasSize();
+		this.calculateCardCoordinates();
+		this.drawCards();
+		$(this._gallery).css("visibility", "visible"); 
+	}
+	
+	onResizeWindow()
+	{
+		clearTimeout(this._resizeTimeout);
+		this._resizeTimeout = setTimeout(this.redrawCanvases.bind(this), 500);
+	}
+	
+		/*
 	The reason I set canvasHeight = windowHeight*0.9 in case 2 whereas in case 1 i set galleryWidth = windowWidth,
 	is that if the width of the canvas is just right, it looks fine, but if the height is exactly right, its hard to
 	scroll perfectly to get the whole canvas in the window.
@@ -51,7 +110,6 @@ class SixNimmtView {
 	*/
 	setCanvasSize()
 	{
-		
 		// Known variables
 		const windowWidth = $(window).width();
 		const windowHeight = $(window).height();
@@ -71,9 +129,6 @@ class SixNimmtView {
 				galleryWidth = canvasWidth + 2*spaceForOneFlickityArrow;
 		}
 		
-		
-		$(this._gallery).css("visibility", "hidden"); 
-		
 		$(this._gallery).css("width", galleryWidth+"px");
 		this._gameCanvas.width = canvasWidth;
 		this._gameCanvas.height = canvasHeight;
@@ -82,14 +137,6 @@ class SixNimmtView {
 
 		this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
 		console.log("Canvas resized...");
-		
-		$(this._gallery).css("visibility", "visible"); 
 
-	}
-	
-	onResizeWindow()
-	{
-		clearTimeout(this._resizeTimeout);
-		this._resizeTimeout = setTimeout(this.setCanvasSize.bind(this), 500);
 	}
 }
