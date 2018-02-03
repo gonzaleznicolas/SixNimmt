@@ -1,7 +1,7 @@
 "use strict";
 
 // constants for determining game board size
-const cardHeightToWidthFactor = 5/6;
+const cardHeightToWidthFactor = 3/4;
 const numberOfRows = 4;
 const numberOfCols = 7;
 const margin = 5; // pixels
@@ -75,6 +75,7 @@ class SixNimmtView {
 	{
 		$(this._gallery).css("visibility", "hidden"); 
 		this.setCanvasSize();
+		this.calculateCardDimensions();
 		this.calculateCardCoordinates();
 		this.drawCards();
 		$(this._gallery).css("visibility", "visible"); 
@@ -84,6 +85,12 @@ class SixNimmtView {
 	{
 		clearTimeout(this._resizeTimeout);
 		this._resizeTimeout = setTimeout(this.redrawCanvases.bind(this), 500);
+	}
+	
+	calculateCardDimensions()
+	{
+		this._cardWidth = (this._gameCanvas.width - ((numberOfCols + 1)*margin)) / numberOfCols;
+		this._cardHeight = (this._gameCanvas.height - ((numberOfRows + 1)*margin)) / numberOfRows;
 	}
 	
 		/*
