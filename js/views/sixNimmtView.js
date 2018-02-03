@@ -4,7 +4,7 @@
 const cardHeightToWidthFactor = 3/4;
 const numberOfRows = 4;
 const numberOfCols = 7;
-const margin = 7; // pixels
+const margin = 10; // pixels
 
 class SixNimmtView {
 	constructor(sixNimmtModel) {
@@ -58,11 +58,25 @@ class SixNimmtView {
 	
 	drawCard(x, y)
 	{
-		this._gameCtx.beginPath();
-		this._gameCtx.rect(x, y, this._cardWidth, this._cardHeight);
 		this._gameCtx.fillStyle = "white";
-		this._gameCtx.fill();
-		this._gameCtx.closePath();
+		this.roundedRect(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin);
+	}
+	
+	roundedRect(ctx, x, y, width, height, radius)
+	{
+		ctx.beginPath();
+		ctx.moveTo(x, y + radius);
+		ctx.lineTo(x, y + height - radius);
+		ctx.arcTo(x, y + height, x + radius, y + height, radius);
+		ctx.lineTo(x + width - radius, y + height);
+		ctx.arcTo(x + width, y + height, x + width, y + height-radius, radius);
+		ctx.lineTo(x + width, y + radius);
+		ctx.arcTo(x + width, y, x + width - radius, y, radius);
+		ctx.lineTo(x + radius, y);
+		ctx.arcTo(x, y, x, y + radius, radius);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 	}
 	
 	setUpFlickity()

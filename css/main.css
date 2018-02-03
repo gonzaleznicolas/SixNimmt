@@ -10,7 +10,7 @@ body{
 .gallery {
 	background: #7f5093;
 	width: 100%;
-	margin: auto;
+	margin-left: auto;
 	visibility: hidden;
 }
 
