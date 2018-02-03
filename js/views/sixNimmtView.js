@@ -51,19 +51,34 @@ class SixNimmtView {
 		{
 			for (let col = 0; col < numberOfCols; col++)
 			{
-				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y);
+				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, 56);
 			}
 		}
 	}
 	
-	drawCard(x, y)
+	drawCard(x, y, number)// number
 	{
-		this._gameCtx.fillStyle = "white";
-		this.roundedRect(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin);
+		this.drawCardShape(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin);
+		this.drawCardNumber(this._gameCtx, x, y, number);
 	}
 	
-	roundedRect(ctx, x, y, width, height, radius)
+	drawCardNumber(ctx, x, y, number)
 	{
+		const fontPixels = 0.5*this._cardHeight;
+		ctx.font = fontPixels+"px 'Consolas'";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.lineWidth = 2;
+		ctx.fillStyle = '#7f5093';
+		ctx.fillText(number, x + (this._cardWidth/2), y+(this._cardHeight*0.4), 0.9*this._cardWidth);
+		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight*0.4), 0.9*this._cardWidth);
+	}
+	
+	drawCardShape(ctx, x, y, width, height, radius)
+	{
+		this._gameCtx.fillStyle = "white";
+		this._gameCtx.lineWidth = 1;
+		
 		ctx.beginPath();
 		ctx.moveTo(x, y + radius);
 		ctx.lineTo(x, y + height - radius);
