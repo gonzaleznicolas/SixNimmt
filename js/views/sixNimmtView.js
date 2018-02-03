@@ -4,7 +4,7 @@
 const cardHeightToWidthFactor = 3/4;
 const numberOfRows = 4;
 const numberOfCols = 7;
-const margin = 5; // pixels
+const margin = 7; // pixels
 
 class SixNimmtView {
 	constructor(sixNimmtModel) {
@@ -20,7 +20,7 @@ class SixNimmtView {
 		
 		this._resizeTimeout;
 		this._cardCoordinates = [];	// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
-		this.redrawCanvases();
+		this.drawCanvases();
 		
 		$(window).on("resize", this.onResizeWindow.bind(this));	// i have to bind(this) because otherwise when onResizeWindow is called,
 															// 'this' will be window, not this object, and it wont find setCanvasSize.
@@ -60,7 +60,7 @@ class SixNimmtView {
 	{
 		this._gameCtx.beginPath();
 		this._gameCtx.rect(x, y, this._cardWidth, this._cardHeight);
-		this._gameCtx.fillStyle = "#0095DD";
+		this._gameCtx.fillStyle = "white";
 		this._gameCtx.fill();
 		this._gameCtx.closePath();
 	}
@@ -71,7 +71,7 @@ class SixNimmtView {
 		return flickity;
 	}
 	
-	redrawCanvases()
+	drawCanvases()
 	{
 		$(this._gallery).css("visibility", "hidden"); 
 		this.setCanvasSize();
@@ -84,7 +84,7 @@ class SixNimmtView {
 	onResizeWindow()
 	{
 		clearTimeout(this._resizeTimeout);
-		this._resizeTimeout = setTimeout(this.redrawCanvases.bind(this), 500);
+		this._resizeTimeout = setTimeout(this.drawCanvases.bind(this), 500);
 	}
 	
 	calculateCardDimensions()

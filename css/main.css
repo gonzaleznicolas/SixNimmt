@@ -3,8 +3,12 @@
 	box-sizing: border-box;
 }
 
+body{
+	background: #7f5093;
+}
+
 .gallery {
-	background: #EEE;
+	background: #7f5093;
 	width: 100%;
 	margin: auto;
 	visibility: hidden;
@@ -13,13 +17,11 @@
 .galleryCell {
 	justify-content: center;
 	width: 100%;
-	background: #8C8;
-	border: 1px solid blue;
+	background: #7f5093;
 }
 
 canvas {
 	margin-left: 65px;
-	border: 1px solid black;
 }
 
 
