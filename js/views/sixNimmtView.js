@@ -59,19 +59,74 @@ class SixNimmtView {
 	drawCard(x, y, number)// number
 	{
 		this.drawCardShape(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin);
+		this.drawBigCow(this._gameCtx, x, y)
 		this.drawCardNumber(this._gameCtx, x, y, number);
+	}
+	
+	drawBigCow(ctx, x, y)
+	{
+		const cowIsThisFractionOfCardHeight = 2/3;
+		const cowIsThisFractionOfCardWidth = 9/10;
+		const designConstH = 9;	// dont change
+		const designConstW = 10	// dont change
+		
+		const h = cowIsThisFractionOfCardHeight*((1/designConstH)*this._cardHeight);	// one vertical unit
+		const w = cowIsThisFractionOfCardWidth*((1/designConstW)*this._cardWidth);	// one horizontal unit
+		
+		// center of the card
+		const mx = x + this._cardWidth/2;
+		const my = y + this._cardHeight/2;
+		
+		ctx.beginPath();
+		ctx.moveTo(mx + 5*w, my - 1.8*h);
+		ctx.bezierCurveTo( mx + 4.5*w, my - 2.6*h, mx + 4*w, my - 3.6*h, mx + 2.7*w, my - 5*h);
+		ctx.quadraticCurveTo(mx + 3.1*w, my - 4*h, mx + 3*w, my - 2.7*h);
+		ctx.lineTo(mx + 1.5*w, my - 2.5*h);
+		ctx.lineTo(mx + 2*w, my - 3*h);
+		ctx.lineTo(mx + 1.5*w, my - 4.5*h);
+		ctx.lineTo(mx + 0.5*w, my - 3.5*h);
+		ctx.lineTo(mx + 1*w, my - 2.5*h);
+		ctx.lineTo(mx + 0, my - 3*h);
+		ctx.lineTo(mx - 1*w, my - 2.5*h);
+		ctx.lineTo(mx - 0.5*w, my - 3.5*h);
+		ctx.lineTo(mx - 1.5*w, my - 4.5*h);
+		ctx.lineTo(mx - 2*w, my - 3*h);
+		ctx.lineTo(mx - 1.5*w, my - 2.5*h);
+		ctx.lineTo(mx - 3*w, my - 2.7*h);
+		ctx.quadraticCurveTo(mx - 3.1*w, my - 4*h, mx - 2.7*w, my - 5*h);
+		ctx.bezierCurveTo(mx - 4*w, my - 3.6*h, mx - 4.5*w, my - 2.6*h, mx - 5*w, my - 1.8*h);
+		ctx.quadraticCurveTo(mx - 4.4*w, my - 1.2*h,mx - 2.7*w, my - 0.9*h);
+		ctx.lineTo(mx - 3*w, my + 0.5*h);
+		ctx.lineTo(mx - 2*w, my + 1.5*h);
+		ctx.lineTo(mx - 2.8*w, my + 2.1*h);
+		ctx.lineTo(mx - 2.2*w, my + 3.5*h);
+		ctx.lineTo(mx - 1.3*w, my + 3.3*h);
+		ctx.lineTo(mx - 1*w, my + 4.5*h);
+		ctx.lineTo(mx + 1*w, my + 4.5*h);
+		ctx.lineTo(mx + 1*w, my + 4.5*h);
+		ctx.lineTo(mx + 1.3*w, my + 3.3*h);
+		ctx.lineTo(mx + 2.2*w, my + 3.5*h);
+		ctx.lineTo(mx + 2.8*w, my + 2.1*h);
+		ctx.lineTo(mx + 2*w, my + 1.5*h);
+		ctx.lineTo(mx + 3*w, my + 0.5*h);
+		ctx.lineTo(mx + 2.7*w, my - 0.9*h);
+		ctx.quadraticCurveTo(mx + 4.4*w, my - 1.2*h,mx + 5*w, my - 1.8*h);
+		ctx.fillStyle = "blue";
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 	}
 	
 	drawCardNumber(ctx, x, y, number)
 	{
 		const fontPixels = 0.5*this._cardHeight;
-		ctx.font = fontPixels+"px 'Consolas'";
+		ctx.font = "bold "+fontPixels+"px 'Consolas'";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		ctx.lineWidth = 2;
 		ctx.fillStyle = '#7f5093';
-		ctx.fillText(number, x + (this._cardWidth/2), y+(this._cardHeight*0.4), 0.9*this._cardWidth);
-		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight*0.4), 0.9*this._cardWidth);
+		ctx.fillText(number, x + (this._cardWidth/2), y+(this._cardHeight/2), 0.9*this._cardWidth);
+		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight/2), 0.9*this._cardWidth);
 	}
 	
 	drawCardShape(ctx, x, y, width, height, radius)
