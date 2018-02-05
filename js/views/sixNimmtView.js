@@ -1,10 +1,17 @@
 "use strict";
 
-// constants for determining game board size
+let hi = 44;
+
+// desing parameters
 const cardHeightToWidthFactor = 3/4;
 const numberOfRows = 4;
 const numberOfCols = 7;
 const margin = 10; // pixels
+const cowIsThisFractionOfCardHeight = 2/3;
+const cowIsThisFractionOfCardWidth = 9/10;
+const cowAndNumberAreThisPercentDownTheCard = 0.45;
+
+
 
 class SixNimmtView {
 	constructor(sixNimmtModel) {
@@ -51,7 +58,7 @@ class SixNimmtView {
 		{
 			for (let col = 0; col < numberOfCols; col++)
 			{
-				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, 56);
+				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, hi++);
 			}
 		}
 	}
@@ -59,23 +66,57 @@ class SixNimmtView {
 	drawCard(x, y, number)// number
 	{
 		this.drawCardShape(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin);
-		this.drawBigCow(this._gameCtx, x, y)
+		this.drawBigCow(this._gameCtx, x, y, number);
 		this.drawCardNumber(this._gameCtx, x, y, number);
+		this.drawNegativePts(this._gameCtx, x, y, number)
 	}
 	
-	drawBigCow(ctx, x, y)
+	drawNegativePts(ctx, x, y, number)
 	{
-		const cowIsThisFractionOfCardHeight = 2/3;
-		const cowIsThisFractionOfCardWidth = 9/10;
-		const designConstH = 9;	// dont change
-		const designConstW = 10	// dont change
+		const cardInfo = this.getCardInfo(number);
+		const negativePts = cardInfo.negativePts;
+		const centreX = x + this._cardWidth/2;
+		const bottomOfTheCowY = y + cowAndNumberAreThisPercentDownTheCard*this._cardHeight + (cowIsThisFractionOfCardHeight/2)*this._cardHeight;
+		const centreY = bottomOfTheCowY + ((this._cardHeight - (bottomOfTheCowY - y))/2);
+		if (negativePts === 1)
+					this.drawsimplifiedCow(ctx, centreX, centreY, 2, 2, cardInfo.cowColor);
+	}
+
+	// oneXUnit and oneYunit should be the same for a perfectly proportional picture. slightly different looks fine
+	drawsimplifiedCow(ctx, centreX, centreY, oneXunit, oneYunit, fillColor)
+	{
+		const mx = centreX;
+		const my = centreY;
+		const w = oneXunit;
+		const h = oneYunit;
 		
-		const h = cowIsThisFractionOfCardHeight*((1/designConstH)*this._cardHeight);	// one vertical unit
-		const w = cowIsThisFractionOfCardWidth*((1/designConstW)*this._cardWidth);	// one horizontal unit
-		
-		// center of the card
-		const mx = x + this._cardWidth/2;
-		const my = y + this._cardHeight/2;
+		ctx.beginPath();
+		ctx.moveTo(mx, my - 0.5*h);
+		ctx.lineTo(mx - 1*w, my - 0.5*h);
+		ctx.lineTo(mx - 3*w, my - 2.5*h);
+		ctx.lineTo(mx - 3*w, my + 0.5*h);
+		ctx.lineTo(mx - 1*w, my + 0.5*h);
+		ctx.lineTo(mx - 1*w, my + 2.5*h);
+		ctx.lineTo(mx + 1*w, my + 2.5*h);
+		ctx.lineTo(mx + 1*w, my + 0.5*h);
+		ctx.lineTo(mx + 3*w, my + 0.5*h);
+		ctx.lineTo(mx + 3*w, my - 2.5*h);
+		ctx.lineTo(mx + 1*w, my - 0.5*h);
+		ctx.lineTo(mx, my - 0.5*h);
+		ctx.fillStyle = fillColor;
+		ctx.fill();
+		ctx.lineWidth = 1;
+		ctx.stroke();
+		ctx.closePath();
+	}
+
+	// oneXUnit and oneYunit should be the same for a perfectly proportional picture. slightly different looks fine
+	drawCow(ctx, centreX, centreY, oneXunit, oneYunit, fillColor)
+	{
+		const mx = centreX;
+		const my = centreY;
+		const w = oneXunit;
+		const h = oneYunit;
 		
 		ctx.beginPath();
 		ctx.moveTo(mx + 5*w, my - 1.8*h);
@@ -111,22 +152,37 @@ class SixNimmtView {
 		ctx.lineTo(mx + 3*w, my + 0.5*h);
 		ctx.lineTo(mx + 2.7*w, my - 0.9*h);
 		ctx.quadraticCurveTo(mx + 4.4*w, my - 1.2*h,mx + 5*w, my - 1.8*h);
-		ctx.fillStyle = "blue";
+		ctx.fillStyle = fillColor;
 		ctx.fill();
 		ctx.stroke();
 		ctx.closePath();
 	}
 	
+	drawBigCow(ctx, x, y, number)
+	{
+		const designConstH = 9;	// dont change
+		const designConstW = 10	// dont change
+		
+		const h = cowIsThisFractionOfCardHeight*((1/designConstH)*this._cardHeight);	// one vertical unit
+		const w = cowIsThisFractionOfCardWidth*((1/designConstW)*this._cardWidth);	// one horizontal unit
+		
+		// center of the cow
+		const mx = x + this._cardWidth/2;
+		const my = y + this._cardHeight * cowAndNumberAreThisPercentDownTheCard;
+		
+		this.drawCow(ctx, mx, my, w, h, this.getCardInfo(number).cowColor);
+	}
+	
 	drawCardNumber(ctx, x, y, number)
 	{
 		const fontPixels = 0.5*this._cardHeight;
-		ctx.font = "bold "+fontPixels+"px 'Consolas'";
+		ctx.font = "bold "+fontPixels+"px 'Comic Sans MS'";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		ctx.lineWidth = 2;
-		ctx.fillStyle = '#7f5093';
-		ctx.fillText(number, x + (this._cardWidth/2), y+(this._cardHeight/2), 0.9*this._cardWidth);
-		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight/2), 0.9*this._cardWidth);
+		ctx.fillStyle = this.getCardInfo(number).numColor;
+		ctx.fillText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), 0.9*this._cardWidth);
+		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), 0.9*this._cardWidth);
 	}
 	
 	drawCardShape(ctx, x, y, width, height, radius)
@@ -175,6 +231,20 @@ class SixNimmtView {
 	{
 		this._cardWidth = (this._gameCanvas.width - ((numberOfCols + 1)*margin)) / numberOfCols;
 		this._cardHeight = (this._gameCanvas.height - ((numberOfRows + 1)*margin)) / numberOfRows;
+	}
+	
+	getCardInfo(cardNumber)
+	{
+		if (cardNumber === 55)
+			return {negativePts: 7, cowColor: "red", numColor: "yellow"};
+		else if ( cardNumber % 11 === 0)
+			return {negativePts: 5, cowColor: "blue", numColor: "orange"};
+		else if (cardNumber % 10 === 0)
+			return {negativePts: 3, cowColor: "red", numColor: "blue"};
+		else if (cardNumber % 5 === 0)
+			return {negativePts: 2, cowColor: "blue", numColor: "yellow"};
+		else
+			return {negativePts: 1, cowColor: "#7f5093", numColor: "white"};
 	}
 	
 		/*
