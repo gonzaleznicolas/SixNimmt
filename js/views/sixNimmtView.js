@@ -77,32 +77,52 @@ class SixNimmtView {
 		const negativePts = cardInfo.negativePts;
 		const centreX = x + this._cardWidth/2;
 		const bottomOfTheCowY = y + cowAndNumberAreThisPercentDownTheCard*this._cardHeight + (cowIsThisFractionOfCardHeight/2)*this._cardHeight;
-		const centreY = bottomOfTheCowY + ((this._cardHeight - (bottomOfTheCowY - y))/2);
+		const sizeOfGapBetweenCowAndBottomOfCard = this._cardHeight - (bottomOfTheCowY - y);
+		const centreY = bottomOfTheCowY + (sizeOfGapBetweenCowAndBottomOfCard/2);
 		if (negativePts === 1)
-					this.drawsimplifiedCow(ctx, centreX, centreY, 2, 2, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX, centreY, sizeOfGapBetweenCowAndBottomOfCard/3, sizeOfGapBetweenCowAndBottomOfCard/3, cardInfo.cowColor);
+		else if (negativePts === 2)
+		{
+			
+		}
+		else if (negativePts === 3)
+		{
+			
+		}
+		else if (negativePts === 5)
+		{
+			
+		}
+		else if (negativePts === 7)
+		{
+			
+		}
 	}
 
-	// oneXUnit and oneYunit should be the same for a perfectly proportional picture. slightly different looks fine
-	drawsimplifiedCow(ctx, centreX, centreY, oneXunit, oneYunit, fillColor)
+	drawsimplifiedCow(ctx, centreX, centreY, cowWidth, cowHeight, fillColor)
 	{
 		const mx = centreX;
 		const my = centreY;
-		const w = oneXunit;
-		const h = oneYunit;
+
+		const designConstH = 9;	// dont change
+		const designConstW = 10	// dont change
+		
+		const oneXunit = (1/designConstW)*cowWidth;	// one horizontal unit
+		const oneYunit = (1/designConstH)*cowHeight;	// one vertical unit
 		
 		ctx.beginPath();
-		ctx.moveTo(mx, my - 0.5*h);
-		ctx.lineTo(mx - 1*w, my - 0.5*h);
-		ctx.lineTo(mx - 3*w, my - 2.5*h);
-		ctx.lineTo(mx - 3*w, my + 0.5*h);
-		ctx.lineTo(mx - 1*w, my + 0.5*h);
-		ctx.lineTo(mx - 1*w, my + 2.5*h);
-		ctx.lineTo(mx + 1*w, my + 2.5*h);
-		ctx.lineTo(mx + 1*w, my + 0.5*h);
-		ctx.lineTo(mx + 3*w, my + 0.5*h);
-		ctx.lineTo(mx + 3*w, my - 2.5*h);
-		ctx.lineTo(mx + 1*w, my - 0.5*h);
-		ctx.lineTo(mx, my - 0.5*h);
+		ctx.moveTo(mx, my - 0.5*oneYunit);
+		ctx.lineTo(mx - 1*oneXunit, my - 0.5*oneYunit);
+		ctx.lineTo(mx - 2.5*oneXunit, my - 2.5*oneYunit);
+		ctx.lineTo(mx - 3*oneXunit, my + 0.5*oneYunit);
+		ctx.lineTo(mx - 1*oneXunit, my + 0.5*oneYunit);
+		ctx.lineTo(mx - 1*oneXunit, my + 2.5*oneYunit);
+		ctx.lineTo(mx + 1*oneXunit, my + 2.5*oneYunit);
+		ctx.lineTo(mx + 1*oneXunit, my + 0.5*oneYunit);
+		ctx.lineTo(mx + 3*oneXunit, my + 0.5*oneYunit);
+		ctx.lineTo(mx + 2.5*oneXunit, my - 2.5*oneYunit);
+		ctx.lineTo(mx + 1*oneXunit, my - 0.5*oneYunit);
+		ctx.lineTo(mx, my - 0.5*oneYunit);
 		ctx.fillStyle = fillColor;
 		ctx.fill();
 		ctx.lineWidth = 1;
@@ -110,48 +130,51 @@ class SixNimmtView {
 		ctx.closePath();
 	}
 
-	// oneXUnit and oneYunit should be the same for a perfectly proportional picture. slightly different looks fine
-	drawCow(ctx, centreX, centreY, oneXunit, oneYunit, fillColor)
+	drawCow(ctx, centreX, centreY, cowWidth, cowHeight, fillColor)
 	{
 		const mx = centreX;
 		const my = centreY;
-		const w = oneXunit;
-		const h = oneYunit;
+
+		const designConstH = 9;	// dont change
+		const designConstW = 10	// dont change
+		
+		const oneXunit = (1/designConstW)*cowWidth;	// one horizontal unit
+		const oneYunit = (1/designConstH)*cowHeight;	// one vertical unit
 		
 		ctx.beginPath();
-		ctx.moveTo(mx + 5*w, my - 1.8*h);
-		ctx.bezierCurveTo( mx + 4.5*w, my - 2.6*h, mx + 4*w, my - 3.6*h, mx + 2.7*w, my - 5*h);
-		ctx.quadraticCurveTo(mx + 3.1*w, my - 4*h, mx + 3*w, my - 2.7*h);
-		ctx.lineTo(mx + 1.5*w, my - 2.5*h);
-		ctx.lineTo(mx + 2*w, my - 3*h);
-		ctx.lineTo(mx + 1.5*w, my - 4.5*h);
-		ctx.lineTo(mx + 0.5*w, my - 3.5*h);
-		ctx.lineTo(mx + 1*w, my - 2.5*h);
-		ctx.lineTo(mx + 0, my - 3*h);
-		ctx.lineTo(mx - 1*w, my - 2.5*h);
-		ctx.lineTo(mx - 0.5*w, my - 3.5*h);
-		ctx.lineTo(mx - 1.5*w, my - 4.5*h);
-		ctx.lineTo(mx - 2*w, my - 3*h);
-		ctx.lineTo(mx - 1.5*w, my - 2.5*h);
-		ctx.lineTo(mx - 3*w, my - 2.7*h);
-		ctx.quadraticCurveTo(mx - 3.1*w, my - 4*h, mx - 2.7*w, my - 5*h);
-		ctx.bezierCurveTo(mx - 4*w, my - 3.6*h, mx - 4.5*w, my - 2.6*h, mx - 5*w, my - 1.8*h);
-		ctx.quadraticCurveTo(mx - 4.4*w, my - 1.2*h,mx - 2.7*w, my - 0.9*h);
-		ctx.lineTo(mx - 3*w, my + 0.5*h);
-		ctx.lineTo(mx - 2*w, my + 1.5*h);
-		ctx.lineTo(mx - 2.8*w, my + 2.1*h);
-		ctx.lineTo(mx - 2.2*w, my + 3.5*h);
-		ctx.lineTo(mx - 1.3*w, my + 3.3*h);
-		ctx.lineTo(mx - 1*w, my + 4.5*h);
-		ctx.lineTo(mx + 1*w, my + 4.5*h);
-		ctx.lineTo(mx + 1*w, my + 4.5*h);
-		ctx.lineTo(mx + 1.3*w, my + 3.3*h);
-		ctx.lineTo(mx + 2.2*w, my + 3.5*h);
-		ctx.lineTo(mx + 2.8*w, my + 2.1*h);
-		ctx.lineTo(mx + 2*w, my + 1.5*h);
-		ctx.lineTo(mx + 3*w, my + 0.5*h);
-		ctx.lineTo(mx + 2.7*w, my - 0.9*h);
-		ctx.quadraticCurveTo(mx + 4.4*w, my - 1.2*h,mx + 5*w, my - 1.8*h);
+		ctx.moveTo(mx + 5*oneXunit, my - 1.8*oneYunit);
+		ctx.bezierCurveTo( mx + 4.5*oneXunit, my - 2.6*oneYunit, mx + 4*oneXunit, my - 3.6*oneYunit, mx + 2.7*oneXunit, my - 5*oneYunit);
+		ctx.quadraticCurveTo(mx + 3.1*oneXunit, my - 4*oneYunit, mx + 3*oneXunit, my - 2.7*oneYunit);
+		ctx.lineTo(mx + 1.5*oneXunit, my - 2.5*oneYunit);
+		ctx.lineTo(mx + 2*oneXunit, my - 3*oneYunit);
+		ctx.lineTo(mx + 1.5*oneXunit, my - 4.5*oneYunit);
+		ctx.lineTo(mx + 0.5*oneXunit, my - 3.5*oneYunit);
+		ctx.lineTo(mx + 1*oneXunit, my - 2.5*oneYunit);
+		ctx.lineTo(mx + 0, my - 3*oneYunit);
+		ctx.lineTo(mx - 1*oneXunit, my - 2.5*oneYunit);
+		ctx.lineTo(mx - 0.5*oneXunit, my - 3.5*oneYunit);
+		ctx.lineTo(mx - 1.5*oneXunit, my - 4.5*oneYunit);
+		ctx.lineTo(mx - 2*oneXunit, my - 3*oneYunit);
+		ctx.lineTo(mx - 1.5*oneXunit, my - 2.5*oneYunit);
+		ctx.lineTo(mx - 3*oneXunit, my - 2.7*oneYunit);
+		ctx.quadraticCurveTo(mx - 3.1*oneXunit, my - 4*oneYunit, mx - 2.7*oneXunit, my - 5*oneYunit);
+		ctx.bezierCurveTo(mx - 4*oneXunit, my - 3.6*oneYunit, mx - 4.5*oneXunit, my - 2.6*oneYunit, mx - 5*oneXunit, my - 1.8*oneYunit);
+		ctx.quadraticCurveTo(mx - 4.4*oneXunit, my - 1.2*oneYunit,mx - 2.7*oneXunit, my - 0.9*oneYunit);
+		ctx.lineTo(mx - 3*oneXunit, my + 0.5*oneYunit);
+		ctx.lineTo(mx - 2*oneXunit, my + 1.5*oneYunit);
+		ctx.lineTo(mx - 2.8*oneXunit, my + 2.1*oneYunit);
+		ctx.lineTo(mx - 2.2*oneXunit, my + 3.5*oneYunit);
+		ctx.lineTo(mx - 1.3*oneXunit, my + 3.3*oneYunit);
+		ctx.lineTo(mx - 1*oneXunit, my + 4.5*oneYunit);
+		ctx.lineTo(mx + 1*oneXunit, my + 4.5*oneYunit);
+		ctx.lineTo(mx + 1*oneXunit, my + 4.5*oneYunit);
+		ctx.lineTo(mx + 1.3*oneXunit, my + 3.3*oneYunit);
+		ctx.lineTo(mx + 2.2*oneXunit, my + 3.5*oneYunit);
+		ctx.lineTo(mx + 2.8*oneXunit, my + 2.1*oneYunit);
+		ctx.lineTo(mx + 2*oneXunit, my + 1.5*oneYunit);
+		ctx.lineTo(mx + 3*oneXunit, my + 0.5*oneYunit);
+		ctx.lineTo(mx + 2.7*oneXunit, my - 0.9*oneYunit);
+		ctx.quadraticCurveTo(mx + 4.4*oneXunit, my - 1.2*oneYunit,mx + 5*oneXunit, my - 1.8*oneYunit);
 		ctx.fillStyle = fillColor;
 		ctx.fill();
 		ctx.stroke();
@@ -160,11 +183,8 @@ class SixNimmtView {
 	
 	drawBigCow(ctx, x, y, number)
 	{
-		const designConstH = 9;	// dont change
-		const designConstW = 10	// dont change
-		
-		const h = cowIsThisFractionOfCardHeight*((1/designConstH)*this._cardHeight);	// one vertical unit
-		const w = cowIsThisFractionOfCardWidth*((1/designConstW)*this._cardWidth);	// one horizontal unit
+		const h = cowIsThisFractionOfCardHeight*this._cardHeight;
+		const w = cowIsThisFractionOfCardWidth*this._cardWidth;
 		
 		// center of the cow
 		const mx = x + this._cardWidth/2;
