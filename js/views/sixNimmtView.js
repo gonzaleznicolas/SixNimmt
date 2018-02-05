@@ -79,23 +79,44 @@ class SixNimmtView {
 		const bottomOfTheCowY = y + cowAndNumberAreThisPercentDownTheCard*this._cardHeight + (cowIsThisFractionOfCardHeight/2)*this._cardHeight;
 		const sizeOfGapBetweenCowAndBottomOfCard = this._cardHeight - (bottomOfTheCowY - y);
 		const centreY = bottomOfTheCowY + (sizeOfGapBetweenCowAndBottomOfCard/2);
+		
+		const cowWidth = sizeOfGapBetweenCowAndBottomOfCard/3;
+		const cowHeight = sizeOfGapBetweenCowAndBottomOfCard/3;
+		const horizontalSpaceBetweenCows = cowWidth/2;
+		const verticalSpaceBetweenCows = cowHeight/2;
+		
 		if (negativePts === 1)
-					this.drawsimplifiedCow(ctx, centreX, centreY, sizeOfGapBetweenCowAndBottomOfCard/3, sizeOfGapBetweenCowAndBottomOfCard/3, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX, centreY, cowWidth, cowHeight, cardInfo.cowColor);
 		else if (negativePts === 2)
 		{
-			
+					this.drawsimplifiedCow(ctx, centreX - horizontalSpaceBetweenCows, centreY, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX + horizontalSpaceBetweenCows, centreY, cowWidth, cowHeight, cardInfo.cowColor);
 		}
 		else if (negativePts === 3)
 		{
-			
+					this.drawsimplifiedCow(ctx, centreX, centreY, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX - cowWidth, centreY, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX + cowWidth, centreY, cowWidth, cowHeight, cardInfo.cowColor);
 		}
 		else if (negativePts === 5)
 		{
-			
+					this.drawsimplifiedCow(ctx, centreX, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX - cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX + cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					
+					this.drawsimplifiedCow(ctx, centreX - horizontalSpaceBetweenCows, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX + horizontalSpaceBetweenCows, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
 		}
 		else if (negativePts === 7)
 		{
-			
+					this.drawsimplifiedCow(ctx, centreX - horizontalSpaceBetweenCows, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX + horizontalSpaceBetweenCows, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX - horizontalSpaceBetweenCows - cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX + horizontalSpaceBetweenCows + cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					
+					this.drawsimplifiedCow(ctx, centreX, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX - cowWidth, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawsimplifiedCow(ctx, centreX + cowWidth, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
 		}
 	}
 
