@@ -4,8 +4,8 @@ let hi = 44;
 
 // desing parameters
 const cardHeightToWidthFactor = 3/4;
-const numberOfRows = 4;
-const numberOfCols = 7;
+const spaceInCanvasForThisNumberOfRows = 4;
+const spaceInCanvasForThisNumberOfCols = 7;
 const margin = 10; // pixels
 const cowIsThisFractionOfCardHeight = 2/3;
 const cowIsThisFractionOfCardWidth = 9/10;
@@ -21,6 +21,10 @@ class SixNimmtView {
 		this._handCanvas = $('#handCanvas')[0];
 		this._gameCtx = this._gameCanvas.getContext("2d");
 		this._handCtx = this._handCanvas.getContext("2d");
+		
+		// make one less column than we left space for. the rightmost column is for the face-down played cards
+		this._numberOfRows = spaceInCanvasForThisNumberOfRows;
+		this._numberOfCols = spaceInCanvasForThisNumberOfCols - 1;
 		
 		this._cardWidth = 20;
 		this._cardHeight = 30;
@@ -39,11 +43,11 @@ class SixNimmtView {
 	{
 		let x = margin;
 		let y = margin;
-		for (let row = 0; row < numberOfRows; row++)
+		for (let row = 0; row < this._numberOfRows; row++)
 		{
 			x = margin;
 			this._cardCoordinates[row] = [];
-			for (let col = 0; col < numberOfCols; col++)
+			for (let col = 0; col < this._numberOfCols; col++)
 			{
 				this._cardCoordinates[row][col] = {x: x, y: y};
 				x = x + this._cardWidth + margin;
@@ -54,16 +58,48 @@ class SixNimmtView {
 	
 	drawCards()
 	{
-		for (let row = 0; row < numberOfRows; row++)
+		for (let row = 0; row < this._numberOfRows; row++)
 		{
-			for (let col = 0; col < numberOfCols; col++)
+			for (let col = 0; col < this._numberOfCols; col++)
 			{
 				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, hi++);
 			}
 		}
 	}
 	
-	drawCard(x, y, number)// number
+	// drawDangerRectangles()
+	// {
+		// const takeCardsColumn = 5; // if you place the 6th card (5th index) you take all the cards in that row
+		// for (let row = 0; row < this._numberOfRows; row++)
+		// {
+			// this.drawDangerRectangle(this._cardCoordinates[row][takeCardsColumn].x, this._cardCoordinates[row][takeCardsColumn].y);
+		// }
+	// }
+	
+	// drawDangerRectangle(x, y)
+	// {
+		// const ctx = this._gameCtx;
+		// ctx.lineWidth = 3;
+		// const radius = margin;
+
+		// ctx.beginPath();
+		// ctx.strokeStyle = "red";
+		// ctx.setLineDash([5, 15]);
+		// ctx.moveTo(x, y + radius);
+		// ctx.lineTo(x, y + height - radius);
+		// ctx.arcTo(x, y + height, x + radius, y + height, radius);
+		// ctx.lineTo(x + width - radius, y + height);
+		// ctx.arcTo(x + width, y + height, x + width, y + height-radius, radius);
+		// ctx.lineTo(x + width, y + radius);
+		// ctx.arcTo(x + width, y, x + width - radius, y, radius);
+		// ctx.lineTo(x + radius, y);
+		// ctx.arcTo(x, y, x, y + radius, radius);
+		// ctx.stroke();
+		// ctx.closePath();
+		// ctx.strokeStyle = "black";
+	// }
+	
+	drawCard(x, y, number)
 	{
 		this.drawCardShape(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin, number);
 		this.drawBigCow(this._gameCtx, x, y, number);
@@ -268,8 +304,8 @@ class SixNimmtView {
 	
 	calculateCardDimensions()
 	{
-		this._cardWidth = (this._gameCanvas.width - ((numberOfCols + 1)*margin)) / numberOfCols;
-		this._cardHeight = (this._gameCanvas.height - ((numberOfRows + 1)*margin)) / numberOfRows;
+		this._cardWidth = (this._gameCanvas.width - ((spaceInCanvasForThisNumberOfCols + 1)*margin)) / spaceInCanvasForThisNumberOfCols;
+		this._cardHeight = (this._gameCanvas.height - ((spaceInCanvasForThisNumberOfRows + 1)*margin)) / spaceInCanvasForThisNumberOfRows;
 	}
 	
 	getCardInfo(cardNumber)
@@ -292,21 +328,21 @@ class SixNimmtView {
 	scroll perfectly to get the whole canvas in the window.
 	
 	Explanation of the formulas...?
-		See the constants cardHeightToWidthFactor, numberOfRows, numberOfCols, margin.
+		See the constants cardHeightToWidthFactor, spaceInCanvasForThisNumberOfRows, spaceInCanvasForThisNumberOfCols, margin.
 		Those numbers will be set by the the user and the canvas and cards will be layed out acordingly.
 		
 		The dimensions of the canvas considering the number of cards and the dimensions of the cards can be derived this way:
 
 			cardWidth = cardHeight * cardHeightToWidthFactor
-			canvasWidth = (numberOfCols * cardWidth) + (numberOfCols + 1)*margin
-			canvasHeight = numberOfRows * cardHeight + (numberOfRows + 1)*margin
+			canvasWidth = (spaceInCanvasForThisNumberOfCols * cardWidth) + (spaceInCanvasForThisNumberOfCols + 1)*margin
+			canvasHeight = spaceInCanvasForThisNumberOfRows * cardHeight + (spaceInCanvasForThisNumberOfRows + 1)*margin
 			
 			For this function, we need to use the formulas above to relate canvasWidth and canvasHeight to eachother in terms of the constants.
 			(cancel out the unknowns cardWidth and cardHeight)
 			
 			The result is:
-				canvasHeight = ((numberOfRows*(canvasWidth - ((numberOfCols + 1)*margin)))/(numberOfCols * cardHeightToWidthFactor)) + ((numberOfRows + 1)*margin)
-				canvasWidth = ((numberOfCols * cardHeightToWidthFactor * (canvasHeight - ((numberOfRows + 1)*margin)))/numberOfRows) + ((numberOfCols + 1)*margin)
+				canvasHeight = ((spaceInCanvasForThisNumberOfRows*(canvasWidth - ((spaceInCanvasForThisNumberOfCols + 1)*margin)))/(spaceInCanvasForThisNumberOfCols * cardHeightToWidthFactor)) + ((spaceInCanvasForThisNumberOfRows + 1)*margin)
+				canvasWidth = ((spaceInCanvasForThisNumberOfCols * cardHeightToWidthFactor * (canvasHeight - ((spaceInCanvasForThisNumberOfRows + 1)*margin)))/spaceInCanvasForThisNumberOfRows) + ((spaceInCanvasForThisNumberOfCols + 1)*margin)
 	*/
 	setCanvasSize()
 	{
@@ -318,14 +354,14 @@ class SixNimmtView {
 		// CASE 1
 		let galleryWidth = windowWidth;
 		let canvasWidth = windowWidth - 2*spaceForOneFlickityArrow;
-		let canvasHeight = ((numberOfRows*(canvasWidth - ((numberOfCols + 1)*margin)))/(numberOfCols * cardHeightToWidthFactor)) + ((numberOfRows + 1)*margin);
+		let canvasHeight = ((spaceInCanvasForThisNumberOfRows*(canvasWidth - ((spaceInCanvasForThisNumberOfCols + 1)*margin)))/(spaceInCanvasForThisNumberOfCols * cardHeightToWidthFactor)) + ((spaceInCanvasForThisNumberOfRows + 1)*margin);
 		
 		// if by setting galleryWidth = windowWidth and maintaining the ration we make the canvas taller than the screen
 		if (canvasHeight > windowHeight)
 		{
 				// CASE 2
 				canvasHeight = windowHeight*0.9;
-				canvasWidth = ((numberOfCols * cardHeightToWidthFactor * (canvasHeight - ((numberOfRows + 1)*margin)))/numberOfRows) + ((numberOfCols + 1)*margin);
+				canvasWidth = ((spaceInCanvasForThisNumberOfCols * cardHeightToWidthFactor * (canvasHeight - ((spaceInCanvasForThisNumberOfRows + 1)*margin)))/spaceInCanvasForThisNumberOfRows) + ((spaceInCanvasForThisNumberOfCols + 1)*margin);
 				galleryWidth = canvasWidth + 2*spaceForOneFlickityArrow;
 		}
 		
