@@ -9,7 +9,7 @@ const numberOfCols = 7;
 const margin = 10; // pixels
 const cowIsThisFractionOfCardHeight = 2/3;
 const cowIsThisFractionOfCardWidth = 9/10;
-const cowAndNumberAreThisPercentDownTheCard = 0.45;
+const cowAndNumberAreThisPercentDownTheCard = 0.4;
 
 
 
@@ -65,7 +65,7 @@ class SixNimmtView {
 	
 	drawCard(x, y, number)// number
 	{
-		this.drawCardShape(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin);
+		this.drawCardShape(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin, number);
 		this.drawBigCow(this._gameCtx, x, y, number);
 		this.drawCardNumber(this._gameCtx, x, y, number);
 		this.drawNegativePts(this._gameCtx, x, y, number)
@@ -80,8 +80,8 @@ class SixNimmtView {
 		const sizeOfGapBetweenCowAndBottomOfCard = this._cardHeight - (bottomOfTheCowY - y);
 		const centreY = bottomOfTheCowY + (sizeOfGapBetweenCowAndBottomOfCard/2);
 		
-		const cowWidth = sizeOfGapBetweenCowAndBottomOfCard/3;
-		const cowHeight = sizeOfGapBetweenCowAndBottomOfCard/3;
+		const cowWidth = sizeOfGapBetweenCowAndBottomOfCard/2;
+		const cowHeight = sizeOfGapBetweenCowAndBottomOfCard/2;
 		const horizontalSpaceBetweenCows = cowWidth/2;
 		const verticalSpaceBetweenCows = cowHeight/2;
 		
@@ -146,8 +146,6 @@ class SixNimmtView {
 		ctx.lineTo(mx, my - 0.5*oneYunit);
 		ctx.fillStyle = fillColor;
 		ctx.fill();
-		ctx.lineWidth = 1;
-		ctx.stroke();
 		ctx.closePath();
 	}
 
@@ -226,9 +224,9 @@ class SixNimmtView {
 		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), 0.9*this._cardWidth);
 	}
 	
-	drawCardShape(ctx, x, y, width, height, radius)
+	drawCardShape(ctx, x, y, width, height, radius, number)
 	{
-		this._gameCtx.fillStyle = "white";
+		this._gameCtx.fillStyle = this.getCardInfo(number).cardColor;
 		this._gameCtx.lineWidth = 1;
 		
 		ctx.beginPath();
@@ -277,15 +275,15 @@ class SixNimmtView {
 	getCardInfo(cardNumber)
 	{
 		if (cardNumber === 55)
-			return {negativePts: 7, cowColor: "red", numColor: "yellow"};
+			return {negativePts: 7, cowColor: "red", numColor: "yellow", cardColor: "purple"};
 		else if ( cardNumber % 11 === 0)
-			return {negativePts: 5, cowColor: "blue", numColor: "orange"};
+			return {negativePts: 5, cowColor: "blue", numColor: "#ffbc00", cardColor: "red"};
 		else if (cardNumber % 10 === 0)
-			return {negativePts: 3, cowColor: "red", numColor: "blue"};
+			return {negativePts: 3, cowColor: "red", numColor: "#85c7e0", cardColor: "#ffbc00"};
 		else if (cardNumber % 5 === 0)
-			return {negativePts: 2, cowColor: "blue", numColor: "yellow"};
+			return {negativePts: 2, cowColor: "blue", numColor: "yellow", cardColor: "#85c7e0"};
 		else
-			return {negativePts: 1, cowColor: "#7f5093", numColor: "white"};
+			return {negativePts: 1, cowColor: "#7f5093", numColor: "white", cardColor: "white"};
 	}
 	
 		/*

@@ -8,7 +8,7 @@ body{
 }
 
 .gallery {
-	background: #7f5093;
+	background: transparent;
 	width: 100%;
 	margin-left: auto;
 	visibility: hidden;
@@ -17,7 +17,7 @@ body{
 .galleryCell {
 	justify-content: center;
 	width: 100%;
-	background: #7f5093;
+	background: transparent;
 }
 
 canvas {
