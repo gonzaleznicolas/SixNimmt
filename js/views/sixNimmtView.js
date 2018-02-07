@@ -9,7 +9,7 @@ const spaceInCanvasForThisNumberOfCols = 7;
 const margin = 10; // pixels
 const cowIsThisFractionOfCardHeight = 2/3;
 const cowIsThisFractionOfCardWidth = 9/10;
-const cowAndNumberAreThisPercentDownTheCard = 0.4;
+const cowAndNumberAreThisPercentDownTheCard = 0.43;
 
 
 
@@ -87,67 +87,46 @@ class SixNimmtView {
 		const cowWidth = sizeOfGapBetweenCowAndBottomOfCard/2;
 		const cowHeight = sizeOfGapBetweenCowAndBottomOfCard/2;
 		const horizontalSpaceBetweenCows = cowWidth/2;
-		const verticalSpaceBetweenCows = cowHeight/2;
+		const verticalSpaceBetweenCows = cowHeight/3;
 		
 		if (negativePts === 1)
-					this.drawsimplifiedCow(ctx, centreX, centreY, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX, centreY, cowWidth, cowHeight, cardInfo.cowColor);
 		else if (negativePts === 2)
 		{
-					this.drawsimplifiedCow(ctx, centreX - horizontalSpaceBetweenCows, centreY, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX + horizontalSpaceBetweenCows, centreY, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX - horizontalSpaceBetweenCows, centreY, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX + horizontalSpaceBetweenCows, centreY, cowWidth, cowHeight, cardInfo.cowColor);
 		}
 		else if (negativePts === 3)
 		{
-					this.drawsimplifiedCow(ctx, centreX, centreY, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX - cowWidth, centreY, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX + cowWidth, centreY, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX, centreY, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX - cowWidth, centreY, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX + cowWidth, centreY, cowWidth, cowHeight, cardInfo.cowColor);
 		}
 		else if (negativePts === 5)
 		{
-					this.drawsimplifiedCow(ctx, centreX, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX - cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX + cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX - cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX + cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
 					
-					this.drawsimplifiedCow(ctx, centreX - horizontalSpaceBetweenCows, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX + horizontalSpaceBetweenCows, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX - horizontalSpaceBetweenCows, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX + horizontalSpaceBetweenCows, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
 		}
 		else if (negativePts === 7)
 		{
-					this.drawsimplifiedCow(ctx, centreX - horizontalSpaceBetweenCows, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX + horizontalSpaceBetweenCows, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX - horizontalSpaceBetweenCows - cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX + horizontalSpaceBetweenCows + cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX - horizontalSpaceBetweenCows, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX + horizontalSpaceBetweenCows, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX - horizontalSpaceBetweenCows - cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX + horizontalSpaceBetweenCows + cowWidth, centreY - verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
 					
-					this.drawsimplifiedCow(ctx, centreX, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX - cowWidth, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
-					this.drawsimplifiedCow(ctx, centreX + cowWidth, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX - cowWidth, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
+					this.drawLittleCow(ctx, centreX + cowWidth, centreY + verticalSpaceBetweenCows, cowWidth, cowHeight, cardInfo.cowColor);
 		}
 	}
 
-	drawsimplifiedCow(ctx, centreX, centreY, cowWidth, cowHeight, fillColor)
+	drawLittleCow(ctx, centreX, centreY, cowWidth, cowHeight, fillColor)
 	{
-		const mx = centreX;
-		const my = centreY;
-
-		const designConstH = 9;	// dont change
-		const designConstW = 10	// dont change
-		
-		const oneXunit = (1/designConstW)*cowWidth;	// one horizontal unit
-		const oneYunit = (1/designConstH)*cowHeight;	// one vertical unit
-		
-		ctx.beginPath();
-		ctx.moveTo(mx, my - 0.5*oneYunit);
-		ctx.lineTo(mx - 1*oneXunit, my - 0.5*oneYunit);
-		ctx.lineTo(mx - 2.5*oneXunit, my - 2.5*oneYunit);
-		ctx.lineTo(mx - 3*oneXunit, my + 0.5*oneYunit);
-		ctx.lineTo(mx - 1*oneXunit, my + 0.5*oneYunit);
-		ctx.lineTo(mx - 1*oneXunit, my + 2.5*oneYunit);
-		ctx.lineTo(mx + 1*oneXunit, my + 2.5*oneYunit);
-		ctx.lineTo(mx + 1*oneXunit, my + 0.5*oneYunit);
-		ctx.lineTo(mx + 3*oneXunit, my + 0.5*oneYunit);
-		ctx.lineTo(mx + 2.5*oneXunit, my - 2.5*oneYunit);
-		ctx.lineTo(mx + 1*oneXunit, my - 0.5*oneYunit);
-		ctx.lineTo(mx, my - 0.5*oneYunit);
+		drawsimplifiedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
 		ctx.fillStyle = fillColor;
 		ctx.fill();
 		ctx.closePath();

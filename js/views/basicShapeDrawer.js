@@ -15,7 +15,7 @@ function drawCardShape(ctx, x, y, width, height, radius)
 function drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
 {
 		const designConstH = 9;	// dont change
-		const designConstW = 10	// dont change
+		const designConstW = 10; // dont change
 		
 		const oneXunit = (1/designConstW)*cowWidth;	// one horizontal unit
 		const oneYunit = (1/designConstH)*cowHeight;	// one vertical unit
@@ -55,4 +55,27 @@ function drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
 		ctx.lineTo(centreX + 2.7*oneXunit, centreY - 0.9*oneYunit);
 		ctx.quadraticCurveTo(centreX + 4.4*oneXunit, centreY - 1.2*oneYunit,centreX + 5*oneXunit, centreY - 1.8*oneYunit);
 
+}
+
+function drawsimplifiedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
+{
+		const designConstH = 9;	// dont change
+		const designConstW = 10;	// dont change
+		
+		const oneXunit = (1/designConstW)*cowWidth;	// one horizontal unit
+		const oneYunit = (1/designConstH)*cowHeight;	// one vertical unit
+	
+		ctx.beginPath();
+		ctx.moveTo(centreX, centreY - 0.5*oneYunit);
+		ctx.lineTo(centreX - 1*oneXunit, centreY - 0.5*oneYunit);
+		ctx.lineTo(centreX - 2.5*oneXunit, centreY - 2.5*oneYunit);
+		ctx.lineTo(centreX - 3*oneXunit, centreY + 0.5*oneYunit);
+		ctx.lineTo(centreX - 1*oneXunit, centreY + 0.5*oneYunit);
+		ctx.lineTo(centreX - 1*oneXunit, centreY + 2.5*oneYunit);
+		ctx.lineTo(centreX + 1*oneXunit, centreY + 2.5*oneYunit);
+		ctx.lineTo(centreX + 1*oneXunit, centreY + 0.5*oneYunit);
+		ctx.lineTo(centreX + 3*oneXunit, centreY + 0.5*oneYunit);
+		ctx.lineTo(centreX + 2.5*oneXunit, centreY - 2.5*oneYunit);
+		ctx.lineTo(centreX + 1*oneXunit, centreY - 0.5*oneYunit);
+		ctx.lineTo(centreX, centreY - 0.5*oneYunit);
 }
