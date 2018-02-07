@@ -69,7 +69,7 @@ class SixNimmtView {
 	
 	drawCard(x, y, number)
 	{
-		this.drawCardShape(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin, number);
+		this.drawBlankCard(this._gameCtx, x, y, this._cardWidth, this._cardHeight, margin, number);
 		this.drawBigCow(this._gameCtx, x, y, number);
 		this.drawCardNumber(this._gameCtx, x, y, number);
 		this.drawNegativePts(this._gameCtx, x, y, number)
@@ -228,21 +228,13 @@ class SixNimmtView {
 		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), 0.9*this._cardWidth);
 	}
 	
-	drawCardShape(ctx, x, y, width, height, radius, number)
+	drawBlankCard(ctx, x, y, width, height, radius, number)
 	{
 		this._gameCtx.fillStyle = this.getCardInfo(number).cardColor;
 		this._gameCtx.lineWidth = 1;
 		
 		ctx.beginPath();
-		ctx.moveTo(x, y + radius);
-		ctx.lineTo(x, y + height - radius);
-		ctx.arcTo(x, y + height, x + radius, y + height, radius);
-		ctx.lineTo(x + width - radius, y + height);
-		ctx.arcTo(x + width, y + height, x + width, y + height-radius, radius);
-		ctx.lineTo(x + width, y + radius);
-		ctx.arcTo(x + width, y, x + width - radius, y, radius);
-		ctx.lineTo(x + radius, y);
-		ctx.arcTo(x, y, x, y + radius, radius);
+		drawCardShape(ctx, x, y, width, height, radius);
 		ctx.fill();
 		ctx.stroke();
 		ctx.closePath();
