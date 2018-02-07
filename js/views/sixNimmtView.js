@@ -155,51 +155,10 @@ class SixNimmtView {
 
 	drawCow(ctx, centreX, centreY, cowWidth, cowHeight, fillColor)
 	{
-		const mx = centreX;
-		const my = centreY;
-
-		const designConstH = 9;	// dont change
-		const designConstW = 10	// dont change
-		
-		const oneXunit = (1/designConstW)*cowWidth;	// one horizontal unit
-		const oneYunit = (1/designConstH)*cowHeight;	// one vertical unit
-		
-		ctx.beginPath();
-		ctx.moveTo(mx + 5*oneXunit, my - 1.8*oneYunit);
-		ctx.bezierCurveTo( mx + 4.5*oneXunit, my - 2.6*oneYunit, mx + 4*oneXunit, my - 3.6*oneYunit, mx + 2.7*oneXunit, my - 5*oneYunit);
-		ctx.quadraticCurveTo(mx + 3.1*oneXunit, my - 4*oneYunit, mx + 3*oneXunit, my - 2.7*oneYunit);
-		ctx.lineTo(mx + 1.5*oneXunit, my - 2.5*oneYunit);
-		ctx.lineTo(mx + 2*oneXunit, my - 3*oneYunit);
-		ctx.lineTo(mx + 1.5*oneXunit, my - 4.5*oneYunit);
-		ctx.lineTo(mx + 0.5*oneXunit, my - 3.5*oneYunit);
-		ctx.lineTo(mx + 1*oneXunit, my - 2.5*oneYunit);
-		ctx.lineTo(mx + 0, my - 3*oneYunit);
-		ctx.lineTo(mx - 1*oneXunit, my - 2.5*oneYunit);
-		ctx.lineTo(mx - 0.5*oneXunit, my - 3.5*oneYunit);
-		ctx.lineTo(mx - 1.5*oneXunit, my - 4.5*oneYunit);
-		ctx.lineTo(mx - 2*oneXunit, my - 3*oneYunit);
-		ctx.lineTo(mx - 1.5*oneXunit, my - 2.5*oneYunit);
-		ctx.lineTo(mx - 3*oneXunit, my - 2.7*oneYunit);
-		ctx.quadraticCurveTo(mx - 3.1*oneXunit, my - 4*oneYunit, mx - 2.7*oneXunit, my - 5*oneYunit);
-		ctx.bezierCurveTo(mx - 4*oneXunit, my - 3.6*oneYunit, mx - 4.5*oneXunit, my - 2.6*oneYunit, mx - 5*oneXunit, my - 1.8*oneYunit);
-		ctx.quadraticCurveTo(mx - 4.4*oneXunit, my - 1.2*oneYunit,mx - 2.7*oneXunit, my - 0.9*oneYunit);
-		ctx.lineTo(mx - 3*oneXunit, my + 0.5*oneYunit);
-		ctx.lineTo(mx - 2*oneXunit, my + 1.5*oneYunit);
-		ctx.lineTo(mx - 2.8*oneXunit, my + 2.1*oneYunit);
-		ctx.lineTo(mx - 2.2*oneXunit, my + 3.5*oneYunit);
-		ctx.lineTo(mx - 1.3*oneXunit, my + 3.3*oneYunit);
-		ctx.lineTo(mx - 1*oneXunit, my + 4.5*oneYunit);
-		ctx.lineTo(mx + 1*oneXunit, my + 4.5*oneYunit);
-		ctx.lineTo(mx + 1*oneXunit, my + 4.5*oneYunit);
-		ctx.lineTo(mx + 1.3*oneXunit, my + 3.3*oneYunit);
-		ctx.lineTo(mx + 2.2*oneXunit, my + 3.5*oneYunit);
-		ctx.lineTo(mx + 2.8*oneXunit, my + 2.1*oneYunit);
-		ctx.lineTo(mx + 2*oneXunit, my + 1.5*oneYunit);
-		ctx.lineTo(mx + 3*oneXunit, my + 0.5*oneYunit);
-		ctx.lineTo(mx + 2.7*oneXunit, my - 0.9*oneYunit);
-		ctx.quadraticCurveTo(mx + 4.4*oneXunit, my - 1.2*oneYunit,mx + 5*oneXunit, my - 1.8*oneYunit);
+		drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
 		ctx.fillStyle = fillColor;
 		ctx.fill();
+		ctx.lineWidth = 1;
 		ctx.stroke();
 		ctx.closePath();
 	}
