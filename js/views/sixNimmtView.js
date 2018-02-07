@@ -155,10 +155,11 @@ class SixNimmtView {
 		ctx.font = "bold "+fontPixels+"px 'Comic Sans MS'";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
+		const maximumFullNumberWidth = 0.9*this._cardWidth;
 		ctx.lineWidth = 2;
 		ctx.fillStyle = this.getCardInfo(number).numColor;
-		ctx.fillText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), 0.9*this._cardWidth);
-		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), 0.9*this._cardWidth);
+		ctx.fillText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), maximumFullNumberWidth);
+		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), maximumFullNumberWidth);
 	}
 	
 	drawBlankCard(ctx, x, y, width, height, radius, number)
@@ -213,7 +214,7 @@ class SixNimmtView {
 			return {negativePts: 1, cowColor: "#7f5093", numColor: "white", cardColor: "white"};
 	}
 	
-		/*
+	/*
 	The reason I set canvasHeight = windowHeight*0.9 in case 2 whereas in case 1 i set galleryWidth = windowWidth,
 	is that if the width of the canvas is just right, it looks fine, but if the height is exactly right, its hard to
 	scroll perfectly to get the whole canvas in the window.
