@@ -156,10 +156,12 @@ class SixNimmtView {
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		const maximumFullNumberWidth = 0.9*this._cardWidth;
+		const centreXofNumber= x + (this._cardWidth/2);
+		const centreYofNumber = y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard);
 		ctx.lineWidth = 2;
 		ctx.fillStyle = this.getCardInfo(number).numColor;
-		ctx.fillText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), maximumFullNumberWidth);
-		ctx.strokeText(number, x + (this._cardWidth/2), y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard), maximumFullNumberWidth);
+		ctx.fillText(number, centreXofNumber, centreYofNumber, maximumFullNumberWidth);
+		ctx.strokeText(number, centreXofNumber, centreYofNumber, maximumFullNumberWidth);
 	}
 	
 	drawBlankCard(ctx, x, y, width, height, radius, number)
