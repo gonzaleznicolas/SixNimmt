@@ -230,12 +230,10 @@ class SixNimmtView {
 	
 	drawBlankCard(ctx, x, y, width, height, radius, number)
 	{
-		this._gameCtx.fillStyle = this.getCardInfo(number).cardColor;
-		this._gameCtx.lineWidth = 1;
-		
-		ctx.beginPath();
 		drawCardShape(ctx, x, y, width, height, radius);
+		this._gameCtx.fillStyle = this.getCardInfo(number).cardColor;
 		ctx.fill();
+		this._gameCtx.lineWidth = 1;
 		ctx.stroke();
 		ctx.closePath();
 	}

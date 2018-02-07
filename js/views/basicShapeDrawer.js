@@ -1,5 +1,6 @@
 function drawCardShape(ctx, x, y, width, height, radius)
 {
+		ctx.beginPath();
 		ctx.moveTo(x, y + radius);
 		ctx.lineTo(x, y + height - radius);
 		ctx.arcTo(x, y + height, x + radius, y + height, radius);
