@@ -152,27 +152,22 @@ class SixNimmtView {
 		ctx.fill();
 		ctx.closePath();
 	}
-
-	drawCow(ctx, centreX, centreY, cowWidth, cowHeight, fillColor)
+	
+	drawBigCow(ctx, x, y, number)
 	{
-		drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
-		ctx.fillStyle = fillColor;
+		const cowWidth = cowIsThisFractionOfCardWidth*this._cardWidth;
+		const cowHeight = cowIsThisFractionOfCardHeight*this._cardHeight;
+		
+		// center of the cow
+		const centreX = x + this._cardWidth/2;
+		const centreY = y + this._cardHeight * cowAndNumberAreThisPercentDownTheCard;
+		
+		drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight);
+		ctx.fillStyle = this.getCardInfo(number).cowColor;
 		ctx.fill();
 		ctx.lineWidth = 1;
 		ctx.stroke();
 		ctx.closePath();
-	}
-	
-	drawBigCow(ctx, x, y, number)
-	{
-		const h = cowIsThisFractionOfCardHeight*this._cardHeight;
-		const w = cowIsThisFractionOfCardWidth*this._cardWidth;
-		
-		// center of the cow
-		const mx = x + this._cardWidth/2;
-		const my = y + this._cardHeight * cowAndNumberAreThisPercentDownTheCard;
-		
-		this.drawCow(ctx, mx, my, w, h, this.getCardInfo(number).cowColor);
 	}
 	
 	drawCardNumber(ctx, x, y, number)
