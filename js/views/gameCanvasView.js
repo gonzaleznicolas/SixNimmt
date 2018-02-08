@@ -10,8 +10,14 @@ class GameCanvasView extends CanvasView
 		this._numberOfRows = spaceInCanvasesForThisNumberOfRows;
 		this._numberOfCols = spaceInCanvasesForThisNumberOfCols - 1;
 	}
+	
+	calculateCardDimensions()
+	{
+		this._cardWidth = (this._canvas.width - ((spaceInCanvasesForThisNumberOfCols + 1)*margin)) / spaceInCanvasesForThisNumberOfCols;
+		this._cardHeight = (this._canvas.height - ((spaceInCanvasesForThisNumberOfRows + 1)*margin)) / spaceInCanvasesForThisNumberOfRows;
+	}
 
-	// drawCards()
+	// draw()
 	// {
 		// for (let row = 0; row < this._numberOfRows; row++)
 		// {
@@ -22,22 +28,22 @@ class GameCanvasView extends CanvasView
 		// }
 	// }
 	
-	// calculateCardCoordinates()
-	// {
-		// let x = margin;
-		// let y = margin;
-		// for (let row = 0; row < this._numberOfRows; row++)
-		// {
-			// x = margin;
-			// this._cardCoordinates[row] = [];
-			// for (let col = 0; col < this._numberOfCols; col++)
-			// {
-				// this._cardCoordinates[row][col] = {x: x, y: y};
-				// x = x + this._cardWidth + margin;
-			// }
-			// y = y + this._cardHeight + margin;
-		// }
-	// }
+	calculateCardCoordinates()
+	{
+		let x = margin;
+		let y = margin;
+		for (let row = 0; row < this._numberOfRows; row++)
+		{
+			x = margin;
+			this._cardCoordinates[row] = [];
+			for (let col = 0; col < this._numberOfCols; col++)
+			{
+				this._cardCoordinates[row][col] = {x: x, y: y};
+				x = x + this._cardWidth + margin;
+			}
+			y = y + this._cardHeight + margin;
+		}
+	}
 	
 	/*
 	The reason I set canvasHeight = windowHeight*0.9 in case 2 whereas in case 1 i set galleryWidth = windowWidth,

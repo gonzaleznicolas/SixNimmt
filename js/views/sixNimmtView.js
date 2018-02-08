@@ -37,13 +37,17 @@ class SixNimmtView
 	onResizeWindowHelper()
 	{
 		$(this._gallery).css("visibility", "hidden"); 
-		this._gameCanvasView.setCanvasSize();
-		this._handCanvasView.setCanvasSize();
-		this.recalcGallerySize();
 
-		// this.calculateCardDimensions();
-		// this.calculateCardCoordinates();
-		// this.drawCards();
+		// update game canvas
+		this._gameCanvasView.setCanvasSize();
+		this._gameCanvasView.calculateCardDimensions();
+		this._gameCanvasView.calculateCardCoordinates();
+		//this._gameCanvasView.draw();
+
+		// update hand canvas
+		this._handCanvasView.setCanvasSize();
+		
+		this.recalcGallerySize();
 		$(this._gallery).css("visibility", "visible"); 
 	}
 	

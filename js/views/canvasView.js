@@ -134,12 +134,6 @@ class CanvasView
 		// ctx.closePath();
 	// }
 	
-	// calculateCardDimensions()
-	// {
-		// this._cardWidth = (this._gameCanvas.width - ((spaceInCanvasesForThisNumberOfCols + 1)*margin)) / spaceInCanvasesForThisNumberOfCols;
-		// this._cardHeight = (this._gameCanvas.height - ((spaceInCanvasesForThisNumberOfRows + 1)*margin)) / spaceInCanvasesForThisNumberOfRows;
-	// }
-	
 	// getCardInfo(cardNumber)
 	// {
 		// if (cardNumber === 55)
@@ -153,6 +147,5 @@ class CanvasView
 		// else
 			// return {negativePts: 1, cowColor: "#7f5093", numColor: "white", cardColor: "white"};
 	// }
-	
 
 }
