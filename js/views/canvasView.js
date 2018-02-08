@@ -93,7 +93,7 @@ class CanvasView
 		const width = this._cardWidth;
 		const height = this._cardHeight;
 		
-		drawCardShape(ctx, x, y, width, height, radius);
+		BasicShapeDrawer.drawCardShape(ctx, x, y, width, height, radius);
 		ctx.fillStyle = getCardInfo(number).cardColor;
 		ctx.fill();
 		ctx.lineWidth = 1;
@@ -122,7 +122,7 @@ class CanvasView
 	{
 		const ctx = this._ctx;
 
-		drawsimplifiedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
+		BasicShapeDrawer.drawsimplifiedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
 		ctx.fillStyle = fillColor;
 		ctx.fill();
 		ctx.closePath();
@@ -139,7 +139,7 @@ class CanvasView
 		const centreX = x + this._cardWidth/2;
 		const centreY = y + this._cardHeight * cowAndNumberAreThisPercentDownTheCard;
 		
-		drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight);
+		BasicShapeDrawer.drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight);
 		ctx.fillStyle = getCardInfo(number).cowColor;
 		ctx.fill();
 		ctx.lineWidth = 1;
