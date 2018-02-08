@@ -28,6 +28,8 @@ class CanvasView
 
 	}
 	
+	get canvasWidth() { return this._canvas.width;}
+	
 	drawCard(x, y, number)
 	{
 		this.drawBlankCard(x, y, number);

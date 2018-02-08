@@ -26,9 +26,7 @@ class SixNimmtView
 	
 	recalcGallerySize()
 	{
-		const widerCanvas = Math.max(this._gameCanvasView._canvas.width, this._handCanvasView._canvas.width);
-		// const widerCanvas = this._gameCanvasView._canvas.width > this._handCanvasView._canvas.width ?
-												// this._gameCanvasView._canvas.width : this._handCanvasView._canvas.width;
+		const widerCanvas = Math.max(this._gameCanvasView.canvasWidth, this._handCanvasView.canvasWidth);
 		const galleryWidth = widerCanvas + 2*spaceForOneFlickityArrow;
 		$(this._gallery).css("width", galleryWidth+"px"); // make it the wider canvas + 2* space for arrows
 		this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
