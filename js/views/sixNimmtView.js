@@ -42,7 +42,7 @@ class SixNimmtView
 		this._gameCanvasView.setCanvasSize();
 		this._gameCanvasView.calculateCardDimensions();
 		this._gameCanvasView.calculateCardCoordinates();
-		//this._gameCanvasView.draw();
+		this._gameCanvasView.draw();
 
 		// update hand canvas
 		this._handCanvasView.setCanvasSize();

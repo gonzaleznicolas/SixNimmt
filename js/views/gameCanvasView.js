@@ -17,16 +17,16 @@ class GameCanvasView extends CanvasView
 		this._cardHeight = (this._canvas.height - ((spaceInCanvasesForThisNumberOfRows + 1)*margin)) / spaceInCanvasesForThisNumberOfRows;
 	}
 
-	// draw()
-	// {
-		// for (let row = 0; row < this._numberOfRows; row++)
-		// {
-			// for (let col = 0; col < this._numberOfCols; col++)
-			// {
-				// this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, hi++);
-			// }
-		// }
-	// }
+	draw()
+	{
+		for (let row = 0; row < this._numberOfRows; row++)
+		{
+			for (let col = 0; col < this._numberOfCols; col++)
+			{
+				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, hi++);
+			}
+		}
+	}
 	
 	calculateCardCoordinates()
 	{
