@@ -37,9 +37,7 @@ class SixNimmtView
 		$(this._gallery).css("visibility", "hidden"); 
 
 		// update game canvas
-		this._gameCanvasView.setCanvasSize();
-		this._gameCanvasView.calculateCardDimensions();
-		this._gameCanvasView.calculateCardCoordinates();
+		this._gameCanvasView.resize();
 		this._gameCanvasView.draw();
 
 		// update hand canvas
