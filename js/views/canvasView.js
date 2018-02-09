@@ -25,10 +25,39 @@ class CanvasView
 		this._numberOfCols = undefined;
 
 		this._cardCoordinates = [];	// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
-
 	}
 	
 	get canvasWidth() { return this._canvas.width;}
+
+	flipCard(row, col, number)
+	{
+		this._fcRow = row;
+		this._fcCol = col;
+		this._fcNumber = number;
+		this._fcNumberOfIterations = 150;
+		this._fcX = this._cardCoordinates[row][col].x;
+		this._fcY = this._cardCoordinates[row][col].y;
+		this._fcW = this._cardWidth;
+		this._flipCardTimeout = setInterval(this.flipCardHelper.bind(this), 10)
+	}
+	
+	flipCardHelper()
+	{
+		this.clearCardSpace(this._fcX, this._fcY);
+		this.drawCard(this._fcX, this._fcY, this._fcW, this._fcNumber);
+		this._fcW = this._fcW - 1;
+		this._fcNumberOfIterations--;
+		if (this._fcNumberOfIterations <= 0)
+		{
+			clearInterval(this._flipCardTimeout);
+		}
+	}
+	
+	clearCardSpace(x, y)
+	{
+		this._ctx.fillStyle = "#7f5093";
+		this._ctx.fillRect(x-2, y-2, this._cardWidth+4, this._cardHeight+4)
+	}
 	
 	// use cardWidth parameter rather than using this._cardWidth because for the fliping of cards,
 	// the card has to be redrawn many times at different widths.

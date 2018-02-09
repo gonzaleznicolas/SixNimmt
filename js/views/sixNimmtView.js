@@ -11,7 +11,7 @@ class SixNimmtView
 		this._handCanvasView = new HandCanvasView($('#handCanvas')[0]);
 		
 		this.onResizeWindowHelper();
-		this._resizeTimeout;
+		this._resizeTimeout = undefined;
 		$(window).on("resize", this.onResizeWindow.bind(this));	// i have to bind(this) because otherwise when onResizeWindow is called,
 															// 'this' will be window, not this object, and it wont find setCanvasSize.
 															// event handlers are by default called with 'this' set to the window object

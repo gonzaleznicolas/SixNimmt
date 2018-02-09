@@ -19,7 +19,7 @@ class GameCanvasView extends CanvasView
 		{
 			for (let col = 0; col < this._numberOfCols - 1; col++)
 			{
-				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, 15, hi++);
+				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, hi++);
 			}
 		}
 	}

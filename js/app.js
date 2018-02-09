@@ -1,9 +1,12 @@
 "use strict";
 
 $(function () {
-	const sixNimmtModel = new SixNimmtModel();
-	const sixNimmtView = new SixNimmtView(sixNimmtModel);
+	sixNimmtModel = new SixNimmtModel();
+	sixNimmtView = new SixNimmtView(sixNimmtModel);
 });
+
+let sixNimmtModel = undefined;
+let sixNimmtView = undefined;
 
 function getCardInfo(cardNumber)
 {
@@ -22,4 +25,9 @@ function getCardInfo(cardNumber)
 	}
 	else // undefined passed in therefore info for back of card
 		return {cowColor: "#7f5093", cardColor: "white"}
+}
+
+// for testing purposes
+function hello(row, col, num) {
+	sixNimmtView._gameCanvasView.flipCard(row, col, num);
 }
