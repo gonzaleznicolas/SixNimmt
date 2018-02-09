@@ -28,6 +28,6 @@ function getCardInfo(cardNumber)
 }
 
 // for testing purposes
-function hello(row, col, num) {
+function flip(row, col, num) {
 	sixNimmtView._gameCanvasView.flipCard(row, col, num);
 }

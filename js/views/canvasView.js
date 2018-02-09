@@ -34,23 +34,33 @@ class CanvasView
 		this._fcRow = row;
 		this._fcCol = col;
 		this._fcNumber = number;
-		this._fcNumberOfIterations = 150;
+		this._fcNumberOfIterations = 250;
 		this._fcX = this._cardCoordinates[row][col].x;
 		this._fcY = this._cardCoordinates[row][col].y;
-		this._fcW = this._cardWidth;
-		this._flipCardTimeout = setInterval(this.flipCardHelper.bind(this), 10)
+		this._fcBackW = this._cardWidth; // back of the card starts full width
+		requestAnimationFrame(this.flipCardHelper.bind(this));
 	}
 	
 	flipCardHelper()
 	{
 		this.clearCardSpace(this._fcX, this._fcY);
-		this.drawCard(this._fcX, this._fcY, this._fcW, this._fcNumber);
-		this._fcW = this._fcW - 1;
-		this._fcNumberOfIterations--;
-		if (this._fcNumberOfIterations <= 0)
+		let xToKeepCardCenteredAsItShrinks = undefined;
+		if (this._fcBackW > 0)
 		{
-			clearInterval(this._flipCardTimeout);
+			xToKeepCardCenteredAsItShrinks = this._fcX + (this._cardWidth - this._fcBackW)/2
+			this.drawFaceDownCard(xToKeepCardCenteredAsItShrinks, this._fcY, this._fcBackW);
 		}
+		else
+		{
+			xToKeepCardCenteredAsItShrinks = this._fcX + (this._cardWidth + this._fcBackW)/2
+			this.drawCard(xToKeepCardCenteredAsItShrinks, this._fcY, (-1)*this._fcBackW, 5);
+		}
+		this._fcBackW = this._fcBackW - 3;
+
+		if ((-1)*this._fcBackW >= this._cardWidth)
+			return;
+		
+		requestAnimationFrame(this.flipCardHelper.bind(this));
 	}
 	
 	clearCardSpace(x, y)
@@ -119,11 +129,17 @@ class CanvasView
 		ctx.font = "bold "+fontPixels+"px 'Comic Sans MS'";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
-		const maximumFullNumberWidth = 0.9*cardWidth;
 		const centreXofNumber= x + (cardWidth/2);
 		const centreYofNumber = y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard);
 		ctx.lineWidth = 2;
 		ctx.fillStyle = getCardInfo(number).numColor;
+
+		const textSize = ctx.measureText(number); // the size of the text if we let it be without setting a max width
+
+		// textSize.width * (cardWidth/this._cardWidth) will be smaller when we are narrowing the card to flip it
+		// 0.9*cardWidth will be smaller when we have a wide number like 104 and the card is normal size
+		const maximumFullNumberWidth = Math.min(textSize.width * (cardWidth/this._cardWidth), 0.9*cardWidth);
+
 		ctx.fillText(number, centreXofNumber, centreYofNumber, maximumFullNumberWidth);
 		ctx.strokeText(number, centreXofNumber, centreYofNumber, maximumFullNumberWidth);
 	}
