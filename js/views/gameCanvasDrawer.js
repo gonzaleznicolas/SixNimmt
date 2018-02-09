@@ -19,7 +19,7 @@ class GameCanvasDrawer extends CanvasDrawer
 		{
 			for (let col = 0; col < this._numberOfCols - 1; col++)
 			{
-				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, hi++);
+				this.drawFaceDownCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth);
 			}
 		}
 	}

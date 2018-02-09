@@ -9,7 +9,9 @@ class SixNimmtView
 		this._flickity = this.setUpFlickity();
 		this._gameCanvasDrawer = new GameCanvasDrawer($('#gameCanvas')[0]);
 		this._handCanvasDrawer = new HandCanvasDrawer($('#handCanvas')[0]);
-		
+		this._gameAnimation = new GameAnimation(this._gameCanvasDrawer);
+		this._handAnimation = new HandAnimation(this._handCanvasDrawer);
+
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;
 		$(window).on("resize", this.onResizeWindow.bind(this));	// i have to bind(this) because otherwise when onResizeWindow is called,

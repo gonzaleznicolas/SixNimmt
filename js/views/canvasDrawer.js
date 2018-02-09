@@ -1,7 +1,5 @@
 "use strict";
 
-let hi = 44;
-
 // desing parameters
 const cardHeightToWidthFactor = 3/4;
 const spaceInCanvasesForThisNumberOfRows = 4;
@@ -10,7 +8,8 @@ const margin = 10; // pixels
 const radius = 10;
 const cowIsThisFractionOfCardHeight = 2/3;
 const cowIsThisFractionOfCardWidth = 9/10;
-const cowAndNumberAreThisPercentDownTheCard = 0.43;
+const cowIsThisPercentDownTheCard = 0.43;
+const numberIsThisPercentDownTheCard = 0.5;
 
 class CanvasDrawer
 {
@@ -28,46 +27,6 @@ class CanvasDrawer
 	}
 	
 	get canvasWidth() { return this._canvas.width;}
-
-	flipCard(row, col, number)
-	{
-		this._fcRow = row;
-		this._fcCol = col;
-		this._fcNumber = number;
-		this._fcNumberOfIterations = 250;
-		this._fcX = this._cardCoordinates[row][col].x;
-		this._fcY = this._cardCoordinates[row][col].y;
-		this._fcBackW = this._cardWidth; // back of the card starts full width
-		requestAnimationFrame(this.flipCardHelper.bind(this));
-	}
-	
-	flipCardHelper()
-	{
-		this.clearCardSpace(this._fcX, this._fcY);
-		let xToKeepCardCenteredAsItShrinks = undefined;
-		if (this._fcBackW > 0)
-		{
-			xToKeepCardCenteredAsItShrinks = this._fcX + (this._cardWidth - this._fcBackW)/2
-			this.drawFaceDownCard(xToKeepCardCenteredAsItShrinks, this._fcY, this._fcBackW);
-		}
-		else
-		{
-			xToKeepCardCenteredAsItShrinks = this._fcX + (this._cardWidth + this._fcBackW)/2
-			this.drawCard(xToKeepCardCenteredAsItShrinks, this._fcY, (-1)*this._fcBackW, 5);
-		}
-		this._fcBackW = this._fcBackW - 3;
-
-		if ((-1)*this._fcBackW >= this._cardWidth)
-			return;
-		
-		requestAnimationFrame(this.flipCardHelper.bind(this));
-	}
-	
-	clearCardSpace(x, y)
-	{
-		this._ctx.fillStyle = "#7f5093";
-		this._ctx.fillRect(x-2, y-2, this._cardWidth+4, this._cardHeight+4)
-	}
 	
 	// use cardWidth parameter rather than using this._cardWidth because for the fliping of cards,
 	// the card has to be redrawn many times at different widths.
@@ -110,7 +69,7 @@ class CanvasDrawer
 		
 		// draw the big cow right in the middle if its a face down card
 		const faceUpCard = number != undefined;
-		const centreY = faceUpCard ? (y + this._cardHeight * cowAndNumberAreThisPercentDownTheCard) : (y + this._cardHeight/2);
+		const centreY = faceUpCard ? (y + this._cardHeight * cowIsThisPercentDownTheCard) : (y + this._cardHeight/2);
 		
 		BasicShapeDrawer.drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight);
 		ctx.fillStyle = getCardInfo(number).cowColor;
@@ -130,7 +89,7 @@ class CanvasDrawer
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		const centreXofNumber= x + (cardWidth/2);
-		const centreYofNumber = y+(this._cardHeight * cowAndNumberAreThisPercentDownTheCard);
+		const centreYofNumber = y+(this._cardHeight * numberIsThisPercentDownTheCard);
 		ctx.lineWidth = 2;
 		ctx.fillStyle = getCardInfo(number).numColor;
 
@@ -151,7 +110,7 @@ class CanvasDrawer
 		const cardInfo = getCardInfo(number);
 		const negativePts = cardInfo.negativePts;
 		const centreX = x + cardWidth/2;
-		const bottomOfTheCowY = y + cowAndNumberAreThisPercentDownTheCard*this._cardHeight + (cowIsThisFractionOfCardHeight/2)*this._cardHeight;
+		const bottomOfTheCowY = y + cowIsThisPercentDownTheCard*this._cardHeight + (cowIsThisFractionOfCardHeight/2)*this._cardHeight;
 		const sizeOfGapBetweenCowAndBottomOfCard = this._cardHeight - (bottomOfTheCowY - y);
 		const centreY = bottomOfTheCowY + (sizeOfGapBetweenCowAndBottomOfCard/2);
 		
@@ -205,4 +164,9 @@ class CanvasDrawer
 		ctx.closePath();
 	}
 
+	clearCardSpace(x, y)
+	{
+		this._ctx.fillStyle = "#7f5093";
+		this._ctx.fillRect(x-2, y-2, this._cardWidth+4, this._cardHeight+4)
+	}
 }
