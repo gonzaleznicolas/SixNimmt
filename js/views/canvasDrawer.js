@@ -12,7 +12,7 @@ const cowIsThisFractionOfCardHeight = 2/3;
 const cowIsThisFractionOfCardWidth = 9/10;
 const cowAndNumberAreThisPercentDownTheCard = 0.43;
 
-class CanvasView
+class CanvasDrawer
 {
 	constructor(canvas)
 	{

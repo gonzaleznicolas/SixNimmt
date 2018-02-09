@@ -7,8 +7,8 @@ class SixNimmtView
 	constructor(sixNimmtModel) {
 		this._gallery = $('.gallery')[0];
 		this._flickity = this.setUpFlickity();
-		this._gameCanvasView = new GameCanvasView($('#gameCanvas')[0]);
-		this._handCanvasView = new HandCanvasView($('#handCanvas')[0]);
+		this._gameCanvasDrawer = new GameCanvasDrawer($('#gameCanvas')[0]);
+		this._handCanvasDrawer = new HandCanvasDrawer($('#handCanvas')[0]);
 		
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;
@@ -26,7 +26,7 @@ class SixNimmtView
 	
 	recalcGallerySize()
 	{
-		const widerCanvas = Math.max(this._gameCanvasView.canvasWidth, this._handCanvasView.canvasWidth);
+		const widerCanvas = Math.max(this._gameCanvasDrawer.canvasWidth, this._handCanvasDrawer.canvasWidth);
 		const galleryWidth = widerCanvas + 2*spaceForOneFlickityArrow;
 		$(this._gallery).css("width", galleryWidth+"px"); // make it the wider canvas + 2* space for arrows
 		this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
@@ -37,11 +37,11 @@ class SixNimmtView
 		$(this._gallery).css("visibility", "hidden"); 
 
 		// update game canvas
-		this._gameCanvasView.resize();
-		this._gameCanvasView.draw();
+		this._gameCanvasDrawer.resize();
+		this._gameCanvasDrawer.draw();
 
 		// update hand canvas
-		this._handCanvasView.setCanvasSize();
+		this._handCanvasDrawer.setCanvasSize();
 		
 		this.recalcGallerySize();
 		$(this._gallery).css("visibility", "visible"); 

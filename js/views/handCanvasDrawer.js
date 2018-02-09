@@ -1,6 +1,6 @@
 "use strict";
 
-class HandCanvasView extends CanvasView
+class HandCanvasDrawer extends CanvasDrawer
 {
 	constructor(canvas)
 	{

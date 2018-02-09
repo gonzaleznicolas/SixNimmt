@@ -1,6 +1,6 @@
 "use strict";
 
-class GameCanvasView extends CanvasView
+class GameCanvasDrawer extends CanvasDrawer
 {
 	constructor(canvas)
 	{

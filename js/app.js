@@ -29,5 +29,5 @@ function getCardInfo(cardNumber)
 
 // for testing purposes
 function flip(row, col, num) {
-	sixNimmtView._gameCanvasView.flipCard(row, col, num);
+	sixNimmtView._gameCanvasDrawer.flipCard(row, col, num);
 }
