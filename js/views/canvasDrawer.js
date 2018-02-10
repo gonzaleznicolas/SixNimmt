@@ -184,7 +184,7 @@ class CanvasDrawer
 		return offsetLeft;
 	}
 
-	function getCanvasOffsetTop()
+	getCanvasOffsetTop()
 	{
 		let elem = this._canvas;
 		let offsetTop = 0;
