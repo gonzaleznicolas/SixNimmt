@@ -31,3 +31,27 @@ function getCardInfo(cardNumber)
 function flip(row, col, num) {
 	sixNimmtView._gameAnimation.flipCard(row, col, num);
 }
+
+function getOffsetLeft(elem)
+{
+	let offsetLeft = 0;
+	do{
+		if( !isNaN(elem.offsetLeft))
+		{
+			offsetLeft += elem.offsetLeft;
+		}
+	}while( elem = elem.parentElement);
+	return offsetLeft;
+}
+
+function getOffsetTop(elem)
+{
+	let offsetTop = 0;
+	do{
+		if( !isNaN(elem.offsetTop))
+		{
+			offsetTop += elem.offsetTop;
+		}
+	}while( elem = elem.parentElement);
+	return offsetTop;
+}
