@@ -44,8 +44,8 @@ class GameAnimation
     
     canvasClicked(event)
     {
-        const canvasLeft = getOffsetLeft(this._gameCanvasDrawer._canvas);
-        const canvasTop = getOffsetTop(this._gameCanvasDrawer._canvas);
+        const canvasLeft = this._gameCanvasDrawer.getCanvasOffsetLeft();
+        const canvasTop = this._gameCanvasDrawer.getCanvasOffsetTop();
 
         const x = event.pageX - canvasLeft;
         const y = event.pageY - canvasTop;

@@ -169,4 +169,31 @@ class CanvasDrawer
 		this._ctx.fillStyle = "#7f5093";
 		this._ctx.fillRect(x-2, y-2, this._cardWidth+4, this._cardHeight+4)
 	}
+	
+	
+	getCanvasOffsetLeft()
+	{
+		let elem = this._canvas;
+		let offsetLeft = 0;
+		do{
+			if( !isNaN(elem.offsetLeft))
+			{
+				offsetLeft += elem.offsetLeft;
+			}
+		}while( elem = elem.parentElement);
+		return offsetLeft;
+	}
+
+	function getCanvasOffsetTop()
+	{
+		let elem = this._canvas;
+		let offsetTop = 0;
+		do{
+			if( !isNaN(elem.offsetTop))
+			{
+				offsetTop += elem.offsetTop;
+			}
+		}while( elem = elem.parentElement);
+		return offsetTop;
+	}
 }
