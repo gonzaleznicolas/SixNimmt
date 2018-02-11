@@ -5,7 +5,7 @@ class GameAnimation
     constructor(drawer)
     {
         this._gameCanvasDrawer = drawer;
-        this._gameCanvasDrawer._canvas.addEventListener("click", this.canvasClicked.bind(this), false);
+        this._gameCanvasDrawer._canvas.addEventListener("click", this.onCanvasClicked.bind(this), false);
     }
 
 	flipCard(row, col, number)
@@ -42,7 +42,7 @@ class GameAnimation
 		requestAnimationFrame(this.flipCardHelper.bind(this));
     }
     
-    canvasClicked(event)
+    onCanvasClicked(event)
     {
         const canvasLeft = this._gameCanvasDrawer.getCanvasOffsetLeft();
         const canvasTop = this._gameCanvasDrawer.getCanvasOffsetTop();
@@ -50,7 +50,9 @@ class GameAnimation
         const x = event.pageX - canvasLeft;
         const y = event.pageY - canvasTop;
 
-        this._gameCanvasDrawer.drawWarningRectangle(x,y);
+				const rowCol = this._gameCanvasDrawer.getCardRowColFromXY(x, y);
+				
+				this.flipCard(rowCol.row, rowCol.col, Math.floor(Math.random()*20)+44);
         
     }
 }

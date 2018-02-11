@@ -28,6 +28,34 @@ class CanvasDrawer
 	
 	get canvasWidth() { return this._canvas.width;}
 	
+	getCardRowColFromXY(x, y)
+	{
+		let clickedRow = undefined;
+		let clickedCol = undefined;
+		// find which row this y belongs to
+		for (let row = 0; row < this._numberOfRows; row++)
+		{
+			if (y >= this._cardCoordinates[row][0].y && y <= this._cardCoordinates[row][0].y + this._cardHeight)
+			{
+				clickedRow = row;
+				break;
+			}
+				clickedRow = row;
+		}
+		
+		// find which col this x belongs to
+		for (let col = 0; col < this._numberOfCols; col++)
+		{
+			if (x >= this._cardCoordinates[0][col].x && x <= this._cardCoordinates[0][col].x + this._cardWidth)
+			{
+				clickedCol = col;
+				break;
+			}
+		}
+		
+		return {row: clickedRow, col:clickedCol};
+	}
+	
 	// use cardWidth parameter rather than using this._cardWidth because for the fliping of cards,
 	// the card has to be redrawn many times at different widths.
 	drawCard(x, y, cardWidth, number)
