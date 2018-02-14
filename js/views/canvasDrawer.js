@@ -2,9 +2,10 @@
 
 // desing parameters
 const cardHeightToWidthFactor = 3/4;
-const spaceInCanvasesForThisNumberOfRows = 4;
-const spaceInCanvasesForThisNumberOfCols = 7;
+const spaceInGameCanvasForThisNumberOfRows = 4;
+const spaceInGameCanvasForThisNumberOfCols = 7;
 const margin = 10; // pixels
+const extraNumberOfMarginsBetween6thColAndLastCol = 6;
 const radius = 10;
 const cowIsThisFractionOfCardHeight = 2/3;
 const cowIsThisFractionOfCardWidth = 9/10;
