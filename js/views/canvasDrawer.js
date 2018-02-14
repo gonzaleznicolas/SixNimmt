@@ -3,7 +3,7 @@
 // desing parameters
 const cardHeightToWidthFactor = 3/4;
 const spaceInGameCanvasForThisNumberOfRows = 4;
-const spaceInGameCanvasForThisNumberOfCols = 7;
+const spaceInGameCanvasForThisNumberOfCols = 7;	// 6 for the game, one extra col for the upcoming cards
 const margin = 10; // pixels
 const extraNumberOfMarginsBetween6thColAndLastCol = 6;
 const radius = 10;
