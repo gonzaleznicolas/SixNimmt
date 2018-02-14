@@ -8,7 +8,8 @@ class GameCanvasDrawer extends CanvasDrawer
 		
 		// make one less column than we left space for. the rightmost column is for the face-down played cards
 		this._numberOfRows = spaceInGameCanvasForThisNumberOfRows;
-		this._numberOfCols = spaceInGameCanvasForThisNumberOfCols - 1;
+		this._numberOfCols = spaceInGameCanvasForThisNumberOfCols - 1;	// actual game has one less col because the last col is for the upcoming cards
+		this._totalExtraSpaceToTheRightForUpcomingCards = undefined;
 	}
 	
 	draw()
@@ -71,6 +72,8 @@ class GameCanvasDrawer extends CanvasDrawer
 	{
 		this._cardWidth = (this._canvas.width - ((spaceInGameCanvasForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)) / spaceInGameCanvasForThisNumberOfCols;
 		this._cardHeight = (this._canvas.height - ((spaceInGameCanvasForThisNumberOfRows + 1)*margin)) / spaceInGameCanvasForThisNumberOfRows;
+		
+		this._totalExtraSpaceToTheRightForUpcomingCards = this._cardWidth + extraNumberOfMarginsBetween6thColAndLastCol*margin;
 	}
 	
 	calculateCardCoordinates()
