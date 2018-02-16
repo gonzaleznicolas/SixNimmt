@@ -91,6 +91,15 @@ class CanvasDrawer
 		this.drawBigCow(x, y, cardWidth, undefined);
 	}
 	
+	dimCard(x, y)
+	{
+		const ctx = this._ctx;
+		BasicShapeDrawer.drawCardShape(ctx, x, y, this._cardWidth, this._cardHeight, radius);
+		ctx.fillStyle = "rgba(127, 80, 147, 0.85)";
+		ctx.fill();
+		ctx.closePath();
+	}
+	
 	drawBlankCard(x, y, cardWidth, number)
 	{
 		const ctx = this._ctx;
@@ -99,7 +108,7 @@ class CanvasDrawer
 		ctx.fillStyle = getCardInfo(number).cardColor;
 		ctx.fill();
 		ctx.lineWidth = 1;
-		ctx.strokeStyle = "black";
+		ctx.strokeStyle = "rgba(0, 0, 0, 1)";
 		ctx.stroke();
 		ctx.closePath();
 	}
@@ -122,7 +131,7 @@ class CanvasDrawer
 		ctx.fillStyle = getCardInfo(number).cowColor;
 		ctx.fill();
 		ctx.lineWidth = 1;
-		ctx.strokeStyle = "black";
+		ctx.strokeStyle = "rgba(0, 0, 0, 1)";
 		ctx.stroke();
 		ctx.closePath();
 	}
@@ -213,8 +222,7 @@ class CanvasDrawer
 
 	clearCardSpace(x, y)
 	{
-		this._ctx.fillStyle = "#7f5093";
-		this._ctx.fillRect(x-2, y-2, this._cardWidth+4, this._cardHeight+4)
+		this._ctx.clearRect(x-2, y-2, this._cardWidth+4, this._cardHeight+4)
 	}
 	
 	
