@@ -15,14 +15,13 @@ body{
 }
 
 .galleryCell {
-	justify-content: center;
+	text-align: center;
 	width: 100%;
 	background: transparent;
 }
 
 canvas {
-	margin-left: 65px;
-	border: 1px solid black;
+	margin-left: auto;
 }
 
 

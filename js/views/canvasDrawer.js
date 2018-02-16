@@ -4,6 +4,8 @@
 const cardHeightToWidthFactor = 3/4;
 const spaceInGameCanvasForThisNumberOfRows = 4;
 const spaceInGameCanvasForThisNumberOfCols = 7;	// 6 for the game, one extra col for the upcoming cards
+const numberOfColsInHandCanvas = 5;
+const numberOfRowsInHandCanvas = 2;
 const margin = 10; // pixels
 const extraNumberOfMarginsBetween6thColAndLastCol = 6;
 const radius = 10;
@@ -23,7 +25,6 @@ class CanvasDrawer
 		this._cardHeight = undefined;
 		this._numberOfRows = undefined;
 		this._numberOfCols = undefined;
-
 		this._cardCoordinates = [];	// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
 	}
 	
@@ -55,6 +56,23 @@ class CanvasDrawer
 		}
 		
 		return {row: clickedRow, col:clickedCol};
+	}
+	
+	calculateCardCoordinates()
+	{
+		let x = margin;
+		let y = margin;
+		for (let row = 0; row < this._numberOfRows; row++)
+		{
+			x = margin;
+			this._cardCoordinates[row] = [];
+			for (let col = 0; col < this._numberOfCols; col++)
+			{
+				this._cardCoordinates[row][col] = {x: x, y: y};
+				x = x + this._cardWidth + margin;
+			}
+			y = y + this._cardHeight + margin;
+		}
 	}
 	
 	// use cardWidth parameter rather than using this._cardWidth because for the fliping of cards,
