@@ -28,7 +28,7 @@ function getCardInfo(cardNumber)
 }
 
 // for testing purposes
-function flip(row, col, num) {
-	sixNimmtView._gameAnimation.flipCard(row, col, num);
+function move(row1, col1, row2, col2) {
+	sixNimmtView._gameAnimation.moveCard(row1, col1, row2, col2);
 }
 

@@ -2,18 +2,39 @@
 
 class GameAnimation
 {
-    constructor(drawer)
-    {
-        this._gameCanvasDrawer = drawer;
-        this._gameCanvasDrawer._canvas.addEventListener("click", this.onCanvasClicked.bind(this), false);
-    }
+	constructor(drawer)
+	{
+			this._gameCanvasDrawer = drawer;
+			this._gameCanvasDrawer._canvas.addEventListener("click", this.onCanvasClicked.bind(this), false);
+	}
 
+	moveCard(startRow, startCol, endRow, endCol)
+	{
+		const start = this._gameCanvasDrawer._cardCoordinates[startRow][startCol];
+		const end = this._gameCanvasDrawer._cardCoordinates[endRow][endCol];
+		
+		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
+		this._nextPt = null;
+		requestAnimationFrame(this.moveCardHelper.bind(this));
+	}
+	
+	moveCardHelper()
+	{
+		this._nextPt = this._line.nextPoint();
+		
+		if (this._line.done1 == false || this._line.done2 == false)
+		{
+			this._gameCanvasDrawer.draw();
+			this._gameCanvasDrawer.drawFaceDownCard(this._nextPt.x, this._nextPt.y, this._gameCanvasDrawer._cardWidth);
+			requestAnimationFrame(this.moveCardHelper.bind(this));
+		}
+	}
+	
 	flipCard(row, col, number)
 	{
 		this._fcRow = row;
 		this._fcCol = col;
 		this._fcNumber = number;
-		this._fcNumberOfIterations = 250;
 		this._fcX = this._gameCanvasDrawer._cardCoordinates[row][col].x;
 		this._fcY = this._gameCanvasDrawer._cardCoordinates[row][col].y;
 		this._fcBackW = this._gameCanvasDrawer._cardWidth; // back of the card starts full width
@@ -40,19 +61,18 @@ class GameAnimation
 			return;
 		
 		requestAnimationFrame(this.flipCardHelper.bind(this));
-    }
-    
-    onCanvasClicked(event)
-    {
-        const canvasLeft = this._gameCanvasDrawer.getCanvasOffsetLeft();
-        const canvasTop = this._gameCanvasDrawer.getCanvasOffsetTop();
+	}
+		
+	onCanvasClicked(event)
+	{
+		const canvasLeft = this._gameCanvasDrawer.getCanvasOffsetLeft();
+		const canvasTop = this._gameCanvasDrawer.getCanvasOffsetTop();
 
-        const x = event.pageX - canvasLeft;
-        const y = event.pageY - canvasTop;
+		const x = event.pageX - canvasLeft;
+		const y = event.pageY - canvasTop;
 
-				const rowCol = this._gameCanvasDrawer.getCardRowColFromXY(x, y);
-				
-				this.flipCard(rowCol.row, rowCol.col, Math.floor(Math.random()*20)+44);
-        
-    }
+		const rowCol = this._gameCanvasDrawer.getCardRowColFromXY(x, y);
+		
+		this.flipCard(rowCol.row, rowCol.col, Math.floor(Math.random()*20)+44);
+	}
 }
