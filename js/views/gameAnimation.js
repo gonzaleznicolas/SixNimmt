@@ -21,13 +21,10 @@ class GameAnimation
 	moveCardHelper()
 	{
 		this._nextPt = this._line.nextPoint();
-		
-		if (this._line.done1 == false || this._line.done2 == false)
-		{
-			this._gameCanvasDrawer.draw();
-			this._gameCanvasDrawer.drawFaceDownCard(this._nextPt.x, this._nextPt.y, this._gameCanvasDrawer._cardWidth);
+		this._gameCanvasDrawer.draw();
+		this._gameCanvasDrawer.drawFaceDownCard(this._nextPt.x, this._nextPt.y, this._gameCanvasDrawer._cardWidth);
+		if (this._line.done == false)
 			requestAnimationFrame(this.moveCardHelper.bind(this));
-		}
 	}
 	
 	flipCard(row, col, number)

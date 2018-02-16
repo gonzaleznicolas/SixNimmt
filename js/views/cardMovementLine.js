@@ -1,19 +1,18 @@
 "use strict";
 
 const pixelJumpPerFrame = 3;
+const closeEnough = pixelJumpPerFrame*2;
 
 class CardMovementLine
 {
 
 	constructor(x1, y1, x2, y2)
 	{
-		this.done1 = false;
-		this.done2 = false;
+		this.done = false;
 		
 		if (x1 == x2 && y1 == y2)
 		{
-			this.done1 = true;
-			this.done2 = true;
+			this.done = true;
 			return;
 		}
 		
@@ -62,19 +61,16 @@ class CardMovementLine
 	
 	nextPoint()
 	{
-		if (this.done1 == true)
-		{
-			this.done2 = true;
-			return;
-		}
-		this.currentX += this.xIncrement;
-		const closeEnough = pixelJumpPerFrame*2;
 		if ( Math.abs(this.currentX - this.x2) < closeEnough && Math.abs(this.f(this.currentX) - this.y2) < closeEnough)
 		{
-			this.done1 = true;
+			this.done = true;
+			// return the exact final points to make sure we are not off even by a little bit
 			return this.xySwapped ? {x: this.y2, y: this.x2} : {x: this.x2, y: this.y2};
 		}
 		else
+		{
+			this.currentX += this.xIncrement;
 			return this.xySwapped ? {x: this.f(this.currentX), y: this.currentX} : {x: this.currentX, y: this.f(this.currentX)};
+		}
 	}
 }
