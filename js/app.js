@@ -32,3 +32,4 @@ function move(row1, col1, row2, col2) {
 	sixNimmtView._gameAnimation.moveCard(row1, col1, row2, col2);
 }
 
+
