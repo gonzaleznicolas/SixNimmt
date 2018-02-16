@@ -220,27 +220,11 @@ class CanvasDrawer
 	
 	getCanvasOffsetLeft()
 	{
-		let elem = this._canvas;
-		let offsetLeft = 0;
-		do{
-			if( !isNaN(elem.offsetLeft))
-			{
-				offsetLeft += elem.offsetLeft;
-			}
-		}while( elem = elem.parentElement);
-		return offsetLeft;
+		return this._canvas.offsetLeft + $(this._canvas).closest(".gallery")[0].offsetLeft;
 	}
 
 	getCanvasOffsetTop()
 	{
-		let elem = this._canvas;
-		let offsetTop = 0;
-		do{
-			if( !isNaN(elem.offsetTop))
-			{
-				offsetTop += elem.offsetTop;
-			}
-		}while( elem = elem.parentElement);
-		return offsetTop;
+		return this._canvas.offsetTop + $(this._canvas).closest(".gallery")[0].offsetTop;
 	}
 }
