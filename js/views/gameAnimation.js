@@ -15,7 +15,8 @@ class GameAnimation
 		
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
 		this._nextPt = null;
-		requestAnimationFrame(this.moveCardHelper.bind(this));
+		if (this._line.done == false)
+			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
 	
 	moveCardHelper()
@@ -54,10 +55,8 @@ class GameAnimation
 		}
 		this._fcBackW = this._fcBackW - 3;
 
-		if ((-1)*this._fcBackW >= this._gameCanvasDrawer._cardWidth)
-			return;
-		
-		requestAnimationFrame(this.flipCardHelper.bind(this));
+		if ((-1)*this._fcBackW < this._gameCanvasDrawer._cardWidth)
+			requestAnimationFrame(this.flipCardHelper.bind(this));
 	}
 		
 	onCanvasClicked(event)
