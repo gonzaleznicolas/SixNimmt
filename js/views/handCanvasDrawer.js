@@ -20,6 +20,17 @@ class HandCanvasDrawer extends CanvasDrawer
 		}
 	}
 	
+	dimAll()
+	{	
+		for (let row = 0; row < this._numberOfRows; row++)
+		{
+			for (let col = 0; col < this._numberOfCols; col++)
+			{
+				this.dimCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y);
+			}
+		}
+	}
+	
 	resize(gameCanvasCardHeight)
 	{
 		// Idea: based on the gameCanvasCardHeight, make the cards on the hand canvas

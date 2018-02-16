@@ -17,13 +17,11 @@ class GameCanvasDrawer extends CanvasDrawer
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
 		this.drawWarningRectangles();
 		
-		let num = 55;
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
 			for (let col = 0; col < this._numberOfCols - 1; col++)
 			{
-				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, num++);
-				this.dimCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y);
+				this.drawFaceDownCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth);
 			}
 		}
 	}

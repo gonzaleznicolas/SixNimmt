@@ -10,7 +10,10 @@ class HandAnimation
 	
 	toggleCardSelection(row, col, number)
 	{
-		let i = 5;
+		this._handCanvasDrawer.draw();
+		this._handCanvasDrawer.dimAll();
+		const card = this._handCanvasDrawer._cardCoordinates[row][col];
+		this._handCanvasDrawer.drawCard(card.x, card.y, this._handCanvasDrawer._cardWidth, 44);
 	}
 
 	onCanvasClicked(event)
