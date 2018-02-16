@@ -15,7 +15,7 @@ class GameAnimation
 		
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
 		this._nextPt = null;
-		if (this._line.done == false)
+		if (!this._line.done)
 			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
 	
@@ -24,7 +24,7 @@ class GameAnimation
 		this._nextPt = this._line.nextPoint();
 		this._gameCanvasDrawer.draw();
 		this._gameCanvasDrawer.drawFaceDownCard(this._nextPt.x, this._nextPt.y, this._gameCanvasDrawer._cardWidth);
-		if (this._line.done == false)
+		if (!this._line.done)
 			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
 	
