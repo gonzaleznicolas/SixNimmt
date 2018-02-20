@@ -55,7 +55,7 @@ class CanvasDrawer
 			}
 		}
 		
-		if (!clickedRow || !clickedCol)
+		if (clickedRow == undefined || clickedCol == undefined)
 			return undefined;
 		
 		return {row: clickedRow, col:clickedCol};

@@ -32,6 +32,7 @@ class HandAnimation
 
 		const rowCol = this._handCanvasDrawer.getCardRowColFromXY(x, y);
 		
-		this.toggleCardSelection(rowCol.row, rowCol.col);
+		if (rowCol)
+			this.toggleCardSelection(rowCol.row, rowCol.col);
 	}
 }

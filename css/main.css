@@ -2,10 +2,16 @@
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	margin: 0;
+	padding: 0;
+	border: 0;
 }
 
 body{
 	background: rgba(127, 80, 147, 1);
+}
+
+#game {
+	display: flex;
 }
 
 .gallery {
@@ -36,6 +42,11 @@ body{
 #pleaseSelectCard{
 	font-family: "Comic Sans MS";
 	color: rgba(255, 255, 255, 1);
+}
+
+#scoreBoard{
+	border: 1px solid white;
+	background: red;
 }
 
 
