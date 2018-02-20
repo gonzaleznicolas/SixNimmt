@@ -49,7 +49,7 @@ class SixNimmtView
 		this._handCanvasDrawer.draw();
 
 		// update play card button
-		$('#playCardTable').css("font-size", this._handCanvasDrawer._cardHeight*0.2 + "px");
+		$('.playCardTable').css("font-size", this._handCanvasDrawer._cardHeight*0.2 + "px");
 		
 		this.recalcGallerySize();
 		$(this._gallery).css("visibility", "visible"); 
