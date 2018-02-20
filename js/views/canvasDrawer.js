@@ -55,6 +55,9 @@ class CanvasDrawer
 			}
 		}
 		
+		if (!clickedRow || !clickedCol)
+			return undefined;
+		
 		return {row: clickedRow, col:clickedCol};
 	}
 	

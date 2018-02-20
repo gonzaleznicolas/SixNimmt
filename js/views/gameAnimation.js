@@ -69,6 +69,7 @@ class GameAnimation
 
 		const rowCol = this._gameCanvasDrawer.getCardRowColFromXY(x, y);
 		
-		this.flipCard(rowCol.row, rowCol.col, Math.floor(Math.random()*20)+44);
+		if (rowCol)
+			this.flipCard(rowCol.row, rowCol.col, Math.floor(Math.random()*20)+44);
 	}
 }
