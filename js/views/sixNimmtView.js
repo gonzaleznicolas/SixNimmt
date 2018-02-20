@@ -12,7 +12,7 @@ class SixNimmtView
 		this._gameAnimation = new GameAnimation(this._gameCanvasDrawer);
 		this._handAnimation = new HandAnimation(this._handCanvasDrawer);
 
-		$('#playCardTable').css("margin-left", margin + "px");	// couldnt be set using pure css
+		$('.playCardTable').css("margin-left", margin + "px");	// couldnt be set using pure css
 		
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;
