@@ -47,11 +47,12 @@ class SixNimmtView
 		const spaceBelowGallery = Math.abs(galleryHeight - windowHeight);
 		const spaceLeftOfGallery = Math.abs(galleryWidth - windowWidth);
 		
-		if (spaceLeftOfGallery >= spaceBelowGallery)
+		if (spaceLeftOfGallery>= 50 && spaceLeftOfGallery >= spaceBelowGallery)
 		{
 			// place the scoreboard to the left of the gallery
 			$("#game").css("flex-direction", "row-reverse");
-			$("#scoreBoard").css("width", spaceLeftOfGallery + "px" );
+			$("#game").css("justify-content", "flex-end");
+			$("#scoreBoard").css("width", Math.min(200, spaceLeftOfGallery) + "px" );
 			$("#scoreBoard").css("height", windowHeight + "px" );			
 		}
 		else
@@ -59,7 +60,7 @@ class SixNimmtView
 			// place the scoreboard below the gallery
 			$("#game").css("flex-direction", "column");
 			$("#scoreBoard").css("width", windowWidth + "px" );
-			$("#scoreBoard").css("height", spaceBelowGallery + "px" );	
+			$("#scoreBoard").css("height", Math.min(200, Math.max(50, spaceBelowGallery)) + "px" );	
 		}
 	}
 	
