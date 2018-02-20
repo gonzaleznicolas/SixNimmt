@@ -12,6 +12,8 @@ class SixNimmtView
 		this._gameAnimation = new GameAnimation(this._gameCanvasDrawer);
 		this._handAnimation = new HandAnimation(this._handCanvasDrawer);
 
+		$('#playCardTable').css("margin-left", margin + "px");	// couldnt be set using pure css
+		
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;
 		$(window).on("resize", this.onResizeWindow.bind(this));	// i have to bind(this) because otherwise when onResizeWindow is called,
@@ -45,6 +47,9 @@ class SixNimmtView
 		// update hand canvas
 		this._handCanvasDrawer.resize(this._gameCanvasDrawer._cardHeight);
 		this._handCanvasDrawer.draw();
+
+		// update play card button
+		$('#playCardTable').css("font-size", this._handCanvasDrawer._cardHeight*0.2 + "px");
 		
 		this.recalcGallerySize();
 		$(this._gallery).css("visibility", "visible"); 
