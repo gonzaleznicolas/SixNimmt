@@ -7,6 +7,9 @@ class HandCanvasDrawer extends CanvasDrawer
 		super(canvas);
 		this._numberOfRows = numberOfRowsInHandCanvas;
 		this._numberOfCols = numberOfColsInHandCanvas;
+		
+		$("#playCard").parents("tr").css("visibility", "collapse");
+		this._currentlySelected = undefined;	// undefined means nothing selected
 	}
 	
 	draw()
@@ -18,8 +21,27 @@ class HandCanvasDrawer extends CanvasDrawer
 				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, row*col+col+30);
 			}
 		}
+		
+		this.updateBasedOnCardSelection();
 	}
-	
+
+	updateBasedOnCardSelection()
+	{
+		if (this._currentlySelected == undefined)
+		{
+			$("#playCard").parents("tr").css("visibility", "collapse");
+			$("#pleaseSelectCard").parents("tr").css("visibility", "visible");
+		}
+		else
+		{
+			this.dimAll();
+			const card = this._cardCoordinates[this._currentlySelected.row][this._currentlySelected.col];
+			this.drawCard(card.x, card.y, this._cardWidth, 44);
+			$("#playCard").parents("tr").css("visibility", "visible");
+			$("#pleaseSelectCard").parents("tr").css("visibility", "collapse");
+		}
+	}
+
 	dimAll()
 	{	
 		for (let row = 0; row < this._numberOfRows; row++)
