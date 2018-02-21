@@ -26,8 +26,8 @@ class Scoreboard
 			// place the scoreboard to the left of the gallery
 			$("#game").css("flex-direction", "row-reverse");
 			$("#game").css("justify-content", "flex-end");
+			$("#scoreboard").css("align-items", "center");
 			$("#scoreboard").css("padding", 0 + "px" );
-			$("#scoreboard").css("text-align", "center" );
 			$("#scoreboard").css("width", Math.min(maxScoreboardWidthWhenOnSide, spaceLeftOfGallery) + "px" );
 			$("#scoreboard").css("height", galleryHeight + "px" );
 
@@ -40,7 +40,6 @@ class Scoreboard
 			// place the scoreboard below the gallery
 			$("#game").css("flex-direction", "column");
 			$("#scoreboard").css("padding-left", spaceForOneFlickityArrow + margin + "px" );
-			$("#scoreboard").css("text-align", "left" );
 			$("#scoreboard").css("align-items", "flex-start");
 			$("#scoreboard").css("width", windowWidth + "px" );
 
