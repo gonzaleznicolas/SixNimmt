@@ -126,7 +126,7 @@ class GameCanvasDrawer extends CanvasDrawer
 	{
 		// Known variables
 		const windowWidth = $(window).width();
-		const windowHeight = $(window).height();
+		const windowHeight = $(window).height() - $('header').height();
 		const spaceForOneFlickityArrow = 65;
 		
 		// CASE 1

@@ -62,6 +62,8 @@ class HandCanvasDrawer extends CanvasDrawer
 		this.calculateCardDimensions(gameCanvasCardHeight);
 		this.setCanvasSize();
 		this.calculateCardCoordinates();
+		// update play card button
+		$('.playCardTable').css("font-size", this._cardHeight*0.2 + "px");
 	}
 	
 	calculateCardDimensions(gameCanvasCardHeight)
