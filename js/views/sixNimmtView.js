@@ -29,8 +29,6 @@ class SixNimmtView
 
 		this._scoreboard = new Scoreboard(["Nico", "Nata", "Erin", "Catalina Gonzalez", "Nico", "Nata", "Erin", "Catalina Gonzalez", "Nico", "Nata", "Erin", "Catalina Gonzalez"]);
 		
-		$('.playCardTable').css("margin-left", margin + "px");	// couldnt be set using pure css
-		
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;
 		$(window).on("resize", this.onResizeWindow.bind(this));	// i have to bind(this) because otherwise when onResizeWindow is called,

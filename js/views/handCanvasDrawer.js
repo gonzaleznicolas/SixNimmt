@@ -7,9 +7,35 @@ class HandCanvasDrawer extends CanvasDrawer
 		super(canvas);
 		this._numberOfRows = numberOfRowsInHandCanvas;
 		this._numberOfCols = numberOfColsInHandCanvas;
-		
-		$("#playCard").parents("tr").css("visibility", "collapse");
 		this._currentlySelected = undefined;	// undefined means nothing selected
+		this.createPlayCardAndPleaseSelectCardElements();
+	}
+	
+	createPlayCardAndPleaseSelectCardElements(){
+		// the reason for creating them here instead of in html, is that when we are in spectator mode
+		// and the hand is not even drawn, we do not want these elements anywhere
+		this._playCardButton = $(document.createElement("p")).addClass("playCardButton");
+		this._playCardButton.css({
+			'width': 'fit-content',
+			'border-radius': '0.5em',
+			'padding': '0.5em',
+			'margin-left': margin+"px",
+			'background': 'rgba(0, 0, 0, 0.3)',
+			'color': 'rgba(255, 255, 255, 1)',
+			'font-weight': '0.5em',
+			'font-family': 'Comic Sans MS'
+		});
+		this._playCardButton[0].innerHTML = "Play Card";
+		
+		this._selectCardMessage = $(document.createElement("p")).addClass("selectCardMessage");
+		this._selectCardMessage.css({
+			'margin-left': margin+"px",
+			'font-family': 'Comic Sans MS',
+			'color': 'rgba(255, 255, 255, 1)'
+		});
+		this._selectCardMessage[0].innerHTML = "Please select a card to play";
+		
+		$('#handCanvasWrapper').append(this._selectCardMessage);
 	}
 	
 	draw()
@@ -29,16 +55,17 @@ class HandCanvasDrawer extends CanvasDrawer
 	{
 		if (this._currentlySelected == undefined)
 		{
-			$("#playCard").parents("tr").css("visibility", "collapse");
-			$("#pleaseSelectCard").parents("tr").css("visibility", "visible");
+			$('.playCardButton').remove();
+			$('#handCanvasWrapper').append(this._selectCardMessage);
 		}
 		else
 		{
 			this.dimAll();
 			const card = this._cardCoordinates[this._currentlySelected.row][this._currentlySelected.col];
 			this.drawCard(card.x, card.y, this._cardWidth, 44);
-			$("#playCard").parents("tr").css("visibility", "visible");
-			$("#pleaseSelectCard").parents("tr").css("visibility", "collapse");
+			$('.selectCardMessage').remove();
+			$('.playCardButton').remove();
+			$('#handCanvasWrapper').append(this._playCardButton);
 		}
 	}
 
@@ -63,7 +90,7 @@ class HandCanvasDrawer extends CanvasDrawer
 		this.setCanvasSize();
 		this.calculateCardCoordinates();
 		// update play card button
-		$('.playCardTable').css("font-size", this._cardHeight*0.2 + "px");
+		$('#handCanvasWrapper').css("font-size", this._cardHeight*0.2 + "px");
 	}
 	
 	calculateCardDimensions(gameCanvasCardHeight)
