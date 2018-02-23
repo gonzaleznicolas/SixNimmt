@@ -33,6 +33,8 @@ class SixNimmtView
 			$('#handCanvasGalleryCell').remove();
 		else
 		{
+			$('#playCardButton').css("margin-left", margin + "px");  // couldnt be set using pure css
+			$('#selectCardMessage').css("margin-left", margin + "px"); 
 			this._handCanvasDrawer = new HandCanvasDrawer($('#handCanvas')[0]);
 			this._handAnimation = new HandAnimation(this._handCanvasDrawer);
 		}
