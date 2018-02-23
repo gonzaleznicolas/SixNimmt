@@ -20,12 +20,22 @@ const maxScoreboardWidthWhenOnSide = 200;
 class SixNimmtView
 {
 	constructor(sixNimmtModel) {
-		this._gallery = $('.gallery')[0];
-		this._flickity = this.setUpFlickity();
+		deFactoSpaceForOneFlickityArrow = bSpectatorMode ? 0 : spaceForOneFlickityArrow;
+		
+		this._gallery = $('.gallery');
+		
+		if (!bSpectatorMode)
+			this._flickity = this.setUpFlickity();
 		this._gameCanvasDrawer = new GameCanvasDrawer($('#gameCanvas')[0]);
-		this._handCanvasDrawer = new HandCanvasDrawer($('#handCanvas')[0]);
 		this._gameAnimation = new GameAnimation(this._gameCanvasDrawer);
-		this._handAnimation = new HandAnimation(this._handCanvasDrawer);
+		
+		if (bSpectatorMode)
+			$('#handCanvasGalleryCell').remove();
+		else
+		{
+			this._handCanvasDrawer = new HandCanvasDrawer($('#handCanvas')[0]);
+			this._handAnimation = new HandAnimation(this._handCanvasDrawer);
+		}
 
 		this._scoreboard = new Scoreboard(["Nico", "Nata", "Erin", "Catalina Gonzalez", "Nico", "Nata", "Erin", "Catalina Gonzalez", "Nico", "Nata", "Erin", "Catalina Gonzalez"]);
 		
@@ -39,16 +49,17 @@ class SixNimmtView
 	
 	setUpFlickity()
 	{
-		const flickity = new Flickity( this._gallery, { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
+		const flickity = new Flickity( this._gallery[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
 		return flickity;
 	}
 	
 	recalcGallerySize()
 	{
-		const widerCanvas = Math.max(this._gameCanvasDrawer.canvasWidth, this._handCanvasDrawer.canvasWidth);
-		const galleryWidth = widerCanvas + 2*spaceForOneFlickityArrow;
-		$(this._gallery).css("width", galleryWidth+"px"); // make it the wider canvas + 2* space for arrows
-		this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
+		const widerCanvas = bSpectatorMode ? this._gameCanvasDrawer.canvasWidth : Math.max(this._gameCanvasDrawer.canvasWidth, this._handCanvasDrawer.canvasWidth);
+		const galleryWidth = widerCanvas + 2*deFactoSpaceForOneFlickityArrow;
+		this._gallery.css("width", galleryWidth+"px"); // make it the wider canvas + 2* space for arrows
+		if (!bSpectatorMode)
+			this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
 	}
 	
 	onResizeWindowHelper()
@@ -56,15 +67,17 @@ class SixNimmtView
 		$("#game").css("visibility", "hidden"); 
 
 		this._gameCanvasDrawer.resize();
-		this._handCanvasDrawer.resize(this._gameCanvasDrawer._cardHeight);
+		if (!bSpectatorMode)
+			this._handCanvasDrawer.resize(this._gameCanvasDrawer._cardHeight);
 		
 		// better to calculate gallery dimensions from the game canvas than to use jQuery on the gallery object. That was causing bugs.
-		this._scoreboard.resize(this._gameCanvasDrawer._canvas.width + 2*spaceForOneFlickityArrow, this._gameCanvasDrawer._canvas.height);
+		//this._scoreboard.resize(this._gameCanvasDrawer._canvas.width + 2*deFactoSpaceForOneFlickityArrow, this._gameCanvasDrawer._canvas.height);
 		this.recalcGallerySize();
 
 		this._gameCanvasDrawer.draw();
-		this._handCanvasDrawer.draw();
-		this._scoreboard.draw();
+		if (!bSpectatorMode)
+			this._handCanvasDrawer.draw();
+		//this._scoreboard.draw();
 		
 		$("#game").css("visibility", "visible"); 
 	}

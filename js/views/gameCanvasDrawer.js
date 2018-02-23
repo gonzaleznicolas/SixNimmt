@@ -126,17 +126,16 @@ class GameCanvasDrawer extends CanvasDrawer
 	{
 		// Known variables
 		const windowWidth = $(window).width();
-		const windowHeight = $(window).height() - $('header').height();
-		const spaceForOneFlickityArrow = 65;
+		const windowHeight = $(window).height();
 		
 		// CASE 1
-		let canvasWidth = windowWidth - 2*spaceForOneFlickityArrow;
+		let canvasWidth = windowWidth - 2*deFactoSpaceForOneFlickityArrow;
 		let canvasHeight = ((spaceInGameCanvasForThisNumberOfRows*
 												(canvasWidth - ((spaceInGameCanvasForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)))/
 												(spaceInGameCanvasForThisNumberOfCols * cardHeightToWidthFactor)) +
 												((spaceInGameCanvasForThisNumberOfRows + 1)*margin);
 		
-		// if by setting canvasWidth = windowWidth - 2*spaceForOneFlickityArrow and maintaining the ration we make the canvas taller than the screen
+		// if by setting canvasWidth = windowWidth - 2*deFactoSpaceForOneFlickityArrow and maintaining the ration we make the canvas taller than the screen
 		if (canvasHeight > windowHeight)
 		{
 				// CASE 2
