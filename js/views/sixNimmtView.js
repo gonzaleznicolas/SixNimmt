@@ -50,8 +50,20 @@ class SixNimmtView
 	
 	setUpFlickity()
 	{
-		const flickity = new Flickity( this._gallery[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
-		return flickity;
+		let flickity = undefined;
+		try{
+			flickity = new Flickity( this._gallery[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
+		}
+		catch (err)
+		{
+			console.log("There was an error initializing flickity. Will place table and hand on top of eachother rather than in a gallery.");
+		}
+		finally
+		{
+			if (!flickity)
+				return undefined;
+			return flickity;
+		}
 	}
 	
 	recalcGallerySize()
@@ -59,7 +71,7 @@ class SixNimmtView
 		const widerCanvas = bSpectatorMode ? this._tableDrawer.canvasWidth : Math.max(this._tableDrawer.canvasWidth, this._handDrawer.canvasWidth);
 		const galleryWidth = widerCanvas + 2*deFactoSpaceForOneFlickityArrow;
 		this._gallery.css("width", galleryWidth+"px"); // make it the wider canvas + 2* space for arrows
-		if (!bSpectatorMode)
+		if (!bSpectatorMode && this._flickity)
 			this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
 	}
 	

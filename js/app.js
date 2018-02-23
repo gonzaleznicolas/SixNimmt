@@ -1,6 +1,6 @@
 "use strict";
 
-let bSpectatorMode = false;
+let bSpectatorMode = true;
 
 $(function () {
 	sixNimmtModel = new SixNimmtModel();
