@@ -61,7 +61,7 @@ class HandDrawer extends Drawer
 	resize(tableCardHeight)
 	{
 		// Idea: based on the tableCardHeight, make the cards on the hand canvas
-		// (spaceIntableForThisNumberOfCols/numberOfColsInHandCanvas)ths as big as the cards on the table canvas.
+		// (spaceOnTableForThisNumberOfCols/numberOfColsInHandCanvas)ths as big as the cards on the table canvas.
 		// Once we know the hand canvas card dimensions, using the global margin we can calculate
 		// the hand canvas dimensions based on how much space is necessary for two rows of 5 cards.
 		this.calculateCardDimensions(tableCardHeight);
@@ -74,7 +74,7 @@ class HandDrawer extends Drawer
 	calculateCardDimensions(tableCardHeight)
 	{
 		const tableCardWidth = cardHeightToWidthFactor * tableCardHeight;
-		const tableToHandCanvasCardSizeFactor = (spaceIntableForThisNumberOfCols/numberOfColsInHandCanvas);
+		const tableToHandCanvasCardSizeFactor = (spaceOnTableForThisNumberOfCols/numberOfColsInHandCanvas);
 		this._cardWidth = tableToHandCanvasCardSizeFactor * tableCardWidth;
 		this._cardHeight = tableToHandCanvasCardSizeFactor * tableCardHeight;
 	}

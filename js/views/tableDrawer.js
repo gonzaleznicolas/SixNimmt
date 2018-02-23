@@ -7,15 +7,19 @@ class TableDrawer extends Drawer
 		super(canvas);
 		
 		// make one less column than we left space for. the rightmost column is for the face-down played cards
-		this._numberOfRows = spaceIntableForThisNumberOfRows;
-		this._numberOfCols = spaceIntableForThisNumberOfCols - 1;	// actual game has one less col because the last col is for the upcoming cards
+		this._numberOfRows = spaceOnTableForThisNumberOfRows;
+		this._numberOfCols = spaceOnTableForThisNumberOfCols - 1;	// actual game has one less col because the last col is for the upcoming cards
 		this._totalExtraSpaceToTheRightForUpcomingCards = undefined;
+		
+		this._upcomingCardCoordinates = []; // at position i, youll find an object {x: ___,y: ___} with the
+											// canvas coordinates of the top left corner of the ith upcoming card
 	}
 	
 	draw()
 	{
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
 		this.drawWarningRectangles();
+		this.drawUpcomingCardRectangles();
 		
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
@@ -35,6 +39,31 @@ class TableDrawer extends Drawer
 		}
 	}
 	
+	drawUpcomingCardRectangles()
+	{
+		for (let i = 0; i < this._numberOfRows; i++)
+		{
+			this.drawUpcomingCardRectangle(this._upcomingCardCoordinates[i].x, this._upcomingCardCoordinates[i].y);
+		}
+	}
+	
+	drawUpcomingCardRectangle(x, y)
+	{
+		const ctx = this._ctx;
+		const width = this._cardWidth;
+		const height = this._cardHeight;
+		
+		// draw card outline
+		ctx.lineWidth = 3;
+		ctx.strokeStyle = "rgba(255, 255, 255, 1)";
+		ctx.setLineDash([3, 3]);
+		
+		BasicShapeDrawer.drawCardShape(ctx, x, y, width, height, radius);
+		ctx.stroke();
+		ctx.closePath();
+		ctx.setLineDash([]);
+	}
+	
 	drawWarningRectangle(x, y)
 	{
 		const ctx = this._ctx;
@@ -43,7 +72,7 @@ class TableDrawer extends Drawer
 		
 		// draw card outline
 		ctx.lineWidth = 3;
-		ctx.strokeStyle = "#6f0a0a";
+		ctx.strokeStyle = "rgba(111, 10, 10, 1)";
 		ctx.setLineDash([3, 3]);
 		
 		BasicShapeDrawer.drawCardShape(ctx, x, y, width, height, radius);
@@ -52,7 +81,7 @@ class TableDrawer extends Drawer
 		ctx.setLineDash([]);
 
 		// draw angry cow
-		ctx.fillStyle = "#6f0a0a";
+		ctx.fillStyle = "rgba(111, 10, 10, 1)";
 		const cowWidth = cowIsThisFractionOfCardWidth*this._cardWidth;
 		const cowHeight = cowIsThisFractionOfCardHeight*this._cardHeight;
 		const centreX = x + this._cardWidth/2;
@@ -67,12 +96,13 @@ class TableDrawer extends Drawer
 		this.setCanvasSize();
 		this.calculateCardDimensions();
 		this.calculateCardCoordinates();
+		this.calculateUpcomingCardCoordinates();
 	}
 
 	calculateCardDimensions()
 	{
-		this._cardWidth = (this._canvas.width - ((spaceIntableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)) / spaceIntableForThisNumberOfCols;
-		this._cardHeight = (this._canvas.height - ((spaceIntableForThisNumberOfRows + 1)*margin)) / spaceIntableForThisNumberOfRows;
+		this._cardWidth = (this._canvas.width - ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)) / spaceOnTableForThisNumberOfCols;
+		this._cardHeight = (this._canvas.height - ((spaceOnTableForThisNumberOfRows + 1)*margin)) / spaceOnTableForThisNumberOfRows;
 		
 		this._totalExtraSpaceToTheRightForUpcomingCards = this._cardWidth + extraNumberOfMarginsBetween6thColAndLastCol*margin;
 	}
@@ -93,6 +123,18 @@ class TableDrawer extends Drawer
 			y = y + this._cardHeight + margin;
 		}
 	}
+	
+	calculateUpcomingCardCoordinates()
+	{
+		const x = (this._numberOfCols)*this._cardWidth +
+					(this._numberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin;
+		let y = margin;
+		for (let i = 0; i < this._numberOfRows; i++)
+		{
+			this._upcomingCardCoordinates[i] = {x: x, y: y};
+			y = y + this._cardHeight + margin;
+		}
+	}
 
 	/*
 	The reason I set canvasHeight = windowHeight*0.9 in case 2 whereas in case 1 i set galleryWidth = windowWidth,
@@ -100,27 +142,27 @@ class TableDrawer extends Drawer
 	scroll perfectly to get the whole canvas in the window.
 	
 	Explanation of the formulas...?
-		See the constants cardHeightToWidthFactor, spaceIntableForThisNumberOfRows, spaceIntableForThisNumberOfCols, margin,
+		See the constants cardHeightToWidthFactor, spaceOnTableForThisNumberOfRows, spaceOnTableForThisNumberOfCols, margin,
 		and extraSpaceBetween6thColAndLastCol.
 		Those numbers will be set by the the user and the canvas and cards will be layed out acordingly.
 		
 		The dimensions of the canvas considering the number of cards and the dimensions of the cards can be derived this way:
 
 			cardWidth = cardHeight * cardHeightToWidthFactor
-			canvasWidth = (spaceIntableForThisNumberOfCols * cardWidth) + (spaceIntableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin
-			canvasHeight = spaceIntableForThisNumberOfRows * cardHeight + (spaceIntableForThisNumberOfRows + 1)*margin
+			canvasWidth = (spaceOnTableForThisNumberOfCols * cardWidth) + (spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin
+			canvasHeight = spaceOnTableForThisNumberOfRows * cardHeight + (spaceOnTableForThisNumberOfRows + 1)*margin
 			
 			For this function, we need to use the formulas above to relate canvasWidth and canvasHeight to eachother in terms of the constants.
 			(cancel out the unknowns cardWidth and cardHeight)
 			
 			The result is:
-				canvasHeight = ((spaceIntableForThisNumberOfRows*
-												(canvasWidth - ((spaceIntableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)))/
-												(spaceIntableForThisNumberOfCols * cardHeightToWidthFactor)) +
-												((spaceIntableForThisNumberOfRows + 1)*margin)
-				canvasWidth = ((spaceIntableForThisNumberOfCols *
-											 cardHeightToWidthFactor * (canvasHeight - ((spaceIntableForThisNumberOfRows + 1)*margin)))/
-											 spaceIntableForThisNumberOfRows) + ((spaceIntableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)
+				canvasHeight = ((spaceOnTableForThisNumberOfRows*
+												(canvasWidth - ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)))/
+												(spaceOnTableForThisNumberOfCols * cardHeightToWidthFactor)) +
+												((spaceOnTableForThisNumberOfRows + 1)*margin)
+				canvasWidth = ((spaceOnTableForThisNumberOfCols *
+											 cardHeightToWidthFactor * (canvasHeight - ((spaceOnTableForThisNumberOfRows + 1)*margin)))/
+											 spaceOnTableForThisNumberOfRows) + ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)
 	*/
 	setCanvasSize()
 	{
@@ -130,19 +172,19 @@ class TableDrawer extends Drawer
 		
 		// CASE 1
 		let canvasWidth = windowWidth - 2*deFactoSpaceForOneFlickityArrow;
-		let canvasHeight = ((spaceIntableForThisNumberOfRows*
-												(canvasWidth - ((spaceIntableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)))/
-												(spaceIntableForThisNumberOfCols * cardHeightToWidthFactor)) +
-												((spaceIntableForThisNumberOfRows + 1)*margin);
+		let canvasHeight = ((spaceOnTableForThisNumberOfRows*
+												(canvasWidth - ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)))/
+												(spaceOnTableForThisNumberOfCols * cardHeightToWidthFactor)) +
+												((spaceOnTableForThisNumberOfRows + 1)*margin);
 		
 		// if by setting canvasWidth = windowWidth - 2*deFactoSpaceForOneFlickityArrow and maintaining the ration we make the canvas taller than the screen
 		if (canvasHeight > windowHeight)
 		{
 				// CASE 2
 				canvasHeight = windowHeight*0.9;
-				canvasWidth = ((spaceIntableForThisNumberOfCols *
-											 cardHeightToWidthFactor * (canvasHeight - ((spaceIntableForThisNumberOfRows + 1)*margin)))/
-											 spaceIntableForThisNumberOfRows) + ((spaceIntableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin);
+				canvasWidth = ((spaceOnTableForThisNumberOfCols *
+											 cardHeightToWidthFactor * (canvasHeight - ((spaceOnTableForThisNumberOfRows + 1)*margin)))/
+											 spaceOnTableForThisNumberOfRows) + ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin);
 		}
 
 		this._canvas.width = canvasWidth;

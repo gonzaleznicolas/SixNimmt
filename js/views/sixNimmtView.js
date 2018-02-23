@@ -3,8 +3,8 @@
 // desing parameters
 const spaceForOneFlickityArrow = 65; // px
 const cardHeightToWidthFactor = 3/4;
-const spaceIntableForThisNumberOfRows = 4;
-const spaceIntableForThisNumberOfCols = 7;	// 6 for the game, one extra col for the upcoming cards
+const spaceOnTableForThisNumberOfRows = 4;
+const spaceOnTableForThisNumberOfCols = 7;	// 6 for the game, one extra col for the upcoming cards
 const numberOfColsInHandCanvas = 5;
 const numberOfRowsInHandCanvas = 2;
 const margin = 10; // px
