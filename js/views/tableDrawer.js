@@ -91,9 +91,9 @@ class TableDrawer extends Drawer
 		ctx.closePath();
 	}
 	
-	resize()
+	resize(galleryWidth, galleryHeight)
 	{
-		this.setCanvasSize();
+		this.setCanvasSize(galleryWidth - 2*deFactoSpaceForOneFlickityArrow, galleryHeight);
 		this.calculateCardDimensions();
 		this.calculateCardCoordinates();
 		this.calculateUpcomingCardCoordinates();
@@ -135,59 +135,10 @@ class TableDrawer extends Drawer
 			y = y + this._cardHeight + margin;
 		}
 	}
-
-	/*
-	The reason I set canvasHeight = windowHeight*0.9 in case 2 whereas in case 1 i set galleryWidth = windowWidth,
-	is that if the width of the canvas is just right, it looks fine, but if the height is exactly right, its hard to
-	scroll perfectly to get the whole canvas in the window.
 	
-	Explanation of the formulas...?
-		See the constants cardHeightToWidthFactor, spaceOnTableForThisNumberOfRows, spaceOnTableForThisNumberOfCols, margin,
-		and extraSpaceBetween6thColAndLastCol.
-		Those numbers will be set by the the user and the canvas and cards will be layed out acordingly.
-		
-		The dimensions of the canvas considering the number of cards and the dimensions of the cards can be derived this way:
-
-			cardWidth = cardHeight * cardHeightToWidthFactor
-			canvasWidth = (spaceOnTableForThisNumberOfCols * cardWidth) + (spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin
-			canvasHeight = spaceOnTableForThisNumberOfRows * cardHeight + (spaceOnTableForThisNumberOfRows + 1)*margin
-			
-			For this function, we need to use the formulas above to relate canvasWidth and canvasHeight to eachother in terms of the constants.
-			(cancel out the unknowns cardWidth and cardHeight)
-			
-			The result is:
-				canvasHeight = ((spaceOnTableForThisNumberOfRows*
-												(canvasWidth - ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)))/
-												(spaceOnTableForThisNumberOfCols * cardHeightToWidthFactor)) +
-												((spaceOnTableForThisNumberOfRows + 1)*margin)
-				canvasWidth = ((spaceOnTableForThisNumberOfCols *
-											 cardHeightToWidthFactor * (canvasHeight - ((spaceOnTableForThisNumberOfRows + 1)*margin)))/
-											 spaceOnTableForThisNumberOfRows) + ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)
-	*/
-	setCanvasSize()
+	setCanvasSize(width, height)
 	{
-		// Known variables
-		const windowWidth = $(window).width();
-		const windowHeight = $(window).height();
-		
-		// CASE 1
-		let canvasWidth = windowWidth - 2*deFactoSpaceForOneFlickityArrow;
-		let canvasHeight = ((spaceOnTableForThisNumberOfRows*
-												(canvasWidth - ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)))/
-												(spaceOnTableForThisNumberOfCols * cardHeightToWidthFactor)) +
-												((spaceOnTableForThisNumberOfRows + 1)*margin);
-		
-		// if by setting canvasWidth = windowWidth - 2*deFactoSpaceForOneFlickityArrow and maintaining the ration we make the canvas taller than the screen
-		if (canvasHeight > windowHeight)
-		{
-				// CASE 2
-				canvasHeight = windowHeight*0.9;
-				canvasWidth = ((spaceOnTableForThisNumberOfCols *
-											 cardHeightToWidthFactor * (canvasHeight - ((spaceOnTableForThisNumberOfRows + 1)*margin)))/
-											 spaceOnTableForThisNumberOfRows) + ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin);
-		}
-
-		this._canvas.width = canvasWidth;
-		this._canvas.height = canvasHeight;
+		this._canvas.width = width;
+		this._canvas.height = height;
 	}
 }

@@ -1,6 +1,7 @@
 "use strict";
 
-let bSpectatorMode = true;
+let bSpectatorMode = false;
+const flickityEnabled = true;
 
 $(function () {
 	sixNimmtModel = new SixNimmtModel();
