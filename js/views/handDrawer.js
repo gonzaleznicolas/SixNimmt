@@ -11,6 +11,8 @@ class HandDrawer extends Drawer
 		
 		this._playCardButton = $('#playCardButton');
 		this._selectCardMessage = $('#selectCardMessage');
+		this._playCardButton.css("margin-left", margin + "px");  // couldnt be set using pure css
+		this._selectCardMessage.css("margin-left", margin + "px");  // couldnt be set using pure css
 		$('#playCardButton').remove();
 	}
 	

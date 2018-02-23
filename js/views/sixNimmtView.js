@@ -1,21 +1,21 @@
 "use strict";
 
 // desing parameters
-const spaceForOneFlickityArrow = 65;
+const spaceForOneFlickityArrow = 65; // px
 const cardHeightToWidthFactor = 3/4;
 const spaceIntableForThisNumberOfRows = 4;
 const spaceIntableForThisNumberOfCols = 7;	// 6 for the game, one extra col for the upcoming cards
 const numberOfColsInHandCanvas = 5;
 const numberOfRowsInHandCanvas = 2;
-const margin = 10; // pixels
+const margin = 10; // px
 const extraNumberOfMarginsBetween6thColAndLastCol = 6;
-const radius = 10;
+const radius = 10; // px
 const cowIsThisFractionOfCardHeight = 2/3;
 const cowIsThisFractionOfCardWidth = 9/10;
 const cowIsThisPercentDownTheCard = 0.43;
 const numberIsThisPercentDownTheCard = 0.5;
-const minScoreboardWidthWhenOnSide = 100; //px
-const maxScoreboardWidthWhenOnSide = 200;
+const minScoreboardWidthWhenOnSide = 100; // px
+const maxScoreboardWidthWhenOnSide = 200; // px
 
 class SixNimmtView
 {
@@ -26,6 +26,7 @@ class SixNimmtView
 		
 		if (!bSpectatorMode)
 			this._flickity = this.setUpFlickity();
+		
 		this._tableDrawer = new TableDrawer($('#tableCanvas')[0]);
 		this._tableAnimation = new TableAnimation(this._tableDrawer);
 		
@@ -33,8 +34,6 @@ class SixNimmtView
 			$('.hand.galleryCell').remove();
 		else
 		{
-			$('#playCardButton').css("margin-left", margin + "px");  // couldnt be set using pure css
-			$('#selectCardMessage').css("margin-left", margin + "px"); 
 			this._handDrawer = new HandDrawer($('#handCanvas')[0]);
 			this._handAnimation = new HandAnimation(this._handDrawer);
 		}

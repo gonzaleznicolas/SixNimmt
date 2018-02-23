@@ -7,9 +7,6 @@ $(function () {
 	sixNimmtView = new SixNimmtView(sixNimmtModel);
 });
 
-let sixNimmtModel = undefined;
-let sixNimmtView = undefined;
-
 function getCardInfo(cardNumber)
 {
 	if (cardNumber )
@@ -29,7 +26,10 @@ function getCardInfo(cardNumber)
 		return {cowColor: "rgba(127, 80, 147, 1)", cardColor: "rgba(255, 255,	255, 1)"}
 }
 
-// for testing purposes
+// TEMPORARY:
+let sixNimmtModel = undefined;
+let sixNimmtView = undefined;
+
 function move(row1, col1, row2, col2) {
 	sixNimmtView._tableAnimation.moveCard(row1, col1, row2, col2);
 }
