@@ -31,7 +31,7 @@ function getCardInfo(cardNumber)
 
 // for testing purposes
 function move(row1, col1, row2, col2) {
-	sixNimmtView._gameAnimation.moveCard(row1, col1, row2, col2);
+	sixNimmtView._tableAnimation.moveCard(row1, col1, row2, col2);
 }
 
 

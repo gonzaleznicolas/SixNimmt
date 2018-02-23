@@ -6,10 +6,6 @@
 	border: 1px solid black;
 }
 
-canvas{
-	border: 1px solid red;
-}
-
 header{
 	height: 50px;
 }
@@ -36,6 +32,14 @@ body{
 	background: transparent;
 }
 
+#scoreboard{
+	display: flex;
+	padding: 0.3em;
+	font-family: Courier;
+	color: rgba(255, 255, 255, 1);
+	flex-direction: column;
+}
+
 #playCardButton{ 
   width: fit-content; 
   border-radius: 0.5em; 
@@ -50,11 +54,3 @@ body{
   font-family: "Comic Sans MS"; 
   color: rgba(255, 255, 255, 1); 
 } 
-
-#scoreboard{
-	display: flex;
-	padding: 0.3em;
-	font-family: Courier;
-	color: rgba(255, 255, 255, 1);
-	flex-direction: column;
-}

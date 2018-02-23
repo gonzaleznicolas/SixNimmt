@@ -3,8 +3,8 @@
 // desing parameters
 const spaceForOneFlickityArrow = 65;
 const cardHeightToWidthFactor = 3/4;
-const spaceInGameCanvasForThisNumberOfRows = 4;
-const spaceInGameCanvasForThisNumberOfCols = 7;	// 6 for the game, one extra col for the upcoming cards
+const spaceIntableForThisNumberOfRows = 4;
+const spaceIntableForThisNumberOfCols = 7;	// 6 for the game, one extra col for the upcoming cards
 const numberOfColsInHandCanvas = 5;
 const numberOfRowsInHandCanvas = 2;
 const margin = 10; // pixels
@@ -26,17 +26,17 @@ class SixNimmtView
 		
 		if (!bSpectatorMode)
 			this._flickity = this.setUpFlickity();
-		this._gameCanvasDrawer = new GameCanvasDrawer($('#gameCanvas')[0]);
-		this._gameAnimation = new GameAnimation(this._gameCanvasDrawer);
+		this._tableDrawer = new TableDrawer($('#tableCanvas')[0]);
+		this._tableAnimation = new TableAnimation(this._tableDrawer);
 		
 		if (bSpectatorMode)
-			$('#handCanvasGalleryCell').remove();
+			$('.hand.galleryCell').remove();
 		else
 		{
 			$('#playCardButton').css("margin-left", margin + "px");  // couldnt be set using pure css
 			$('#selectCardMessage').css("margin-left", margin + "px"); 
-			this._handCanvasDrawer = new HandCanvasDrawer($('#handCanvas')[0]);
-			this._handAnimation = new HandAnimation(this._handCanvasDrawer);
+			this._handDrawer = new HandDrawer($('#handCanvas')[0]);
+			this._handAnimation = new HandAnimation(this._handDrawer);
 		}
 
 		this._scoreboard = new Scoreboard(["Nico", "Nata", "Erin", "Catalina Gonzalez", "Nico", "Nata", "Erin", "Catalina Gonzalez", "Nico", "Nata", "Erin", "Catalina Gonzalez"]);
@@ -57,7 +57,7 @@ class SixNimmtView
 	
 	recalcGallerySize()
 	{
-		const widerCanvas = bSpectatorMode ? this._gameCanvasDrawer.canvasWidth : Math.max(this._gameCanvasDrawer.canvasWidth, this._handCanvasDrawer.canvasWidth);
+		const widerCanvas = bSpectatorMode ? this._tableDrawer.canvasWidth : Math.max(this._tableDrawer.canvasWidth, this._handDrawer.canvasWidth);
 		const galleryWidth = widerCanvas + 2*deFactoSpaceForOneFlickityArrow;
 		this._gallery.css("width", galleryWidth+"px"); // make it the wider canvas + 2* space for arrows
 		if (!bSpectatorMode)
@@ -68,17 +68,17 @@ class SixNimmtView
 	{
 		$("#game").css("visibility", "hidden"); 
 
-		this._gameCanvasDrawer.resize();
+		this._tableDrawer.resize();
 		if (!bSpectatorMode)
-			this._handCanvasDrawer.resize(this._gameCanvasDrawer._cardHeight);
+			this._handDrawer.resize(this._tableDrawer._cardHeight);
 		
-		// better to calculate gallery dimensions from the game canvas than to use jQuery on the gallery object. That was causing bugs.
-		//this._scoreboard.resize(this._gameCanvasDrawer._canvas.width + 2*deFactoSpaceForOneFlickityArrow, this._gameCanvasDrawer._canvas.height);
+		// better to calculate gallery dimensions from the table canvas than to use jQuery on the gallery object. That was causing bugs.
+		//this._scoreboard.resize(this._tableDrawer._canvas.width + 2*deFactoSpaceForOneFlickityArrow, this._tableDrawer._canvas.height);
 		this.recalcGallerySize();
 
-		this._gameCanvasDrawer.draw();
+		this._tableDrawer.draw();
 		if (!bSpectatorMode)
-			this._handCanvasDrawer.draw();
+			this._handDrawer.draw();
 		//this._scoreboard.draw();
 		
 		$("#game").css("visibility", "visible"); 
