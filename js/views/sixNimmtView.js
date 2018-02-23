@@ -8,7 +8,7 @@ const spaceOnTableForThisNumberOfCols = 7;	// 6 for the game, one extra col for 
 const numberOfColsInHandCanvas = 5;
 const numberOfRowsInHandCanvas = 2;
 const margin = 10; // px
-const extraNumberOfMarginsBetween6thColAndLastCol = 6;
+const extraNumberOfMarginsBetween6thColAndLastCol = 3;
 const radius = 10; // px
 const cowIsThisFractionOfCardHeight = 2/3;
 const cowIsThisFractionOfCardWidth = 9/10;
@@ -52,7 +52,8 @@ class SixNimmtView
 	{
 		let flickity = undefined;
 		try{
-			flickity = new Flickity( this._gallery[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
+			if (flickityEnabled)
+				flickity = new Flickity( this._gallery[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
 		}
 		catch (err)
 		{
@@ -66,31 +67,34 @@ class SixNimmtView
 		}
 	}
 	
-	recalcGallerySize()
+	setGallerySize(galleryWidth)
 	{
-		const widerCanvas = bSpectatorMode ? this._tableDrawer.canvasWidth : Math.max(this._tableDrawer.canvasWidth, this._handDrawer.canvasWidth);
-		const galleryWidth = widerCanvas + 2*deFactoSpaceForOneFlickityArrow;
-		this._gallery.css("width", galleryWidth+"px"); // make it the wider canvas + 2* space for arrows
+		this._gallery.css("width", galleryWidth+"px");
 		if (!bSpectatorMode && this._flickity)
 			this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
 	}
 	
 	onResizeWindowHelper()
 	{
+		const s = LayoutCalculator.calculate();
 		$("#game").css("visibility", "hidden"); 
+		
+		if (s.bScoreboardBelowGallery)
+			$("#game").css("flex-direction", "column");
+		else
+			$("#game").css("flex-direction", "row");
 
-		this._tableDrawer.resize();
+		this._tableDrawer.resize(s.galleryWidth, s.galleryHeight);
 		if (!bSpectatorMode)
 			this._handDrawer.resize(this._tableDrawer._cardHeight);
 		
-		// better to calculate gallery dimensions from the table canvas than to use jQuery on the gallery object. That was causing bugs.
-		//this._scoreboard.resize(this._tableDrawer._canvas.width + 2*deFactoSpaceForOneFlickityArrow, this._tableDrawer._canvas.height);
-		this.recalcGallerySize();
+		this._scoreboard.resize(s.scoreboardWidth, s.scoreboardHeight);
+		this.setGallerySize(s.galleryWidth);
 
 		this._tableDrawer.draw();
 		if (!bSpectatorMode)
 			this._handDrawer.draw();
-		//this._scoreboard.draw();
+		this._scoreboard.draw();
 		
 		$("#game").css("visibility", "visible"); 
 	}
