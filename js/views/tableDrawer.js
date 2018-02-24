@@ -6,13 +6,12 @@ class TableDrawer extends Drawer
 	{
 		super(canvas);
 		
-		// make one less column than we left space for. the rightmost column is for the face-down played cards
-		this._numberOfRows = spaceOnTableForThisNumberOfRows;
-		this._numberOfCols = spaceOnTableForThisNumberOfCols - 1;	// actual game has one less col because the last col is for the upcoming cards
+		this._numberOfRows = numberOfRowsOnTableCanvas;
+		this._numberOfCols = numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn;
 		this._totalExtraSpaceToTheRightForUpcomingCards = undefined;
 		
-		this._upcomingCardCoordinates = []; // at position i, youll find an object {x: ___,y: ___} with the
-											// canvas coordinates of the top left corner of the ith upcoming card
+		// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
+		this._upcomingCardCoordinates = []; 
 	}
 	
 	draw()
@@ -30,20 +29,26 @@ class TableDrawer extends Drawer
 		}
 	}
 	
+	drawUpcomingCardRectangles()
+	{
+		let numberOfRectanglesDrawn = 0;
+		for (let row = 0; row < this._numberOfRows && numberOfRectanglesDrawn < numberOfPlayers; row++)
+		{
+			for (let col = 0; col < additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfRectanglesDrawn < numberOfPlayers; col++)
+			{
+				
+				this.drawUpcomingCardRectangle(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y);
+				numberOfRectanglesDrawn++;
+			}
+		}
+	}
+	
 	drawWarningRectangles()
 	{
 		const redColumn = 5; // if you place the 6th card (5th index) you take the whole row
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
 			this.drawWarningRectangle(this._cardCoordinates[row][redColumn].x, this._cardCoordinates[row][redColumn].y);
-		}
-	}
-	
-	drawUpcomingCardRectangles()
-	{
-		for (let i = 0; i < this._numberOfRows; i++)
-		{
-			this.drawUpcomingCardRectangle(this._upcomingCardCoordinates[i].x, this._upcomingCardCoordinates[i].y);
 		}
 	}
 	
@@ -101,10 +106,10 @@ class TableDrawer extends Drawer
 
 	calculateCardDimensions()
 	{
-		this._cardWidth = (this._canvas.width - ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)) / spaceOnTableForThisNumberOfCols;
-		this._cardHeight = (this._canvas.height - ((spaceOnTableForThisNumberOfRows + 1)*margin)) / spaceOnTableForThisNumberOfRows;
+		this._cardWidth = (this._canvas.width - ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)) / totalNumberOfColsOnTableCanvas;
+		this._cardHeight = (this._canvas.height - ((numberOfRowsOnTableCanvas + 1)*margin)) / numberOfRowsOnTableCanvas;
 		
-		this._totalExtraSpaceToTheRightForUpcomingCards = this._cardWidth + extraNumberOfMarginsBetween6thColAndLastCol*margin;
+		this._totalExtraSpaceToTheRightForUpcomingCards = this._cardWidth*additionalColsOnTableCanvasForCardsPlayedThisTurn + extraNumberOfMarginsBetween6thColAndTheRest*margin;
 	}
 	
 	calculateCardCoordinates()
@@ -126,12 +131,19 @@ class TableDrawer extends Drawer
 	
 	calculateUpcomingCardCoordinates()
 	{
-		const x = (this._numberOfCols)*this._cardWidth +
-					(this._numberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin;
+		let x = (this._numberOfCols)*this._cardWidth +
+					(this._numberOfCols + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin;
 		let y = margin;
-		for (let i = 0; i < this._numberOfRows; i++)
+		for (let row = 0; row < this._numberOfRows; row++)
 		{
-			this._upcomingCardCoordinates[i] = {x: x, y: y};
+			x = (this._numberOfCols)*this._cardWidth +
+					(this._numberOfCols + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin;
+			this._upcomingCardCoordinates[row] = [];
+			for (let col = 0; col < additionalColsOnTableCanvasForCardsPlayedThisTurn; col++)
+			{
+				this._upcomingCardCoordinates[row][col] = {x: x, y: y};
+				x = x + this._cardWidth + margin;
+			}
 			y = y + this._cardHeight + margin;
 		}
 	}

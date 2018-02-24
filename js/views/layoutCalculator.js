@@ -1,5 +1,3 @@
-let deFactoSpaceForOneFlickityArrow = undefined;
-
 "use strict";
 
 class LayoutCalculator
@@ -94,49 +92,49 @@ class LayoutCalculator
 	
 	Explanation of the formulas...?
 		The point is to calculate the dimensions of the table canvas based on card dimensions, margins, etc.
+		Note: totalNumberOfColsOnTableCanvas = number of cols for the game + number of cols for cards played this turn (depends on number of players)
 		
-		See the constants cardHeightToWidthFactor, spaceOnTableForThisNumberOfRows, spaceOnTableForThisNumberOfCols, margin,
+		See the constants cardHeightToWidthFactor, numberOfRowsOnTableCanvas, totalNumberOfColsOnTableCanvas, margin,
 		and extraSpaceBetween6thColAndLastCol.
 		Those numbers will be set by the the user and the canvas and cards will be layed out acordingly.
 		
 		The dimensions of the canvas considering the number of cards and the dimensions of the cards can be derived this way:
 
 			cardWidth = cardHeight * cardHeightToWidthFactor
-			tableCanvasWidth = (spaceOnTableForThisNumberOfCols * cardWidth) + (spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin
-			tableCanvasHeight = (spaceOnTableForThisNumberOfRows * cardHeight) + (spaceOnTableForThisNumberOfRows + 1)*margin
+			tableCanvasWidth = (totalNumberOfColsOnTableCanvas * cardWidth) + (totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin
+			tableCanvasHeight = (numberOfRowsOnTableCanvas * cardHeight) + (numberOfRowsOnTableCanvas + 1)*margin
 			
 			For this function, we need to use the formulas above to relate tableCanvasWidth and tableCanvasHeight to eachother in terms of the constants.
 			(cancel out the unknowns cardWidth and cardHeight)
 			
 			The result is:
-				tableCanvasHeight = ((spaceOnTableForThisNumberOfRows*
-												(tableCanvasWidth - ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)))/
-												(spaceOnTableForThisNumberOfCols * cardHeightToWidthFactor)) +
-												((spaceOnTableForThisNumberOfRows + 1)*margin)
-				tableCanvasWidth = ((spaceOnTableForThisNumberOfCols *
-											 cardHeightToWidthFactor * (tableCanvasHeight - ((spaceOnTableForThisNumberOfRows + 1)*margin)))/
-											 spaceOnTableForThisNumberOfRows) + ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)
+				tableCanvasHeight = ((numberOfRowsOnTableCanvas*
+												(tableCanvasWidth - ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)))/
+												(totalNumberOfColsOnTableCanvas * cardHeightToWidthFactor)) +
+												((numberOfRowsOnTableCanvas + 1)*margin)
+				tableCanvasWidth = ((totalNumberOfColsOnTableCanvas *
+											 cardHeightToWidthFactor * (tableCanvasHeight - ((numberOfRowsOnTableCanvas + 1)*margin)))/
+											 numberOfRowsOnTableCanvas) + ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)
 	****************************************************************************************************************************************************************/
 	static calculateGalleryDimensions(maxWidth, maxHeight)
 	{
-		
 		let bTookUpFullMaxWidth = true;
 		
 		// CASE 1
 		let tabletableCanvasWidth = maxWidth - 2*deFactoSpaceForOneFlickityArrow;
-		let tabletableCanvasHeight = ((spaceOnTableForThisNumberOfRows*
-												(tabletableCanvasWidth - ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin)))/
-												(spaceOnTableForThisNumberOfCols * cardHeightToWidthFactor)) +
-												((spaceOnTableForThisNumberOfRows + 1)*margin);
+		let tabletableCanvasHeight = ((numberOfRowsOnTableCanvas*
+												(tabletableCanvasWidth - ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)))/
+												(totalNumberOfColsOnTableCanvas * cardHeightToWidthFactor)) +
+												((numberOfRowsOnTableCanvas + 1)*margin);
 		
 		// if by setting tabletableCanvasWidth = maxWidth - 2*deFactoSpaceForOneFlickityArrow and maintaining the ration we make the canvas taller than the screen
 		if (tabletableCanvasHeight > maxHeight)
 		{	
 				// CASE 2
 				tabletableCanvasHeight = maxHeight;
-				tabletableCanvasWidth = ((spaceOnTableForThisNumberOfCols *
-											 cardHeightToWidthFactor * (tabletableCanvasHeight - ((spaceOnTableForThisNumberOfRows + 1)*margin)))/
-											 spaceOnTableForThisNumberOfRows) + ((spaceOnTableForThisNumberOfCols + 1 + extraNumberOfMarginsBetween6thColAndLastCol)*margin);
+				tabletableCanvasWidth = ((totalNumberOfColsOnTableCanvas *
+											 cardHeightToWidthFactor * (tabletableCanvasHeight - ((numberOfRowsOnTableCanvas + 1)*margin)))/
+											 numberOfRowsOnTableCanvas) + ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin);
 				bTookUpFullMaxWidth = false;
 		}
 

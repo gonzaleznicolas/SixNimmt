@@ -3,24 +3,32 @@
 // desing parameters
 const spaceForOneFlickityArrow = 65; // px
 const cardHeightToWidthFactor = 3/4;
-const spaceOnTableForThisNumberOfRows = 4;
-const spaceOnTableForThisNumberOfCols = 7;	// 6 for the game, one extra col for the upcoming cards
-const numberOfColsInHandCanvas = 5;
-const numberOfRowsInHandCanvas = 2;
 const margin = 10; // px
-const extraNumberOfMarginsBetween6thColAndLastCol = 3;
+const extraNumberOfMarginsBetween6thColAndTheRest = 3;
 const radius = 10; // px
 const cowIsThisFractionOfCardHeight = 2/3;
 const cowIsThisFractionOfCardWidth = 9/10;
 const cowIsThisPercentDownTheCard = 0.43;
 const numberIsThisPercentDownTheCard = 0.5;
-const minScoreboardWidthWhenOnSide = 100; // px
-const maxScoreboardWidthWhenOnSide = 200; // px
+const numberOfRowsOnTableCanvas = 4;
+const numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn = 6;
+const numberOfColsOnHandCanvas = 5;
+const numberOfRowsOnHandCanvas = 2;
+const percentageOfGalleryHeightLeftForThePlayCardButtonBelowHandCanvas = 0.2;
+
+// globals that depend on specific instance of the game 
+let deFactoSpaceForOneFlickityArrow = undefined;
+let numberOfPlayers = 10;
+let additionalColsOnTableCanvasForCardsPlayedThisTurn = undefined;	// depends on the number of players
+let totalNumberOfColsOnTableCanvas = undefined;
+let flickityEnabled = true;
 
 class SixNimmtView
 {
 	constructor(sixNimmtModel) {
 		deFactoSpaceForOneFlickityArrow = bSpectatorMode ? 0 : spaceForOneFlickityArrow;
+		additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/numberOfRowsOnTableCanvas);
+		totalNumberOfColsOnTableCanvas = numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn + additionalColsOnTableCanvasForCardsPlayedThisTurn;
 		
 		this._gallery = $('.gallery');
 		
@@ -86,7 +94,7 @@ class SixNimmtView
 
 		this._tableDrawer.resize(s.galleryWidth, s.galleryHeight);
 		if (!bSpectatorMode)
-			this._handDrawer.resize(this._tableDrawer._cardHeight);
+			this._handDrawer.resize(s.galleryWidth, s.galleryHeight);
 		
 		this._scoreboard.resize(s.scoreboardWidth, s.scoreboardHeight);
 		this.setGallerySize(s.galleryWidth);

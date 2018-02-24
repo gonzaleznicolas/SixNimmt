@@ -5,8 +5,8 @@ class HandDrawer extends Drawer
 	constructor(canvas) 
 	{ 
 		super(canvas); 
-		this._numberOfRows = numberOfRowsInHandCanvas; 
-		this._numberOfCols = numberOfColsInHandCanvas; 
+		this._numberOfRows = numberOfRowsOnHandCanvas; 
+		this._numberOfCols = numberOfColsOnHandCanvas; 
 		this._currentlySelected = undefined;	// undefined means nothing selected 
 		 
 		this._playCardButton = $('#playCardButton'); 
@@ -58,30 +58,38 @@ class HandDrawer extends Drawer
 		} 
 	} 
 	 
-	resize(tableCardHeight) 
-	{ 
-		// Idea: based on the tableCardHeight, make the cards on the hand canvas 
-		// (spaceOnTableForThisNumberOfCols/numberOfColsInHandCanvas)ths as big as the cards on the table canvas. 
-		// Once we know the hand canvas card dimensions, using the global margin we can calculate 
-		// the hand canvas dimensions based on how much space is necessary for two rows of 5 cards. 
-		this.calculateCardDimensions(tableCardHeight); 
-		this.setCanvasSize(); 
+	resize(galleryWidth, galleryHeight) 
+	{
+		this.setCanvasAndCardDimensions(galleryWidth - 2*deFactoSpaceForOneFlickityArrow, (1 - percentageOfGalleryHeightLeftForThePlayCardButtonBelowHandCanvas)*galleryHeight);
 		this.calculateCardCoordinates(); 
 		// update play card button 
 		$('#handWrapper').css("font-size", this._cardHeight*0.2 + "px"); 
 	} 
 	 
-	calculateCardDimensions(tableCardHeight) 
-	{ 
-		const tableCardWidth = cardHeightToWidthFactor * tableCardHeight; 
-		const tableToHandCanvasCardSizeFactor = (spaceOnTableForThisNumberOfCols/numberOfColsInHandCanvas); 
-		this._cardWidth = tableToHandCanvasCardSizeFactor * tableCardWidth; 
-		this._cardHeight = tableToHandCanvasCardSizeFactor * tableCardHeight; 
-	} 
-	 
-	setCanvasSize() 
-	{	 
-		this._canvas.width = numberOfColsInHandCanvas*this._cardWidth + (numberOfColsInHandCanvas+1)*margin; 
-		this._canvas.height = numberOfRowsInHandCanvas*this._cardHeight + (numberOfRowsInHandCanvas+1)*margin; 
-	} 
+	setCanvasAndCardDimensions(maxWidth, maxHeight) 
+	{
+		/* step 1: find out what the canvas height would be if we set the canvas width to the maxWidth:
+		We know cardWidth = cardHeight * cardHeightToWidthFactor
+		Let canvasWidth = maxWidth
+		Let maxWidth = (numberOfColsOnHandCanvas+1)*margin + numberOfColsOnHandCanvas*cardWidth
+		so we can solve for the card height: */
+		let canvasWidth = maxWidth;
+		let cardHeight = (canvasWidth - (numberOfColsOnHandCanvas+1)*margin)/(numberOfColsOnHandCanvas*cardHeightToWidthFactor);
+		// from the card height, we can find the canvas height
+		let canvasHeight = (numberOfRowsOnHandCanvas)*cardHeight + (numberOfRowsOnHandCanvas+1)*margin;
+		
+		/* step 2: if by making the width the maxWidth, we made the canvas too tall, then set the height to the maxHeight instead and repeat the process*/
+		if (canvasHeight > maxHeight)
+		{
+			canvasHeight = maxHeight;
+			cardHeight = (maxHeight - (numberOfRowsOnHandCanvas+1)*margin)/(numberOfRowsOnHandCanvas);
+			canvasWidth = (numberOfColsOnHandCanvas+1)*margin + numberOfColsOnHandCanvas*cardHeightToWidthFactor*cardHeight;
+		}
+		
+		this._cardHeight = cardHeight;
+		this._cardWidth = cardHeight*cardHeightToWidthFactor;
+		
+		this._canvas.width = canvasWidth; 
+		this._canvas.height = canvasHeight; 
+	}
 }
