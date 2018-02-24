@@ -17,6 +17,7 @@ body{
 #game {
 	display: flex;
 	visibility: hidden;
+	align-items: center;
 }
 
 .gallery {

@@ -18,13 +18,9 @@ class LayoutCalculator
 		/*******************************************************************************************
 		Give the gallery all the space on the screen, see if it wants to take up the full width
 		or the full height.
-		Note: I didnt really give it the full screen height, I deducted the height of the header,
-				and multiplied the remaining space by 0.9.
-				The reason for that if the width of the canvas is just right, it looks fine,
-				but if the height is exactly right, its hard to scroll perfectly to get the whole
-				canvas in the window. So give it 0.9 the space.
+		Note: I didnt really give it the full screen height, I deducted the height of the header
 		*******************************************************************************************/
-		let galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth, (windowHeight - $('header').height())*0.9)
+		let galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth, windowHeight - $('header').height())
 		
 		let galleryWidth = galleryDimensions.width;
 		let galleryHeight = galleryDimensions.height;
@@ -45,12 +41,10 @@ class LayoutCalculator
 		}
 		
 		/*******************************************************************************************
-		If here, it means the gallery took up the full height of the screen, and we will be doing a
-		horizontal alignment. I.e. the scoreboard will be to the right of the gallery.
+		If here, it means the gallery took up the full height of the screen.
 		We dont want the width of the gallery + the width of the scoreboard to be wider that the screen,
 		we never want horizontal scrolling.
-		But we need to make sure the scoreboard is wide enough. We will define wide enough as
-		1/4 * galleryHeight.
+		But we need to make sure the scoreboard is wide enough. Wide enough is defined in LayoutCalculator.scoreboardWidthWhenHorizontalLayout()
 		So, check if the space left to the right of the gallery is wide enough.
 		*******************************************************************************************/
 		if (windowWidth - galleryWidth > LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight))
@@ -63,12 +57,28 @@ class LayoutCalculator
 		}
 		
 		/*******************************************************************************************
-		If here, we are laying out in horizontal mode, but the space left to the right of the gallery
-		is not wide enough for the scoreboard.
+		If here, it means the gallery took up the full height of the screen. We have some space to the side, but
+		if we didnt fall into the previous if, its because the space to the side is not enought for the scoreboard.
+		If we are not in spectator mode, someone is doing viewing this probably on their phone, so they can scroll down
+		to see the scoreboard. Lets put the scoreboard below.
+		*******************************************************************************************/
+		if (!bSpectatorMode)
+		{
+			/* CASE 2 : screen horizontal alignment: place scoreboard beside gallery. There was naturally space for the scoreboard.*/
+			return {galleryWidth: galleryWidth, galleryHeight: galleryHeight,
+					bScoreboardBelowGallery: true,
+					scoreboardWidth: galleryWidth,
+					scoreboardHeight: galleryHeight};
+		}		
+		
+		/*******************************************************************************************
+		If here, we are laying out in horizontal mode, the space left to the right of the gallery
+		is not wide enough for the scoreboard, and we are on spectator mode so we wont tolerate any scrolling.
+		So the solution is to shring the gallery so that we have space for the scoreboard.
 		So, recalculate the gallery dimensions, and give it as its max width the
 		screen width - space needed for scoreboard.
 		*******************************************************************************************/
-		galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth - LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight), (windowHeight - $('header').height())*0.9)
+		galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth - LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight), windowHeight - $('header').height())
 		galleryWidth = galleryDimensions.width;
 		galleryHeight = galleryDimensions.height;
 		

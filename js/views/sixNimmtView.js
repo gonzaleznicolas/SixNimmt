@@ -18,7 +18,7 @@ const percentageOfGalleryHeightLeftForThePlayCardButtonBelowHandCanvas = 0.2;
 
 // globals that depend on specific instance of the game 
 let deFactoSpaceForOneFlickityArrow = undefined;
-let numberOfPlayers = 10;
+let numberOfPlayers = 4;
 let additionalColsOnTableCanvasForCardsPlayedThisTurn = undefined;	// depends on the number of players
 let totalNumberOfColsOnTableCanvas = undefined;
 let flickityEnabled = true;
