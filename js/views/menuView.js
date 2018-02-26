@@ -4,7 +4,6 @@ class MenuView
 {
 	constructor()
 	{
-		$('#test')[0].addEventListener("click", this.hiClicked.bind(this), false);
 		this._menuElement = $('#menu');
 		this._menuElement.remove();
 		this._menuButton = $("#menuButton");
@@ -12,33 +11,26 @@ class MenuView
 		this._bIsMenuOn = false;
 		
 		this._menuButton[0].addEventListener("click", this.menuButtonClicked.bind(this), false);
-		document.addEventListener("click", this.documentClicked.bind(this), true);
 	}
 	
 	menuButtonClicked(event)
 	{
-		if (!this._bIsMenuOn)
-		{
-			$('header').after(this._menuElement);
-			this._bIsMenuOn = true;
-		}
+		if (this._bIsMenuOn)
+			this.removeMenu();
+		else
+			this.showMenu();
 		event.stopPropagation();
 	}
 	
-	documentClicked(event)
+	removeMenu()
 	{
-		if (this._bIsMenuOn)
-		{ 
-			if(!$(event.target).closest('#menu').length) {
-				this._menuElement.remove();
-				this._bIsMenuOn = false;
-				event.stopPropagation();
-			}
-		}
+		this._menuElement.remove();
+		this._bIsMenuOn = false;
 	}
 	
-	hiClicked()
+	showMenu()
 	{
-		let i = 6;
+		$('header').after(this._menuElement);
+		this._bIsMenuOn = true;
 	}
 }

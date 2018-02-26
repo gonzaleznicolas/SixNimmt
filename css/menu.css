@@ -9,18 +9,22 @@
 }
 
 #menuButton div{
-	  width: 80%;
-    height: 15%;
-		border-radius: 2px;
-    background-color: rgba(255, 255, 255, 1);
+	width: 80%;
+	height: 15%;
+	border: 1px solid black;
+	border-radius: 2px;
+	background-color: rgba(255, 255, 255, 1);
 }
 
 #menu{
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 80%;
-	z-index: 1;
-	background: rgba(0,0,0, 0.8);
 	position: fixed;
+	top: 55px;
+	left: 0;
+	height: 15em;
+	width: 15em;
+	margin: 5px;
+	z-index: 1;
+	border-radius: 10px;
+	border: 1px solid black;
+	background: rgba(255, 255, 255, 1);
 }
