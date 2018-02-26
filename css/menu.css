@@ -17,14 +17,26 @@
 	background-color: rgba(255, 255, 255, 1);
 }
 
+#menuBackground{
+	position: fixed;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	display: none;
+}
+
 #menu{
 	position: fixed;
+	z-index: 3;
 	top: 55px;
 	left: 10px;
 	height: 15em;
 	width: 15em;
-	z-index: 1;
 	border-radius: 10px;
 	border: 1px solid black;
 	background: rgba(255, 255, 255, 1);
+	display: none;
 }
