@@ -6,11 +6,12 @@
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
+	padding: 5px 10px;
 }
 
 #menuButton div{
-	width: 80%;
-	height: 15%;
+	width: 100%;
+	height: 20%;
 	border: 1px solid black;
 	border-radius: 2px;
 	background-color: rgba(255, 255, 255, 1);
@@ -19,10 +20,9 @@
 #menu{
 	position: fixed;
 	top: 55px;
-	left: 0;
+	left: 10px;
 	height: 15em;
 	width: 15em;
-	margin: 5px;
 	z-index: 1;
 	border-radius: 10px;
 	border: 1px solid black;

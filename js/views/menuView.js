@@ -5,7 +5,7 @@ class MenuView
 	constructor()
 	{
 		this._menuElement = $('#menu');
-		this._menuElement.remove();
+		this._menuElement.hide();
 		this._menuButton = $("#menuButton");
 
 		this._bIsMenuOn = false;
@@ -15,22 +15,6 @@ class MenuView
 	
 	menuButtonClicked(event)
 	{
-		if (this._bIsMenuOn)
-			this.removeMenu();
-		else
-			this.showMenu();
-		event.stopPropagation();
-	}
-	
-	removeMenu()
-	{
-		this._menuElement.remove();
-		this._bIsMenuOn = false;
-	}
-	
-	showMenu()
-	{
-		$('header').after(this._menuElement);
-		this._bIsMenuOn = true;
+		this._menuElement.toggle(300);
 	}
 }

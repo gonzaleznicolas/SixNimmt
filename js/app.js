@@ -4,8 +4,8 @@ let bSpectatorMode = false;
 
 $(function () {
 	sixNimmtModel = new SixNimmtModel();
-	sixNimmtView = new SixNimmtView(sixNimmtModel);
 	menuView = new MenuView();
+	sixNimmtView = new SixNimmtView(sixNimmtModel);
 });
 
 function getCardInfo(cardNumber)
