@@ -5,6 +5,7 @@ let bSpectatorMode = false;
 $(function () {
 	sixNimmtModel = new SixNimmtModel();
 	sixNimmtView = new SixNimmtView(sixNimmtModel);
+	menuView = new MenuView();
 });
 
 function getCardInfo(cardNumber)
@@ -29,6 +30,7 @@ function getCardInfo(cardNumber)
 // TEMPORARY:
 let sixNimmtModel = undefined;
 let sixNimmtView = undefined;
+let menuView = undefined;
 
 function move(row1, col1, row2, col2) {
 	sixNimmtView._tableAnimation.moveCard(row1, col1, row2, col2);

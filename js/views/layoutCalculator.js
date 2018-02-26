@@ -15,12 +15,13 @@ class LayoutCalculator
 	{
 		const windowWidth = $(window).width();
 		const windowHeight = $(window).height();
+		const headerHeight = $('header').height();
 		/*******************************************************************************************
 		Give the gallery all the space on the screen, see if it wants to take up the full width
 		or the full height.
 		Note: I didnt really give it the full screen height, I deducted the height of the header
 		*******************************************************************************************/
-		let galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth, windowHeight - $('header').height())
+		let galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth, windowHeight - headerHeight)
 		
 		let galleryWidth = galleryDimensions.width;
 		let galleryHeight = galleryDimensions.height;
@@ -64,7 +65,7 @@ class LayoutCalculator
 		*******************************************************************************************/
 		if (!bSpectatorMode)
 		{
-			/* CASE 2 : screen horizontal alignment: place scoreboard beside gallery. There was naturally space for the scoreboard.*/
+			/* CASE 3 :*/
 			return {galleryWidth: galleryWidth, galleryHeight: galleryHeight,
 					bScoreboardBelowGallery: true,
 					scoreboardWidth: galleryWidth,
@@ -78,11 +79,11 @@ class LayoutCalculator
 		So, recalculate the gallery dimensions, and give it as its max width the
 		screen width - space needed for scoreboard.
 		*******************************************************************************************/
-		galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth - LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight), windowHeight - $('header').height())
+		galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth - LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight), windowHeight - headerHeight)
 		galleryWidth = galleryDimensions.width;
 		galleryHeight = galleryDimensions.height;
 		
-		/* CASE 3 : screen horizontal alignment: place scoreboard beside gallery. Gallery had to be shrunk to fit scoreboard.*/
+		/* CASE 4 : screen horizontal alignment: place scoreboard beside gallery. Gallery had to be shrunk to fit scoreboard.*/
 		return {galleryWidth: galleryWidth, galleryHeight: galleryHeight,
 			bScoreboardBelowGallery: false,
 			scoreboardWidth: LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight),

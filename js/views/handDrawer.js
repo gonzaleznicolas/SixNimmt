@@ -13,7 +13,7 @@ class HandDrawer extends Drawer
 		this._selectCardMessage = $('#selectCardMessage'); 
 		this._playCardButton.css("margin-left", margin + "px");	// couldnt be set using pure css 
 		this._selectCardMessage.css("margin-left", margin + "px");	// couldnt be set using pure css 
-		$('#playCardButton').remove(); 
+		this._playCardButton.remove(); 
 	} 
 	 
 	draw() 
@@ -33,7 +33,7 @@ class HandDrawer extends Drawer
 	{ 
 		if (this._currentlySelected == undefined) 
 		{ 
-			$('#playCardButton').remove(); 
+			this._playCardButton.remove(); 
 			$('#handWrapper').append(this._selectCardMessage); 
 		} 
 		else 
@@ -41,8 +41,8 @@ class HandDrawer extends Drawer
 			this.dimAll(); 
 			const card = this._cardCoordinates[this._currentlySelected.row][this._currentlySelected.col]; 
 			this.drawCard(card.x, card.y, this._cardWidth, 44); 
-			$('#selectCardMessage').remove(); 
-			$('#playCardButton').remove(); 
+			this._selectCardMessage.remove(); 
+			this._playCardButton.remove(); 
 			$('#handWrapper').append(this._playCardButton); 
 		} 
 	} 
