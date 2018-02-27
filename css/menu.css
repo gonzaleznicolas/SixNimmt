@@ -1,5 +1,9 @@
 #menuButton
 {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 3;
 	width: 65px;
 	height: 55px;
 	display: flex;
@@ -24,8 +28,8 @@
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background: rgba(0, 0, 0, 0.8);
 	display: none;
+	background: rgba(0,0,0,0.6);
 }
 
 #menu{
