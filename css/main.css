@@ -5,6 +5,12 @@
 	padding: 0;
 }
 
+body{
+	--nimmtPurple:rgba(127, 80, 147, 1);
+	--margin: 10px;
+	background: var(--nimmtPurple);
+}
+
 @media (max-width: 700px) {
 	
 }
@@ -24,10 +30,6 @@ header{
 	color: rgba(255, 255, 255, 1);
 	margin-left: 75px;
 	font-family: 'Bangers';
-}
-
-body{
-	background: rgba(127, 80, 147, 1);
 }
 
 #game {

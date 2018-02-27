@@ -1,9 +1,13 @@
 "use strict";
 
+var bodyStyles = window.getComputedStyle(document.body);
+
 // desing parameters
 const spaceForOneFlickityArrow = 65; // px
 const cardHeightToWidthFactor = 3/4;
-const margin = 10; // px
+
+const marginStr = bodyStyles.getPropertyValue('--margin').trim()
+const margin = parseInt(marginStr.substring(0, marginStr.indexOf("px")).trim()); // px
 const extraNumberOfMarginsBetween6thColAndTheRest = 3;
 const radius = 10; // px
 const cowIsThisFractionOfCardHeight = 2/3;
