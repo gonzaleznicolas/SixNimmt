@@ -1,7 +1,7 @@
 #menuButton
 {
 	position: fixed;
-	top: 0;
+	top: 5px;
 	left: 0;
 	z-index: 3;
 	width: 65px;
@@ -10,7 +10,7 @@
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
-	padding: 5px 10px;
+	padding: 10px 12px;
 }
 
 #menuButton div{
@@ -21,7 +21,7 @@
 	background-color: rgba(255, 255, 255, 1);
 }
 
-#menuBackground{
+.menuBackground{
 	position: fixed;
 	z-index: 2;
 	top: 0;

@@ -16,8 +16,13 @@ header{
 	width: 100%;
 	z-index: 1;
 	position: fixed;
-	font-size: 1.5em;
 	background: rgba(127, 80, 147, 1);
+}
+
+#headerText{
+	font-size: 55px;
+	color: rgba(255, 255, 255, 1);
+	margin-left: 75px;
 }
 
 body{
