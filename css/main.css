@@ -23,6 +23,7 @@ header{
 	font-size: 55px;
 	color: rgba(255, 255, 255, 1);
 	margin-left: 75px;
+	font-family: 'Luckiest Guy';
 }
 
 body{
@@ -51,7 +52,6 @@ body{
 #scoreboard{
 	display: flex;
 	padding: 0.3em;
-	font-family: Courier;
 	background: rgba(150, 80, 147, 1);
 	color: rgba(255, 255, 255, 1);
 	flex-direction: column;
@@ -62,12 +62,12 @@ body{
 	border-radius: 0.5em; 
 	font-weight: 0.5em; 
 	padding: 0.5em; 
-	font-family: "Comic Sans MS"; 
+	font-family: 'Luckiest Guy'; 
 	background: rgba(0, 0, 0, 0.3); 
 	color: rgba(255, 255, 255, 1); 
 } 
  
 #selectCardMessage{ 
-	font-family: "Comic Sans MS"; 
+	font-family: 'Luckiest Guy'; 
 	color: rgba(255, 255, 255, 1); 
 } 

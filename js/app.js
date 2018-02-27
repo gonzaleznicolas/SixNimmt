@@ -15,11 +15,11 @@ function getCardInfo(cardNumber)
 		if (cardNumber === 55)
 			return {negativePts: 7, cowColor: "rgba(255, 0, 0, 1)", numColor: "rgba(255, 255,	0, 1)", cardColor: "rgba(115, 60, 110, 1)"};
 		else if ( cardNumber % 11 === 0)
-			return {negativePts: 5, cowColor: "rgba(0, 0, 255, 1)", numColor: "rgba(255, 188, 0, 1)", cardColor: "rgba(255, 0, 0, 1)"};
+			return {negativePts: 5, cowColor: "rgba(0, 0, 100, 1)", numColor: "rgba(255, 188, 0, 1)", cardColor: "rgba(255, 0, 0, 1)"};
 		else if (cardNumber % 10 === 0)
 			return {negativePts: 3, cowColor: "rgba(255, 0, 0, 1)", numColor: "rgba(133, 199, 224, 1)", cardColor: "rgba(255, 188, 0, 1)"};
 		else if (cardNumber % 5 === 0)
-			return {negativePts: 2, cowColor: "rgba(0, 0, 255, 1)", numColor: "rgba(255, 255,	0, 1)", cardColor: "rgba(133, 199,	224, 1)"};
+			return {negativePts: 2, cowColor: "rgba(0, 0, 100, 1)", numColor: "rgba(255, 255,	0, 1)", cardColor: "rgba(133, 199,	224, 1)"};
 		else
 			return {negativePts: 1, cowColor: "rgba(127, 80, 147, 1)", numColor: "rgba(255, 255,	255, 1)", cardColor: "rgba(255, 255,	255, 1)"};
 	}
