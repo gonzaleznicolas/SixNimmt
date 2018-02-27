@@ -23,7 +23,7 @@ header{
 	font-size: 55px;
 	color: rgba(255, 255, 255, 1);
 	margin-left: 75px;
-	font-family: 'Luckiest Guy';
+	font-family: 'Bangers';
 }
 
 body{
@@ -62,12 +62,12 @@ body{
 	border-radius: 0.5em; 
 	font-weight: 0.5em; 
 	padding: 0.5em; 
-	font-family: 'Luckiest Guy'; 
+	font-family: 'Bangers'; 
 	background: rgba(0, 0, 0, 0.3); 
 	color: rgba(255, 255, 255, 1); 
 } 
  
 #selectCardMessage{ 
-	font-family: 'Luckiest Guy'; 
+	font-family: 'Bangers'; 
 	color: rgba(255, 255, 255, 1); 
 } 
