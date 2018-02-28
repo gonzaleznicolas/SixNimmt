@@ -61,6 +61,12 @@ header{
 	flex-direction: column;
 }
 
+/* This container is just so the play card button wont show wider than necessary on some browsers*/
+#playCardContainer{
+	display: flex;
+	flex-flow: row;
+}
+
 #playCardButton{ 
 	width: fit-content; 
 	border-radius: 0.5em; 
@@ -69,7 +75,8 @@ header{
 	font-family: 'Bangers'; 
 	background: rgba(0, 0, 0, 0.3); 
 	color: rgba(255, 255, 255, 1); 
-} 
+	display: none;
+}
  
 #selectCardMessage{ 
 	font-family: 'Bangers'; 
