@@ -151,13 +151,13 @@ class LayoutCalculator
 		The point is to calculate the dimensions of the table canvas based on card dimensions, margins, etc.
 		Note: totalNumberOfColsOnTableCanvas = number of cols for the game + number of cols for cards played this turn (depends on number of players)
 		
-		See the constants this.cardHeightToWidthFactor, numberOfRowsOnTableCanvas, totalNumberOfColsOnTableCanvas, margin,
+		See the constants cardHeightToWidthFactor, numberOfRowsOnTableCanvas, totalNumberOfColsOnTableCanvas, margin,
 		and extraSpaceBetween6thColAndLastCol.
 		Those numbers will be set by the the user and the canvas and cards will be layed out acordingly.
 		
 		The dimensions of the canvas considering the number of cards and the dimensions of the cards can be derived this way:
 
-			cardWidth = cardHeight * this.cardHeightToWidthFactor
+			cardWidth = cardHeight * cardHeightToWidthFactor
 			tableCanvasWidth = (totalNumberOfColsOnTableCanvas * cardWidth) + (totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin
 			tableCanvasHeight = (numberOfRowsOnTableCanvas * cardHeight) + (numberOfRowsOnTableCanvas + 1)*margin
 			
@@ -167,10 +167,10 @@ class LayoutCalculator
 			The result is:
 				tableCanvasHeight = ((numberOfRowsOnTableCanvas*
 												(tableCanvasWidth - ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)))/
-												(totalNumberOfColsOnTableCanvas * this.cardHeightToWidthFactor)) +
+												(totalNumberOfColsOnTableCanvas * cardHeightToWidthFactor)) +
 												((numberOfRowsOnTableCanvas + 1)*margin)
 				tableCanvasWidth = ((totalNumberOfColsOnTableCanvas *
-											 this.cardHeightToWidthFactor * (tableCanvasHeight - ((numberOfRowsOnTableCanvas + 1)*margin)))/
+											 cardHeightToWidthFactor * (tableCanvasHeight - ((numberOfRowsOnTableCanvas + 1)*margin)))/
 											 numberOfRowsOnTableCanvas) + ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)
 	****************************************************************************************************************************************************************/
 	calculateGalleryDimensions(maxWidth, maxHeight)
