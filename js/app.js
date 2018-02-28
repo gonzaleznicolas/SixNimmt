@@ -26,10 +26,10 @@ function getCardInfo(cardNumber)
 		else if (cardNumber % 5 === 0)
 			return {negativePts: 2, cowColor: "rgba(0, 0, 100, 1)", numColor: "rgba(255, 255,	0, 1)", cardColor: "rgba(133, 199,	224, 1)"};
 		else
-			return {negativePts: 1, cowColor: "rgba(127, 80, 147, 1)", numColor: "rgba(255, 255,	255, 1)", cardColor: "rgba(255, 255,	255, 1)"};
+			return {negativePts: 1, cowColor: lc.nimmtPurple, numColor: "rgba(255, 255,	255, 1)", cardColor: "rgba(255, 255,	255, 1)"};
 	}
 	else // undefined passed in therefore info for back of card
-		return {cowColor: "rgba(127, 80, 147, 1)", cardColor: "rgba(255, 255,	255, 1)"}
+		return {cowColor: lc.nimmtPurple, cardColor: "rgba(255, 255,	255, 1)"}
 }
 
 // TEMPORARY:

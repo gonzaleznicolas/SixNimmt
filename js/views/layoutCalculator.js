@@ -4,11 +4,15 @@ class LayoutCalculator
 {
 	constructor()
 	{
-		// design parameters defined in main.css
-		//var bodyStyles = window.getComputedStyle(document.body);
-		//this.marginStr = bodyStyles.getPropertyValue('--margin').trim()
-		this.margin = 10; //parseInt(marginStr.substring(0, marginStr.indexOf("px")).trim()); // px
-		this.radius = 10; // px
+		// design parameters defined in main.css body{}
+		let bodyStyles = window.getComputedStyle(document.body);
+		let marginStr = bodyStyles.getPropertyValue('--margin').trim()
+		this.margin = parseInt(marginStr.substring(0, marginStr.indexOf("px")).trim());
+		
+		let radiusStr = bodyStyles.getPropertyValue('--radius').trim()
+		this.radius = parseInt(radiusStr.substring(0, radiusStr.indexOf("px")).trim());
+		
+		this.nimmtPurple = bodyStyles.getPropertyValue('--nimmtPurple').trim();
 
 		// design parameters. change if you want to change how it all looks like
 		this.spaceForOneFlickityArrow = 65; // px

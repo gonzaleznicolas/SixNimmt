@@ -6,8 +6,10 @@
 }
 
 body{
-	--nimmtPurple:rgba(127, 80, 147, 1);
+	--nimmtPurple: rgba(127, 80, 147, 1);
 	--margin: 10px;
+	--radius: 10px;
+	--menuButtonSideLength: 75px;
 	background: var(--nimmtPurple);
 }
 
@@ -18,15 +20,15 @@ body{
 header{
 	top: 0;
 	left: 0;
-	height: 55px;
+	height: var(--menuButtonSideLength);
 	width: 100%;
 	z-index: 1;
 	position: fixed;
-	background: rgba(127, 80, 147, 1);
+	background: var(--nimmtPurple);
 }
 
 #headerText{
-	font-size: 55px;
+	font-size: var(--menuButtonSideLength);
 	color: rgba(255, 255, 255, 1);
 	margin-left: 75px;
 	font-family: 'Bangers';
@@ -35,7 +37,7 @@ header{
 #game {
 	display: flex;
 	visibility: hidden;
-	margin-top: 55px;
+	margin-top: var(--menuButtonSideLength);
 }
 
 .gallery {

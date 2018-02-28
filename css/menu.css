@@ -1,16 +1,16 @@
 #menuButton
 {
 	position: fixed;
-	top: 5px;
+	top: 0;
 	left: 0;
 	z-index: 3;
-	width: 65px;
-	height: 55px;
+	width: var(--menuButtonSideLength);
+	height: var(--menuButtonSideLength);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
-	padding: 10px 12px;
+	padding: var(--margin) var(--margin);
 }
 
 #menuButton div{
@@ -35,11 +35,11 @@
 #menu{
 	position: fixed;
 	z-index: 3;
-	top: 65px;
-	left: 10px;
+	top: calc(var(--menuButtonSideLength) + var(--margin));
+	left: var(--margin);
 	height: 15em;
 	width: 15em;
-	border-radius: 10px;
+	border-radius: var(--radius);
 	border: 1px solid black;
 	background: rgba(255, 255, 255, 1);
 	display: none;
