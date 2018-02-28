@@ -58,9 +58,9 @@ class HandDrawer extends Drawer
 		} 
 	} 
 	 
-	resize(galleryWidth, galleryHeight) 
+	resize() 
 	{
-		this.setCanvasAndCardDimensions(galleryWidth - 2*lc.deFactoSpaceForOneFlickityArrow, (1 - lc.percentageOfGalleryHeightLeftForThePlayCardButtonBelowHandCanvas)*galleryHeight);
+		this.setCanvasAndCardDimensions(lc.galleryWidth - 2*lc.deFactoSpaceForOneFlickityArrow, (1 - lc.percentageOfGalleryHeightLeftForThePlayCardButtonBelowHandCanvas)*lc.galleryHeight);
 		this.calculateCardCoordinates(); 
 		// update play card button 
 		$('#handWrapper').css("font-size", this._cardHeight*0.2 + "px"); 

@@ -52,9 +52,9 @@ class SixNimmtView
 		}
 	}
 	
-	setGallerySize(galleryWidth)
+	setGallerySize()
 	{
-		this._gallery.css("width", galleryWidth+"px");
+		this._gallery.css("width", lc.galleryWidth+"px");
 		if (!bSpectatorMode && this._flickity)
 			this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
 	}
@@ -69,12 +69,12 @@ class SixNimmtView
 		else
 			$("#game").css("flex-direction", "row");
 
-		this._tableDrawer.resize(lc.galleryWidth, lc.galleryHeight);
+		this._tableDrawer.resize();
 		if (!bSpectatorMode)
-			this._handDrawer.resize(lc.galleryWidth, lc.galleryHeight);
+			this._handDrawer.resize();
 		
-		this._scoreboard.resize(lc.scoreboardWidth, lc.scoreboardHeight);
-		this.setGallerySize(lc.galleryWidth);
+		this._scoreboard.resize();
+		this.setGallerySize();
 
 		this._tableDrawer.draw();
 		if (!bSpectatorMode)

@@ -96,9 +96,9 @@ class TableDrawer extends Drawer
 		ctx.closePath();
 	}
 	
-	resize(galleryWidth, galleryHeight)
+	resize()
 	{
-		this.setCanvasSize(galleryWidth - 2*lc.deFactoSpaceForOneFlickityArrow, galleryHeight);
+		this.setCanvasSize(lc.galleryWidth - 2*lc.deFactoSpaceForOneFlickityArrow, lc.galleryHeight);
 		this.calculateCardDimensions();
 		this.calculateCardCoordinates();
 		this.calculateUpcomingCardCoordinates();

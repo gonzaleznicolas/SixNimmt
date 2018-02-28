@@ -12,10 +12,10 @@ class Scoreboard
 
 	}
 	
-	resize(scoreboardWidth, scoreboardHeight)
+	resize()
 	{
-		$("#scoreboard").css("width", scoreboardWidth + "px" );
-		$("#scoreboard").css("height", scoreboardHeight + "px" );
+		$("#scoreboard").css("width", lc.scoreboardWidth + "px" );
+		$("#scoreboard").css("height", lc.scoreboardHeight + "px" );
 	}
 	
 }
