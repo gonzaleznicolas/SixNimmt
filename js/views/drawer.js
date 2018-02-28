@@ -49,18 +49,18 @@ class Drawer
 	
 	calculateCardCoordinates()
 	{
-		let x = margin;
-		let y = margin;
+		let x = lc.margin;
+		let y = lc.margin;
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
-			x = margin;
+			x = lc.margin;
 			this._cardCoordinates[row] = [];
 			for (let col = 0; col < this._numberOfCols; col++)
 			{
 				this._cardCoordinates[row][col] = {x: x, y: y};
-				x = x + this._cardWidth + margin;
+				x = x + this._cardWidth + lc.margin;
 			}
-			y = y + this._cardHeight + margin;
+			y = y + this._cardHeight + lc.margin;
 		}
 	}
 	
@@ -83,7 +83,7 @@ class Drawer
 	dimCard(x, y)
 	{
 		const ctx = this._ctx;
-		BasicShapeDrawer.drawCardShape(ctx, x, y, this._cardWidth, this._cardHeight, radius);
+		BasicShapeDrawer.drawCardShape(ctx, x, y, this._cardWidth, this._cardHeight, lc.radius);
 		ctx.fillStyle = "rgba(127, 80, 147, 0.85)";
 		ctx.fill();
 		ctx.closePath();
@@ -93,7 +93,7 @@ class Drawer
 	{
 		const ctx = this._ctx;
 		
-		BasicShapeDrawer.drawCardShape(ctx, x, y, cardWidth, this._cardHeight, radius);
+		BasicShapeDrawer.drawCardShape(ctx, x, y, cardWidth, this._cardHeight, lc.radius);
 		ctx.fillStyle = getCardInfo(number).cardColor;
 		ctx.fill();
 		ctx.lineWidth = 1;
@@ -106,15 +106,15 @@ class Drawer
 	{
 		const ctx = this._ctx;
 		
-		const cowWidth = cowIsThisFractionOfCardWidth*cardWidth;
-		const cowHeight = cowIsThisFractionOfCardHeight*this._cardHeight;
+		const cowWidth = lc.cowIsThisFractionOfCardWidth*cardWidth;
+		const cowHeight = lc.cowIsThisFractionOfCardHeight*this._cardHeight;
 		
 		// center of the cow
 		const centreX = x + cardWidth/2;
 		
 		// draw the big cow right in the middle if its a face down card
 		const faceUpCard = number != undefined;
-		const centreY = faceUpCard ? (y + this._cardHeight * cowIsThisPercentDownTheCard) : (y + this._cardHeight/2);
+		const centreY = faceUpCard ? (y + this._cardHeight * lc.cowIsThisPercentDownTheCard) : (y + this._cardHeight/2);
 		
 		BasicShapeDrawer.drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight);
 		ctx.fillStyle = getCardInfo(number).cowColor;
@@ -134,7 +134,7 @@ class Drawer
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		const centreXofNumber= x + (cardWidth/2);
-		const centreYofNumber = y+(this._cardHeight * numberIsThisPercentDownTheCard);
+		const centreYofNumber = y+(this._cardHeight * lc.numberIsThisPercentDownTheCard);
 		ctx.lineWidth = 2;
 		ctx.fillStyle = getCardInfo(number).numColor;
 
@@ -155,7 +155,7 @@ class Drawer
 		const cardInfo = getCardInfo(number);
 		const negativePts = cardInfo.negativePts;
 		const centreX = x + cardWidth/2;
-		const bottomOfTheCowY = y + cowIsThisPercentDownTheCard*this._cardHeight + (cowIsThisFractionOfCardHeight/2)*this._cardHeight;
+		const bottomOfTheCowY = y + lc.cowIsThisPercentDownTheCard*this._cardHeight + (lc.cowIsThisFractionOfCardHeight/2)*this._cardHeight;
 		const sizeOfGapBetweenCowAndBottomOfCard = this._cardHeight - (bottomOfTheCowY - y);
 		const centreY = bottomOfTheCowY + (sizeOfGapBetweenCowAndBottomOfCard/2);
 		

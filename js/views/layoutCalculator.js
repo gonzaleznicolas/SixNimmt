@@ -2,16 +2,52 @@
 
 class LayoutCalculator
 {
+	constructor()
+	{
+		// design parameters defined in main.css
+		//var bodyStyles = window.getComputedStyle(document.body);
+		//this.marginStr = bodyStyles.getPropertyValue('--margin').trim()
+		this.margin = 10; //parseInt(marginStr.substring(0, marginStr.indexOf("px")).trim()); // px
+		this.radius = 10; // px
+
+		// design parameters. change if you want to change how it all looks like
+		this.spaceForOneFlickityArrow = 65; // px
+		this.cardHeightToWidthFactor = 3/4;
+		this.extraNumberOfMarginsBetween6thColAndTheRest = 3;
+		this.cowIsThisFractionOfCardHeight = 2/3;
+		this.cowIsThisFractionOfCardWidth = 9/10;
+		this.cowIsThisPercentDownTheCard = 0.43;
+		this.numberIsThisPercentDownTheCard = 0.5;
+		
+		// dont change these unless you know what youre doing
+		this.numberOfRowsOnTableCanvas = 4;
+		this.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn = 6;
+		this.numberOfColsOnHandCanvas = 5;
+		this.numberOfRowsOnHandCanvas = 2;
+		this.percentageOfGalleryHeightLeftForThePlayCardButtonBelowHandCanvas = 0.2;
+		
+		// calculated depening on game instance
+		this.totalNumberOfColsOnTableCanvas = undefined;
+		this.additionalColsOnTableCanvasForCardsPlayedThisTurn = undefined;	// depends on the number of players
+		this.deFactoSpaceForOneFlickityArrow = undefined;
+		
+		// calculated layout dimensions
+		this.galleryWidth = undefined;
+		this.galleryHeight = undefined;
+		this.bScoreboardBelowGallery = undefined;
+		this.scoreboardWidth = undefined;
+		this.scoreboardHeight = undefined;
+	}
+	
 	/************************************************************************************
-	Based on the window dimensions, this function will return an object with the following
-	members:
+	Based on the window dimensions, this function will set the following of its own attributes:
 		- galleryWidth
 		- galleryHeight
 		- bScoreboardBelowGallery
 		- scoreboardWidth
 		- scoreboardHeight
 	*************************************************************************************/
-	static calculate()
+	calculate()
 	{
 		const windowWidth = $(window).width();
 		const windowHeight = $(window).height();
@@ -21,7 +57,7 @@ class LayoutCalculator
 		or the full height.
 		Note: I didnt really give it the full screen height, I deducted the height of the header
 		*******************************************************************************************/
-		let galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth, windowHeight - headerHeight)
+		let galleryDimensions = this.calculateGalleryDimensions(windowWidth, windowHeight - headerHeight)
 		
 		let galleryWidth = galleryDimensions.width;
 		let galleryHeight = galleryDimensions.height;
@@ -34,27 +70,32 @@ class LayoutCalculator
 		if (bScoreboardBelowGallery)
 		{
 			/* CASE 1 : screen vertical alignment: place scoreboard bellow gallery*/
-			return {galleryWidth: galleryWidth,
-					galleryHeight: galleryHeight,
-					bScoreboardBelowGallery: true,
-					scoreboardWidth: galleryWidth,
-					scoreboardHeight: 1000};
+			this.galleryWidth = galleryWidth;
+			this.galleryHeight = galleryHeight;
+			this.bScoreboardBelowGallery = true;
+			this.scoreboardWidth = galleryWidth;
+			this.scoreboardHeight = 1000;
+			
+			return;
 		}
 		
 		/*******************************************************************************************
 		If here, it means the gallery took up the full height of the screen.
 		We dont want the width of the gallery + the width of the scoreboard to be wider that the screen,
 		we never want horizontal scrolling.
-		But we need to make sure the scoreboard is wide enough. Wide enough is defined in LayoutCalculator.scoreboardWidthWhenHorizontalLayout()
+		But we need to make sure the scoreboard is wide enough. Wide enough is defined in this.scoreboardWidthWhenHorizontalLayout()
 		So, check if the space left to the right of the gallery is wide enough.
 		*******************************************************************************************/
-		if (windowWidth - galleryWidth > LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight))
+		if (windowWidth - galleryWidth > this.scoreboardWidthWhenHorizontalLayout(galleryHeight))
 		{
 			/* CASE 2 : screen horizontal alignment: place scoreboard beside gallery. There was naturally space for the scoreboard.*/
-			return {galleryWidth: galleryWidth, galleryHeight: galleryHeight,
-					bScoreboardBelowGallery: false,
-					scoreboardWidth: LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight),
-					scoreboardHeight: galleryHeight};
+			this.galleryWidth = galleryWidth;
+			this.galleryHeight = galleryHeight;
+			this.bScoreboardBelowGallery = false;
+			this.scoreboardWidth = this.scoreboardWidthWhenHorizontalLayout(galleryHeight);
+			this.scoreboardHeight = galleryHeight;
+			
+			return;
 		}
 		
 		/*******************************************************************************************
@@ -66,10 +107,13 @@ class LayoutCalculator
 		if (!bSpectatorMode)
 		{
 			/* CASE 3 :*/
-			return {galleryWidth: galleryWidth, galleryHeight: galleryHeight,
-					bScoreboardBelowGallery: true,
-					scoreboardWidth: galleryWidth,
-					scoreboardHeight: galleryHeight};
+			this.galleryWidth = galleryWidth;
+			this.galleryHeight = galleryHeight;
+			this.bScoreboardBelowGallery = true;
+			this.scoreboardWidth = galleryWidth;
+			this.scoreboardHeight = 1000;
+			
+			return;
 		}		
 		
 		/*******************************************************************************************
@@ -79,16 +123,18 @@ class LayoutCalculator
 		So, recalculate the gallery dimensions, and give it as its max width the
 		screen width - space needed for scoreboard.
 		*******************************************************************************************/
-		galleryDimensions = LayoutCalculator.calculateGalleryDimensions(windowWidth - LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight), windowHeight - headerHeight)
+		galleryDimensions = this.calculateGalleryDimensions(windowWidth - this.scoreboardWidthWhenHorizontalLayout(galleryHeight), windowHeight - headerHeight)
 		galleryWidth = galleryDimensions.width;
 		galleryHeight = galleryDimensions.height;
 		
 		/* CASE 4 : screen horizontal alignment: place scoreboard beside gallery. Gallery had to be shrunk to fit scoreboard.*/
-		return {galleryWidth: galleryWidth, galleryHeight: galleryHeight,
-			bScoreboardBelowGallery: false,
-			scoreboardWidth: LayoutCalculator.scoreboardWidthWhenHorizontalLayout(galleryHeight),
-			scoreboardHeight: galleryHeight};
+		this.galleryWidth = galleryWidth;
+		this.galleryHeight = galleryHeight;
+		this.bScoreboardBelowGallery = false;
+		this.scoreboardWidth = this.scoreboardWidthWhenHorizontalLayout(galleryHeight);
+		this.scoreboardHeight = galleryHeight;
 		
+		return;
 	}
 	
 	
@@ -105,13 +151,13 @@ class LayoutCalculator
 		The point is to calculate the dimensions of the table canvas based on card dimensions, margins, etc.
 		Note: totalNumberOfColsOnTableCanvas = number of cols for the game + number of cols for cards played this turn (depends on number of players)
 		
-		See the constants cardHeightToWidthFactor, numberOfRowsOnTableCanvas, totalNumberOfColsOnTableCanvas, margin,
+		See the constants this.cardHeightToWidthFactor, numberOfRowsOnTableCanvas, totalNumberOfColsOnTableCanvas, margin,
 		and extraSpaceBetween6thColAndLastCol.
 		Those numbers will be set by the the user and the canvas and cards will be layed out acordingly.
 		
 		The dimensions of the canvas considering the number of cards and the dimensions of the cards can be derived this way:
 
-			cardWidth = cardHeight * cardHeightToWidthFactor
+			cardWidth = cardHeight * this.cardHeightToWidthFactor
 			tableCanvasWidth = (totalNumberOfColsOnTableCanvas * cardWidth) + (totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin
 			tableCanvasHeight = (numberOfRowsOnTableCanvas * cardHeight) + (numberOfRowsOnTableCanvas + 1)*margin
 			
@@ -121,38 +167,38 @@ class LayoutCalculator
 			The result is:
 				tableCanvasHeight = ((numberOfRowsOnTableCanvas*
 												(tableCanvasWidth - ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)))/
-												(totalNumberOfColsOnTableCanvas * cardHeightToWidthFactor)) +
+												(totalNumberOfColsOnTableCanvas * this.cardHeightToWidthFactor)) +
 												((numberOfRowsOnTableCanvas + 1)*margin)
 				tableCanvasWidth = ((totalNumberOfColsOnTableCanvas *
-											 cardHeightToWidthFactor * (tableCanvasHeight - ((numberOfRowsOnTableCanvas + 1)*margin)))/
+											 this.cardHeightToWidthFactor * (tableCanvasHeight - ((numberOfRowsOnTableCanvas + 1)*margin)))/
 											 numberOfRowsOnTableCanvas) + ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)
 	****************************************************************************************************************************************************************/
-	static calculateGalleryDimensions(maxWidth, maxHeight)
+	calculateGalleryDimensions(maxWidth, maxHeight)
 	{
 		let bTookUpFullMaxWidth = true;
 		
 		// CASE 1
-		let tabletableCanvasWidth = maxWidth - 2*deFactoSpaceForOneFlickityArrow;
-		let tabletableCanvasHeight = ((numberOfRowsOnTableCanvas*
-												(tabletableCanvasWidth - ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)))/
-												(totalNumberOfColsOnTableCanvas * cardHeightToWidthFactor)) +
-												((numberOfRowsOnTableCanvas + 1)*margin);
+		let tabletableCanvasWidth = maxWidth - 2*this.deFactoSpaceForOneFlickityArrow;
+		let tabletableCanvasHeight = ((this.numberOfRowsOnTableCanvas*
+												(tabletableCanvasWidth - ((this.totalNumberOfColsOnTableCanvas + 1 + this.extraNumberOfMarginsBetween6thColAndTheRest)*this.margin)))/
+												(this.totalNumberOfColsOnTableCanvas * this.cardHeightToWidthFactor)) +
+												((this.numberOfRowsOnTableCanvas + 1)*this.margin);
 		
 		// if by setting tabletableCanvasWidth = maxWidth - 2*deFactoSpaceForOneFlickityArrow and maintaining the ration we make the canvas taller than the screen
 		if (tabletableCanvasHeight > maxHeight)
 		{	
 				// CASE 2
 				tabletableCanvasHeight = maxHeight;
-				tabletableCanvasWidth = ((totalNumberOfColsOnTableCanvas *
-											 cardHeightToWidthFactor * (tabletableCanvasHeight - ((numberOfRowsOnTableCanvas + 1)*margin)))/
-											 numberOfRowsOnTableCanvas) + ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin);
+				tabletableCanvasWidth = ((this.totalNumberOfColsOnTableCanvas *
+											 this.cardHeightToWidthFactor * (tabletableCanvasHeight - ((this.numberOfRowsOnTableCanvas + 1)*this.margin)))/
+											 this.numberOfRowsOnTableCanvas) + ((this.totalNumberOfColsOnTableCanvas + 1 + this.extraNumberOfMarginsBetween6thColAndTheRest)*this.margin);
 				bTookUpFullMaxWidth = false;
 		}
 
-		return {width: tabletableCanvasWidth + 2*deFactoSpaceForOneFlickityArrow, height: tabletableCanvasHeight, bTookUpFullMaxWidth: bTookUpFullMaxWidth};
+		return {width: tabletableCanvasWidth + 2*this.deFactoSpaceForOneFlickityArrow, height: tabletableCanvasHeight, bTookUpFullMaxWidth: bTookUpFullMaxWidth};
 	}
 	
-	static scoreboardWidthWhenHorizontalLayout(galleryHeight)
+	scoreboardWidthWhenHorizontalLayout(galleryHeight)
 	{
 		return (1/2)*galleryHeight;
 	}

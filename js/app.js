@@ -1,8 +1,13 @@
 "use strict";
 
 let bSpectatorMode = false;
+let numberOfPlayers = 10;
+let flickityEnabled = true;
+
+let lc = undefined;
 
 $(function () {
+	lc = new LayoutCalculator();
 	sixNimmtModel = new SixNimmtModel();
 	sixNimmtView = new SixNimmtView(sixNimmtModel);
 	menuView = new MenuView();

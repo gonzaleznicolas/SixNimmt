@@ -6,8 +6,8 @@ class TableDrawer extends Drawer
 	{
 		super(canvas);
 		
-		this._numberOfRows = numberOfRowsOnTableCanvas;
-		this._numberOfCols = numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn;
+		this._numberOfRows = lc.numberOfRowsOnTableCanvas;
+		this._numberOfCols = lc.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn ;
 		this._totalExtraSpaceToTheRightForUpcomingCards = undefined;
 		
 		// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
@@ -34,7 +34,7 @@ class TableDrawer extends Drawer
 		let numberOfRectanglesDrawn = 0;
 		for (let row = 0; row < this._numberOfRows && numberOfRectanglesDrawn < numberOfPlayers; row++)
 		{
-			for (let col = 0; col < additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfRectanglesDrawn < numberOfPlayers; col++)
+			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfRectanglesDrawn < numberOfPlayers; col++)
 			{
 				
 				this.drawUpcomingCardRectangle(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y);
@@ -63,7 +63,7 @@ class TableDrawer extends Drawer
 		ctx.strokeStyle = "rgba(255, 255, 255, 1)";
 		ctx.setLineDash([3, 3]);
 		
-		BasicShapeDrawer.drawCardShape(ctx, x, y, width, height, radius);
+		BasicShapeDrawer.drawCardShape(ctx, x, y, width, height, lc.radius);
 		ctx.stroke();
 		ctx.closePath();
 		ctx.setLineDash([]);
@@ -80,15 +80,15 @@ class TableDrawer extends Drawer
 		ctx.strokeStyle = "rgba(111, 10, 10, 1)";
 		ctx.setLineDash([3, 3]);
 		
-		BasicShapeDrawer.drawCardShape(ctx, x, y, width, height, radius);
+		BasicShapeDrawer.drawCardShape(ctx, x, y, width, height, lc.radius);
 		ctx.stroke();
 		ctx.closePath();
 		ctx.setLineDash([]);
 
 		// draw angry cow
 		ctx.fillStyle = "rgba(111, 10, 10, 1)";
-		const cowWidth = cowIsThisFractionOfCardWidth*this._cardWidth;
-		const cowHeight = cowIsThisFractionOfCardHeight*this._cardHeight;
+		const cowWidth = lc.cowIsThisFractionOfCardWidth*this._cardWidth;
+		const cowHeight = lc.cowIsThisFractionOfCardHeight*this._cardHeight;
 		const centreX = x + this._cardWidth/2;
 		const centreY = y + this._cardHeight/2;
 		BasicShapeDrawer.drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
@@ -98,7 +98,7 @@ class TableDrawer extends Drawer
 	
 	resize(galleryWidth, galleryHeight)
 	{
-		this.setCanvasSize(galleryWidth - 2*deFactoSpaceForOneFlickityArrow, galleryHeight);
+		this.setCanvasSize(galleryWidth - 2*lc.deFactoSpaceForOneFlickityArrow, galleryHeight);
 		this.calculateCardDimensions();
 		this.calculateCardCoordinates();
 		this.calculateUpcomingCardCoordinates();
@@ -106,45 +106,45 @@ class TableDrawer extends Drawer
 
 	calculateCardDimensions()
 	{
-		this._cardWidth = (this._canvas.width - ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)) / totalNumberOfColsOnTableCanvas;
-		this._cardHeight = (this._canvas.height - ((numberOfRowsOnTableCanvas + 1)*margin)) / numberOfRowsOnTableCanvas;
+		this._cardWidth = (this._canvas.width - ((lc.totalNumberOfColsOnTableCanvas + 1 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin)) / lc.totalNumberOfColsOnTableCanvas;
+		this._cardHeight = (this._canvas.height - ((lc.numberOfRowsOnTableCanvas + 1)*lc.margin)) / lc.numberOfRowsOnTableCanvas;
 		
-		this._totalExtraSpaceToTheRightForUpcomingCards = this._cardWidth*additionalColsOnTableCanvasForCardsPlayedThisTurn + extraNumberOfMarginsBetween6thColAndTheRest*margin;
+		this._totalExtraSpaceToTheRightForUpcomingCards = this._cardWidth*lc.additionalColsOnTableCanvasForCardsPlayedThisTurn + lc.extraNumberOfMarginsBetween6thColAndTheRest*lc.margin;
 	}
 	
 	calculateCardCoordinates()
 	{
-		let x = margin;
-		let y = margin;
+		let x = lc.margin;
+		let y = lc.margin;
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
-			x = margin;
+			x = lc.margin;
 			this._cardCoordinates[row] = [];
 			for (let col = 0; col < this._numberOfCols; col++)
 			{
 				this._cardCoordinates[row][col] = {x: x, y: y};
-				x = x + this._cardWidth + margin;
+				x = x + this._cardWidth + lc.margin;
 			}
-			y = y + this._cardHeight + margin;
+			y = y + this._cardHeight + lc.margin;
 		}
 	}
 	
 	calculateUpcomingCardCoordinates()
 	{
 		let x = (this._numberOfCols)*this._cardWidth +
-					(this._numberOfCols + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin;
-		let y = margin;
+					(this._numberOfCols + 1 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin;
+		let y = lc.margin;
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
 			x = (this._numberOfCols)*this._cardWidth +
-					(this._numberOfCols + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin;
+					(this._numberOfCols + 1 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin;
 			this._upcomingCardCoordinates[row] = [];
-			for (let col = 0; col < additionalColsOnTableCanvasForCardsPlayedThisTurn; col++)
+			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn; col++)
 			{
 				this._upcomingCardCoordinates[row][col] = {x: x, y: y};
-				x = x + this._cardWidth + margin;
+				x = x + this._cardWidth + lc.margin;
 			}
-			y = y + this._cardHeight + margin;
+			y = y + this._cardHeight + lc.margin;
 		}
 	}
 	

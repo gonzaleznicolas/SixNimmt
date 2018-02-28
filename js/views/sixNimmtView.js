@@ -1,38 +1,11 @@
 "use strict";
 
-var bodyStyles = window.getComputedStyle(document.body);
-
-// desing parameters
-const spaceForOneFlickityArrow = 65; // px
-const cardHeightToWidthFactor = 3/4;
-
-const marginStr = bodyStyles.getPropertyValue('--margin').trim()
-const margin = parseInt(marginStr.substring(0, marginStr.indexOf("px")).trim()); // px
-const extraNumberOfMarginsBetween6thColAndTheRest = 3;
-const radius = 10; // px
-const cowIsThisFractionOfCardHeight = 2/3;
-const cowIsThisFractionOfCardWidth = 9/10;
-const cowIsThisPercentDownTheCard = 0.43;
-const numberIsThisPercentDownTheCard = 0.5;
-const numberOfRowsOnTableCanvas = 4;
-const numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn = 6;
-const numberOfColsOnHandCanvas = 5;
-const numberOfRowsOnHandCanvas = 2;
-const percentageOfGalleryHeightLeftForThePlayCardButtonBelowHandCanvas = 0.2;
-
-// globals that depend on specific instance of the game 
-let deFactoSpaceForOneFlickityArrow = undefined;
-let numberOfPlayers = 4;
-let additionalColsOnTableCanvasForCardsPlayedThisTurn = undefined;	// depends on the number of players
-let totalNumberOfColsOnTableCanvas = undefined;
-let flickityEnabled = true;
-
 class SixNimmtView
 {
 	constructor(sixNimmtModel) {
-		deFactoSpaceForOneFlickityArrow = bSpectatorMode ? 0 : spaceForOneFlickityArrow;
-		additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/numberOfRowsOnTableCanvas);
-		totalNumberOfColsOnTableCanvas = numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn + additionalColsOnTableCanvasForCardsPlayedThisTurn;
+		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode ? 0 : lc.spaceForOneFlickityArrow;
+		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/lc.numberOfRowsOnTableCanvas);
+		lc.totalNumberOfColsOnTableCanvas = lc.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn  + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
 		
 		this._gallery = $('.gallery');
 		
@@ -88,20 +61,20 @@ class SixNimmtView
 	
 	onResizeWindowHelper()
 	{
-		const s = LayoutCalculator.calculate();
+		lc.calculate();
 		$("#game").css("visibility", "hidden"); 
 		
-		if (s.bScoreboardBelowGallery)
+		if (lc.bScoreboardBelowGallery)
 			$("#game").css("flex-direction", "column");
 		else
 			$("#game").css("flex-direction", "row");
 
-		this._tableDrawer.resize(s.galleryWidth, s.galleryHeight);
+		this._tableDrawer.resize(lc.galleryWidth, lc.galleryHeight);
 		if (!bSpectatorMode)
-			this._handDrawer.resize(s.galleryWidth, s.galleryHeight);
+			this._handDrawer.resize(lc.galleryWidth, lc.galleryHeight);
 		
-		this._scoreboard.resize(s.scoreboardWidth, s.scoreboardHeight);
-		this.setGallerySize(s.galleryWidth);
+		this._scoreboard.resize(lc.scoreboardWidth, lc.scoreboardHeight);
+		this.setGallerySize(lc.galleryWidth);
 
 		this._tableDrawer.draw();
 		if (!bSpectatorMode)
