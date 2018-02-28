@@ -69,19 +69,19 @@ class HandDrawer extends Drawer
 		/* step 1: find out what the canvas height would be if we set the canvas width to the maxWidth:
 		We know cardWidth = cardHeight * lc.cardHeightToWidthFactor
 		Let canvasWidth = maxWidth
-		Let maxWidth = (lc.numberOfColsOnHandCanvas +1)*lc.margin + lc.numberOfColsOnHandCanvas *cardWidth
+		Let maxWidth = (this._numberOfCols +1)*lc.margin + this._numberOfCols *cardWidth
 		so we can solve for the card height: */
 		let canvasWidth = maxWidth;
-		let cardHeight = (canvasWidth - (lc.numberOfColsOnHandCanvas +1)*lc.margin)/(lc.numberOfColsOnHandCanvas * lc.cardHeightToWidthFactor);
+		let cardHeight = (canvasWidth - (this._numberOfCols +1)*lc.margin)/(this._numberOfCols * lc.cardHeightToWidthFactor);
 		// from the card height, we can find the canvas height
-		let canvasHeight = (lc.numberOfRowsOnHandCanvas)*cardHeight + (lc.numberOfRowsOnHandCanvas+1)*lc.margin;
+		let canvasHeight = (this._numberOfRows)*cardHeight + (this._numberOfRows+1)*lc.margin;
 		
 		/* step 2: if by making the width the maxWidth, we made the canvas too tall, then set the height to the maxHeight instead and repeat the process*/
 		if (canvasHeight > maxHeight)
 		{
 			canvasHeight = maxHeight;
-			cardHeight = (maxHeight - (lc.numberOfRowsOnHandCanvas+1)*lc.margin)/(lc.numberOfRowsOnHandCanvas);
-			canvasWidth = (lc.numberOfColsOnHandCanvas +1)*lc.margin + lc.numberOfColsOnHandCanvas *lc.cardHeightToWidthFactor*cardHeight;
+			cardHeight = (maxHeight - (this._numberOfRows+1)*lc.margin)/(this._numberOfRows);
+			canvasWidth = (this._numberOfCols +1)*lc.margin + this._numberOfCols *lc.cardHeightToWidthFactor*cardHeight;
 		}
 		
 		this._cardHeight = cardHeight;

@@ -123,7 +123,7 @@ class LayoutCalculator
 		/*******************************************************************************************
 		If here, we are laying out in horizontal mode, the space left to the right of the gallery
 		is not wide enough for the scoreboard, and we are on spectator mode so we wont tolerate any scrolling.
-		So the solution is to shring the gallery so that we have space for the scoreboard.
+		So the solution is to shrink the gallery so that we have space for the scoreboard.
 		So, recalculate the gallery dimensions, and give it as its max width the
 		screen width - space needed for scoreboard.
 		*******************************************************************************************/

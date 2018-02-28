@@ -8,7 +8,6 @@ class TableDrawer extends Drawer
 		
 		this._numberOfRows = lc.numberOfRowsOnTableCanvas;
 		this._numberOfCols = lc.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn ;
-		this._totalExtraSpaceToTheRightForUpcomingCards = undefined;
 		
 		// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
 		this._upcomingCardCoordinates = []; 
@@ -108,25 +107,6 @@ class TableDrawer extends Drawer
 	{
 		this._cardWidth = (this._canvas.width - ((lc.totalNumberOfColsOnTableCanvas + 1 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin)) / lc.totalNumberOfColsOnTableCanvas;
 		this._cardHeight = (this._canvas.height - ((lc.numberOfRowsOnTableCanvas + 1)*lc.margin)) / lc.numberOfRowsOnTableCanvas;
-		
-		this._totalExtraSpaceToTheRightForUpcomingCards = this._cardWidth*lc.additionalColsOnTableCanvasForCardsPlayedThisTurn + lc.extraNumberOfMarginsBetween6thColAndTheRest*lc.margin;
-	}
-	
-	calculateCardCoordinates()
-	{
-		let x = lc.margin;
-		let y = lc.margin;
-		for (let row = 0; row < this._numberOfRows; row++)
-		{
-			x = lc.margin;
-			this._cardCoordinates[row] = [];
-			for (let col = 0; col < this._numberOfCols; col++)
-			{
-				this._cardCoordinates[row][col] = {x: x, y: y};
-				x = x + this._cardWidth + lc.margin;
-			}
-			y = y + this._cardHeight + lc.margin;
-		}
 	}
 	
 	calculateUpcomingCardCoordinates()
