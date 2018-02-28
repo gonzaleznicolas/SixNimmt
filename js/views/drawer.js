@@ -84,7 +84,7 @@ class Drawer
 	{
 		const ctx = this._ctx;
 		BasicShapeDrawer.drawCardShape(ctx, x, y, this._cardWidth, this._cardHeight, lc.radius);
-		ctx.fillStyle = "rgba(127, 80, 147, 0.85)";
+		ctx.fillStyle = lc.nimmtPurple.substring(0, lc.nimmtPurple.indexOf("1)"))+"0.85)";
 		ctx.fill();
 		ctx.closePath();
 	}
