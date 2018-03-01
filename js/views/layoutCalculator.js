@@ -5,6 +5,8 @@ class LayoutCalculator
 	constructor()
 	{
 		// design parameters defined in main.css body{}
+		// dont make these global because where they are now, we are sure that this doesnt execute until the document is loaded.
+		// if we make it global, this could execute before the css loads.
 		let bodyStyles = window.getComputedStyle(document.body);
 		let marginStr = bodyStyles.getPropertyValue('--margin').trim()
 		this.margin = parseInt(marginStr.substring(0, marginStr.indexOf("px")).trim());
