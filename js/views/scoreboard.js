@@ -12,21 +12,26 @@ class Scoreboard
 	{
 		this._scoreboardContainer.empty();
 		
-		let sidelength = undefined;
+		let elementHeight = undefined;
+		let elementWidth = undefined;
 		if (lc.bScoreboardBelowGallery)
 		{
-			sidelength = (lc.galleryWidth  - 6*lc.margin)/5;
+			let scoreboardElementsPerRow = 4;
+			let numberOfRows = Math.ceil(numberOfPlayers/scoreboardElementsPerRow);
+			elementWidth = (lc.galleryWidth - (scoreboardElementsPerRow + 1)*lc.margin)/scoreboardElementsPerRow;
+			elementHeight = elementWidth * (1/lc.scoreboardElementHeightToWidthFactor);
 		}
 		else
 		{
-			sidelength = (lc.galleryHeight  - 6*lc.margin)/5;
+			elementWidth = lc.scoreboardWidth;
+			elementHeight = (lc.galleryHeight - 11*lc.margin)/10;
 		}
 		for (let i = 0; i < numberOfPlayers; i++)
 		{
 			let e = $(document.createElement("div"));
 			e.addClass("scoreboardElement");
-			e.css("width", sidelength + "px");
-			e.css("height", sidelength + "px");
+			e.css("width", elementWidth + "px");
+			e.css("height", elementHeight + "px");
 			this._scoreboardContainer.append(e);
 		}
 	}

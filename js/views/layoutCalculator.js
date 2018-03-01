@@ -24,6 +24,7 @@ class LayoutCalculator
 		this.cowIsThisFractionOfCardWidth = 9/10;
 		this.cowIsThisPercentDownTheCard = 0.43;
 		this.numberIsThisPercentDownTheCard = 0.5;
+		this.scoreboardElementHeightToWidthFactor = 4;
 		
 		// dont change these unless you know what youre doing
 		this.numberOfRowsOnTableCanvas = 4;
@@ -200,15 +201,19 @@ class LayoutCalculator
 	
 	scoreboardWidthWhenHorizontalLayout()
 	{
-		let numberOfColumns = Math.ceil(numberOfPlayers/5);
-		let squareSideLength = (this.galleryHeight  - 6*this.margin)/5;
-		return this.margin + numberOfColumns*(this.margin + squareSideLength);
+		let elementHeight = (this.galleryHeight - (maxNumberOfPlayers + 1)*this.margin)/maxNumberOfPlayers;
+		let elementWidth = elementHeight*this.scoreboardElementHeightToWidthFactor;
+		let scoreboardWidth = elementWidth + 2*this.margin;
+		return scoreboardWidth;
 	}
 	
 	scoreboardHeightWhenVerticalLayout()
 	{
-		let numberOfRows = Math.ceil(numberOfPlayers/5);
-		let squareSideLength = (this.galleryWidth  - 6*this.margin)/5;
-		return this.margin + numberOfRows*(this.margin + squareSideLength);
+		let scoreboardElementsPerRow = 4;
+		let numberOfRows = Math.ceil(numberOfPlayers/scoreboardElementsPerRow);
+		let elementWidth = (this.galleryWidth - (scoreboardElementsPerRow + 1)*this.margin)/scoreboardElementsPerRow;
+		let elementHeight = elementWidth * (1/this.scoreboardElementHeightToWidthFactor);
+		let scoreboardHeight = numberOfRows*elementHeight + (numberOfRows + 1)*this.margin;
+		return scoreboardHeight;
 	}
 }
