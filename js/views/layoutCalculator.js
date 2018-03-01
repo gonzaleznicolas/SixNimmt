@@ -72,16 +72,41 @@ class LayoutCalculator
 		/*******************************************************************************************
 		If the screen is such that the gallery took up the full width rather than the full height,
 		its a vertical screen and we will put the scoreboard bellow the gallery.
-		** but first we have to make sure that the 
+		** but first we have to make sure that the scoreboard+gallery+header fit in the screen,
+		or we are not in spectator mode (i.e. scrolling vertically is okay)
 		*******************************************************************************************/
 		/* CASE 1 : screen vertical alignment: place scoreboard bellow gallery*/
 		this.galleryWidth = galleryWidth;
 		this.galleryHeight = galleryHeight;
-		this.bScoreboardBelowGallery = true;
+		this.bScoreboardBelowGallery = bScoreboardBelowGallery;
 		this.scoreboardWidth = galleryWidth;
 		this.scoreboardHeight = this.scoreboardHeightWhenVerticalLayout();
-		if (bScoreboardBelowGallery && (this.galleryHeight + this.scoreboardHeight + headerHeight< windowHeight || !bSpectatorMode))
+		if (bScoreboardBelowGallery)
+		{
+			if(this.galleryHeight + this.scoreboardHeight + headerHeight< windowHeight || !bSpectatorMode)
+				return;
+			
+			/*******************************************************************************************
+			If here, the gallery took up the full width (we want the scoreboard below the gallery)
+			but the problem is that we are in spectator mode (need everything to fit in the screen) and
+			everything did not fit in the screen naturally.
+			So, lets shrink the gallery until it all fits. do this by giving it a max height of the available
+			space after leaving space for the scoreboard and the header.
+			*******************************************************************************************/
+			/* CASE 1.5 : screen vertical alignment: place scoreboard bellow gallery*/
+			galleryDimensions = this.calculateGalleryDimensions(galleryWidth, windowHeight - headerHeight - this.scoreboardHeight);
+			galleryWidth = galleryDimensions.width;
+			galleryHeight = galleryDimensions.height;
+
+			this.galleryWidth = galleryWidth;
+			this.galleryHeight = galleryHeight;
+			this.bScoreboardBelowGallery = bScoreboardBelowGallery;
+			this.scoreboardWidth = galleryWidth;
+			this.scoreboardHeight = this.scoreboardHeightWhenVerticalLayout();
+			
 			return;
+		}
+		
 		
 		/*******************************************************************************************
 		If here, it means the gallery took up the full height of the screen.
@@ -121,7 +146,7 @@ class LayoutCalculator
 		So, recalculate the gallery dimensions, and give it as its max width the
 		screen width - space needed for scoreboard.
 		*******************************************************************************************/
-		galleryDimensions = this.calculateGalleryDimensions(windowWidth - this.scoreboardWidthWhenHorizontalLayout(), windowHeight - headerHeight)
+		galleryDimensions = this.calculateGalleryDimensions(windowWidth - this.scoreboardWidthWhenHorizontalLayout(), windowHeight - headerHeight);
 		galleryWidth = galleryDimensions.width;
 		galleryHeight = galleryDimensions.height;
 		
