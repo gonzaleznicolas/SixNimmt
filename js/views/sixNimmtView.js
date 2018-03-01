@@ -62,7 +62,7 @@ class SixNimmtView
 	onResizeWindowHelper()
 	{
 		lc.calculate();
-		$("#game").css("visibility", "hidden"); 
+		//$("#game").css("visibility", "hidden"); 
 		
 		if (lc.bScoreboardBelowGallery)
 			$("#game").css("flex-direction", "column");
@@ -81,7 +81,7 @@ class SixNimmtView
 			this._handDrawer.draw();
 		this._scoreboard.draw();
 		
-		$("#game").css("visibility", "visible"); 
+		//$("#game").css("visibility", "visible"); 
 	}
 	
 	onResizeWindow()

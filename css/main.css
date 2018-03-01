@@ -36,7 +36,7 @@ header{
 
 #game {
 	display: flex;
-	visibility: hidden;
+/* 	visibility: hidden; */
 	margin-top: var(--menuButtonSideLength);
 }
 
@@ -54,11 +54,19 @@ header{
 }
 
 #scoreboard{
-	display: flex;
-	padding: 0.3em;
 	background: rgba(150, 80, 147, 1);
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: flex-start;
 	color: rgba(255, 255, 255, 1);
-	flex-direction: column;
+	padding: calc(var(--margin)/2);
+}
+
+.scoreboardElement{
+	border: 1px solid black;
+	background: white;
+	margin: calc(var(--margin)/2);
 }
 
 /* This container is just so the play card button wont show wider than necessary on some browsers*/
