@@ -81,36 +81,13 @@ class LayoutCalculator
 		this.bScoreboardBelowGallery = bScoreboardBelowGallery;
 		this.scoreboardWidth = galleryWidth;
 		this.scoreboardHeight = this.scoreboardHeightWhenVerticalLayout();
-		if (bScoreboardBelowGallery)
-		{
-			if(this.galleryHeight + this.scoreboardHeight + headerHeight< windowHeight || !bSpectatorMode)
-				return;
-			
-			/*******************************************************************************************
-			If here, the gallery took up the full width (we want the scoreboard below the gallery)
-			but the problem is that we are in spectator mode (need everything to fit in the screen) and
-			everything did not fit in the screen naturally.
-			So, lets shrink the gallery until it all fits. do this by giving it a max height of the available
-			space after leaving space for the scoreboard and the header.
-			*******************************************************************************************/
-			/* CASE 1.5 : screen vertical alignment: place scoreboard bellow gallery*/
-			galleryDimensions = this.calculateGalleryDimensions(galleryWidth, windowHeight - headerHeight - this.scoreboardHeight);
-			galleryWidth = galleryDimensions.width;
-			galleryHeight = galleryDimensions.height;
-
-			this.galleryWidth = galleryWidth;
-			this.galleryHeight = galleryHeight;
-			this.bScoreboardBelowGallery = bScoreboardBelowGallery;
-			this.scoreboardWidth = galleryWidth;
-			this.scoreboardHeight = this.scoreboardHeightWhenVerticalLayout();
-			
+		if (bScoreboardBelowGallery && (this.galleryHeight + this.scoreboardHeight + headerHeight< windowHeight || !bSpectatorMode))
 			return;
-		}
 		
 		
 		/*******************************************************************************************
 		If here, it means the gallery took up the full height of the screen.
-		We dont want the width of the gallery + the width of the scoreboard to be wider that the screen,
+		We dont want the width of the gallery + the width of the scoreboard to be wider than the screen,
 		we never want horizontal scrolling.
 		But we need to make sure the scoreboard is wide enough. Wide enough is defined in this.scoreboardWidthWhenHorizontalLayout()
 		So, check if the space left to the right of the gallery is wide enough.
@@ -126,7 +103,7 @@ class LayoutCalculator
 		
 		/*******************************************************************************************
 		If here, it means the gallery took up the full height of the screen. We have some space to the side, but
-		if we didnt fall into the previous if, its because the space to the side is not enought for the scoreboard.
+		if we didnt fall into the previous if, its because the space to the side is not enough for the scoreboard.
 		If we are not in spectator mode, someone is doing viewing this probably on their phone, so they can scroll down
 		to see the scoreboard. Lets put the scoreboard below.
 		*******************************************************************************************/
