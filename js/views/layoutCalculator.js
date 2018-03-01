@@ -25,6 +25,7 @@ class LayoutCalculator
 		this.cowIsThisPercentDownTheCard = 0.43;
 		this.numberIsThisPercentDownTheCard = 0.5;
 		this.scoreboardElementHeightToWidthFactor = 4;
+		this.scoreboardElementsPerRowOnVerticalLayout = 4;
 		
 		// dont change these unless you know what youre doing
 		this.numberOfRowsOnTableCanvas = 4;
@@ -209,9 +210,8 @@ class LayoutCalculator
 	
 	scoreboardHeightWhenVerticalLayout()
 	{
-		let scoreboardElementsPerRow = 4;
-		let numberOfRows = Math.ceil(numberOfPlayers/scoreboardElementsPerRow);
-		let elementWidth = (this.galleryWidth - (scoreboardElementsPerRow + 1)*this.margin)/scoreboardElementsPerRow;
+		let numberOfRows = Math.ceil(numberOfPlayers/this.scoreboardElementsPerRowOnVerticalLayout);
+		let elementWidth = (this.galleryWidth - (this.scoreboardElementsPerRowOnVerticalLayout + 1)*this.margin)/this.scoreboardElementsPerRowOnVerticalLayout;
 		let elementHeight = elementWidth * (1/this.scoreboardElementHeightToWidthFactor);
 		let scoreboardHeight = numberOfRows*elementHeight + (numberOfRows + 1)*this.margin;
 		return scoreboardHeight;
