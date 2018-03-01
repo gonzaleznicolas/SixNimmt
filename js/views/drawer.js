@@ -215,11 +215,19 @@ class Drawer
 	
 	getCanvasOffsetLeft()
 	{
-		return this._canvas.offsetLeft + $(this._canvas).closest(".gallery")[0].offsetLeft;
+		// because of how flickity works, to get the offset of the canvas we have to do it differently depending on whether flickity is enabled or not
+		if (bSpectatorMode || !bFlickityEnabled)
+			return this._canvas.offsetLeft;
+		else
+			return this._canvas.offsetLeft + $(".gallery")[0].offsetLeft;
 	}
 
 	getCanvasOffsetTop()
 	{
-		return this._canvas.offsetTop + $(this._canvas).closest(".gallery")[0].offsetTop;
+		// because of how flickity works, to get the offset of the canvas we have to do it differently depending on whether flickity is enabled or not
+		if (bSpectatorMode || !bFlickityEnabled)
+			return this._canvas.offsetTop;
+		else
+			return this._canvas.offsetTop + $(".gallery")[0].offsetTop;
 	}
 }

@@ -3,7 +3,7 @@
 class SixNimmtView
 {
 	constructor(sixNimmtModel) {
-		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode ? 0 : lc.spaceForOneFlickityArrow;
+		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
 		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/lc.numberOfRowsOnTableCanvas);
 		lc.totalNumberOfColsOnTableCanvas = lc.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn  + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
 		
@@ -37,7 +37,7 @@ class SixNimmtView
 	{
 		let flickity = undefined;
 		try{
-			if (flickityEnabled)
+			if (bFlickityEnabled)
 				flickity = new Flickity( this._gallery[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
 		}
 		catch (err)

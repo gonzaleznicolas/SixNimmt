@@ -2,7 +2,7 @@
 
 let bSpectatorMode = false;
 let numberOfPlayers = 2;
-let flickityEnabled = true;
+let bFlickityEnabled = false;
 
 let lc = undefined;
 

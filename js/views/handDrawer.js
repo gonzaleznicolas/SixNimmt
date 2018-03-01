@@ -61,7 +61,10 @@ class HandDrawer extends Drawer
 		this.setCanvasAndCardDimensions(lc.galleryWidth - 2*lc.deFactoSpaceForOneFlickityArrow, (1 - lc.percentageOfGalleryHeightLeftForThePlayCardButtonBelowHandCanvas)*lc.galleryHeight);
 		this.calculateCardCoordinates(); 
 		// update play card button 
-		$('#handWrapper').css("font-size", this._cardHeight*0.2 + "px"); 
+		$('#handContainer').css("font-size", this._cardHeight*0.2 + "px");
+		// this is so when !bFlickityEnabled and the play card button / please play card message are at the bottom,
+		// things arent jumping around because of the height difference between the play card button and the please play card message.
+		$('#handContainer').css("height", lc.galleryHeight + "px");
 	} 
 	 
 	setCanvasAndCardDimensions(maxWidth, maxHeight) 
