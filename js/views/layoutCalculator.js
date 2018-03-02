@@ -79,14 +79,14 @@ class LayoutCalculator
 			this.scoreboardWidth = this.galleryWidth;
 			this.setScoreboardHeightAndScoreboardElementDimensionsWhenVerticalLayout();
 			
-			// if the content fints in the window OR we are in NOT in spectator mode, we are done
+			// if the content fits in the window OR we are in NOT in spectator mode, we are done
 			if (this.galleryHeight + this.scoreboardHeight + headerHeight < windowHeight || !bSpectatorMode)
 				return;
 		}
 		
 		// if here, either:
 		//		1) From the beginning there was naturally space on the side of the gallery for the scoreboard OR
-		//		2) There was naturally space on the bottom of the gallery but not enough to aavoid scrolling, and we are in spectator mode so scrolling is not okay
+		//		2) There was naturally space on the bottom of the gallery but not enough to avoid scrolling, and we are in spectator mode so scrolling is not okay
 		// so, lets put the scoreboard on the side.
 		this.bScoreboardBelowGallery = false; // bScoreboardBelowGallery may already be false, if we didnt even go in the first if.
 		this.scoreboardHeight = this.galleryHeight;
@@ -96,7 +96,7 @@ class LayoutCalculator
 		if (this.galleryWidth + this.scoreboardWidth < windowWidth)
 			return;
 
-		
+		// if here, it did not fit naturally on the side, so shrink the gallery (by giving it a smaller maxWidth) enough for the scoreboard to fit
 		this.setGalleryDimensionsANDbScoreboardBelowGallery(windowWidth - this.scoreboardWidth, windowHeight - headerHeight);
 
 		this.bScoreboardBelowGallery = false;
