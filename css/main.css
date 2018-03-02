@@ -58,14 +58,14 @@ header{
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-content: flex-start;
-	justify-content: center;
 	padding: calc(var(--margin)/2);
+	font-family: 'Bangers';
 }
 
 .scoreboardElement{
-	border: 1px solid black;
-	background: white;
+	border: 1px solid grey;
 	margin: calc(var(--margin)/2);
+	color: rgba(255, 255, 255, 1); 
 }
 
 /* This container is just so the play card button wont show wider than necessary on some browsers*/

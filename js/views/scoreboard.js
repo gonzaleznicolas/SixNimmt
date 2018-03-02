@@ -5,27 +5,25 @@ class Scoreboard
 	constructor(players)
 	{
 		this._scoreboardContainer = $("#scoreboard");
-		this._scores = players.map(playerName => {return {name: playerName, score: 0}});
+
+		// make a ScoreboardElement object for each player
+		this._scoreboardElements = players.map(playerName => {return new ScoreboardElement(playerName)});
+
+		// put all the ScoreboardElements in the scoreboardContainer
+		this._scoreboardElements.forEach(element => this._scoreboardContainer.append(element._div));
 	}
-	
-	draw()
+
+	incrementScore(playerName, incrementBy)
 	{
-		this._scoreboardContainer.empty();
-		
-		for (let i = 0; i < numberOfPlayers; i++)
-		{
-			let e = $(document.createElement("div"));
-			e.addClass("scoreboardElement");
-			e.css("width", lc.scoreboardElementWidth + "px");
-			e.css("height", lc.scoreboardElementHeight + "px");
-			this._scoreboardContainer.append(e);
-		}
+		console.log(hi);
 	}
 	
 	resize()
 	{
 		this._scoreboardContainer.css("width", lc.scoreboardWidth + "px" );
 		this._scoreboardContainer.css("height", lc.scoreboardHeight + "px" );
+		this._scoreboardContainer.css("font-size", lc.scoreboardElementHeight + "px");
+		this._scoreboardElements.forEach(element => element.resize());
 	}
 	
 }

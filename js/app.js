@@ -1,6 +1,6 @@
 "use strict";
 
-let bSpectatorMode = true;
+let bSpectatorMode = false;
 let numberOfPlayers = 9;
 let bFlickityEnabled = true;
 let maxNumberOfPlayers = 10;

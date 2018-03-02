@@ -23,7 +23,7 @@ class SixNimmtView
 			this._handAnimation = new HandAnimation(this._handDrawer);
 		}
 
-		this._scoreboard = new Scoreboard(["Nico", "Nata", "Erin", "Catalina Gonzalez", "Nico", "Nata", "Erin", "Catalina Gonzalez", "Nico", "Nata", "Erin", "Catalina Gonzalez"]);
+		this._scoreboard = new Scoreboard(["Nico", "Nata", "Erin", "Catali", "Nico", "Nata", "IIIIII", "MMMMMM"]);
 		
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;
@@ -79,7 +79,6 @@ class SixNimmtView
 		this._tableDrawer.draw();
 		if (!bSpectatorMode)
 			this._handDrawer.draw();
-		this._scoreboard.draw();
 		
 		$("#game").css("visibility", "visible"); 
 	}
