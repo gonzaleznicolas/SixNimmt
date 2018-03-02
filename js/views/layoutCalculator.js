@@ -72,10 +72,10 @@ class LayoutCalculator
 		const headerHeight = $('header').height();
 
 		// see what dimensions the gallery takes if you give it the full screen (minus the header)
-		this.setGalleryDimensionsANDbScoreboardBelowGallery(windowWidth, windowHeight - headerHeight)
+		let bGalleryUsedMaxWidth = this.setGalleryDimensions(windowWidth, windowHeight - headerHeight)
 
 		// there is naturally space bellow the gallery
-		if (this.bScoreboardBelowGallery)
+		if (bGalleryUsedMaxWidth)
 		{
 			// set up the scoreboard to go below the gallery
 			this.scoreboardWidth = this.galleryWidth;
@@ -83,7 +83,10 @@ class LayoutCalculator
 			
 			// if the content fits in the window OR we are in NOT in spectator mode, we are done
 			if (this.galleryHeight + this.scoreboardHeight + headerHeight < windowHeight || !bSpectatorMode)
+			{
+				this.bScoreboardBelowGallery = true;
 				return;
+			}
 		}
 		else // there is naturally space to the side of the gallery
 		{
@@ -93,10 +96,13 @@ class LayoutCalculator
 			
 			// if the scoreboard fits on the side without horizontal scrolling, we are done
 			if (this.galleryWidth + this.scoreboardWidth < windowWidth)
+			{
+				this.bScoreboardBelowGallery = false;
 				return;
+			}
 			
 			// there was some space to the side, but not enough for the scoreboard.
-			// if we are not in specator mode, horizontal scrolling is allowed, so put the scoreboard below.
+			// if we are not in specator mode, vertical scrolling is allowed, so put the scoreboard below.
 			if (!bSpectatorMode)
 			{
 				this.bScoreboardBelowGallery = true;
@@ -105,22 +111,18 @@ class LayoutCalculator
 				return;
 			}
 		}
-		
+
 		// if here, we are in spectator mode and there wasnt space naturally beside or below for the scoreboard without scrolling
-		// in this case, always place the scoreboard beside the gallery, and simply shrink the gallery (by giving it a smaller maxWidth)
-		// so there is space for the scoreboard.
+		// in this case, always place the scoreboard beside the gallery, and simply shrink the gallery until there is space on the side for the scoreboard.
 		// this if fine because spectator mode is usually on a big screen so shrinking is okay.
-		this.bScoreboardBelowGallery = false; // bScoreboardBelowGallery may already be false, if we didnt even go in the first if.
-		this.scoreboardHeight = this.galleryHeight;
-		this.setScoreboardWidthAndScoreboardElementDimensionsWhenHorizontalLayout();
-		// the three lines above are important. we need to set this.scoreboardWidth this way so that when we subtract this from windowWidth
-		// and give that to setGalleryDimensionsANDbScoreboardBelowGallery, it is a number that makes sense. for eg. we dont want this.scoreboardWidth
-		// to be the width when we were trying to put the scoreboard bellow (it would be too wide)
-		this.setGalleryDimensionsANDbScoreboardBelowGallery(windowWidth - this.scoreboardWidth, windowHeight - headerHeight);
 		this.bScoreboardBelowGallery = false;
-		this.scoreboardHeight = this.galleryHeight;
-		this.setScoreboardWidthAndScoreboardElementDimensionsWhenHorizontalLayout();
-		return;
+		let widthTakenAway = 10;
+		do{
+			this.setGalleryDimensions(windowWidth - widthTakenAway, windowHeight - headerHeight);
+			this.scoreboardHeight = this.galleryHeight;
+			this.setScoreboardWidthAndScoreboardElementDimensionsWhenHorizontalLayout();
+			widthTakenAway += 10;
+		} while(this.galleryWidth + this.scoreboardWidth > windowWidth);
 	}
 	
 	setScoreboardWidthAndScoreboardElementDimensionsWhenHorizontalLayout()
@@ -173,7 +175,7 @@ class LayoutCalculator
 											 cardHeightToWidthFactor * (tableCanvasHeight - ((numberOfRowsOnTableCanvas + 1)*margin)))/
 											 numberOfRowsOnTableCanvas) + ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)
 	****************************************************************************************************************************************************************/
-	setGalleryDimensionsANDbScoreboardBelowGallery(maxWidth, maxHeight)
+	setGalleryDimensions(maxWidth, maxHeight)
 	{
 		let bTookUpFullMaxWidth = true;
 		
@@ -197,6 +199,6 @@ class LayoutCalculator
 
 		this.galleryWidth = tabletableCanvasWidth + 2*this.deFactoSpaceForOneFlickityArrow;
 		this.galleryHeight = tabletableCanvasHeight;
-		this.bScoreboardBelowGallery = bTookUpFullMaxWidth;
+		return bTookUpFullMaxWidth;
 	}
 }
