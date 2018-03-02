@@ -45,6 +45,8 @@ class LayoutCalculator
 		this.bScoreboardBelowGallery = undefined;
 		this.scoreboardWidth = undefined;
 		this.scoreboardHeight = undefined;
+		this.scoreboardElementWidth = undefined;
+		this.scoreboardElementHeight = undefined;
 	}
 	
 	/************************************************************************************
@@ -65,11 +67,7 @@ class LayoutCalculator
 		or the full height.
 		Note: I didnt really give it the full screen height, I deducted the height of the header
 		*******************************************************************************************/
-		let galleryDimensions = this.calculateGalleryDimensions(windowWidth, windowHeight - headerHeight)
-		
-		let galleryWidth = galleryDimensions.width;
-		let galleryHeight = galleryDimensions.height;
-		let bScoreboardBelowGallery = galleryDimensions.bTookUpFullMaxWidth;
+		this.calculateGalleryDimensions(windowWidth, windowHeight - headerHeight)
 		
 		/*******************************************************************************************
 		If the screen is such that the gallery took up the full width rather than the full height,
@@ -78,12 +76,10 @@ class LayoutCalculator
 		or we are not in spectator mode (i.e. scrolling vertically is okay)
 		*******************************************************************************************/
 		/* CASE 1 : screen vertical alignment: place scoreboard bellow gallery*/
-		this.galleryWidth = galleryWidth;
-		this.galleryHeight = galleryHeight;
-		this.bScoreboardBelowGallery = bScoreboardBelowGallery;
-		this.scoreboardWidth = galleryWidth;
-		this.scoreboardHeight = this.scoreboardHeightWhenVerticalLayout();
-		if (bScoreboardBelowGallery && (this.galleryHeight + this.scoreboardHeight + headerHeight< windowHeight || !bSpectatorMode))
+
+		this.scoreboardWidth = this.galleryWidth;
+		this.setScoreboardHeightAndScoreboardElementDimensionsWhenVerticalLayout();
+		if (this.bScoreboardBelowGallery && (this.galleryHeight + this.scoreboardHeight + headerHeight< windowHeight || !bSpectatorMode))
 			return;
 		
 		
@@ -91,16 +87,14 @@ class LayoutCalculator
 		If here, it means the gallery took up the full height of the screen.
 		We dont want the width of the gallery + the width of the scoreboard to be wider than the screen,
 		we never want horizontal scrolling.
-		But we need to make sure the scoreboard is wide enough. Wide enough is defined in this.scoreboardWidthWhenHorizontalLayout()
+		But we need to make sure the scoreboard is wide enough. Wide enough is defined in this.setScoreboardWidthAndScoreboardElementDimensionsWhenHorizontalLayout()
 		So, check if the space left to the right of the gallery is wide enough.
 		*******************************************************************************************/
 		/* CASE 2 : screen horizontal alignment: place scoreboard beside gallery. There was naturally space for the scoreboard.*/
-		this.galleryWidth = galleryWidth;
-		this.galleryHeight = galleryHeight;
 		this.bScoreboardBelowGallery = false;
-		this.scoreboardWidth = this.scoreboardWidthWhenHorizontalLayout();
-		this.scoreboardHeight = galleryHeight;
-		if (windowWidth - galleryWidth > this.scoreboardWidthWhenHorizontalLayout())
+		this.scoreboardHeight = this.galleryHeight;
+		this.setScoreboardWidthAndScoreboardElementDimensionsWhenHorizontalLayout();
+		if (this.galleryWidth + this.scoreboardWidth < windowWidth)
 			return;
 		
 		/*******************************************************************************************
@@ -110,13 +104,14 @@ class LayoutCalculator
 		to see the scoreboard. Lets put the scoreboard below.
 		*******************************************************************************************/
 		/* CASE 3 :*/
-		this.galleryWidth = galleryWidth;
-		this.galleryHeight = galleryHeight;
-		this.bScoreboardBelowGallery = true;
-		this.scoreboardWidth = galleryWidth;
-		this.scoreboardHeight = this.scoreboardHeightWhenVerticalLayout();
+
 		if (!bSpectatorMode)
+		{
+			this.bScoreboardBelowGallery = true;
+			this.scoreboardWidth = this.galleryWidth;
+			this.setScoreboardHeightAndScoreboardElementDimensionsWhenVerticalLayout();
 			return;
+		}
 		
 		/*******************************************************************************************
 		If here, we are laying out in horizontal mode, the space left to the right of the gallery
@@ -125,16 +120,14 @@ class LayoutCalculator
 		So, recalculate the gallery dimensions, and give it as its max width the
 		screen width - space needed for scoreboard.
 		*******************************************************************************************/
-		galleryDimensions = this.calculateGalleryDimensions(windowWidth - this.scoreboardWidthWhenHorizontalLayout(), windowHeight - headerHeight);
-		galleryWidth = galleryDimensions.width;
-		galleryHeight = galleryDimensions.height;
+		this.calculateGalleryDimensions(windowWidth - this.scoreboardWidth, windowHeight - headerHeight);
+
 		
 		/* CASE 4 : screen horizontal alignment: place scoreboard beside gallery. Gallery had to be shrunk to fit scoreboard.*/
-		this.galleryWidth = galleryWidth;
-		this.galleryHeight = galleryHeight;
+
 		this.bScoreboardBelowGallery = false;
-		this.scoreboardWidth = this.scoreboardWidthWhenHorizontalLayout();
-		this.scoreboardHeight = galleryHeight;
+		this.scoreboardHeight = this.galleryHeight;
+		this.setScoreboardWidthAndScoreboardElementDimensionsWhenHorizontalLayout();
 		
 		return;
 	}
@@ -197,23 +190,23 @@ class LayoutCalculator
 				bTookUpFullMaxWidth = false;
 		}
 
-		return {width: tabletableCanvasWidth + 2*this.deFactoSpaceForOneFlickityArrow, height: tabletableCanvasHeight, bTookUpFullMaxWidth: bTookUpFullMaxWidth};
+		this.galleryWidth = tabletableCanvasWidth + 2*this.deFactoSpaceForOneFlickityArrow;
+		this.galleryHeight = tabletableCanvasHeight;
+		this.bScoreboardBelowGallery = bTookUpFullMaxWidth;
 	}
 	
-	scoreboardWidthWhenHorizontalLayout()
+	setScoreboardWidthAndScoreboardElementDimensionsWhenHorizontalLayout()
 	{
-		let elementHeight = (this.galleryHeight - (maxNumberOfPlayers + 1)*this.margin)/maxNumberOfPlayers;
-		let elementWidth = elementHeight*this.scoreboardElementHeightToWidthFactor;
-		let scoreboardWidth = elementWidth + 2*this.margin;
-		return scoreboardWidth;
+		this.scoreboardElementHeight = (this.galleryHeight - (maxNumberOfPlayers + 1)*this.margin)/maxNumberOfPlayers;
+		this.scoreboardElementWidth = this.scoreboardElementHeight*this.scoreboardElementHeightToWidthFactor;
+		this.scoreboardWidth = this.scoreboardElementWidth + 2*this.margin;
 	}
 	
-	scoreboardHeightWhenVerticalLayout()
+	setScoreboardHeightAndScoreboardElementDimensionsWhenVerticalLayout()
 	{
 		let numberOfRows = Math.ceil(numberOfPlayers/this.scoreboardElementsPerRowOnVerticalLayout);
-		let elementWidth = (this.galleryWidth - (this.scoreboardElementsPerRowOnVerticalLayout + 1)*this.margin)/this.scoreboardElementsPerRowOnVerticalLayout;
-		let elementHeight = elementWidth * (1/this.scoreboardElementHeightToWidthFactor);
-		let scoreboardHeight = numberOfRows*elementHeight + (numberOfRows + 1)*this.margin;
-		return scoreboardHeight;
+		this.scoreboardElementWidth = (this.galleryWidth - (this.scoreboardElementsPerRowOnVerticalLayout + 1)*this.margin)/this.scoreboardElementsPerRowOnVerticalLayout;
+		this.scoreboardElementHeight = this.scoreboardElementWidth * (1/this.scoreboardElementHeightToWidthFactor);
+		this.scoreboardHeight = numberOfRows*this.scoreboardElementHeight + (numberOfRows + 1)*this.margin;
 	}
 }
