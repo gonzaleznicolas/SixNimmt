@@ -13,14 +13,9 @@ class Scoreboard
 		this.putElementsInContainer();
 	}
 
-	putElementsInContainer()
-	{
-		this._scoreboardElements.forEach(element => this._scoreboardContainer.append(element.div));
-	}
-
 	incrementScore(playerName, incrementBy)
 	{
-		// if there is already an increment score in progress, wait half a second and try again.
+		// if there is already an increment score animation in progress, wait half a second and try again.
 		if (this._indexOfElementBeingUpdated != undefined)
 		{
 			setTimeout( this.incrementScore.bind(this), 500, playerName, incrementBy);
@@ -30,7 +25,7 @@ class Scoreboard
 		this._elementBeingMoved = this._scoreboardElements[this._indexOfElementBeingUpdated];
 		this._elementBeingMoved.incrementScoreBy(incrementBy);
 		// make the element being moved pink
-		this._elementBeingMoved.div.toggleClass("scoreboardElementBeingMoved");;
+		this._elementBeingMoved.makePink();
 		this._incrementScoreInterval = setInterval(this.incrementScoreAnimationHelper.bind(this), 1000);
 	}
 
@@ -43,7 +38,7 @@ class Scoreboard
 		{
 			clearInterval(this._incrementScoreInterval);
 			// wait one second to make it white again
-			setTimeout( function(element){element.toggleClass("scoreboardElementBeingMoved");}, 1000, this._elementBeingMoved.div);
+			setTimeout( function(element){element.makeWhite();}, 1000, this._elementBeingMoved);
 			this._elementBeingMoved = undefined;
 			this._indexOfElementBeingUpdated = undefined;
 		}
@@ -55,6 +50,11 @@ class Scoreboard
 			this._indexOfElementBeingUpdated--;
 			this.putElementsInContainer();
 		}
+	}
+
+	putElementsInContainer()
+	{
+		this._scoreboardElements.forEach(element => this._scoreboardContainer.append(element.div));
 	}
 
 	resize()

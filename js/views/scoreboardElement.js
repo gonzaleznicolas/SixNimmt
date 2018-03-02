@@ -26,6 +26,10 @@ class ScoreboardElement
         this._div[0].innerHTML = this._playerName + ":" + this._playerScore;
     }
 
+    makePink(){this._div.addClass("pink");}
+
+    makeWhite(){this._div.removeClass("pink");}
+
     resize()
     {
         this._div.css("width", lc.scoreboardElementWidth + "px");
