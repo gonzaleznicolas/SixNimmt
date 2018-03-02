@@ -1,6 +1,6 @@
 "use strict";
 
-let bSpectatorMode = false;
+let bSpectatorMode = true;
 let numberOfPlayers = 9;
 let bFlickityEnabled = true;
 let maxNumberOfPlayers = 10;
@@ -40,6 +40,11 @@ let menuView = undefined;
 
 function move(row1, col1, row2, col2) {
 	sixNimmtView._tableAnimation.moveCard(row1, col1, row2, col2);
+}
+
+function add(player, num)
+{
+	sixNimmtView._scoreboard.incrementScore(player, num);
 }
 
 

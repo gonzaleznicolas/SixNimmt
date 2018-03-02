@@ -23,7 +23,7 @@ class SixNimmtView
 			this._handAnimation = new HandAnimation(this._handDrawer);
 		}
 
-		this._scoreboard = new Scoreboard(["Nico", "Nata", "Erin", "Catali", "Nico", "Nata", "IIIIII", "MMMMMM"]);
+		this._scoreboard = new Scoreboard(["one", "two", "three", "four", "five", "six", "seven", "eight"]);
 		
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;
