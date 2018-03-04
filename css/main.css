@@ -59,12 +59,14 @@ header{
 	flex-wrap: wrap;
 	align-content: flex-start;
 	padding: calc(var(--margin)/2);
-	font-family: 'Bangers';
+	font-family: 'Yanone Kaffeesatz';
 }
 
 .scoreboardElement{
 	margin: calc(var(--margin)/2);
+	border-radius: var(--radius);
 	color: rgba(255, 255, 255, 1); 
+	background: rgba(110, 70, 127, 1);
 }
 
 .pink{

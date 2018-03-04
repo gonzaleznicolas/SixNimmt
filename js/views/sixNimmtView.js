@@ -5,8 +5,8 @@ class SixNimmtView
 	constructor(sixNimmtModel) {
 		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
 		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/lc.numberOfRowsOnTableCanvas);
-		lc.totalNumberOfColsOnTableCanvas = lc.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn  + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
-		
+		lc.totalNumberOfColsOnTableCanvas = lc.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
+		lc.calculate();
 		this._gallery = $('.gallery');
 		
 		if (!bSpectatorMode)
@@ -23,7 +23,7 @@ class SixNimmtView
 			this._handAnimation = new HandAnimation(this._handDrawer);
 		}
 
-		this._scoreboard = new Scoreboard(["one", "two", "three", "four", "five", "six", "seven", "eight"]);
+		this._scoreboard = new Scoreboard(["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Moises", "Jesus", "Jose", "Maria", "MMMMMM"]);
 		
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;

@@ -17,14 +17,14 @@ class LayoutCalculator
 		this.nimmtPurple = bodyStyles.getPropertyValue('--nimmtPurple').trim();
 
 		// design parameters. change if you want to change how it all looks like
-		this.spaceForOneFlickityArrow = 65; // px
+		this.spaceForOneFlickityArrow = 30; // px
 		this.cardHeightToWidthFactor = 3/4;
 		this.extraNumberOfMarginsBetween6thColAndTheRest = 3;
 		this.cowIsThisFractionOfCardHeight = 2/3;
 		this.cowIsThisFractionOfCardWidth = 9/10;
 		this.cowIsThisPercentDownTheCard = 0.43;
 		this.numberIsThisPercentDownTheCard = 0.5;
-		this.scoreboardElementHeightToWidthFactor = 5.5;	// if you're going to change this, make sure the longest name allowed with 000 points fits
+		this.scoreboardElementHeightToWidthFactor = 4.7;	// if you're going to change this, make sure the longest name allowed with 000 points fits
 		this.scoreboardElementsPerRowOnVerticalLayout = 4;
 		
 		// dont change these unless you know what youre doing

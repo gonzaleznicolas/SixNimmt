@@ -26,15 +26,15 @@ class Scoreboard
 		this._elementBeingMoved.incrementScoreBy(incrementBy);
 		// make the element being moved pink
 		this._elementBeingMoved.makePink();
-		this._incrementScoreInterval = setInterval(this.incrementScoreAnimationHelper.bind(this), 1000);
+		this._incrementScoreInterval = setInterval(this.incrementScoreAnimationHelper.bind(this), 300);
 	}
 
 	incrementScoreAnimationHelper()
 	{
 		// move the element which had its score incremented until it is in the right place
-		if (this._indexOfElementBeingUpdated == 0 ||
-			this._scoreboardElements[this._indexOfElementBeingUpdated].score <
-			this._scoreboardElements[this._indexOfElementBeingUpdated-1].score)
+		if (this._indexOfElementBeingUpdated == this._scoreboardElements.length - 1 ||
+			this._elementBeingMoved.score <=
+			this._scoreboardElements[this._indexOfElementBeingUpdated+1].score)
 		{
 			clearInterval(this._incrementScoreInterval);
 			// wait one second to make it white again
@@ -45,9 +45,9 @@ class Scoreboard
 		else
 		{
 			this._scoreboardContainer.empty();
-			this._scoreboardElements[this._indexOfElementBeingUpdated] = this._scoreboardElements[this._indexOfElementBeingUpdated - 1];
-			this._scoreboardElements[this._indexOfElementBeingUpdated - 1] = this._elementBeingMoved;
-			this._indexOfElementBeingUpdated--;
+			this._scoreboardElements[this._indexOfElementBeingUpdated] = this._scoreboardElements[this._indexOfElementBeingUpdated + 1];
+			this._scoreboardElements[this._indexOfElementBeingUpdated + 1] = this._elementBeingMoved;
+			this._indexOfElementBeingUpdated++;
 			this.putElementsInContainer();
 		}
 	}
