@@ -18,11 +18,12 @@ class TableDrawer extends Drawer
 		this.drawWarningRectangles();
 		this.drawUpcomingCardRectangles();
 		
+		let cardNumber = undefined;
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
 			for (let col = 0; col < this._numberOfCols; col++)
 			{
-				let cardNumber = this._model.table[row][col];
+				cardNumber = this._model.table[row][col];
 				if (cardNumber)
 					this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber);
 			}
