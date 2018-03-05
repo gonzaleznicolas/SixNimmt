@@ -6,8 +6,8 @@ class TableDrawer extends Drawer
 	{
 		super(canvas);
 		
-		this._numberOfRows = lc.numberOfRowsOnTableCanvas;
-		this._numberOfCols = lc.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn ;
+		this._numberOfRows = NUMBER_OF_ROWS_ON_TABLE_CANVAS;
+		this._numberOfCols = NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN ;
 		
 		// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
 		this._upcomingCardCoordinates = []; 
@@ -106,7 +106,7 @@ class TableDrawer extends Drawer
 	calculateCardDimensions()
 	{
 		this._cardWidth = (this._canvas.width - ((lc.totalNumberOfColsOnTableCanvas + 1 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin)) / lc.totalNumberOfColsOnTableCanvas;
-		this._cardHeight = (this._canvas.height - ((lc.numberOfRowsOnTableCanvas + 1)*lc.margin)) / lc.numberOfRowsOnTableCanvas;
+		this._cardHeight = (this._canvas.height - ((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*lc.margin)) / NUMBER_OF_ROWS_ON_TABLE_CANVAS;
 	}
 	
 	calculateUpcomingCardCoordinates()

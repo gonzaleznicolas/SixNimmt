@@ -4,8 +4,8 @@ class SixNimmtView
 {
 	constructor(sixNimmtModel) {
 		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
-		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/lc.numberOfRowsOnTableCanvas);
-		lc.totalNumberOfColsOnTableCanvas = lc.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
+		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/NUMBER_OF_ROWS_ON_TABLE_CANVAS);
+		lc.totalNumberOfColsOnTableCanvas = NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
 		lc.calculate();
 		this._gallery = $('.gallery');
 		

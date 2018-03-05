@@ -5,8 +5,8 @@ class HandDrawer extends Drawer
 	constructor(canvas) 
 	{ 
 		super(canvas); 
-		this._numberOfRows = lc.numberOfRowsOnHandCanvas; 
-		this._numberOfCols = lc.numberOfColsOnHandCanvas ; 
+		this._numberOfRows = NUMBER_OF_ROWS_ON_HAND_CANVAS; 
+		this._numberOfCols = NUMBER_OF_COLS_ON_HAND_CANVAS ; 
 		this._currentlySelected = undefined;	// undefined means nothing selected 
 		 
 		this._playCardButton = $('#playCardButton'); 

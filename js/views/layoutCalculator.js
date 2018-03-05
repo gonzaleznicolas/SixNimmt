@@ -27,13 +27,9 @@ class LayoutCalculator
 		this.scoreboardElementHeightToWidthFactor = 4.7;	// if you're going to change this, make sure the longest name allowed with 000 points fits
 		this.scoreboardElementsPerRowOnVerticalLayout = 4;
 		
-		// dont change these unless you know what youre doing
-		this.numberOfRowsOnTableCanvas = 4;
-		this.numberOfColsOnTableCanvasNotIncludingColsForCardsPlayedThisTurn = 6;
-		this.numberOfColsOnHandCanvas = 5;
-		this.numberOfRowsOnHandCanvas = 2;
+		// dont change this unless you know what youre doing
 		this.percentageOfGalleryHeightLeftForThePlayCardButtonBelowHandCanvas = 0.2;
-		
+
 		// calculated depening on game instance
 		this.totalNumberOfColsOnTableCanvas = undefined;
 		this.additionalColsOnTableCanvasForCardsPlayedThisTurn = undefined;	// depends on the number of players
@@ -153,7 +149,7 @@ class LayoutCalculator
 		The point is to calculate the dimensions of the table canvas based on card dimensions, margins, etc.
 		Note: totalNumberOfColsOnTableCanvas = number of cols for the game + number of cols for cards played this turn (depends on number of players)
 		
-		See the constants cardHeightToWidthFactor, numberOfRowsOnTableCanvas, totalNumberOfColsOnTableCanvas, margin,
+		See the constants cardHeightToWidthFactor, NUMBER_OF_ROWS_ON_TABLE_CANVAS, totalNumberOfColsOnTableCanvas, margin,
 		and extraSpaceBetween6thColAndLastCol.
 		Those numbers will be set by the the user and the canvas and cards will be layed out acordingly.
 		
@@ -161,19 +157,19 @@ class LayoutCalculator
 
 			cardWidth = cardHeight * cardHeightToWidthFactor
 			tableCanvasWidth = (totalNumberOfColsOnTableCanvas * cardWidth) + (totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin
-			tableCanvasHeight = (numberOfRowsOnTableCanvas * cardHeight) + (numberOfRowsOnTableCanvas + 1)*margin
+			tableCanvasHeight = (NUMBER_OF_ROWS_ON_TABLE_CANVAS * cardHeight) + (NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*margin
 			
 			For this function, we need to use the formulas above to relate tableCanvasWidth and tableCanvasHeight to eachother in terms of the constants.
 			(cancel out the unknowns cardWidth and cardHeight)
 			
 			The result is:
-				tableCanvasHeight = ((numberOfRowsOnTableCanvas*
+				tableCanvasHeight = ((NUMBER_OF_ROWS_ON_TABLE_CANVAS*
 												(tableCanvasWidth - ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)))/
 												(totalNumberOfColsOnTableCanvas * cardHeightToWidthFactor)) +
-												((numberOfRowsOnTableCanvas + 1)*margin)
+												((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*margin)
 				tableCanvasWidth = ((totalNumberOfColsOnTableCanvas *
-											 cardHeightToWidthFactor * (tableCanvasHeight - ((numberOfRowsOnTableCanvas + 1)*margin)))/
-											 numberOfRowsOnTableCanvas) + ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)
+											 cardHeightToWidthFactor * (tableCanvasHeight - ((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*margin)))/
+											 NUMBER_OF_ROWS_ON_TABLE_CANVAS) + ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)
 	****************************************************************************************************************************************************************/
 	setGalleryDimensions(maxWidth, maxHeight)
 	{
@@ -181,10 +177,10 @@ class LayoutCalculator
 		
 		// CASE 1
 		let tabletableCanvasWidth = maxWidth - 2*this.deFactoSpaceForOneFlickityArrow;
-		let tabletableCanvasHeight = ((this.numberOfRowsOnTableCanvas*
+		let tabletableCanvasHeight = ((NUMBER_OF_ROWS_ON_TABLE_CANVAS*
 												(tabletableCanvasWidth - ((this.totalNumberOfColsOnTableCanvas + 1 + this.extraNumberOfMarginsBetween6thColAndTheRest)*this.margin)))/
 												(this.totalNumberOfColsOnTableCanvas * this.cardHeightToWidthFactor)) +
-												((this.numberOfRowsOnTableCanvas + 1)*this.margin);
+												((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*this.margin);
 		
 		// if by setting tabletableCanvasWidth = maxWidth - 2*deFactoSpaceForOneFlickityArrow and maintaining the ration we make the canvas taller than the screen
 		if (tabletableCanvasHeight > maxHeight)
@@ -192,8 +188,8 @@ class LayoutCalculator
 				// CASE 2
 				tabletableCanvasHeight = maxHeight;
 				tabletableCanvasWidth = ((this.totalNumberOfColsOnTableCanvas *
-											 this.cardHeightToWidthFactor * (tabletableCanvasHeight - ((this.numberOfRowsOnTableCanvas + 1)*this.margin)))/
-											 this.numberOfRowsOnTableCanvas) + ((this.totalNumberOfColsOnTableCanvas + 1 + this.extraNumberOfMarginsBetween6thColAndTheRest)*this.margin);
+											 this.cardHeightToWidthFactor * (tabletableCanvasHeight - ((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*this.margin)))/
+											 NUMBER_OF_ROWS_ON_TABLE_CANVAS) + ((this.totalNumberOfColsOnTableCanvas + 1 + this.extraNumberOfMarginsBetween6thColAndTheRest)*this.margin);
 				bTookUpFullMaxWidth = false;
 		}
 

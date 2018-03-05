@@ -5,6 +5,12 @@ let numberOfPlayers = 10;
 let bFlickityEnabled = true;
 let maxNumberOfPlayers = 10;
 
+// game constants
+const NUMBER_OF_ROWS_ON_HAND_CANVAS = 2;
+const NUMBER_OF_COLS_ON_HAND_CANVAS = 5;
+const NUMBER_OF_ROWS_ON_TABLE_CANVAS = 4;
+const NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN = 6;
+
 let lc = undefined;
 
 $(function () {
