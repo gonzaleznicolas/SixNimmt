@@ -2,9 +2,9 @@
  
 class HandDrawer extends Drawer 
 { 
-	constructor(canvas) 
+	constructor(canvas, model) 
 	{ 
-		super(canvas); 
+		super(canvas, model); 
 		this._numberOfRows = NUMBER_OF_ROWS_ON_HAND_CANVAS; 
 		this._numberOfCols = NUMBER_OF_COLS_ON_HAND_CANVAS ; 
 		this._currentlySelected = undefined;	// undefined means nothing selected 

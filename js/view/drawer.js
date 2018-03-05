@@ -2,8 +2,9 @@
 
 class Drawer
 {
-	constructor(canvas)
+	constructor(canvas, model)
 	{
+		this._model = model;
 		this._canvas = canvas;
 		this._ctx = canvas.getContext("2d");
 

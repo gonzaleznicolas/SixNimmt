@@ -2,10 +2,9 @@
 
 class TableDrawer extends Drawer
 {
-	constructor(canvas)
+	constructor(canvas, model)
 	{
-		super(canvas);
-		
+		super(canvas, model);
 		this._numberOfRows = NUMBER_OF_ROWS_ON_TABLE_CANVAS;
 		this._numberOfCols = NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN ;
 		
@@ -21,9 +20,11 @@ class TableDrawer extends Drawer
 		
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
-			for (let col = 0; col < this._numberOfCols - 1; col++)
+			for (let col = 0; col < this._numberOfCols; col++)
 			{
-				this.drawFaceDownCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth);
+				let cardNumber = this._model.table[row][col];
+				if (cardNumber)
+					this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber);
 			}
 		}
 	}

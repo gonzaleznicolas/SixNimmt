@@ -12,14 +12,14 @@ class SixNimmtView
 		if (!bSpectatorMode)
 			this._flickity = this.setUpFlickity();
 		
-		this._tableDrawer = new TableDrawer($('#tableCanvas')[0]);
+		this._tableDrawer = new TableDrawer($('#tableCanvas')[0], sixNimmtModel);
 		this._tableAnimation = new TableAnimation(this._tableDrawer);
 		
 		if (bSpectatorMode)
 			$('.hand.galleryCell').remove();
 		else
 		{
-			this._handDrawer = new HandDrawer($('#handCanvas')[0]);
+			this._handDrawer = new HandDrawer($('#handCanvas')[0], sixNimmtModel);
 			this._handAnimation = new HandAnimation(this._handDrawer);
 		}
 
