@@ -65,18 +65,22 @@ class Drawer
 	
 	// use cardWidth parameter rather than using this._cardWidth because for the fliping of cards,
 	// the card has to be redrawn many times at different widths.
-	drawCard(x, y, cardWidth, number)
+	drawCard(x, y, cardWidth, number, playerName = undefined)
 	{
 		this.drawBlankCard(x, y, cardWidth, number);
 		this.drawBigCow(x, y, cardWidth, number);
 		this.drawCardNumber(x, y, cardWidth, number);
 		this.drawNegativePts(x, y, cardWidth, number)
+		if (playerName)
+			this.drawPlayerName(x, y, cardWidth, playerName)
 	}
 	
-	drawFaceDownCard(x, y, cardWidth)
+	drawFaceDownCard(x, y, cardWidth, playerName = undefined)
 	{
 		this.drawBlankCard(x, y, cardWidth, undefined);
 		this.drawBigCow(x, y, cardWidth, undefined);
+		if (playerName)
+			this.drawPlayerName(x, y, cardWidth, playerName)
 	}
 	
 	dimCard(x, y)
@@ -145,6 +149,29 @@ class Drawer
 
 		ctx.fillText(number, centreXofNumber, centreYofNumber, maximumFullNumberWidth);
 		ctx.strokeText(number, centreXofNumber, centreYofNumber, maximumFullNumberWidth);
+	}
+	
+	drawPlayerName(x, y, cardWidth, playerName)
+	{
+		const ctx = this._ctx;
+
+		const fontPixels = 0.2*this._cardHeight;
+		ctx.font = "bold "+fontPixels+"px Bangers";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		const centreXofNumber= x + (cardWidth/2);
+		const centreYofNumber = y+(this._cardHeight * lc.playerNameIsThisPercentDownTheCard);
+		ctx.lineWidth = 1;
+		ctx.fillStyle = "rgba(255, 255, 255, 1)";
+
+		const textSize = ctx.measureText(playerName); // the size of the text if we let it be without setting a max width
+
+		// textSize.width * (cardWidth/this._cardWidth) will be smaller when we are narrowing the card to flip it
+		// 0.9*cardWidth will be smaller when we have a wide playerName and the card is normal size
+		const maximumFullNameWidth = Math.min(textSize.width * (cardWidth/this._cardWidth), 0.9*cardWidth);
+
+		ctx.fillText(playerName, centreXofNumber, centreYofNumber, maximumFullNameWidth);
+		ctx.strokeText(playerName, centreXofNumber, centreYofNumber, maximumFullNameWidth);
 	}
 	
 	drawNegativePts(x, y, cardWidth, number)
