@@ -156,22 +156,26 @@ class Drawer
 		const ctx = this._ctx;
 
 		const fontPixels = 0.2*this._cardHeight;
-		ctx.font = "bold "+fontPixels+"px Bangers";
+		ctx.font = "bold "+fontPixels+"px Yanone Kaffeesatz";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
-		const centreXofNumber= x + (cardWidth/2);
-		const centreYofNumber = y+(this._cardHeight * lc.playerNameIsThisPercentDownTheCard);
-		ctx.lineWidth = 1;
-		ctx.fillStyle = "rgba(255, 255, 255, 1)";
+		const centreXofName= x + (cardWidth/2);
+		const centreYofName = y+(this._cardHeight * lc.playerNameIsThisPercentDownTheCard);
+
 
 		const textSize = ctx.measureText(playerName); // the size of the text if we let it be without setting a max width
 
 		// textSize.width * (cardWidth/this._cardWidth) will be smaller when we are narrowing the card to flip it
 		// 0.9*cardWidth will be smaller when we have a wide playerName and the card is normal size
 		const maximumFullNameWidth = Math.min(textSize.width * (cardWidth/this._cardWidth), 0.9*cardWidth);
-
-		ctx.fillText(playerName, centreXofNumber, centreYofNumber, maximumFullNameWidth);
-		ctx.strokeText(playerName, centreXofNumber, centreYofNumber, maximumFullNameWidth);
+		
+		ctx.fillStyle = "blue";
+		ctx.fillRect(centreXofName - maximumFullNameWidth/2, y, maximumFullNameWidth, fontPixels*1.1);
+		
+		ctx.lineWidth = 1;
+		ctx.fillStyle = "rgba(255, 255, 255, 1)";
+		ctx.fillText(playerName, centreXofName, centreYofName, maximumFullNameWidth);
+		//ctx.strokeText(playerName, centreXofName, centreYofName, maximumFullNameWidth);
 	}
 	
 	drawNegativePts(x, y, cardWidth, number)

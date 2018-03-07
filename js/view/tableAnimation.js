@@ -46,12 +46,12 @@ class TableAnimation
 		if (this._fcBackW > 0)
 		{
 			xToKeepCardCenteredAsItShrinks = this._fcX + (this._tableDrawer._cardWidth - this._fcBackW)/2
-			this._tableDrawer.drawFaceDownCard(xToKeepCardCenteredAsItShrinks, this._fcY, this._fcBackW);
+			this._tableDrawer.drawFaceDownCard(xToKeepCardCenteredAsItShrinks, this._fcY, this._fcBackW, "Nico");
 		}
 		else
 		{
 			xToKeepCardCenteredAsItShrinks = this._fcX + (this._tableDrawer._cardWidth + this._fcBackW)/2
-			this._tableDrawer.drawCard(xToKeepCardCenteredAsItShrinks, this._fcY, (-1)*this._fcBackW, this._fcNumber);
+			this._tableDrawer.drawCard(xToKeepCardCenteredAsItShrinks, this._fcY, (-1)*this._fcBackW, this._fcNumber, "Nico");
 		}
 		this._fcBackW = this._fcBackW - 3;
 
@@ -68,5 +68,7 @@ class TableAnimation
 		const y = event.pageY - canvasTop;
 
 		const rowCol = this._tableDrawer.getCardRowColFromXY(x, y);
+		if (rowCol)
+			this.flipCard(rowCol.row, rowCol.col, Math.floor(Math.random()*20)+44);
 	}
 }

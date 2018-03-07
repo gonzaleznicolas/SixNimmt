@@ -24,7 +24,7 @@ class HandDrawer extends Drawer
 			{ 
 				cardNumber = this._model.hand[row][col];
 				if (cardNumber)
-					this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber);
+					this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber, "Nico");
 			} 
 		} 
 		 
