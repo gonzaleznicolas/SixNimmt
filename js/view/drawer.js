@@ -80,7 +80,11 @@ class Drawer
 		this.drawBlankCard(x, y, cardWidth, undefined);
 		this.drawBigCow(x, y, cardWidth, undefined);
 		if (playerName)
-			this.drawPlayerName(x, y, cardWidth, number, playerName)
+		{
+			// the number is just used by drawPlayerName() to determine the colors. When
+			// the card is face down, use the colors for card 1.
+			this.drawPlayerName(x, y, cardWidth, 55, playerName);
+		}
 	}
 	
 	dimCard(x, y)
@@ -169,10 +173,17 @@ class Drawer
 		// 0.9*cardWidth will be smaller when we have a wide playerName and the card is normal size
 		const fullNameWidth = Math.min(textSize.width * (cardWidth/this._cardWidth), 0.9*cardWidth);
 		
-		ctx.fillStyle = getCardInfo(number).cowColor;
-		ctx.fillRect(centreXofName - fullNameWidth/2, y, fullNameWidth, fontPixels*1.1);
+		const rectHeight = fontPixels*1.1;
+		const rectWidth = fullNameWidth*1.15;
+		const topOfRect = centreYofName - rectHeight*0.55;
+		const leftOfRect = centreXofName - rectWidth/2;
 		
 		ctx.lineWidth = 1;
+		ctx.fillStyle = 'rgba(127, 80, 147, 1)'; //getCardInfo(number).cowColor;
+		ctx.rect(leftOfRect, topOfRect, rectWidth, rectHeight);
+		ctx.fill();
+		ctx.stroke();
+		
 		ctx.fillStyle = getCardInfo(number).numColor;
 		ctx.fillText(playerName, centreXofName, centreYofName, fullNameWidth);
 	}
