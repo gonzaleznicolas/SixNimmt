@@ -68,8 +68,5 @@ class TableAnimation
 		const y = event.pageY - canvasTop;
 
 		const rowCol = this._tableDrawer.getCardRowColFromXY(x, y);
-		
-		if (rowCol)
-			this.flipCard(rowCol.row, rowCol.col, Math.floor(Math.random()*20)+44);
 	}
 }
