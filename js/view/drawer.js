@@ -72,7 +72,7 @@ class Drawer
 		this.drawCardNumber(x, y, cardWidth, number);
 		this.drawNegativePts(x, y, cardWidth, number)
 		if (playerName)
-			this.drawPlayerName(x, y, cardWidth, playerName)
+			this.drawPlayerName(x, y, cardWidth, number, playerName)
 	}
 	
 	drawFaceDownCard(x, y, cardWidth, playerName = undefined)
@@ -80,7 +80,7 @@ class Drawer
 		this.drawBlankCard(x, y, cardWidth, undefined);
 		this.drawBigCow(x, y, cardWidth, undefined);
 		if (playerName)
-			this.drawPlayerName(x, y, cardWidth, playerName)
+			this.drawPlayerName(x, y, cardWidth, number, playerName)
 	}
 	
 	dimCard(x, y)
@@ -145,13 +145,13 @@ class Drawer
 
 		// textSize.width * (cardWidth/this._cardWidth) will be smaller when we are narrowing the card to flip it
 		// 0.9*cardWidth will be smaller when we have a wide number like 104 and the card is normal size
-		const maximumFullNumberWidth = Math.min(textSize.width * (cardWidth/this._cardWidth), 0.9*cardWidth);
+		const fullNumberWidth = Math.min(textSize.width * (cardWidth/this._cardWidth), 0.9*cardWidth);
 
-		ctx.fillText(number, centreXofNumber, centreYofNumber, maximumFullNumberWidth);
-		ctx.strokeText(number, centreXofNumber, centreYofNumber, maximumFullNumberWidth);
+		ctx.fillText(number, centreXofNumber, centreYofNumber, fullNumberWidth);
+		ctx.strokeText(number, centreXofNumber, centreYofNumber, fullNumberWidth);
 	}
 	
-	drawPlayerName(x, y, cardWidth, playerName)
+	drawPlayerName(x, y, cardWidth, number, playerName)
 	{
 		const ctx = this._ctx;
 
@@ -167,15 +167,14 @@ class Drawer
 
 		// textSize.width * (cardWidth/this._cardWidth) will be smaller when we are narrowing the card to flip it
 		// 0.9*cardWidth will be smaller when we have a wide playerName and the card is normal size
-		const maximumFullNameWidth = Math.min(textSize.width * (cardWidth/this._cardWidth), 0.9*cardWidth);
+		const fullNameWidth = Math.min(textSize.width * (cardWidth/this._cardWidth), 0.9*cardWidth);
 		
-		ctx.fillStyle = "blue";
-		ctx.fillRect(centreXofName - maximumFullNameWidth/2, y, maximumFullNameWidth, fontPixels*1.1);
+		ctx.fillStyle = getCardInfo(number).cowColor;
+		ctx.fillRect(centreXofName - fullNameWidth/2, y, fullNameWidth, fontPixels*1.1);
 		
 		ctx.lineWidth = 1;
-		ctx.fillStyle = "rgba(255, 255, 255, 1)";
-		ctx.fillText(playerName, centreXofName, centreYofName, maximumFullNameWidth);
-		//ctx.strokeText(playerName, centreXofName, centreYofName, maximumFullNameWidth);
+		ctx.fillStyle = getCardInfo(number).numColor;
+		ctx.fillText(playerName, centreXofName, centreYofName, fullNameWidth);
 	}
 	
 	drawNegativePts(x, y, cardWidth, number)
