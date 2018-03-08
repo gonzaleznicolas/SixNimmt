@@ -17,14 +17,15 @@ class HandDrawer extends Drawer
 	 
 	draw() 
 	{
+		let numberOfCardsDrawn = 0;
 		let cardNumber = undefined;
-		for (let row = 0; row < this._numberOfRows; row++) 
+		for (let row = 0; row < this._numberOfRows && numberOfCardsDrawn < this._model.hand.length ; row++) 
 		{ 
-			for (let col = 0; col < this._numberOfCols; col++) 
+			for (let col = 0; col < this._numberOfCols && numberOfCardsDrawn < this._model.hand.length; col++) 
 			{ 
-				cardNumber = this._model.hand[row][col];
-				if (cardNumber)
-					this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber);
+				cardNumber = this._model.hand[numberOfCardsDrawn];
+				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber);
+				numberOfCardsDrawn++;
 			} 
 		} 
 		 
@@ -42,7 +43,7 @@ class HandDrawer extends Drawer
 		{
 			this.dimAll(); 
 			const card = this._cardCoordinates[this._currentlySelected.row][this._currentlySelected.col];
-			let cardNumber = this._model.hand[this._currentlySelected.row][this._currentlySelected.col];
+			let cardNumber = this._model.hand[this.handRowColToIndex(this._currentlySelected.row, this._currentlySelected.col)];
 			this.drawCard(card.x, card.y, this._cardWidth, cardNumber);
 			this._selectCardMessage.hide(); 
 			this._playCardButton.show(); 
@@ -58,7 +59,12 @@ class HandDrawer extends Drawer
 				this.dimCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y); 
 			} 
 		} 
-	} 
+	}
+	
+	handRowColToIndex(row, col)
+	{
+		return NUMBER_OF_COLS_ON_HAND_CANVAS*row + col;
+	}
 	 
 	resize() 
 	{
