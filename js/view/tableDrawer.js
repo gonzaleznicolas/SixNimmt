@@ -25,7 +25,7 @@ class TableDrawer extends Drawer
 			{
 				cardNumber = this._model.table[row][col];
 				if (cardNumber)
-					this.drawFaceDownCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, "MMMMMM");
+					this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber, "Mohama");
 			}
 		}
 	}
