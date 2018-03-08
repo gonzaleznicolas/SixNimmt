@@ -24,7 +24,8 @@ class LayoutCalculator
 		this.cowIsThisFractionOfCardWidth = 9/10;
 		this.cowIsThisPercentDownTheCard = 0.43;
 		this.numberIsThisPercentDownTheCard = 0.5;
-		this.playerNameIsThisPercentDownTheCard = 0.16;
+		this.playerNameIsThisPercentDownTheCardWhenFaceUp = 0.16;
+		this.playerNameIsThisPercentDownTheCardWhenFaceDown = 0.9;
 		this.scoreboardElementHeightToWidthFactor = 4.7;	// if you're going to change this, make sure the longest name allowed with 000 points fits
 		this.scoreboardElementsPerRowOnVerticalLayout = 4;
 		

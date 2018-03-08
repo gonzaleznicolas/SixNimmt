@@ -68,11 +68,13 @@ class Drawer
 	drawCard(x, y, cardWidth, number, playerName = undefined)
 	{
 		this.drawBlankCard(x, y, cardWidth, number);
-		this.drawBigCow(x, y, cardWidth, number);
-		this.drawCardNumber(x, y, cardWidth, number);
-		this.drawNegativePts(x, y, cardWidth, number)
+		
 		if (playerName)
-			this.drawPlayerName(x, y, cardWidth, number, playerName)
+			this.drawPlayerName(x, y, cardWidth, number, playerName, true);
+		else
+			this.drawBigCow(x, y, cardWidth, number);
+		this.drawCardNumber(x, y, cardWidth, number);
+		this.drawNegativePts(x, y, cardWidth, number);
 	}
 	
 	drawFaceDownCard(x, y, cardWidth, playerName = undefined)
@@ -80,11 +82,7 @@ class Drawer
 		this.drawBlankCard(x, y, cardWidth, undefined);
 		this.drawBigCow(x, y, cardWidth, undefined);
 		if (playerName)
-		{
-			// the number is just used by drawPlayerName() to determine the colors. When
-			// the card is face down, use the colors for card 1.
-			this.drawPlayerName(x, y, cardWidth, 55, playerName);
-		}
+			this.drawPlayerName(x, y, cardWidth, undefined, playerName, false);
 	}
 	
 	dimCard(x, y)
@@ -118,13 +116,13 @@ class Drawer
 		
 		// center of the cow
 		const centreX = x + cardWidth/2;
-		
-		// draw the big cow right in the middle if its a face down card
-		const faceUpCard = number != undefined;
-		const centreY = faceUpCard ? (y + this._cardHeight * lc.cowIsThisPercentDownTheCard) : (y + this._cardHeight/2);
+
+		const centreY = y + this._cardHeight * lc.cowIsThisPercentDownTheCard;
 		
 		BasicShapeDrawer.drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight);
-		ctx.fillStyle = getCardInfo(number).cowColor;
+		
+		const faceUpCard = number != undefined;
+		ctx.fillStyle = faceUpCard ? getCardInfo(number).cowColor : lc.nimmtPurple;
 		ctx.fill();
 		ctx.lineWidth = 1;
 		ctx.strokeStyle = "rgba(0, 0, 0, 1)";
@@ -155,7 +153,7 @@ class Drawer
 		ctx.strokeText(number, centreXofNumber, centreYofNumber, fullNumberWidth);
 	}
 	
-	drawPlayerName(x, y, cardWidth, number, playerName)
+	drawPlayerName(x, y, cardWidth, number, playerName, bFaceUp)
 	{
 		const ctx = this._ctx;
 
@@ -164,7 +162,7 @@ class Drawer
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		const centreXofName= x + (cardWidth/2);
-		const centreYofName = y+(this._cardHeight * lc.playerNameIsThisPercentDownTheCard);
+		const centreYofName = bFaceUp ? y+(this._cardHeight * lc.playerNameIsThisPercentDownTheCardWhenFaceUp) : y+(this._cardHeight * lc.playerNameIsThisPercentDownTheCardWhenFaceDown);
 
 
 		const textSize = ctx.measureText(playerName); // the size of the text if we let it be without setting a max width
@@ -178,13 +176,7 @@ class Drawer
 		const topOfRect = centreYofName - rectHeight*0.55;
 		const leftOfRect = centreXofName - rectWidth/2;
 		
-		ctx.lineWidth = 1;
-		ctx.fillStyle = 'rgba(127, 80, 147, 1)'; //getCardInfo(number).cowColor;
-		ctx.rect(leftOfRect, topOfRect, rectWidth, rectHeight);
-		ctx.fill();
-		ctx.stroke();
-		
-		ctx.fillStyle = getCardInfo(number).numColor;
+		ctx.fillStyle = number ? getCardInfo(number).cowColor : lc.nimmtPurple;
 		ctx.fillText(playerName, centreXofName, centreYofName, fullNameWidth);
 	}
 	
