@@ -28,7 +28,7 @@ class TableAnimation
 			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
 	
-	flipCard(row, col, number)
+	flipAllUpcomingCards()
 	{
 		this._fcRow = row;
 		this._fcCol = col;
@@ -61,14 +61,6 @@ class TableAnimation
 		
 	onCanvasClicked(event)
 	{
-		const canvasLeft = this._tableDrawer.getCanvasOffsetLeft();
-		const canvasTop = this._tableDrawer.getCanvasOffsetTop();
-
-		const x = event.pageX - canvasLeft;
-		const y = event.pageY - canvasTop;
-
-		const rowCol = this._tableDrawer.getCardRowColFromXY(x, y);
-		if (rowCol)
-			this.flipCard(rowCol.row, rowCol.col, Math.floor(Math.random()*20)+44);
+		this.flipAllUpcomingCards();
 	}
 }
