@@ -46,10 +46,8 @@ class TableDrawer extends Drawer
 			{
 				playerName = this._model.upcomingCardNames[numberOfCardsDrawn];
 				if (playerName)
-				{
 					this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, playerName);
-					numberOfCardsDrawn++;
-				}
+				numberOfCardsDrawn++;
 			}
 		}
 	}

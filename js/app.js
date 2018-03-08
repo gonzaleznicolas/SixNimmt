@@ -53,4 +53,9 @@ function add(player, num)
 	sixNimmtView._scoreboard.incrementScore(player, num);
 }
 
+function flip()
+{
+	sixNimmtView._tableAnimation.flipAllUpcomingCards();
+}
+
 
