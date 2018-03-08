@@ -18,6 +18,12 @@ class TableDrawer extends Drawer
 		this.drawWarningRectangles();
 		this.drawUpcomingCardRectangles();
 		
+		this.drawCardsOnTable();
+		this.drawFaceDownUpcomingCards();
+	}
+	
+	drawCardsOnTable()
+	{
 		let cardNumber = undefined;
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
@@ -26,6 +32,24 @@ class TableDrawer extends Drawer
 				cardNumber = this._model.table[row][col];
 				if (cardNumber)
 					this.drawFaceDownCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth);
+			}
+		}	
+	}
+	
+	drawFaceDownUpcomingCards()
+	{
+		let numberOfCardsDrawn = 0;
+		let playerName = undefined;
+		for (let row = 0; row < this._numberOfRows && numberOfCardsDrawn < numberOfPlayers; row++)
+		{
+			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsDrawn < numberOfPlayers; col++)
+			{
+				playerName = this._model.upcomingCardNames[numberOfCardsDrawn];
+				if (playerName)
+				{
+					this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, playerName);
+					numberOfCardsDrawn++;
+				}
 			}
 		}
 	}
