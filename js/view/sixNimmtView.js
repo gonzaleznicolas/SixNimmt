@@ -12,8 +12,7 @@ class SixNimmtView
 		if (!bSpectatorMode)
 			this._flickity = this.setUpFlickity();
 		
-		this._tableDrawer = new TableDrawer($('#tableCanvas')[0], sixNimmtModel);
-		this._tableAnimation = new TableAnimation(this._tableDrawer);
+		this._tableView = new TableView(sixNimmtModel);
 		
 		if (bSpectatorMode)
 			$('.hand.galleryCell').remove();
@@ -69,14 +68,14 @@ class SixNimmtView
 		else
 			$("#game").css("flex-direction", "row");
 
-		this._tableDrawer.resize();
+		this._tableView.resize();
 		if (!bSpectatorMode)
 			this._handDrawer.resize();
 		
 		this._scoreboard.resize();
 		this.setGallerySize();
 
-		this._tableDrawer.draw();
+		this._tableView.draw();
 		if (!bSpectatorMode)
 			this._handDrawer.draw();
 		
