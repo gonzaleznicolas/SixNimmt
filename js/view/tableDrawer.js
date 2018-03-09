@@ -15,6 +15,7 @@ class TableDrawer extends Drawer
 	draw()
 	{
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
+		this.drawSeparatorLine();
 		this.drawWarningRectangles();
 		this.drawUpcomingCardRectangles();
 		
@@ -118,6 +119,27 @@ class TableDrawer extends Drawer
 		BasicShapeDrawer.drawDetailedCowShape(ctx, centreX, centreY, cowWidth, cowHeight)
 		ctx.fill();
 		ctx.closePath();
+	}
+	
+	drawSeparatorLine()
+	{
+		const x = (this._numberOfCols)*this._cardWidth +
+					(this._numberOfCols + 1 + lc.extraNumberOfMarginsBetween6thColAndTheRest/2)*lc.margin;
+		const startY = lc.margin;
+		const endY = this._canvas.height - lc.margin;
+		
+		const ctx = this._ctx;
+		ctx.lineWidth = 3;
+		ctx.strokeStyle = "rgba(255, 255, 255, 1)";
+		ctx.setLineDash([10, 10]);
+		
+		ctx.beginPath();
+		ctx.moveTo(x, startY);
+		ctx.lineTo(x, endY);
+		
+		ctx.stroke();
+		ctx.closePath();
+		ctx.setLineDash([]);
 	}
 	
 	resize()
