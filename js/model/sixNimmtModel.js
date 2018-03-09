@@ -10,7 +10,7 @@ class SixNimmtModel {
 		this._hand = [55,20,3,4,11, 1, 32, 43];
 									
 		this._upcomingCards = [1,32,43,55, 63, 37, 73, 24, 75, 1];
-		this._upcomingCardNames = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Moises", "Jesus", "Jose", "Maria", "MMMMMM"];
+		this._upcomingCardNames = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
 	}
 	
 	get table() {return this._table;}

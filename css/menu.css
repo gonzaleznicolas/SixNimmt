@@ -33,14 +33,25 @@
 }
 
 #menu{
+	display: flex;
+	flex-direction: column;
 	position: fixed;
 	z-index: 3;
 	top: calc(var(--menuButtonSideLength) + var(--margin));
 	left: var(--margin);
-	height: 15em;
-	width: 15em;
 	border-radius: var(--radius);
 	border: 1px solid black;
 	background: rgba(255, 255, 255, 1);
 	display: none;
+	padding: 0 var(--margin);
+	font-family: 'Bangers';
+	font-size: calc(var(--menuButtonSideLength)*0.7);
+}
+
+.menuOption{
+	margin: 0.2em 0.2em;
+}
+
+.menuOption:hover{
+	color: var(--nimmtPurple);
 }
