@@ -19,7 +19,7 @@ class LayoutCalculator
 		// design parameters. change if you want to change how it all looks like
 		this.spaceForOneFlickityArrow = 30; // px
 		this.cardHeightToWidthFactor = 3/4;
-		this.extraNumberOfMarginsBetween6thColAndTheRest = 3;
+		this.extraNumberOfMarginsBetween6thColAndTheRest = 2;
 		this.cowIsThisFractionOfCardHeight = 2/3;
 		this.cowIsThisFractionOfCardWidth = 9/10;
 		this.cowIsThisPercentDownTheCard = 0.43;
@@ -158,7 +158,7 @@ class LayoutCalculator
 		The dimensions of the canvas considering the number of cards and the dimensions of the cards can be derived this way:
 
 			cardWidth = cardHeight * cardHeightToWidthFactor
-			tableCanvasWidth = (totalNumberOfColsOnTableCanvas * cardWidth) + (totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin
+			tableCanvasWidth = (totalNumberOfColsOnTableCanvas * cardWidth) + (totalNumberOfColsOnTableCanvas + 2 + extraNumberOfMarginsBetween6thColAndTheRest)*margin
 			tableCanvasHeight = (NUMBER_OF_ROWS_ON_TABLE_CANVAS * cardHeight) + (NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*margin
 			
 			For this function, we need to use the formulas above to relate tableCanvasWidth and tableCanvasHeight to eachother in terms of the constants.
@@ -166,12 +166,15 @@ class LayoutCalculator
 			
 			The result is:
 				tableCanvasHeight = ((NUMBER_OF_ROWS_ON_TABLE_CANVAS*
-												(tableCanvasWidth - ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)))/
+												(tableCanvasWidth - ((totalNumberOfColsOnTableCanvas + 2 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)))/
 												(totalNumberOfColsOnTableCanvas * cardHeightToWidthFactor)) +
 												((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*margin)
 				tableCanvasWidth = ((totalNumberOfColsOnTableCanvas *
 											 cardHeightToWidthFactor * (tableCanvasHeight - ((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*margin)))/
-											 NUMBER_OF_ROWS_ON_TABLE_CANVAS) + ((totalNumberOfColsOnTableCanvas + 1 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)
+											 NUMBER_OF_ROWS_ON_TABLE_CANVAS) + ((totalNumberOfColsOnTableCanvas + 2 + extraNumberOfMarginsBetween6thColAndTheRest)*margin)
+			
+			Note: the reason why we do + 2 on the number of horizontal margins, is that at the border between the table cards and the upcoming cards, there is a
+			margin on both sides. this was done so that the separator line could be totally centered.
 	****************************************************************************************************************************************************************/
 	setGalleryDimensions(maxWidth, maxHeight)
 	{
@@ -180,7 +183,7 @@ class LayoutCalculator
 		// CASE 1
 		let tabletableCanvasWidth = maxWidth - 2*this.deFactoSpaceForOneFlickityArrow;
 		let tabletableCanvasHeight = ((NUMBER_OF_ROWS_ON_TABLE_CANVAS*
-												(tabletableCanvasWidth - ((this.totalNumberOfColsOnTableCanvas + 1 + this.extraNumberOfMarginsBetween6thColAndTheRest)*this.margin)))/
+												(tabletableCanvasWidth - ((this.totalNumberOfColsOnTableCanvas + 2 + this.extraNumberOfMarginsBetween6thColAndTheRest)*this.margin)))/
 												(this.totalNumberOfColsOnTableCanvas * this.cardHeightToWidthFactor)) +
 												((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*this.margin);
 		
@@ -191,7 +194,7 @@ class LayoutCalculator
 				tabletableCanvasHeight = maxHeight;
 				tabletableCanvasWidth = ((this.totalNumberOfColsOnTableCanvas *
 											 this.cardHeightToWidthFactor * (tabletableCanvasHeight - ((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*this.margin)))/
-											 NUMBER_OF_ROWS_ON_TABLE_CANVAS) + ((this.totalNumberOfColsOnTableCanvas + 1 + this.extraNumberOfMarginsBetween6thColAndTheRest)*this.margin);
+											 NUMBER_OF_ROWS_ON_TABLE_CANVAS) + ((this.totalNumberOfColsOnTableCanvas + 2 + this.extraNumberOfMarginsBetween6thColAndTheRest)*this.margin);
 				bTookUpFullMaxWidth = false;
 		}
 

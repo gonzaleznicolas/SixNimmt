@@ -152,19 +152,19 @@ class TableDrawer extends Drawer
 
 	calculateCardDimensions()
 	{
-		this._cardWidth = (this._canvas.width - ((lc.totalNumberOfColsOnTableCanvas + 1 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin)) / lc.totalNumberOfColsOnTableCanvas;
+		this._cardWidth = (this._canvas.width - ((lc.totalNumberOfColsOnTableCanvas + 2 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin)) / lc.totalNumberOfColsOnTableCanvas;
 		this._cardHeight = (this._canvas.height - ((NUMBER_OF_ROWS_ON_TABLE_CANVAS + 1)*lc.margin)) / NUMBER_OF_ROWS_ON_TABLE_CANVAS;
 	}
 	
 	calculateUpcomingCardCoordinates()
 	{
 		let x = (this._numberOfCols)*this._cardWidth +
-					(this._numberOfCols + 1 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin;
+					(this._numberOfCols + 2 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin;
 		let y = lc.margin;
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
 			x = (this._numberOfCols)*this._cardWidth +
-					(this._numberOfCols + 1 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin;
+					(this._numberOfCols + 2 + lc.extraNumberOfMarginsBetween6thColAndTheRest)*lc.margin;
 			this._upcomingCardCoordinates[row] = [];
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn; col++)
 			{
