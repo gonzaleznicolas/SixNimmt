@@ -30,5 +30,6 @@ class MenuView
 	quit()
 	{
 		console.log("quit"); // temporary
+		this.menuButtonClicked(); // to close menu
 	}
 }
