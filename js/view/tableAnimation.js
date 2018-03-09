@@ -42,12 +42,12 @@ class TableAnimation
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsProcessed < numberOfPlayers; col++)
 			{
-				playerName = this._tableDrawer._model.upcomingCardNames[numberOfCardsProcessed];
+				playerName = this._tableDrawer._model.UpcomingCardNames[numberOfCardsProcessed];
 				if (playerName)
 				{
 					x = this._tableDrawer._upcomingCardCoordinates[row][col].x;
 					y = this._tableDrawer._upcomingCardCoordinates[row][col].y;
-					number = this._tableDrawer._model.upcomingCards[numberOfCardsProcessed];
+					number = this._tableDrawer._model.UpcomingCards[numberOfCardsProcessed];
 
 					this._tableDrawer.clearCardSpace(x, y);
 					let xToKeepCardCenteredAsItShrinks = undefined;

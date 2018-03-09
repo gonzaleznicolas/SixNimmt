@@ -13,9 +13,9 @@ class SixNimmtModel {
 		this._upcomingCardNames = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
 	}
 	
-	get table() {return this._table;}
-	get hand() {return this._hand;}
+	get Table() {return this._table;}
+	get Hand() {return this._hand;}
 	
-	get upcomingCards() {return this._upcomingCards;}
-	get upcomingCardNames() {return this._upcomingCardNames;}
+	get UpcomingCards() {return this._upcomingCards;}
+	get UpcomingCardNames() {return this._upcomingCardNames;}
 }
