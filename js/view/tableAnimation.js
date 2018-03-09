@@ -42,7 +42,7 @@ class TableAnimation
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsProcessed < numberOfPlayers; col++)
 			{
-				playerName = this._tableDrawer._model.UpcomingCardNames[numberOfCardsProcessed];
+				playerName = this._tableDrawer._model.PlayerNamesOnUpcomingCards[numberOfCardsProcessed];
 				if (playerName)
 				{
 					x = this._tableDrawer._upcomingCardCoordinates[row][col].x;
