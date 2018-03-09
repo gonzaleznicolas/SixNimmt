@@ -125,7 +125,7 @@ class LayoutCalculator
 	
 	setScoreboardWidthAndScoreboardElementDimensionsWhenHorizontalLayout()
 	{
-		this.scoreboardElementHeight = (this.galleryHeight - (maxNumberOfPlayers + 1)*this.margin)/maxNumberOfPlayers;
+		this.scoreboardElementHeight = (this.galleryHeight - (MAX_NUMBER_OF_PLAYERS + 1)*this.margin)/MAX_NUMBER_OF_PLAYERS;
 		this.scoreboardElementWidth = this.scoreboardElementHeight*this.scoreboardElementHeightToWidthFactor;
 		this.scoreboardWidth = this.scoreboardElementWidth + 2*this.margin;
 	}

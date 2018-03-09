@@ -3,9 +3,9 @@
 let bSpectatorMode = false;
 let numberOfPlayers = 10;
 let bFlickityEnabled = true;
-let maxNumberOfPlayers = 10;
 
 // game constants
+const MAX_NUMBER_OF_PLAYERS = 10;
 const NUMBER_OF_ROWS_ON_HAND_CANVAS = 2;
 const NUMBER_OF_COLS_ON_HAND_CANVAS = 5;
 const NUMBER_OF_ROWS_ON_TABLE_CANVAS = 4;
