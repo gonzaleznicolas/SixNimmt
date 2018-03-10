@@ -28,6 +28,35 @@ class TableAnimation
 			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
 	
+	// call this function after updating the model with the card in col 5,
+	// but before updating the model to say the row was taken
+	takeRow(rowIndex)
+	{
+		let startRow = rowIndex;
+		let startCol = 5;
+		let endRow = rowIndex;
+		let endCol = 0;
+		const start = this._tableDrawer._cardCoordinates[startRow][startCol];
+		const end = this._tableDrawer._cardCoordinates[endRow][endCol];
+		
+		this._cardNumber = this._tableDrawer._model.Table[rowIndex][5];
+		this._cardName = this._tableDrawer._model.PlayerNamesOnTableCards[rowIndex][5];
+		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
+		this._nextPt = null;
+		if (!this._line.done)
+			requestAnimationFrame(this.takeRowHelper.bind(this));
+	}
+	
+	takeRowHelper()
+	{
+		if (this._nextPt)
+			this._tableDrawer.clearCardSpace(this._nextPt.x, this._nextPt.y);
+		this._nextPt = this._line.nextPoint();
+		this._tableDrawer.drawCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth, this._cardNumber, this._cardName);
+		if (!this._line.done)
+			requestAnimationFrame(this.takeRowHelper.bind(this));
+	}
+	
 	flipAllUpcomingCards()
 	{
 		bAnimationInProgress = true;
@@ -77,6 +106,6 @@ class TableAnimation
 		
 	onCanvasClicked(event)
 	{
-		this.flipAllUpcomingCards();
+		this.takeRow(1);
 	}
 }
