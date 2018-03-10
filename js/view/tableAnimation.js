@@ -30,6 +30,7 @@ class TableAnimation
 	
 	flipAllUpcomingCards()
 	{
+		bAnimationInProgress = true;
 		this._fcBackW = this._tableDrawer._cardWidth; // back of the card starts full width
 		requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 	}
@@ -68,8 +69,10 @@ class TableAnimation
 		
 		this._fcBackW = this._fcBackW - 3;
 
-		if ((-1)*this._fcBackW < this._tableDrawer._cardWidth)
-			requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
+				if ((-1) * this._fcBackW < this._tableDrawer._cardWidth)
+						requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
+				else
+					bAnimationInProgress = false;
 	}
 		
 	onCanvasClicked(event)

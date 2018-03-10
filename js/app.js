@@ -11,6 +11,9 @@ const NUMBER_OF_COLS_ON_HAND_CANVAS = 5;
 const NUMBER_OF_ROWS_ON_TABLE_CANVAS = 4;
 const NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN = 6;
 
+// global variables
+let bAnimationInProgress = false;
+
 let lc = undefined;
 
 $(function () {
