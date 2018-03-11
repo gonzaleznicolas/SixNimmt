@@ -61,6 +61,7 @@ function add(player, num)
 function flip()
 {
 	sixNimmtView._tableAnimation.flipAllUpcomingCards();
+	sixNimmtModel.UpcomingCardsFaceUp = true;
 }
 
 function takeRow(i)

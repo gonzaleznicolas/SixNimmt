@@ -20,7 +20,7 @@ class TableDrawer extends Drawer
 		this.drawUpcomingCardRectangles();
 		
 		this.drawCardsOnTable();
-		this.drawFaceDownUpcomingCards();
+		this.drawUpcomingCards();
 	}
 	
 	drawCardsOnTable()
@@ -37,17 +37,24 @@ class TableDrawer extends Drawer
 		}	
 	}
 	
-	drawFaceDownUpcomingCards()
+	drawUpcomingCards()
 	{
 		let numberOfCardsDrawn = 0;
 		let playerName = undefined;
+		let cardNumber = undefined;
 		for (let row = 0; row < this._numberOfRows && numberOfCardsDrawn < numberOfPlayers; row++)
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsDrawn < numberOfPlayers; col++)
 			{
+				cardNumber = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
 				playerName = this._model.PlayerNamesOnUpcomingCards[numberOfCardsDrawn];
-				if (playerName)
-					this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, playerName);
+				if (playerName && cardNumber)
+				{
+					if (this._model.UpcomingCardsFaceUp)
+						this.drawCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, cardNumber, playerName);
+					else
+						this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, playerName);
+				}
 				numberOfCardsDrawn++;
 			}
 		}
@@ -60,7 +67,6 @@ class TableDrawer extends Drawer
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfRectanglesDrawn < numberOfPlayers; col++)
 			{
-				
 				this.drawUpcomingCardRectangle(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y);
 				numberOfRectanglesDrawn++;
 			}
@@ -150,6 +156,11 @@ class TableDrawer extends Drawer
 	upcomingCardsIndexToCol(i)
 	{
 		return i % lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
+	}
+	
+	upcomingCardsRowColToIndex(row, col)
+	{
+		return lc.additionalColsOnTableCanvasForCardsPlayedThisTurn*row + col;
 	}
 	
 	resize()
