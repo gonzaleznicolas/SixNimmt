@@ -41,8 +41,8 @@ class HandDrawer extends Drawer
 		else 
 		{
 			this.dimAll(); 
-			const card = this._cardCoordinates[this._model.CurrentlySelectedCardInHand.row][this._model.CurrentlySelectedCardInHand.col];
-			let cardNumber = this._model.Hand[this.handRowColToIndex(this._model.CurrentlySelectedCardInHand.row, this._model.CurrentlySelectedCardInHand.col)];
+			let cardNumber = this._model.Hand[this._model.CurrentlySelectedCardInHand];
+			const card = this._cardCoordinates[this.handIndexToRow(this._model.CurrentlySelectedCardInHand)][this.handIndexToCol(this._model.CurrentlySelectedCardInHand)];
 			this.drawCard(card.x, card.y, this._cardWidth, cardNumber);
 			this._selectCardMessage.hide(); 
 			this._playCardButton.show(); 
@@ -58,6 +58,16 @@ class HandDrawer extends Drawer
 				this.dimCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, 0.85); 
 			} 
 		} 
+	}
+	
+	handIndexToRow(i)
+	{
+		return Math.floor(i/NUMBER_OF_COLS_ON_HAND_CANVAS);
+	}
+
+	handIndexToCol(i)
+	{
+		return i % NUMBER_OF_COLS_ON_HAND_CANVAS;
 	}
 	
 	handRowColToIndex(row, col)
