@@ -29,26 +29,28 @@ class TableAnimation
 	
 	sortUpcomingCards()
 	{
-		// step 1: make an array oldNewPosition where the index is the old position of a card, and the content is the new position.
-		// eg. suppose at position 5 we had the card with number 1. in the oldNewPosition array we are making here, at index 5
+		// step 1: make an array newPosition where the index is the old position of a card, and the content is the new position.
+		// eg. suppose at position 5 we had the card with number 1. in the newPosition array we are making here, at index 5
 		// the content should be 0. i.e. the card that is currently in position 5 (card 1) should after the sort be in position 0.
-		// oldNewPosition[5]=0.
+		// newPosition[5]=0.
 		
-		let oldNewPosition = [];
+		bAnimationInProgress = true;
+		
+		let newPosition = [];
 		let sortedUpcomingCards = this._tableDrawer._model.UpcomingCards.slice().sort((a, b)=> a-b); // sort a copy of unsorted UpcomingCards
 		
 		for (let i = 0; i < this._tableDrawer._model.UpcomingCards.length; i++)
-			oldNewPosition[i] = sortedUpcomingCards.findIndex(element => element==this._tableDrawer._model.UpcomingCards[i]);
+			newPosition[i] = sortedUpcomingCards.findIndex(element => element==this._tableDrawer._model.UpcomingCards[i]);
 		
 		this._resourcesForCardOriginallyAtPositionI = [];
 		
 		let startRow, startCol, endRow, endCol, start, end;
-		for (let i = 0; i < oldNewPosition.length; i++)
+		for (let i = 0; i < newPosition.length; i++)
 		{
 			startRow = this._tableDrawer.upcomingCardsIndexToRow(i);
 			startCol = this._tableDrawer.upcomingCardsIndexToCol(i);
-			endRow = this._tableDrawer.upcomingCardsIndexToRow(oldNewPosition[i]);
-			endCol = this._tableDrawer.upcomingCardsIndexToCol(oldNewPosition[i]);
+			endRow = this._tableDrawer.upcomingCardsIndexToRow(newPosition[i]);
+			endCol = this._tableDrawer.upcomingCardsIndexToCol(newPosition[i]);
 			start = this._tableDrawer._upcomingCardCoordinates[startRow][startCol];
 			end = this._tableDrawer._upcomingCardCoordinates[endRow][endCol];
 			this._resourcesForCardOriginallyAtPositionI[i] = {
@@ -57,27 +59,13 @@ class TableAnimation
 				line : new CardMovementLine(start.x, start.y, end.x, end.y),
 				nextPt : null
 			};
-			this._tableDrawer.clearCardSpace(start.x, start.y);
+			
+			if (i != newPosition[i])
+				this._tableDrawer.clearCardSpace(start.x, start.y);
 		}
 		
 		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {element.line.done}))
 			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
-		
-		// let startRow = this._tableDrawer.upcomingCardsIndexToRow(startIndex);
-		// let startCol = this._tableDrawer.upcomingCardsIndexToCol(startIndex);
-		// let endRow = this._tableDrawer.upcomingCardsIndexToRow(endIndex);
-		// let endCol = this._tableDrawer.upcomingCardsIndexToCol(endIndex);
-		// const start = this._tableDrawer._upcomingCardCoordinates[startRow][startCol];
-		// const end = this._tableDrawer._upcomingCardCoordinates[endRow][endCol];
-		
-		// this._movingCardNumber = this._tableDrawer._model.UpcomingCards[startIndex];
-		// this._movingCardName = this._tableDrawer._model.PlayerNamesOnUpcomingCards[startIndex];
-		
-		// this._tableDrawer.clearCardSpace(start.x, start.y);
-		// this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
-		// this._nextPt = null;
-		// if (!this._line.done)
-			// requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
 	}
 	
 	sortUpcomingCardsHelper()
@@ -93,13 +81,8 @@ class TableAnimation
 		
 		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {element.line.done}))
 			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
-		
-		// if (this._nextPt)
-			// this._tableDrawer.clearExactCardSpace(this._nextPt.x, this._nextPt.y);
-		// this._nextPt = this._line.nextPoint();
-		// this._tableDrawer.drawCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth, this._movingCardNumber, this._movingCardName);
-		// if (!this._line.done)
-			// requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
+		else
+			bAnimationInProgress = false;
 	}
 	
 	// call this function before updating the model (before removing the card from upcoming card array and putting it in the table array)
