@@ -85,11 +85,13 @@ class Drawer
 			this.drawPlayerName(x, y, cardWidth, undefined, playerName, false);
 	}
 	
-	dimCard(x, y)
+	dimCard(x, y, amount)
 	{
+		let halfMargin = lc.margin/2;
 		const ctx = this._ctx;
-		BasicShapeDrawer.drawCardShape(ctx, x, y, this._cardWidth, this._cardHeight, lc.radius);
-		ctx.fillStyle = lc.nimmtPurple.substring(0, lc.nimmtPurple.indexOf("1)"))+"0.85)";
+		ctx.beginPath();
+		ctx.rect(x-halfMargin, y-halfMargin, this._cardWidth+lc.margin, this._cardHeight+lc.margin);
+		ctx.fillStyle = lc.nimmtPurple.substring(0, lc.nimmtPurple.indexOf("1)"))+amount+")";
 		ctx.fill();
 		ctx.closePath();
 	}
@@ -244,7 +246,7 @@ class Drawer
 	clearCardSpace(x, y)
 	{
 		let halfMargin = lc.margin/2;
-		this._ctx.clearRect(x-halfMargin, y-halfMargin, this._cardWidth+lc.margin, this._cardHeight+lc.margin)
+		this._ctx.clearRect(x-halfMargin, y-halfMargin, this._cardWidth+lc.margin, this._cardHeight+lc.margin);
 	}
 	
 	

@@ -56,7 +56,7 @@ class HandDrawer extends Drawer
 		{ 
 			for (let col = 0; col < this._numberOfCols; col++) 
 			{ 
-				this.dimCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y); 
+				this.dimCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, 0.85); 
 			} 
 		} 
 	}

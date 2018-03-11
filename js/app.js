@@ -21,6 +21,7 @@ $(function () {
 	sixNimmtModel = new SixNimmtModel();
 	sixNimmtView = new SixNimmtView(sixNimmtModel);
 	menuView = new MenuView();
+	sixNimmtController = new SixNimmtController(sixNimmtModel, sixNimmtView, menuView);
 });
 
 function getCardInfo(cardNumber)
@@ -46,6 +47,7 @@ function getCardInfo(cardNumber)
 let sixNimmtModel = undefined;
 let sixNimmtView = undefined;
 let menuView = undefined;
+let sixNimmtController = undefined;
 
 function move(row1, col1, row2, col2) {
 	sixNimmtView._tableAnimation.moveCard(row1, col1, row2, col2);

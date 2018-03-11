@@ -4,7 +4,7 @@ class SixNimmtModel {
 	constructor() {
 		
 		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put undefined where there is no card
-		this._table = [[55,20,3,4,undefined, undefined],
+		this._table = [[5,20,3,4,undefined, undefined],
 									[1,2,3,22,50, 104],
 									[1,65,3,66,undefined, undefined],
 									[1,90,3,4,45, undefined]];

@@ -98,10 +98,10 @@ class TableAnimation
 		
 		this._fcBackW = this._fcBackW - 3;
 
-				if ((-1) * this._fcBackW < this._tableDrawer._cardWidth)
-						requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
-				else
-					bAnimationInProgress = false;
+		if ((-1) * this._fcBackW < this._tableDrawer._cardWidth)
+				requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
+		else
+			bAnimationInProgress = false;
 	}
 		
 	onCanvasClicked(event)
