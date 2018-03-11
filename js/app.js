@@ -63,4 +63,8 @@ function flip()
 	sixNimmtView._tableAnimation.flipAllUpcomingCards();
 }
 
+function takeRow(i)
+{
+	sixNimmtView._tableAnimation.takeRow(i);
+}
 
