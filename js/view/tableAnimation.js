@@ -27,6 +27,32 @@ class TableAnimation
 			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
 	
+	// call this function before updating the model (before removing the card from upcoming card array and putting it in the table array)
+	moveIthUpcomingCardToRowCol(i, tableRow, tableCol)
+	{
+		bAnimationInProgress = true;
+		
+		let upcomingCardStartRow = this._tableDrawer.upcomingCardsIndexToRow(i);
+		let upcomingCardStartCol = this._tableDrawer.upcomingCardsIndexToCol(i);
+		
+		let startXY = this._tableDrawer._upcomingCardCoordinates[upcomingCardStartRow][upcomingCardStartCol];
+		let endXY = this._tableDrawer._cardCoordinates[tableRow][tableCol];
+		
+		this._line = new CardMovementLine(startXY.x, startXY.y, endXY.x, endXY.y);
+		this._nextPt = null;
+		if (!this._line.done)
+			requestAnimationFrame(this.moveIthUpcomingCardToRowColHelper.bind(this));
+	}
+	
+	moveIthUpcomingCardToRowColHelper()
+	{
+		this._nextPt = this._line.nextPoint();
+		this._tableDrawer.draw();
+		this._tableDrawer.drawFaceDownCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth);
+		if (!this._line.done)
+			requestAnimationFrame(this.moveIthUpcomingCardToRowColHelper.bind(this));
+	}
+	
 	// call this function after updating the model with the card in col 5,
 	// but before updating the model to say the row was taken
 	takeRow(rowIndex)

@@ -142,6 +142,16 @@ class TableDrawer extends Drawer
 		ctx.setLineDash([]);
 	}
 	
+	upcomingCardsIndexToRow(i)
+	{
+		return Math.floor(i/lc.additionalColsOnTableCanvasForCardsPlayedThisTurn);
+	}
+	
+	upcomingCardsIndexToCol(i)
+	{
+		return i % lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
+	}
+	
 	resize()
 	{
 		this.setCanvasSize(lc.galleryWidth - 2*lc.deFactoSpaceForOneFlickityArrow, lc.galleryHeight);

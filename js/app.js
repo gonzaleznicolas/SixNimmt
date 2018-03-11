@@ -68,3 +68,8 @@ function takeRow(i)
 	sixNimmtView._tableAnimation.takeRow(i);
 }
 
+function moveIthUpcomingCardToRowCol(i, r, c)
+{
+	sixNimmtView._tableAnimation.moveIthUpcomingCardToRowCol(i, r, c);
+}
+
