@@ -19,8 +19,8 @@ class SixNimmtController {
 	onPlayCardClicked()
 	{
 		// fade out played card
-		let selectedCardRow = this._handDrawer._currentlySelected.row;
-		let selectedCardCol = this._handDrawer._currentlySelected.col;
+		let selectedCardRow = this._sixNimmtModel.CurrentlySelectedCardInHand.row;
+		let selectedCardCol = this._sixNimmtModel.CurrentlySelectedCardInHand.col;
 		this._handAnimation.fadeAwayCard(selectedCardRow, selectedCardCol);
 		
 		// move to table
@@ -44,14 +44,14 @@ class SixNimmtController {
 	
 	toggleCardSelection(row, col)
 	{
-		if (this._handDrawer._currentlySelected != undefined &&
-				row == this._handDrawer._currentlySelected.row &&
-				col == this._handDrawer._currentlySelected.col)
+		if (this._sixNimmtModel.CurrentlySelectedCardInHand != undefined &&
+				row == this._sixNimmtModel.CurrentlySelectedCardInHand.row &&
+				col == this._sixNimmtModel.CurrentlySelectedCardInHand.col)
 		{
-			this._handDrawer._currentlySelected = undefined;
+			this._sixNimmtModel.CurrentlySelectedCardInHand = undefined;
 		}
 		else
-			this._handDrawer._currentlySelected = {row: row, col: col};
+			this._sixNimmtModel.CurrentlySelectedCardInHand = {row: row, col: col};
 		
 		this._handDrawer.draw();
 	}

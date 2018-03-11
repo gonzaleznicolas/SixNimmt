@@ -6,8 +6,7 @@ class HandDrawer extends Drawer
 	{ 
 		super(canvas, model); 
 		this._numberOfRows = NUMBER_OF_ROWS_ON_HAND_CANVAS; 
-		this._numberOfCols = NUMBER_OF_COLS_ON_HAND_CANVAS ; 
-		this._currentlySelected = undefined;	// undefined means nothing selected 
+		this._numberOfCols = NUMBER_OF_COLS_ON_HAND_CANVAS ;
 		 
 		this._playCardButton = $('#playCardButton'); 
 		this._selectCardMessage = $('#selectCardMessage'); 
@@ -34,7 +33,7 @@ class HandDrawer extends Drawer
  
 	updateBasedOnCardSelection() 
 	{ 
-		if (this._currentlySelected == undefined) 
+		if (this._model.CurrentlySelectedCardInHand == undefined) 
 		{ 
 			this._playCardButton.hide(); 
 			this._selectCardMessage.show(); 
@@ -42,8 +41,8 @@ class HandDrawer extends Drawer
 		else 
 		{
 			this.dimAll(); 
-			const card = this._cardCoordinates[this._currentlySelected.row][this._currentlySelected.col];
-			let cardNumber = this._model.Hand[this.handRowColToIndex(this._currentlySelected.row, this._currentlySelected.col)];
+			const card = this._cardCoordinates[this._model.CurrentlySelectedCardInHand.row][this._model.CurrentlySelectedCardInHand.col];
+			let cardNumber = this._model.Hand[this.handRowColToIndex(this._model.CurrentlySelectedCardInHand.row, this._model.CurrentlySelectedCardInHand.col)];
 			this.drawCard(card.x, card.y, this._cardWidth, cardNumber);
 			this._selectCardMessage.hide(); 
 			this._playCardButton.show(); 

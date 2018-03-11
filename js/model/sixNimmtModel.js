@@ -16,6 +16,7 @@ class SixNimmtModel {
 												[undefined, undefined, undefined, undefined, undefined, undefined]];
 		
 		this._hand = [55,20,3,4,11, 1, 32, 43];
+		this._currentlySelectedCardInHand = undefined;
 									
 		this._UpcomingCardsFaceUp = false;
 		this._upcomingCards = [1,32,43,55, 63, 37, 73, 24, 75, 1];
@@ -25,7 +26,10 @@ class SixNimmtModel {
 	
 	get Table() {return this._table;}
 	get PlayerNamesOnTableCards() {return this._playerNamesOnTableCards;}
+	
 	get Hand() {return this._hand;}
+	get CurrentlySelectedCardInHand() {return this._currentlySelectedCardInHand;}
+	set CurrentlySelectedCardInHand(i) {this._currentlySelectedCardInHand = i;}
 	
 	get UpcomingCardsFaceUp() {return this._UpcomingCardsFaceUp;}
 	set UpcomingCardsFaceUp(b) {this._UpcomingCardsFaceUp = b;}
