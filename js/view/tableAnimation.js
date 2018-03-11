@@ -31,6 +31,7 @@ class TableAnimation
 	// but before updating the model to say the row was taken
 	takeRow(rowIndex)
 	{
+		bAnimationInProgress = true;
 		let startRow = rowIndex;
 		let startCol = 5;
 		let endRow = rowIndex;
@@ -54,6 +55,8 @@ class TableAnimation
 		this._tableDrawer.drawCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth, this._cardNumber, this._cardName);
 		if (!this._line.done)
 			requestAnimationFrame(this.takeRowHelper.bind(this));
+		else
+			bAnimationInProgress = false;
 	}
 	
 	flipAllUpcomingCards()

@@ -9,6 +9,7 @@ class HandAnimation
 	
 	fadeAwayCard(row, col)
 	{
+		bAnimationInProgress = true;
 		this._fadeIteration = 0;
 		this._fadeX = this._handDrawer._cardCoordinates[row][col].x;
 		this._fadeY = this._handDrawer._cardCoordinates[row][col].y;
@@ -26,6 +27,7 @@ class HandAnimation
 		else
 		{
 			this._handDrawer.clearCardSpace(this._fadeX, this._fadeY);
+			bAnimationInProgress = false;
 		}
 	}
 }
