@@ -5,7 +5,6 @@ class TableAnimation
 	constructor(drawer)
 	{
 			this._tableDrawer = drawer;
-			this._tableDrawer._canvas.addEventListener("click", this.onCanvasClicked.bind(this), false);
 	}
 
 	moveCard(startRow, startCol, endRow, endCol)
@@ -102,10 +101,5 @@ class TableAnimation
 				requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 		else
 			bAnimationInProgress = false;
-	}
-		
-	onCanvasClicked(event)
-	{
-		this.takeRow(1);
 	}
 }
