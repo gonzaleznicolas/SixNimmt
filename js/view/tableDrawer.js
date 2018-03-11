@@ -46,14 +46,18 @@ class TableDrawer extends Drawer
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsDrawn < numberOfPlayers; col++)
 			{
-				cardNumber = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
-				playerName = this._model.PlayerNamesOnUpcomingCards[numberOfCardsDrawn];
-				if (playerName && cardNumber)
+				if(!this._model.UpcomingCardsCurrentlyInAnimation.
+					includes(this.upcomingCardsRowColToIndex(row, col))) // if the card is currently in animation, dont draw it
 				{
-					if (this._model.UpcomingCardsFaceUp)
-						this.drawCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, cardNumber, playerName);
-					else
-						this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, playerName);
+					cardNumber = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
+					playerName = this._model.PlayerNamesOnUpcomingCards[numberOfCardsDrawn];
+					if (playerName && cardNumber)
+					{
+						if (this._model.UpcomingCardsFaceUp)
+							this.drawCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, cardNumber, playerName);
+						else
+							this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, playerName);
+					}
 				}
 				numberOfCardsDrawn++;
 			}

@@ -21,7 +21,7 @@ class SixNimmtModel {
 		this._UpcomingCardsFaceUp = false;
 		this._upcomingCards = [1,32,43,55, 63, 37, 73, 24, 75, 1];
 		this._playerNamesOnUpcomingCards = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
-		this._upcomingCardsInAnimation = [8]; // list of cards in animation: i.e. dont draw them on draw()
+		this._upcomingCardsCurrentlyInAnimation = []; // list of cards in animation: i.e. dont draw them on draw()
 	}
 	
 	get Table() {return this._table;}
@@ -35,4 +35,6 @@ class SixNimmtModel {
 	set UpcomingCardsFaceUp(b) {this._UpcomingCardsFaceUp = b;}
 	get UpcomingCards() {return this._upcomingCards;}
 	get PlayerNamesOnUpcomingCards() {return this._playerNamesOnUpcomingCards;}
+	get UpcomingCardsCurrentlyInAnimation() {return this._upcomingCardsCurrentlyInAnimation;}
+	set UpcomingCardsCurrentlyInAnimation(c) {this._upcomingCardsCurrentlyInAnimation = c};
 }
