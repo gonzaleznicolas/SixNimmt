@@ -80,7 +80,6 @@ function moveIthUpcomingCardToRowCol(i, r, c)
 
 function sortUpcomingCards()
 {
-	sixNimmtModel.UpcomingCardsCurrentlyInAnimation = sixNimmtModel.UpcomingCards;
 	sixNimmtView._tableAnimation.sortUpcomingCards();
 }
 
