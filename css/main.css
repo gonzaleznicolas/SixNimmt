@@ -74,23 +74,24 @@ header{
 }
 
 /* This container is just so the play card button wont show wider than necessary on some browsers*/
-#playCardContainer{
+#handMessageContainer{
 	display: flex;
 	flex-flow: row;
+	font-family: 'Bangers'; 
+	color: rgba(255, 255, 255, 1); 
 }
 
-#playCardButton{ 
-	width: fit-content; 
-	border-radius: 0.5em; 
-	font-weight: 0.5em; 
+#playCardButton{
+	border-radius: 0.5em;
 	padding: 0.5em; 
-	font-family: 'Bangers'; 
 	background: rgba(0, 0, 0, 0.3); 
-	color: rgba(255, 255, 255, 1); 
 	display: none;
 }
  
 #selectCardMessage{ 
-	font-family: 'Bangers'; 
-	color: rgba(255, 255, 255, 1); 
+	display: none;
 } 
+
+#notTimeToPlayCardMessage{
+	display: none;
+}

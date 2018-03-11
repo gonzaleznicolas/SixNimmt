@@ -3,6 +3,8 @@
 class SixNimmtModel {
 	constructor() {
 		
+		// TABLE
+		
 		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put undefined where there is no card
 		this._table = [[5,20,3,4,undefined, undefined],
 									[1,2,3,22,50, 104],
@@ -15,9 +17,15 @@ class SixNimmtModel {
 												[undefined, undefined, "Nata", undefined, undefined, undefined],
 												[undefined, undefined, undefined, undefined, undefined, undefined]];
 		
+		
+		// HAND
+		
 		this._hand = [55,20,3,4,11, 1, 32, 43];
 		this._currentlySelectedCardInHand = undefined;
-									
+		this._handState = HandState.PlayCard;
+		
+		// UPCOMING CARDS
+		
 		this._UpcomingCardsFaceUp = false;
 		this._upcomingCards = [1,32,43,55, 63, 37, 73, 24, 75, 1];
 		this._playerNamesOnUpcomingCards = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
@@ -30,6 +38,8 @@ class SixNimmtModel {
 	get Hand() {return this._hand;}
 	get CurrentlySelectedCardInHand() {return this._currentlySelectedCardInHand;}
 	set CurrentlySelectedCardInHand(i) {this._currentlySelectedCardInHand = i;}
+	get HandState() {return this._handState;}
+	set HandState(state) {this._handState = state;}
 	
 	get UpcomingCardsFaceUp() {return this._UpcomingCardsFaceUp;}
 	set UpcomingCardsFaceUp(b) {this._UpcomingCardsFaceUp = b;}

@@ -14,6 +14,9 @@ const NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TU
 // global variables
 let bAnimationInProgress = false;
 
+// global enums
+const HandState = Object.freeze({"PlayCard":1, "NotTimeToPlayCard":2})
+
 let lc = undefined;
 
 $(function () {

@@ -30,6 +30,8 @@ class SixNimmtController {
 	
 	onHandCanvasClicked(event)
 	{
+		if (this._sixNimmtModel.HandState != HandState.PlayCard)
+			return;
 		const canvasLeft = this._handDrawer.getCanvasOffsetLeft();
 		const canvasTop = this._handDrawer.getCanvasOffsetTop();
 

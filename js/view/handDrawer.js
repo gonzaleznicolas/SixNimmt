@@ -7,11 +7,8 @@ class HandDrawer extends Drawer
 		super(canvas, model); 
 		this._numberOfRows = NUMBER_OF_ROWS_ON_HAND_CANVAS; 
 		this._numberOfCols = NUMBER_OF_COLS_ON_HAND_CANVAS ;
-		 
-		this._playCardButton = $('#playCardButton'); 
-		this._selectCardMessage = $('#selectCardMessage'); 
-		this._playCardButton.css("margin-left", lc.margin + "px");	// couldnt be set using pure css 
-		this._selectCardMessage.css("margin-left", lc.margin + "px");	// couldnt be set using pure css 
+
+		$('#handMessageContainer').css("margin-left", lc.margin + "px");	// couldnt be set using pure css 
 	} 
 	 
 	draw() 
@@ -29,14 +26,28 @@ class HandDrawer extends Drawer
 		} 
 		 
 		this.updateBasedOnCardSelection(); 
-	} 
+	}
+	
+	respondToStateChange()
+	{
+		if (this._model._handState == HandState.PlayCard)
+		{
+			$('#handMessageContainer').children().hide();
+			$('#selectCardMessage').show(); 
+		}
+		else
+		{
+			$('#handMessageContainer').children().hide();
+			$('#notTimeToPlayCardMessage').show(); 
+		}
+	}
  
 	updateBasedOnCardSelection() 
 	{ 
 		if (this._model.CurrentlySelectedCardInHand == undefined) 
 		{ 
-			this._playCardButton.hide(); 
-			this._selectCardMessage.show(); 
+			$('#handMessageContainer').children().hide();
+			$('#selectCardMessage').show(); 
 		} 
 		else 
 		{
@@ -44,8 +55,8 @@ class HandDrawer extends Drawer
 			let cardNumber = this._model.Hand[this._model.CurrentlySelectedCardInHand];
 			const card = this._cardCoordinates[this.handIndexToRow(this._model.CurrentlySelectedCardInHand)][this.handIndexToCol(this._model.CurrentlySelectedCardInHand)];
 			this.drawCard(card.x, card.y, this._cardWidth, cardNumber);
-			this._selectCardMessage.hide(); 
-			this._playCardButton.show(); 
+			$('#handMessageContainer').children().hide();
+			$('#playCardButton').show();
 		} 
 	} 
  
