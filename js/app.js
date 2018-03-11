@@ -78,3 +78,9 @@ function moveIthUpcomingCardToRowCol(i, r, c)
 	sixNimmtView._tableAnimation.moveIthUpcomingCardToRowCol(i, r, c);
 }
 
+function sortUpcomingCards(i, j)
+{
+	sixNimmtModel.UpcomingCardsCurrentlyInAnimation = [i];
+	sixNimmtView._tableAnimation.sortUpcomingCards(i, j);
+}
+

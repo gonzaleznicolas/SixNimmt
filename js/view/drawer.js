@@ -249,6 +249,18 @@ class Drawer
 		this._ctx.clearRect(x-halfMargin, y-halfMargin, this._cardWidth+lc.margin, this._cardHeight+lc.margin);
 	}
 	
+	clearExactCardSpace(x, y)
+	{
+		const ctx = this._ctx;
+		
+		BasicShapeDrawer.drawCardShape(ctx, x, y, this._cardWidth, this._cardHeight, lc.radius);
+		ctx.fillStyle = lc.nimmtPurple;
+		ctx.strokeStyle = lc.nimmtPurple;
+		ctx.fill();
+		ctx.lineWidth = 3;
+		ctx.stroke();
+		ctx.closePath();
+	}
 	
 	getCanvasOffsetLeft()
 	{

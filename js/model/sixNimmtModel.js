@@ -27,7 +27,7 @@ class SixNimmtModel {
 		// UPCOMING CARDS
 		
 		this._UpcomingCardsFaceUp = false;
-		this._upcomingCards = [1,32,43,55, 63, 37, 73, 24, 75, 1];
+		this._upcomingCards = [4,32,43,55, 63, 37, 73, 24, 75, 1];
 		this._playerNamesOnUpcomingCards = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
 		this._upcomingCardsCurrentlyInAnimation = []; // list of cards in animation: i.e. dont draw them on draw()
 	}

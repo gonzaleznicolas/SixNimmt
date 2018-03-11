@@ -27,6 +27,35 @@ class TableAnimation
 			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
 	
+	sortUpcomingCards(startIndex, endIndex)
+	{
+		let startRow = this._tableDrawer.upcomingCardsIndexToRow(startIndex);
+		let startCol = this._tableDrawer.upcomingCardsIndexToCol(startIndex);
+		let endRow = this._tableDrawer.upcomingCardsIndexToRow(endIndex);
+		let endCol = this._tableDrawer.upcomingCardsIndexToCol(endIndex);
+		const start = this._tableDrawer._upcomingCardCoordinates[startRow][startCol];
+		const end = this._tableDrawer._upcomingCardCoordinates[endRow][endCol];
+		
+		this._movingCardNumber = this._tableDrawer._model.UpcomingCards[startIndex];
+		this._movingCardName = this._tableDrawer._model.PlayerNamesOnUpcomingCards[startIndex];
+		
+		this._tableDrawer.clearCardSpace(start.x, start.y);
+		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
+		this._nextPt = null;
+		if (!this._line.done)
+			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
+	}
+	
+	moveUpcomingCardHelper()
+	{
+		if (this._nextPt)
+			this._tableDrawer.clearExactCardSpace(this._nextPt.x, this._nextPt.y);
+		this._nextPt = this._line.nextPoint();
+		this._tableDrawer.drawCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth, this._movingCardNumber, this._movingCardName);
+		if (!this._line.done)
+			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
+	}
+	
 	// call this function before updating the model (before removing the card from upcoming card array and putting it in the table array)
 	moveIthUpcomingCardToRowCol(i, tableRow, tableCol)
 	{
@@ -72,6 +101,7 @@ class TableAnimation
 		
 		this._movingCardNumber = this._tableDrawer._model.Table[rowIndex][5];
 		this._movingCardName = this._tableDrawer._model.PlayerNamesOnTableCards[rowIndex][5];
+		this._tableDrawer.clearCardSpace(start.x, start.y);
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
 		this._nextPt = null;
 		if (!this._line.done)
