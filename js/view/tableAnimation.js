@@ -64,7 +64,7 @@ class TableAnimation
 				this._tableDrawer.clearCardSpace(start.x, start.y);
 		}
 		
-		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {element.line.done}))
+		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {return element.line.done}))
 			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
 	}
 	
@@ -79,7 +79,7 @@ class TableAnimation
 			this._tableDrawer.drawCard(card.nextPt.x, card.nextPt.y, this._tableDrawer._cardWidth, card.movingCardNumber, card.movingCardName);
 		}
 		
-		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {element.line.done}))
+		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {return element.line.done}))
 			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
 		else
 			bAnimationInProgress = false;

@@ -84,12 +84,12 @@ class SixNimmtView
 	}
 	
 	onResizeWindow()
+	{
+		if (bAnimationInProgress)
 		{
-				if (bAnimationInProgress)
-				{
-						setTimeout(this.onResizeWindow.bind(this), 500);
-						return;
-				}
+			setTimeout(this.onResizeWindow.bind(this), 500);
+			return;
+		}
 		clearTimeout(this._resizeTimeout);
 		this._resizeTimeout = setTimeout(this.onResizeWindowHelper.bind(this), 500);
 	}
