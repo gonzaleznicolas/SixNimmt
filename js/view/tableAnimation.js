@@ -38,6 +38,9 @@ class TableAnimation
 		let startXY = this._tableDrawer._upcomingCardCoordinates[upcomingCardStartRow][upcomingCardStartCol];
 		let endXY = this._tableDrawer._cardCoordinates[tableRow][tableCol];
 		
+		this._movingCardNumber = this._tableDrawer._model.UpcomingCards[i];
+		this._movingCardName = this._tableDrawer._model.PlayerNamesOnUpcomingCards[i];
+		
 		this._line = new CardMovementLine(startXY.x, startXY.y, endXY.x, endXY.y);
 		this._nextPt = null;
 		if (!this._line.done)
@@ -48,9 +51,11 @@ class TableAnimation
 	{
 		this._nextPt = this._line.nextPoint();
 		this._tableDrawer.draw();
-		this._tableDrawer.drawFaceDownCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth);
+		this._tableDrawer.drawCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth, this._movingCardNumber, this._movingCardName);
 		if (!this._line.done)
 			requestAnimationFrame(this.moveIthUpcomingCardToRowColHelper.bind(this));
+		else
+			bAnimationInProgress = false;
 	}
 	
 	// call this function after updating the model with the card in col 5,
@@ -65,8 +70,8 @@ class TableAnimation
 		const start = this._tableDrawer._cardCoordinates[startRow][startCol];
 		const end = this._tableDrawer._cardCoordinates[endRow][endCol];
 		
-		this._cardNumber = this._tableDrawer._model.Table[rowIndex][5];
-		this._cardName = this._tableDrawer._model.PlayerNamesOnTableCards[rowIndex][5];
+		this._movingCardNumber = this._tableDrawer._model.Table[rowIndex][5];
+		this._movingCardName = this._tableDrawer._model.PlayerNamesOnTableCards[rowIndex][5];
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
 		this._nextPt = null;
 		if (!this._line.done)
@@ -78,7 +83,7 @@ class TableAnimation
 		if (this._nextPt)
 			this._tableDrawer.clearCardSpace(this._nextPt.x, this._nextPt.y);
 		this._nextPt = this._line.nextPoint();
-		this._tableDrawer.drawCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth, this._cardNumber, this._cardName);
+		this._tableDrawer.drawCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth, this._movingCardNumber, this._movingCardName);
 		if (!this._line.done)
 			requestAnimationFrame(this.takeRowHelper.bind(this));
 		else
