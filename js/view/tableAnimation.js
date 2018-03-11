@@ -27,33 +27,79 @@ class TableAnimation
 			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
 	
-	sortUpcomingCards(startIndex, endIndex)
+	sortUpcomingCards()
 	{
-		let startRow = this._tableDrawer.upcomingCardsIndexToRow(startIndex);
-		let startCol = this._tableDrawer.upcomingCardsIndexToCol(startIndex);
-		let endRow = this._tableDrawer.upcomingCardsIndexToRow(endIndex);
-		let endCol = this._tableDrawer.upcomingCardsIndexToCol(endIndex);
-		const start = this._tableDrawer._upcomingCardCoordinates[startRow][startCol];
-		const end = this._tableDrawer._upcomingCardCoordinates[endRow][endCol];
+		// step 1: make an array oldNewPosition where the index is the old position of a card, and the content is the new position.
+		// eg. suppose at position 5 we had the card with number 1. in the oldNewPosition array we are making here, at index 5
+		// the content should be 0. i.e. the card that is currently in position 5 (card 1) should after the sort be in position 0.
+		// oldNewPosition[5]=0.
 		
-		this._movingCardNumber = this._tableDrawer._model.UpcomingCards[startIndex];
-		this._movingCardName = this._tableDrawer._model.PlayerNamesOnUpcomingCards[startIndex];
+		let oldNewPosition = [];
+		let sortedUpcomingCards = this._tableDrawer._model.UpcomingCards.slice().sort((a, b)=> a-b); // sort a copy of unsorted UpcomingCards
 		
-		this._tableDrawer.clearCardSpace(start.x, start.y);
-		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
-		this._nextPt = null;
-		if (!this._line.done)
+		for (let i = 0; i < this._tableDrawer._model.UpcomingCards.length; i++)
+			oldNewPosition[i] = sortedUpcomingCards.findIndex(element => element==this._tableDrawer._model.UpcomingCards[i]);
+		
+		this._resourcesForCardOriginallyAtPositionI = [];
+		
+		let startRow, startCol, endRow, endCol, start, end;
+		for (let i = 0; i < oldNewPosition.length; i++)
+		{
+			startRow = this._tableDrawer.upcomingCardsIndexToRow(i);
+			startCol = this._tableDrawer.upcomingCardsIndexToCol(i);
+			endRow = this._tableDrawer.upcomingCardsIndexToRow(oldNewPosition[i]);
+			endCol = this._tableDrawer.upcomingCardsIndexToCol(oldNewPosition[i]);
+			start = this._tableDrawer._upcomingCardCoordinates[startRow][startCol];
+			end = this._tableDrawer._upcomingCardCoordinates[endRow][endCol];
+			this._resourcesForCardOriginallyAtPositionI[i] = {
+				movingCardNumber : this._tableDrawer._model.UpcomingCards[i],
+				movingCardName : this._tableDrawer._model.PlayerNamesOnUpcomingCards[i],
+				line : new CardMovementLine(start.x, start.y, end.x, end.y),
+				nextPt : null
+			};
+			this._tableDrawer.clearCardSpace(start.x, start.y);
+		}
+		
+		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {element.line.done}))
 			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
+		
+		// let startRow = this._tableDrawer.upcomingCardsIndexToRow(startIndex);
+		// let startCol = this._tableDrawer.upcomingCardsIndexToCol(startIndex);
+		// let endRow = this._tableDrawer.upcomingCardsIndexToRow(endIndex);
+		// let endCol = this._tableDrawer.upcomingCardsIndexToCol(endIndex);
+		// const start = this._tableDrawer._upcomingCardCoordinates[startRow][startCol];
+		// const end = this._tableDrawer._upcomingCardCoordinates[endRow][endCol];
+		
+		// this._movingCardNumber = this._tableDrawer._model.UpcomingCards[startIndex];
+		// this._movingCardName = this._tableDrawer._model.PlayerNamesOnUpcomingCards[startIndex];
+		
+		// this._tableDrawer.clearCardSpace(start.x, start.y);
+		// this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
+		// this._nextPt = null;
+		// if (!this._line.done)
+			// requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
 	}
 	
-	moveUpcomingCardHelper()
+	sortUpcomingCardsHelper()
 	{
-		if (this._nextPt)
-			this._tableDrawer.clearExactCardSpace(this._nextPt.x, this._nextPt.y);
-		this._nextPt = this._line.nextPoint();
-		this._tableDrawer.drawCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth, this._movingCardNumber, this._movingCardName);
-		if (!this._line.done)
+		for (let i = 0; i < this._resourcesForCardOriginallyAtPositionI.length; i++)
+		{
+			let card = this._resourcesForCardOriginallyAtPositionI[i];
+			if(card.nextPt)
+				this._tableDrawer.clearExactCardSpace(card.nextPt.x, card.nextPt.y);
+			card.nextPt = card.line.nextPoint();
+			this._tableDrawer.drawCard(card.nextPt.x, card.nextPt.y, this._tableDrawer._cardWidth, card.movingCardNumber, card.movingCardName);
+		}
+		
+		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {element.line.done}))
 			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
+		
+		// if (this._nextPt)
+			// this._tableDrawer.clearExactCardSpace(this._nextPt.x, this._nextPt.y);
+		// this._nextPt = this._line.nextPoint();
+		// this._tableDrawer.drawCard(this._nextPt.x, this._nextPt.y, this._tableDrawer._cardWidth, this._movingCardNumber, this._movingCardName);
+		// if (!this._line.done)
+			// requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
 	}
 	
 	// call this function before updating the model (before removing the card from upcoming card array and putting it in the table array)
