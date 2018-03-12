@@ -60,10 +60,10 @@ class TableAnimation extends Animation
 				if (this._nextOffset)
 					this._drawer.clearCardSpace(this._drawer._cardCoordinates[row][col].x, this._drawer._cardCoordinates[row][col].y + this._nextOffset.y);
 				
-				cardNumber = this._drawer._model.Table[row][col];
+				cardNumber = this._model.Table[row][col];
 				if (cardNumber)
 					this._drawer.drawCard(this._drawer._cardCoordinates[row][col].x, this._drawer._cardCoordinates[row][col].y + this._nextOffset.y, 
-											this._drawer._cardWidth, cardNumber, this._drawer._model.PlayerNamesOnTableCards[row][col]);
+											this._drawer._cardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);
 			}
 		}
 		if (!this._line.done)
@@ -82,10 +82,10 @@ class TableAnimation extends Animation
 		bAnimationInProgress = true;
 		
 		let newPosition = [];
-		let sortedUpcomingCards = this._drawer._model.UpcomingCards.slice().sort((a, b)=> a-b); // sort a copy of unsorted UpcomingCards
+		let sortedUpcomingCards = this._model.UpcomingCards.slice().sort((a, b)=> a-b); // sort a copy of unsorted UpcomingCards
 		
-		for (let i = 0; i < this._drawer._model.UpcomingCards.length; i++)
-			newPosition[i] = sortedUpcomingCards.findIndex(element => element==this._drawer._model.UpcomingCards[i]);
+		for (let i = 0; i < this._model.UpcomingCards.length; i++)
+			newPosition[i] = sortedUpcomingCards.findIndex(element => element==this._model.UpcomingCards[i]);
 		
 		this._resourcesForCardOriginallyAtPositionI = [];
 		
@@ -99,8 +99,8 @@ class TableAnimation extends Animation
 			start = this._drawer._upcomingCardCoordinates[startRow][startCol];
 			end = this._drawer._upcomingCardCoordinates[endRow][endCol];
 			this._resourcesForCardOriginallyAtPositionI[i] = {
-				movingCardNumber : this._drawer._model.UpcomingCards[i],
-				movingCardName : this._drawer._model.PlayerNamesOnUpcomingCards[i],
+				movingCardNumber : this._model.UpcomingCards[i],
+				movingCardName : this._model.PlayerNamesOnUpcomingCards[i],
 				line : new CardMovementLine(start.x, start.y, end.x, end.y),
 				nextPt : null
 			};
@@ -143,8 +143,8 @@ class TableAnimation extends Animation
 		let startXY = this._drawer._upcomingCardCoordinates[upcomingCardStartRow][upcomingCardStartCol];
 		let endXY = this._drawer._cardCoordinates[tableRow][tableCol];
 		
-		this._movingCardNumber = this._drawer._model.UpcomingCards[i];
-		this._movingCardName = this._drawer._model.PlayerNamesOnUpcomingCards[i];
+		this._movingCardNumber = this._model.UpcomingCards[i];
+		this._movingCardName = this._model.PlayerNamesOnUpcomingCards[i];
 		
 		this._line = new CardMovementLine(startXY.x, startXY.y, endXY.x, endXY.y);
 		this._nextPt = null;
@@ -177,8 +177,8 @@ class TableAnimation extends Animation
 		const start = this._drawer._cardCoordinates[startRow][startCol];
 		const end = this._drawer._cardCoordinates[endRow][endCol];
 		
-		this._movingCardNumber = this._drawer._model.Table[rowIndex][5];
-		this._movingCardName = this._drawer._model.PlayerNamesOnTableCards[rowIndex][5];
+		this._movingCardNumber = this._model.Table[rowIndex][5];
+		this._movingCardName = this._model.PlayerNamesOnTableCards[rowIndex][5];
 		this._drawer.clearCardSpace(start.x, start.y);
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
 		this._nextPt = null;
@@ -215,12 +215,12 @@ class TableAnimation extends Animation
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsProcessed < numberOfPlayers; col++)
 			{
-				playerName = this._drawer._model.PlayerNamesOnUpcomingCards[numberOfCardsProcessed];
+				playerName = this._model.PlayerNamesOnUpcomingCards[numberOfCardsProcessed];
 				if (playerName)
 				{
 					x = this._drawer._upcomingCardCoordinates[row][col].x;
 					y = this._drawer._upcomingCardCoordinates[row][col].y;
-					number = this._drawer._model.UpcomingCards[numberOfCardsProcessed];
+					number = this._model.UpcomingCards[numberOfCardsProcessed];
 
 					this._drawer.clearCardSpace(x, y);
 					let xToKeepCardCenteredAsItShrinks = undefined;
