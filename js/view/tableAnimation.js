@@ -165,20 +165,24 @@ class TableAnimation extends Animation
 			bAnimationInProgress = false;
 	}
 	
-	// call this function after updating the model with the card in col 5,
-	// but before updating the model to say the row was taken
+
 	takeRow(rowIndex)
 	{
 		bAnimationInProgress = true;
+		
+		// first, find the col of the last card in the row
+		let indexOfFirstUndefinedInTheRow = this._model.Table[rowIndex].findIndex(cardNum => {return cardNum == undefined});
+		let indexOfLastCardInTheRow = indexOfFirstUndefinedInTheRow == -1 ? this._drawer._numberOfCols - 1 : indexOfFirstUndefinedInTheRow - 1;
+
 		let startRow = rowIndex;
-		let startCol = 5;
+		let startCol = indexOfLastCardInTheRow;
 		let endRow = rowIndex;
 		let endCol = 0;
 		const start = this._drawer.CardCoordinates[startRow][startCol];
 		const end = this._drawer.CardCoordinates[endRow][endCol];
 		
-		this._movingCardNumber = this._model.Table[rowIndex][5];
-		this._movingCardName = this._model.PlayerNamesOnTableCards[rowIndex][5];
+		this._movingCardNumber = this._model.Table[rowIndex][indexOfLastCardInTheRow];
+		this._movingCardName = this._model.PlayerNamesOnTableCards[rowIndex][indexOfLastCardInTheRow];
 		this._drawer.clearCardSpace(start.x, start.y);
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
 		this._nextPt = null;
