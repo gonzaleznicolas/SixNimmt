@@ -45,6 +45,8 @@ class TableAnimation
 		this._nextOffset = null;
 		if (!this._line.done)
 			requestAnimationFrame(this.moveRowsHelper.bind(this));
+		else
+			bAnimationInProgress = false;
 	}
 	
 	moveRowsHelper()
@@ -109,6 +111,8 @@ class TableAnimation
 		
 		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {return element.line.done}))
 			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
+		else
+			bAnimationInProgress = false;
 	}
 	
 	sortUpcomingCardsHelper()
@@ -146,6 +150,8 @@ class TableAnimation
 		this._nextPt = null;
 		if (!this._line.done)
 			requestAnimationFrame(this.moveIthUpcomingCardToRowColHelper.bind(this));
+		else
+			bAnimationInProgress = false;
 	}
 	
 	moveIthUpcomingCardToRowColHelper()
@@ -178,6 +184,8 @@ class TableAnimation
 		this._nextPt = null;
 		if (!this._line.done)
 			requestAnimationFrame(this.takeRowHelper.bind(this));
+		else
+			bAnimationInProgress = false;
 	}
 	
 	takeRowHelper()
