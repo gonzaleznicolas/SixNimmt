@@ -83,3 +83,8 @@ function sortUpcomingCards()
 	sixNimmtView._tableAnimation.sortUpcomingCards();
 }
 
+function moveRows(fromRow, toRow, downThisManyRows)
+{
+	sixNimmtView._tableAnimation.moveRows(fromRow, toRow, downThisManyRows);
+}
+

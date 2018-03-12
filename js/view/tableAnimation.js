@@ -27,6 +27,49 @@ class TableAnimation
 			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
 	
+	// call this function before updating the model
+	// precondition: fromRow <= toRow
+	// note: fromRow toRow is inclusive.
+	moveRows(fromRow, toRow, downThisManyRows)
+	{
+		// if downThisManyRowsIs negative, move up
+		bAnimationInProgress = true;
+		
+		// these rows are in the model before updating the move
+		this._fromRow = fromRow;
+		this._toRow = toRow;
+		
+		// we are just gonna use the CardMovementLine for its y values. and we will use the y values as offsets from the
+		// original value
+		this._line = new CardMovementLine(0, 0, 0, downThisManyRows*(this._tableDrawer._cardHeight + lc.margin));
+		this._nextOffset = null;
+		if (!this._line.done)
+			requestAnimationFrame(this.moveRowsHelper.bind(this));
+	}
+	
+	moveRowsHelper()
+	{
+		this._nextOffset = this._line.nextPoint();
+		let cardNumber;
+		for (let row = this._fromRow; row <= this._toRow; row++)
+		{
+			for (let col = 0; col < this._tableDrawer._numberOfCols; col++)
+			{
+				if (this._nextOffset)
+					this._tableDrawer.clearCardSpace(this._tableDrawer._cardCoordinates[row][col].x, this._tableDrawer._cardCoordinates[row][col].y + this._nextOffset.y);
+				
+				cardNumber = this._tableDrawer._model.Table[row][col];
+				if (cardNumber)
+					this._tableDrawer.drawCard(this._tableDrawer._cardCoordinates[row][col].x, this._tableDrawer._cardCoordinates[row][col].y + this._nextOffset.y, 
+											this._tableDrawer._cardWidth, cardNumber, this._tableDrawer._model.PlayerNamesOnTableCards[row][col]);
+			}
+		}
+		if (!this._line.done)
+			requestAnimationFrame(this.moveRowsHelper.bind(this));
+		else
+			bAnimationInProgress = false;
+	}
+	
 	sortUpcomingCards()
 	{
 		// step 1: make an array newPosition where the index is the old position of a card, and the content is the new position.
