@@ -12,16 +12,12 @@ class SixNimmtView
 		if (!bSpectatorMode)
 			this._flickity = this.setUpFlickity();
 		
-		this._tableDrawer = new TableDrawer($('#tableCanvas')[0], sixNimmtModel);
-		this._tableAnimation = new TableAnimation(this._tableDrawer);
+		this._tableAnimation = new TableAnimation(sixNimmtModel);
 		
 		if (bSpectatorMode)
 			$('.hand.galleryCell').remove();
 		else
-		{
-			this._handDrawer = new HandDrawer($('#handCanvas')[0], sixNimmtModel);
-			this._handAnimation = new HandAnimation(this._handDrawer);
-		}
+			this._handAnimation = new HandAnimation(sixNimmtModel);
 
 		this._scoreboard = new Scoreboard(["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Moises", "Jesus", "Jose", "Maria", "MMMMMM"]);
 		
@@ -69,16 +65,16 @@ class SixNimmtView
 		else
 			$("#game").css("flex-direction", "row");
 
-		this._tableDrawer.resize();
+		this._tableAnimation._drawer.resize();
 		if (!bSpectatorMode)
-			this._handDrawer.resize();
+			this._handAnimation._drawer.resize();
 		
 		this._scoreboard.resize();
 		this.setGallerySize();
 
-		this._tableDrawer.draw();
+		this._tableAnimation._drawer.draw();
 		if (!bSpectatorMode)
-			this._handDrawer.draw();
+			this._handAnimation._drawer.draw();
 		
 		$("#game").css("visibility", "visible"); 
 	}

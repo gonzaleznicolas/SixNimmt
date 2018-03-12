@@ -2,17 +2,17 @@
 
 class HandAnimation
 {
-	constructor(drawer)
+	constructor(model)
 	{
-			this._handDrawer = drawer;
+			this._drawer = new HandDrawer($('#handCanvas')[0], model);
 	}
 	
 	fadeAwayCard(row, col)
 	{
 		bAnimationInProgress = true;
 		this._fadeIteration = 0;
-		this._fadeX = this._handDrawer._cardCoordinates[row][col].x;
-		this._fadeY = this._handDrawer._cardCoordinates[row][col].y;
+		this._fadeX = this._drawer._cardCoordinates[row][col].x;
+		this._fadeY = this._drawer._cardCoordinates[row][col].y;
 		requestAnimationFrame(this.fadeAwayCardHelper.bind(this));
 	}
 	
@@ -20,13 +20,13 @@ class HandAnimation
 	{
 		if (this._fadeIteration < 30)
 		{
-			this._handDrawer.dimCard(this._fadeX, this._fadeY, 0.1);
+			this._drawer.dimCard(this._fadeX, this._fadeY, 0.1);
 			requestAnimationFrame(this.fadeAwayCardHelper.bind(this));
 			this._fadeIteration++;
 		}
 		else
 		{
-			this._handDrawer.clearCardSpace(this._fadeX, this._fadeY);
+			this._drawer.clearCardSpace(this._fadeX, this._fadeY);
 			bAnimationInProgress = false;
 		}
 	}
