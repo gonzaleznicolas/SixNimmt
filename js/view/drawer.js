@@ -17,6 +17,10 @@ class Drawer
 	
 	get Canvas() {return this._canvas;}
 	get CardWidth() {return this._cardWidth;}
+	get CardHeight() {return this._cardHeight;}
+	get NumberOfRows() {return this._numberOfRows;}
+	get NumberOfCols() {return this._numberOfCols;}
+	get CardCoordinates() {return this._cardCoordinates;}
 	
 	getCardRowColFromXY(x, y)
 	{

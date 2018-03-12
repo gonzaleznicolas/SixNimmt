@@ -8,12 +8,14 @@ class Animation
 		this._model = model;
 	}
 	
+	get Drawer() {return this._drawer;}
+	
 	fadeAwayCard(row, col)
 	{
 		bAnimationInProgress = true;
 		this._fadeIteration = 0;
-		this._fadeX = this._drawer._cardCoordinates[row][col].x;
-		this._fadeY = this._drawer._cardCoordinates[row][col].y;
+		this._fadeX = this._drawer.CardCoordinates[row][col].x;
+		this._fadeY = this._drawer.CardCoordinates[row][col].y;
 		requestAnimationFrame(this.fadeAwayCardHelper.bind(this));
 	}
 	

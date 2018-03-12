@@ -12,6 +12,8 @@ class TableDrawer extends Drawer
 		this._upcomingCardCoordinates = []; 
 	}
 	
+	get UpcomingCardCoordinates() {return this._upcomingCardCoordinates;}
+	
 	draw()
 	{
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)

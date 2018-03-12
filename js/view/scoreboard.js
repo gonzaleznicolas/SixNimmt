@@ -21,7 +21,7 @@ class Scoreboard
 			setTimeout( this.incrementScore.bind(this), 500, playerName, incrementBy);
 			return;
 		}
-		this._indexOfElementBeingUpdated = this._scoreboardElements.findIndex(element => element.name == playerName);
+		this._indexOfElementBeingUpdated = this._scoreboardElements.findIndex(element => element.Name == playerName);
 		this._elementBeingMoved = this._scoreboardElements[this._indexOfElementBeingUpdated];
 		this._elementBeingMoved.incrementScoreBy(incrementBy);
 		// make the element being moved pink
@@ -33,8 +33,8 @@ class Scoreboard
 	{
 		// move the element which had its score incremented until it is in the right place
 		if (this._indexOfElementBeingUpdated == this._scoreboardElements.length - 1 ||
-			this._elementBeingMoved.score <=
-			this._scoreboardElements[this._indexOfElementBeingUpdated+1].score)
+			this._elementBeingMoved.Score <=
+			this._scoreboardElements[this._indexOfElementBeingUpdated+1].Score)
 		{
 			clearInterval(this._incrementScoreInterval);
 			// wait one second to make it white again
@@ -54,7 +54,7 @@ class Scoreboard
 
 	putElementsInContainer()
 	{
-		this._scoreboardElements.forEach(element => this._scoreboardContainer.append(element.div));
+		this._scoreboardElements.forEach(element => this._scoreboardContainer.append(element.Div));
 	}
 
 	resize()

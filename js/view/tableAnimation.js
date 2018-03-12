@@ -9,8 +9,8 @@ class TableAnimation extends Animation
 
 	moveCard(startRow, startCol, endRow, endCol)
 	{
-		const start = this._drawer._cardCoordinates[startRow][startCol];
-		const end = this._drawer._cardCoordinates[endRow][endCol];
+		const start = this._drawer.CardCoordinates[startRow][startCol];
+		const end = this._drawer.CardCoordinates[endRow][endCol];
 		
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
 		this._nextPt = null;
@@ -41,7 +41,7 @@ class TableAnimation extends Animation
 		
 		// we are just gonna use the CardMovementLine for its y values. and we will use the y values as offsets from the
 		// original value
-		this._line = new CardMovementLine(0, 0, 0, downThisManyRows*(this._drawer._cardHeight + lc.margin));
+		this._line = new CardMovementLine(0, 0, 0, downThisManyRows*(this._drawer.CardHeight + lc.margin));
 		this._nextOffset = null;
 		if (!this._line.done)
 			requestAnimationFrame(this.moveRowsHelper.bind(this));
@@ -55,14 +55,14 @@ class TableAnimation extends Animation
 		let cardNumber;
 		for (let row = this._fromRow; row <= this._toRow; row++)
 		{
-			for (let col = 0; col < this._drawer._numberOfCols; col++)
+			for (let col = 0; col < this._drawer.NumberOfCols; col++)
 			{
 				if (this._nextOffset)
-					this._drawer.clearCardSpace(this._drawer._cardCoordinates[row][col].x, this._drawer._cardCoordinates[row][col].y + this._nextOffset.y);
+					this._drawer.clearCardSpace(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y + this._nextOffset.y);
 				
 				cardNumber = this._model.Table[row][col];
 				if (cardNumber)
-					this._drawer.drawCard(this._drawer._cardCoordinates[row][col].x, this._drawer._cardCoordinates[row][col].y + this._nextOffset.y, 
+					this._drawer.drawCard(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y + this._nextOffset.y, 
 											this._drawer.CardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);
 			}
 		}
@@ -96,8 +96,8 @@ class TableAnimation extends Animation
 			startCol = this._drawer.upcomingCardsIndexToCol(i);
 			endRow = this._drawer.upcomingCardsIndexToRow(newPosition[i]);
 			endCol = this._drawer.upcomingCardsIndexToCol(newPosition[i]);
-			start = this._drawer._upcomingCardCoordinates[startRow][startCol];
-			end = this._drawer._upcomingCardCoordinates[endRow][endCol];
+			start = this._drawer.UpcomingCardCoordinates[startRow][startCol];
+			end = this._drawer.UpcomingCardCoordinates[endRow][endCol];
 			this._resourcesForCardOriginallyAtPositionI[i] = {
 				movingCardNumber : this._model.UpcomingCards[i],
 				movingCardName : this._model.PlayerNamesOnUpcomingCards[i],
@@ -140,8 +140,8 @@ class TableAnimation extends Animation
 		let upcomingCardStartRow = this._drawer.upcomingCardsIndexToRow(i);
 		let upcomingCardStartCol = this._drawer.upcomingCardsIndexToCol(i);
 		
-		let startXY = this._drawer._upcomingCardCoordinates[upcomingCardStartRow][upcomingCardStartCol];
-		let endXY = this._drawer._cardCoordinates[tableRow][tableCol];
+		let startXY = this._drawer.UpcomingCardCoordinates[upcomingCardStartRow][upcomingCardStartCol];
+		let endXY = this._drawer.CardCoordinates[tableRow][tableCol];
 		
 		this._movingCardNumber = this._model.UpcomingCards[i];
 		this._movingCardName = this._model.PlayerNamesOnUpcomingCards[i];
@@ -174,8 +174,8 @@ class TableAnimation extends Animation
 		let startCol = 5;
 		let endRow = rowIndex;
 		let endCol = 0;
-		const start = this._drawer._cardCoordinates[startRow][startCol];
-		const end = this._drawer._cardCoordinates[endRow][endCol];
+		const start = this._drawer.CardCoordinates[startRow][startCol];
+		const end = this._drawer.CardCoordinates[endRow][endCol];
 		
 		this._movingCardNumber = this._model.Table[rowIndex][5];
 		this._movingCardName = this._model.PlayerNamesOnTableCards[rowIndex][5];
@@ -211,15 +211,15 @@ class TableAnimation extends Animation
 	{
 		let x, y, number, playerName;
 		let numberOfCardsProcessed = 0;
-		for (let row = 0; row < this._drawer._numberOfRows && numberOfCardsProcessed < numberOfPlayers; row++)
+		for (let row = 0; row < this._drawer.NumberOfRows && numberOfCardsProcessed < numberOfPlayers; row++)
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsProcessed < numberOfPlayers; col++)
 			{
 				playerName = this._model.PlayerNamesOnUpcomingCards[numberOfCardsProcessed];
 				if (playerName)
 				{
-					x = this._drawer._upcomingCardCoordinates[row][col].x;
-					y = this._drawer._upcomingCardCoordinates[row][col].y;
+					x = this._drawer.UpcomingCardCoordinates[row][col].x;
+					y = this._drawer.UpcomingCardCoordinates[row][col].y;
 					number = this._model.UpcomingCards[numberOfCardsProcessed];
 
 					this._drawer.clearCardSpace(x, y);

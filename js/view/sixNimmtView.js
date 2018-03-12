@@ -69,16 +69,16 @@ class SixNimmtView
 		else
 			$("#game").css("flex-direction", "row");
 
-		this._tableAnimation._drawer.resize();
+		this._tableAnimation.Drawer.resize();
 		if (!bSpectatorMode)
-			this._handAnimation._drawer.resize();
+			this._handAnimation.Drawer.resize();
 		
 		this._scoreboard.resize();
 		this.setGallerySize();
 
-		this._tableAnimation._drawer.draw();
+		this._tableAnimation.Drawer.draw();
 		if (!bSpectatorMode)
-			this._handAnimation._drawer.draw();
+			this._handAnimation.Drawer.draw();
 		
 		$("#game").css("visibility", "visible"); 
 	}

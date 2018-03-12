@@ -4,16 +4,16 @@ class ScoreboardElement
 {
 		constructor(playerName)
 		{
-				this._div = $(document.createElement("div"));
-				this._div.addClass("scoreboardElement");
-				this._playerName = playerName;
-				this._playerScore = Math.floor(Math.random()*300);
-				this.updateText();
+			this._div = $(document.createElement("div"));
+			this._div.addClass("scoreboardElement");
+			this._playerName = playerName;
+			this._playerScore = Math.floor(Math.random()*300);
+			this.updateText();
 		}
 
-		get name() {return this._playerName}
-		get score() {return this._playerScore}
-		get div() {return this._div}
+		get Name() {return this._playerName}
+		get Score() {return this._playerScore}
+		get Div() {return this._div}
 
 		incrementScoreBy(n)
 		{
