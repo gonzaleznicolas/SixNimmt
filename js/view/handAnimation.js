@@ -1,10 +1,10 @@
 "use strict";
 
-class HandAnimation
+class HandAnimation extends Animation
 {
 	constructor(model)
 	{
-			this._drawer = new HandDrawer($('#handCanvas')[0], model);
+		super(new HandDrawer($('#handCanvas')[0], model), model);
 	}
 	
 	fadeAwayCard(row, col)

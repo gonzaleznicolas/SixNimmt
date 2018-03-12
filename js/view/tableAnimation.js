@@ -1,10 +1,10 @@
 "use strict";
 
-class TableAnimation
+class TableAnimation extends Animation
 {
 	constructor(model)
 	{
-			this._drawer = new TableDrawer($('#tableCanvas')[0], model);;
+		super( new TableDrawer($('#tableCanvas')[0], model), model );
 	}
 
 	moveCard(startRow, startCol, endRow, endCol)
