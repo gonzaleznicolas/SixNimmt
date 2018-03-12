@@ -42,6 +42,16 @@ class TableAnimation extends Animation
 		// we are just gonna use the CardMovementLine for its y values. and we will use the y values as offsets from the
 		// original value
 		this._line = new CardMovementLine(0, 0, 0, downThisManyRows*(this._drawer.CardHeight + lc.margin));
+		if (!this._line.done)
+		{
+			for (let row = this._fromRow; row <= this._toRow; row++)
+			{
+				for (let col = 0; col < this._drawer.NumberOfCols; col++)
+				{
+						this._drawer.clearCardSpace(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y);
+				}
+			}
+		}
 		this._nextOffset = null;
 		if (!this._line.done)
 			requestAnimationFrame(this.moveRowsHelper.bind(this));
@@ -183,8 +193,9 @@ class TableAnimation extends Animation
 		
 		this._movingCardNumber = this._model.Table[rowIndex][indexOfLastCardInTheRow];
 		this._movingCardName = this._model.PlayerNamesOnTableCards[rowIndex][indexOfLastCardInTheRow];
-		this._drawer.clearCardSpace(start.x, start.y);
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
+		if (!this._line.done)
+			this._drawer.clearCardSpace(start.x, start.y);
 		this._nextPt = null;
 		if (!this._line.done)
 			requestAnimationFrame(this.takeRowHelper.bind(this));
