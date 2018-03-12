@@ -15,6 +15,9 @@ class Drawer
 		this._cardCoordinates = [];	// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
 	}
 	
+	get Canvas() {return this._canvas;}
+	get CardWidth() {return this._cardWidth;}
+	
 	getCardRowColFromXY(x, y)
 	{
 		let clickedRow = undefined;

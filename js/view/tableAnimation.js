@@ -22,7 +22,7 @@ class TableAnimation extends Animation
 	{
 		this._nextPt = this._line.nextPoint();
 		this._drawer.draw();
-		this._drawer.drawFaceDownCard(this._nextPt.x, this._nextPt.y, this._drawer._cardWidth);
+		this._drawer.drawFaceDownCard(this._nextPt.x, this._nextPt.y, this._drawer.CardWidth);
 		if (!this._line.done)
 			requestAnimationFrame(this.moveCardHelper.bind(this));
 	}
@@ -63,7 +63,7 @@ class TableAnimation extends Animation
 				cardNumber = this._model.Table[row][col];
 				if (cardNumber)
 					this._drawer.drawCard(this._drawer._cardCoordinates[row][col].x, this._drawer._cardCoordinates[row][col].y + this._nextOffset.y, 
-											this._drawer._cardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);
+											this._drawer.CardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);
 			}
 		}
 		if (!this._line.done)
@@ -123,7 +123,7 @@ class TableAnimation extends Animation
 			if(card.nextPt)
 				this._drawer.clearExactCardSpace(card.nextPt.x, card.nextPt.y);
 			card.nextPt = card.line.nextPoint();
-			this._drawer.drawCard(card.nextPt.x, card.nextPt.y, this._drawer._cardWidth, card.movingCardNumber, card.movingCardName);
+			this._drawer.drawCard(card.nextPt.x, card.nextPt.y, this._drawer.CardWidth, card.movingCardNumber, card.movingCardName);
 		}
 		
 		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {return element.line.done}))
@@ -158,7 +158,7 @@ class TableAnimation extends Animation
 	{
 		this._nextPt = this._line.nextPoint();
 		this._drawer.draw();
-		this._drawer.drawCard(this._nextPt.x, this._nextPt.y, this._drawer._cardWidth, this._movingCardNumber, this._movingCardName);
+		this._drawer.drawCard(this._nextPt.x, this._nextPt.y, this._drawer.CardWidth, this._movingCardNumber, this._movingCardName);
 		if (!this._line.done)
 			requestAnimationFrame(this.moveIthUpcomingCardToRowColHelper.bind(this));
 		else
@@ -193,7 +193,7 @@ class TableAnimation extends Animation
 		if (this._nextPt)
 			this._drawer.clearCardSpace(this._nextPt.x, this._nextPt.y);
 		this._nextPt = this._line.nextPoint();
-		this._drawer.drawCard(this._nextPt.x, this._nextPt.y, this._drawer._cardWidth, this._movingCardNumber, this._movingCardName);
+		this._drawer.drawCard(this._nextPt.x, this._nextPt.y, this._drawer.CardWidth, this._movingCardNumber, this._movingCardName);
 		if (!this._line.done)
 			requestAnimationFrame(this.takeRowHelper.bind(this));
 		else
@@ -203,7 +203,7 @@ class TableAnimation extends Animation
 	flipAllUpcomingCards()
 	{
 		bAnimationInProgress = true;
-		this._fcBackW = this._drawer._cardWidth; // back of the card starts full width
+		this._fcBackW = this._drawer.CardWidth; // back of the card starts full width
 		requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 	}
 	
@@ -226,12 +226,12 @@ class TableAnimation extends Animation
 					let xToKeepCardCenteredAsItShrinks = undefined;
 					if (this._fcBackW > 0)
 					{
-						xToKeepCardCenteredAsItShrinks = x + (this._drawer._cardWidth - this._fcBackW)/2
+						xToKeepCardCenteredAsItShrinks = x + (this._drawer.CardWidth - this._fcBackW)/2
 						this._drawer.drawFaceDownCard(xToKeepCardCenteredAsItShrinks, y, this._fcBackW, playerName);
 					}
 					else
 					{
-						xToKeepCardCenteredAsItShrinks = x + (this._drawer._cardWidth + this._fcBackW)/2
+						xToKeepCardCenteredAsItShrinks = x + (this._drawer.CardWidth + this._fcBackW)/2
 						this._drawer.drawCard(xToKeepCardCenteredAsItShrinks, y, (-1)*this._fcBackW, number, playerName);
 					}
 				}
@@ -241,7 +241,7 @@ class TableAnimation extends Animation
 		
 		this._fcBackW = this._fcBackW - 3;
 
-		if ((-1) * this._fcBackW < this._drawer._cardWidth)
+		if ((-1) * this._fcBackW < this._drawer.CardWidth)
 				requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 		else
 			bAnimationInProgress = false;

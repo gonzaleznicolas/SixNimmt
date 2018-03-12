@@ -29,6 +29,10 @@ class SixNimmtView
 		$(window).on("orientationchange", this.onResizeWindow.bind(this));
 	}
 	
+	get TableAnimation() {return this._tableAnimation;}
+	get HandAnimation() {return this._handAnimation;}
+	get Flickity() {return this._flickity;}
+	
 	setUpFlickity()
 	{
 		let flickity = undefined;

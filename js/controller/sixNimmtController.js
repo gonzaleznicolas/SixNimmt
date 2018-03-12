@@ -7,11 +7,11 @@ class SixNimmtController {
 		this._sixNimmtView = sixNimmtView;
 		this._menuView = menuView;
 		
-		this._tableAnimation = this._sixNimmtView._tableAnimation;
-		this._handAnimation = this._sixNimmtView._handAnimation;
+		this._tableAnimation = this._sixNimmtView.TableAnimation;
+		this._handAnimation = this._sixNimmtView.HandAnimation;
 		
 		$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
-		this._handAnimation._drawer._canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
+		this._handAnimation._drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
 	}
 	
 	onPlayCardClicked()
@@ -23,7 +23,7 @@ class SixNimmtController {
 		
 		// move to table
 		if (!bSpectatorMode && bFlickityEnabled)
-			setTimeout(function(flickity) {flickity.select(0);}, 500, this._sixNimmtView._flickity); // give time for the fade away
+			setTimeout(function(flickity) {flickity.select(0);}, 500, this._sixNimmtView.Flickity); // give time for the fade away
 	}
 	
 	onHandCanvasClicked(event)
