@@ -1,6 +1,6 @@
 "use strict";
 
-const pixelJumpPerFrame = 2;
+const pixelJumpPerFrame = 7;
 const closeEnough = pixelJumpPerFrame*2;
 
 class CardMovementLine
@@ -10,7 +10,7 @@ class CardMovementLine
 	{
 		this.done = false;
 		
-		if (x1 == x2 && y1 == y2)
+		if (Math.abs(x1 - x2) <= closeEnough && Math.abs(y1 - y2) <= closeEnough)
 		{
 			// if the card is already in its final position, still, set these variables, and return them
 			// those coordinates on nextPoint(). This is important for the upcoming card sorting. If a card begins
