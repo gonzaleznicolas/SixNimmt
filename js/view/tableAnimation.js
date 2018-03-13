@@ -59,16 +59,20 @@ class TableAnimation extends Animation
 	
 	moveRowsHelper()
 	{
-		let oldOffset = this._nextOffset;
+		for (let row = this._fromRow; row <= this._toRow; row++)
+		{
+			for (let col = 0; col < this._drawer.NumberOfCols; col++)
+			{
+				if (this._nextOffset)
+					this._drawer.clearCardSpace(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y + this._nextOffset.y);
+			}
+		}		
 		this._nextOffset = this._line.nextPoint();
 		let cardNumber;
 		for (let row = this._fromRow; row <= this._toRow; row++)
 		{
 			for (let col = 0; col < this._drawer.NumberOfCols; col++)
 			{
-				if (oldOffset)
-					this._drawer.clearCardSpace(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y + oldOffset.y);
-				
 				cardNumber = this._model.Table[row][col];
 				if (cardNumber)
 					this._drawer.drawCard(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y + this._nextOffset.y, 
@@ -78,21 +82,7 @@ class TableAnimation extends Animation
 		if (!this._line.done)
 			requestAnimationFrame(this.moveRowsHelper.bind(this));
 		else
-		{
-			// if we are done, we have to draw the rows again because depending on on the pixelJumpPerFrame (if it is large)
-			// it is possible that if we are moving multiple rows, the clearCardSpace of one row end up covering part of another row at the end
-			for (let row = this._fromRow; row <= this._toRow; row++)
-			{
-				for (let col = 0; col < this._drawer.NumberOfCols; col++)
-				{
-					cardNumber = this._model.Table[row][col];
-					if (cardNumber)
-						this._drawer.drawCard(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y + this._nextOffset.y, 
-												this._drawer.CardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);
-				}
-			}
 			bAnimationInProgress = false;
-		}
 	}
 	
 	sortUpcomingCards()
