@@ -35,11 +35,11 @@ class TableDrawer extends Drawer
 		{
 			for (let col = 0; col < this._numberOfCols; col++)
 			{
-				if (this._model.TableState == TableState.SelectRowToTake && this._model.SelectedRow == row)
-					continue;
 				cardNumber = this._model.Table[row][col];
 				if (cardNumber)
 					this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);
+				if (this._model.TableState == TableState.SelectRowToTake && this._model.SelectedRow != row)
+					this.dimCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, .85)
 			}
 		}	
 	}
