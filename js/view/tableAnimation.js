@@ -207,7 +207,11 @@ class TableAnimation extends Animation
 		if (!this._line.done)
 			requestAnimationFrame(this.takeRowHelper.bind(this));
 		else
+		{
+			if (this._bDisapearAtTheEnd)
+				this.fadeAwayCard(this._endRow, this._endCol)
 			bAnimationInProgress = false;
+		}
 	}
 	
 	takeRowHelper()
