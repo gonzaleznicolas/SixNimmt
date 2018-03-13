@@ -51,7 +51,7 @@ class TableDrawer extends Drawer
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsDrawn < numberOfPlayers; col++)
 			{
-				if(!this.DontDrawTheseUpcomingCardsOnDraw.
+				if(!this._dontDrawTheseUpcomingCardsOnDraw.
 					includes(this.upcomingCardsRowColToIndex(row, col))) // if the card is currently in animation, dont draw it
 				{
 					cardNumber = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
