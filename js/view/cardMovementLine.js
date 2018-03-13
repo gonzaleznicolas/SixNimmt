@@ -1,6 +1,6 @@
 "use strict";
 
-const pixelJumpPerFrame = 2;
+const pixelJumpPerFrame = 2; // do not make this any greater than 2. some animations will get messed up.
 const closeEnough = pixelJumpPerFrame*2;
 
 class CardMovementLine
