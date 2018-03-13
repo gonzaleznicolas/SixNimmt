@@ -30,7 +30,7 @@ class SixNimmtModel {
 		this._UpcomingCardsFaceUp = false;
 		this._upcomingCards = [4,undefined,43,55, 103, 37, 63, 24, 75, 1];
 		this._playerNamesOnUpcomingCards = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
-		this._highlightedUpcomingCard = undefined;
+		this._highlightedUpcomingCard = undefined; // when this is not undefined, every upcoming card except the ones whose index is listed here will be dimmed out
 	}
 	
 	get Table() {return this._table;}
