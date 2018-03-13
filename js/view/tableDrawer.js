@@ -65,7 +65,7 @@ class TableDrawer extends Drawer
 						else
 							this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, playerName);
 					}
-					if(this._model.HighlightedUpcomingCard != undefined && !this._model.HighlightedUpcomingCard.includes(this.upcomingCardsRowColToIndex(row, col)))
+					if(this._model.HighlightedUpcomingCard != undefined && this._model.HighlightedUpcomingCard != this.upcomingCardsRowColToIndex(row, col))
 						this.dimCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, 0.85);
 				}
 				numberOfCardsDrawn++;
