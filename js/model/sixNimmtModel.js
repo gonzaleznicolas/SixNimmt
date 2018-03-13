@@ -15,9 +15,9 @@ class SixNimmtModel {
 		this._playerNamesOnTableCards = [["Nico", undefined, undefined, undefined, undefined, undefined],
 												[undefined, undefined, undefined, undefined, undefined, "Judith"],
 												[undefined, undefined, "Nata", undefined, undefined, undefined],
-												[undefined, undefined, undefined, undefined, undefined, undefined]];
+												[undefined, undefined, undefined, undefined, undefined, undefined]]; 
 		this._tableState = TableState.Normal;
-		
+		this._selectedRow = undefined;
 		
 		// HAND
 		
@@ -36,6 +36,8 @@ class SixNimmtModel {
 	get PlayerNamesOnTableCards() {return this._playerNamesOnTableCards;}
 	get TableState() {return this._tableState;}
 	set TableState(state) {this._tableState = state;}
+	get SelectedRow() {return this._selectedRow}
+	set SelectedRow(i) {this._selectedRow = i}
 	
 	get Hand() {return this._hand;}
 	get CurrentlySelectedCardInHand() {return this._currentlySelectedCardInHand;}

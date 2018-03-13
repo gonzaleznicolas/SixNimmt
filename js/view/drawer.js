@@ -34,7 +34,6 @@ class Drawer
 				clickedRow = row;
 				break;
 			}
-				clickedRow = row;
 		}
 		
 		// find which col this x belongs to
@@ -51,6 +50,22 @@ class Drawer
 			return undefined;
 		
 		return {row: clickedRow, col:clickedCol};
+	}
+	
+	getCardRowFromY(y)
+	{
+		let clickedRow = undefined;
+		// find which row this y belongs to
+		for (let row = 0; row < this._numberOfRows; row++)
+		{
+			if (y >= this._cardCoordinates[row][0].y && y <= this._cardCoordinates[row][0].y + this._cardHeight)
+			{
+				clickedRow = row;
+				break;
+			}
+		}
+		
+		return clickedRow;
 	}
 	
 	calculateCardCoordinates()
