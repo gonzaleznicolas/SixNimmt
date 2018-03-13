@@ -30,6 +30,7 @@ class SixNimmtModel {
 		this._UpcomingCardsFaceUp = false;
 		this._upcomingCards = [4,undefined,43,55, 103, 37, 63, 24, 75, 1];
 		this._playerNamesOnUpcomingCards = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
+		this._highlightedUpcomingCard = undefined;
 	}
 	
 	get Table() {return this._table;}
@@ -49,4 +50,6 @@ class SixNimmtModel {
 	set UpcomingCardsFaceUp(b) {this._UpcomingCardsFaceUp = b;}
 	get UpcomingCards() {return this._upcomingCards;}
 	get PlayerNamesOnUpcomingCards() {return this._playerNamesOnUpcomingCards;}
+	get HighlightedUpcomingCard() {return this._highlightedUpcomingCard;}
+	set HighlightedUpcomingCard(h) {this._highlightedUpcomingCard = h;}
 }
