@@ -182,20 +182,21 @@ class TableAnimation extends Animation
 	}
 	
 
-	takeRow(rowIndex)
+	takeRow(rowIndex, bDisapearAtTheEnd = false)
 	{
 		bAnimationInProgress = true;
 		
+		this._bDisapearAtTheEnd = bDisapearAtTheEnd;
 		// first, find the col of the last card in the row
 		let indexOfFirstUndefinedInTheRow = this._model.Table[rowIndex].findIndex(cardNum => {return cardNum == undefined});
 		let indexOfLastCardInTheRow = indexOfFirstUndefinedInTheRow == -1 ? this._drawer._numberOfCols - 1 : indexOfFirstUndefinedInTheRow - 1;
 
 		let startRow = rowIndex;
 		let startCol = indexOfLastCardInTheRow;
-		let endRow = rowIndex;
-		let endCol = 0;
+		this._endRow = rowIndex;
+		this._endCol = 0;
 		const start = this._drawer.CardCoordinates[startRow][startCol];
-		const end = this._drawer.CardCoordinates[endRow][endCol];
+		const end = this._drawer.CardCoordinates[this._endRow][this._endCol];
 		
 		this._movingCardNumber = this._model.Table[rowIndex][indexOfLastCardInTheRow];
 		this._movingCardName = this._model.PlayerNamesOnTableCards[rowIndex][indexOfLastCardInTheRow];
@@ -218,7 +219,11 @@ class TableAnimation extends Animation
 		if (!this._line.done)
 			requestAnimationFrame(this.takeRowHelper.bind(this));
 		else
+		{
+			if (this._bDisapearAtTheEnd)
+				this.fadeAwayCard(this._endRow, this._endCol)
 			bAnimationInProgress = false;
+		}
 	}
 	
 	flipAllUpcomingCards()

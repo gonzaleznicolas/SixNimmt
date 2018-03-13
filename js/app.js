@@ -67,9 +67,9 @@ function flip()
 	sixNimmtModel.UpcomingCardsFaceUp = true;
 }
 
-function takeRow(i)
+function takeRow(i, b)
 {
-	sixNimmtView._tableAnimation.takeRow(i);
+	sixNimmtView._tableAnimation.takeRow(i, b);
 }
 
 function moveIthUpcomingCardToRowCol(i, r, c)
