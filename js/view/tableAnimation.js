@@ -35,6 +35,15 @@ class TableAnimation extends Animation
 		// if downThisManyRowsIs negative, move up
 		bAnimationInProgress = true;
 		
+		// tell the drawer not to draw these cards
+		for (let row = fromRow; row <= toRow; row++)
+		{
+			for (let col = 0; col < this._drawer.NumberOfCols; col++)
+			{
+				this._drawer.DontDrawTheseTableCardsOnDraw.push({row: row, col: col});
+			}
+		}
+		
 		// these rows are in the model before updating the move
 		this._fromRow = fromRow;
 		this._toRow = toRow;
@@ -44,30 +53,27 @@ class TableAnimation extends Animation
 		this._line = new CardMovementLine(0, 0, 0, downThisManyRows*(this._drawer.CardHeight + lc.margin));
 		if (!this._line.done)
 		{
-			for (let row = this._fromRow; row <= this._toRow; row++)
-			{
-				for (let col = 0; col < this._drawer.NumberOfCols; col++)
-					this._drawer.clearCardSpace(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y);
-			}
+			this._drawer.draw();
 		}
 		this._nextOffset = null;
 		if (!this._line.done)
 			requestAnimationFrame(this.moveRowsHelper.bind(this));
 		else
+		{
+			this._drawer.DontDrawTheseTableCardsOnDraw = [];
 			bAnimationInProgress = false;
+		}
 	}
 	
 	moveRowsHelper()
 	{
-		let oldOffset = this._nextOffset;
 		this._nextOffset = this._line.nextPoint();
 		let cardNumber;
 		for (let row = this._fromRow; row <= this._toRow; row++)
 		{
 			for (let col = 0; col < this._drawer.NumberOfCols; col++)
 			{
-				if (oldOffset)
-					this._drawer.clearCardSpace(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y + oldOffset.y);
+				this._drawer.draw();
 				
 				cardNumber = this._model.Table[row][col];
 				if (cardNumber)
@@ -79,18 +85,7 @@ class TableAnimation extends Animation
 			requestAnimationFrame(this.moveRowsHelper.bind(this));
 		else
 		{
-			// if we are done, we have to draw the rows again because depending on on the pixelJumpPerFrame (if it is large)
-			// it is possible that if we are moving multiple rows, the clearCardSpace of one row end up covering part of another row at the end
-			for (let row = this._fromRow; row <= this._toRow; row++)
-			{
-				for (let col = 0; col < this._drawer.NumberOfCols; col++)
-				{
-					cardNumber = this._model.Table[row][col];
-					if (cardNumber)
-						this._drawer.drawCard(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y + this._nextOffset.y, 
-												this._drawer.CardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);
-				}
-			}
+			this._drawer.DontDrawTheseTableCardsOnDraw = [];
 			bAnimationInProgress = false;
 		}
 	}

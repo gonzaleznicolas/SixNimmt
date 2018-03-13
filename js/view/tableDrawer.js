@@ -10,12 +10,15 @@ class TableDrawer extends Drawer
 		
 		// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
 		this._upcomingCardCoordinates = []; 
-		this._dontDrawTheseUpcomingCardsOnDraw = []; // list of cards in animation: i.e. dont draw them on draw()
+		this._dontDrawTheseUpcomingCardsOnDraw = []; // list of cards in animation
+		this._dontDrawTheseTableCardsOnDraw = []; // list of {row:___, col: ___} objects representing table cards in animation
 	}
 	
 	get UpcomingCardCoordinates() {return this._upcomingCardCoordinates;}
 	get DontDrawTheseUpcomingCardsOnDraw() {return this._dontDrawTheseUpcomingCardsOnDraw;}
 	set DontDrawTheseUpcomingCardsOnDraw(c) {this._dontDrawTheseUpcomingCardsOnDraw = c};
+	get DontDrawTheseTableCardsOnDraw() {return this._dontDrawTheseTableCardsOnDraw;}
+	set DontDrawTheseTableCardsOnDraw(c) {this._dontDrawTheseTableCardsOnDraw = c};
 	
 	draw()
 	{
@@ -35,9 +38,13 @@ class TableDrawer extends Drawer
 		{
 			for (let col = 0; col < this._numberOfCols; col++)
 			{
-				cardNumber = this._model.Table[row][col];
-				if (cardNumber)
-					this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);
+				// only draw the card if its rowCol is not found in _dontDrawTheseTableCardsOnDraw
+				if(this._dontDrawTheseTableCardsOnDraw.findIndex(rowCol => {return rowCol.row == row && rowCol.col == col;}) == -1)
+				{
+					cardNumber = this._model.Table[row][col];
+					if (cardNumber)
+						this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);						
+				}
 			}
 		}	
 	}
