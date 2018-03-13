@@ -74,7 +74,6 @@ function takeRow(i)
 
 function moveIthUpcomingCardToRowCol(i, r, c)
 {
-	sixNimmtModel.UpcomingCardsCurrentlyInAnimation = [i];
 	sixNimmtView._tableAnimation.moveIthUpcomingCardToRowCol(i, r, c);
 }
 
