@@ -11,6 +11,7 @@ class SixNimmtController {
 		this._handAnimation = this._sixNimmtView.HandAnimation;
 		
 		$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
+		this._tableAnimation.Drawer.Canvas.addEventListener("click", this.onTableCanvasClicked.bind(this), false);
 		this._handAnimation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
 	}
 	
@@ -24,6 +25,24 @@ class SixNimmtController {
 		// move to table
 		if (!bSpectatorMode && bFlickityEnabled)
 			setTimeout(function(flickity) {flickity.select(0);}, 500, this._sixNimmtView.Flickity); // give time for the fade away
+	}
+	
+	onTableCanvasClicked(event)
+	{
+		if (this._sixNimmtModel.TableState != TableState.SelectRowToTake)
+			return;
+		const canvasLeft = this._tableAnimation.Drawer.getCanvasOffsetLeft();
+		const canvasTop = this._tableAnimation.Drawer.getCanvasOffsetTop();
+
+		const x = event.pageX - canvasLeft;
+		const y = event.pageY - canvasTop;
+
+		const rowCol = this._tableAnimation.Drawer.getCardRowColFromXY(x, y);
+		
+		//if (rowCol)
+			// update model to say selected row
+		// drawer.draw()
+		//** make sure to make drawer draw selected row on draw if in the right state
 	}
 	
 	onHandCanvasClicked(event)

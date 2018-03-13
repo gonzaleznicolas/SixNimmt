@@ -34,6 +34,8 @@ class SixNimmtModel {
 	
 	get Table() {return this._table;}
 	get PlayerNamesOnTableCards() {return this._playerNamesOnTableCards;}
+	get TableState() {return this._tableState;}
+	set TableState(state) {this._tableState = state;}
 	
 	get Hand() {return this._hand;}
 	get CurrentlySelectedCardInHand() {return this._currentlySelectedCardInHand;}
