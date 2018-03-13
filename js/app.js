@@ -16,6 +16,7 @@ let bAnimationInProgress = false;
 
 // global enums
 const HandState = Object.freeze({"PlayCard":1, "NotTimeToPlayCard":2})
+const TableState = Object.freeze({"SelectRowToTake":1, "Normal":2})
 
 let lc = undefined;
 

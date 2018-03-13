@@ -16,6 +16,7 @@ class SixNimmtModel {
 												[undefined, undefined, undefined, undefined, undefined, "Judith"],
 												[undefined, undefined, "Nata", undefined, undefined, undefined],
 												[undefined, undefined, undefined, undefined, undefined, undefined]];
+		this._tableState = TableState.Normal;
 		
 		
 		// HAND
