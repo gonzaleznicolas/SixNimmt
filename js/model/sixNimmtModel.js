@@ -28,7 +28,7 @@ class SixNimmtModel {
 		// UPCOMING CARDS
 		
 		this._UpcomingCardsFaceUp = false;
-		this._upcomingCards = [4,32,43,55, 103, 37, 63, 24, 75, 1];
+		this._upcomingCards = [4,undefined,43,55, 103, 37, 63, 24, 75, 1];
 		this._playerNamesOnUpcomingCards = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
 	}
 	

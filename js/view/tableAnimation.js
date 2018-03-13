@@ -256,13 +256,15 @@ class TableAnimation extends Animation
 					let xToKeepCardCenteredAsItShrinks = undefined;
 					if (this._fcBackW > 0)
 					{
-						xToKeepCardCenteredAsItShrinks = x + (this._drawer.CardWidth - this._fcBackW)/2
-						this._drawer.drawFaceDownCard(xToKeepCardCenteredAsItShrinks, y, this._fcBackW, playerName);
+						xToKeepCardCenteredAsItShrinks = x + (this._drawer.CardWidth - this._fcBackW)/2;
+						if (number != undefined)
+							this._drawer.drawFaceDownCard(xToKeepCardCenteredAsItShrinks, y, this._fcBackW, playerName);
 					}
 					else
 					{
-						xToKeepCardCenteredAsItShrinks = x + (this._drawer.CardWidth + this._fcBackW)/2
-						this._drawer.drawCard(xToKeepCardCenteredAsItShrinks, y, (-1)*this._fcBackW, number, playerName);
+						xToKeepCardCenteredAsItShrinks = x + (this._drawer.CardWidth + this._fcBackW)/2;
+						if (number != undefined)
+							this._drawer.drawCard(xToKeepCardCenteredAsItShrinks, y, (-1)*this._fcBackW, number, playerName);
 					}
 				}
 				numberOfCardsProcessed++;
