@@ -159,7 +159,7 @@ class TableAnimation extends Animation
 	moveIthUpcomingCardToRowCol(i, tableRow, tableCol)
 	{
 		bAnimationInProgress = true;
-		this._model.UpcomingCardsCurrentlyInAnimation = [i];
+		this._drawer.DontDrawTheseUpcomingCardsOnDraw = [i];
 		let upcomingCardStartRow = this._drawer.upcomingCardsIndexToRow(i);
 		let upcomingCardStartCol = this._drawer.upcomingCardsIndexToCol(i);
 		
@@ -186,7 +186,7 @@ class TableAnimation extends Animation
 			requestAnimationFrame(this.moveIthUpcomingCardToRowColHelper.bind(this));
 		else
 		{
-			this._model.UpcomingCardsCurrentlyInAnimation = [];
+			this._drawer.DontDrawTheseUpcomingCardsOnDraw = [];
 			bAnimationInProgress = false;
 		}
 	}

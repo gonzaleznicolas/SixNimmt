@@ -10,9 +10,12 @@ class TableDrawer extends Drawer
 		
 		// at location [row][col] youll find an object {x: ___,y: ___} with the canvas coordinates of the top left corner of the card
 		this._upcomingCardCoordinates = []; 
+		this._dontDrawTheseUpcomingCardsOnDraw = []; // list of cards in animation: i.e. dont draw them on draw()
 	}
 	
 	get UpcomingCardCoordinates() {return this._upcomingCardCoordinates;}
+	get DontDrawTheseUpcomingCardsOnDraw() {return this._dontDrawTheseUpcomingCardsOnDraw;}
+	set DontDrawTheseUpcomingCardsOnDraw(c) {this._dontDrawTheseUpcomingCardsOnDraw = c};
 	
 	draw()
 	{
@@ -48,7 +51,7 @@ class TableDrawer extends Drawer
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsDrawn < numberOfPlayers; col++)
 			{
-				if(!this._model.UpcomingCardsCurrentlyInAnimation.
+				if(!this.DontDrawTheseUpcomingCardsOnDraw.
 					includes(this.upcomingCardsRowColToIndex(row, col))) // if the card is currently in animation, dont draw it
 				{
 					cardNumber = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
