@@ -211,7 +211,7 @@ class TableAnimation extends Animation
 		this._movingCardName = this._model.PlayerNamesOnTableCards[rowIndex][indexOfLastCardInTheRow];
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
 		if (!this._line.done)
-			this._drawer.clearCardSpace(start.x, start.y);
+			this._drawer.clearExactCardSpace(start.x, start.y);
 		this._nextPt = null;
 		if (!this._line.done)
 			requestAnimationFrame(this.takeRowHelper.bind(this));
@@ -222,7 +222,7 @@ class TableAnimation extends Animation
 	takeRowHelper()
 	{
 		if (this._nextPt)
-			this._drawer.clearCardSpace(this._nextPt.x, this._nextPt.y);
+			this._drawer.clearExactCardSpace(this._nextPt.x, this._nextPt.y);
 		this._nextPt = this._line.nextPoint();
 		this._drawer.drawCard(this._nextPt.x, this._nextPt.y, this._drawer.CardWidth, this._movingCardNumber, this._movingCardName);
 		if (!this._line.done)
