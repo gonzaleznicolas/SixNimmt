@@ -22,11 +22,16 @@ class SixNimmtController {
 		const canvasTop = this._tableAnimation.Drawer.getCanvasOffsetTop();
 		const y = event.pageY - canvasTop;
 
-		const selectedRow = this._tableAnimation.Drawer.getCardRowFromY(y);
+		const clickedRow = this._tableAnimation.Drawer.getCardRowFromY(y);
 		
-		if (selectedRow != undefined)
+		if (clickedRow == this._sixNimmtModel.SelectedRow)
 		{
-			this._sixNimmtModel.SelectedRow = selectedRow;
+			this._sixNimmtModel.SelectedRow = undefined;
+			this._tableAnimation.Drawer.draw();
+		}
+		else if (clickedRow != undefined)
+		{
+			this._sixNimmtModel.SelectedRow = clickedRow;
 			this._tableAnimation.Drawer.draw();
 		}
 	}
