@@ -18,31 +18,43 @@ class HandDrawer extends Drawer
 		for (let row = 0; row < this._numberOfRows && numberOfCardsDrawn < this._model.Hand.length ; row++) 
 		{ 
 			for (let col = 0; col < this._numberOfCols && numberOfCardsDrawn < this._model.Hand.length; col++) 
-			{ 
+			{
 				cardNumber = this._model.Hand[numberOfCardsDrawn];
 				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber);
+				
+				if (this._model.HandState == HandState.PlayCard
+				&& this._model.CurrentlySelectedCardInHand != undefined
+				&& this._model.CurrentlySelectedCardInHand != numberOfCardsDrawn)
+				{
+					this.dimCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, 0.85); 
+				}
 				numberOfCardsDrawn++;
 			} 
 		} 
-		 
-		this.updateBasedOnCardSelection(); 
+		if (this._model.HandState == HandState.PlayCard)
+			this.updateMessageBasedOnCardSelection(); 
 	}
 	
+	// this logic should actually go in the controller. move it there in the future.
+	// it should be in charge of coordinating the model and the view.
 	respondToStateChange()
 	{
-		if (this._model._handState == HandState.PlayCard)
+		if (this._model.HandState == HandState.PlayCard)
 		{
-			$('#handMessageContainer').children().hide();
-			$('#selectCardMessage').show(); 
+			this._model.CurrentlySelectedCardInHand = undefined;
+			this.draw();
+			this.updateMessageBasedOnCardSelection(); 
 		}
 		else
 		{
+			this._model.CurrentlySelectedCardInHand = undefined;
+			this.draw();
 			$('#handMessageContainer').children().hide();
 			$('#notTimeToPlayCardMessage').show(); 
 		}
 	}
  
-	updateBasedOnCardSelection() 
+	updateMessageBasedOnCardSelection() 
 	{ 
 		if (this._model.CurrentlySelectedCardInHand == undefined) 
 		{ 
@@ -51,25 +63,10 @@ class HandDrawer extends Drawer
 		} 
 		else 
 		{
-			this.dimAll(); 
-			let cardNumber = this._model.Hand[this._model.CurrentlySelectedCardInHand];
-			const card = this._cardCoordinates[this.handIndexToRow(this._model.CurrentlySelectedCardInHand)][this.handIndexToCol(this._model.CurrentlySelectedCardInHand)];
-			this.drawCard(card.x, card.y, this._cardWidth, cardNumber);
 			$('#handMessageContainer').children().hide();
 			$('#playCardButton').show();
 		} 
 	} 
- 
-	dimAll() 
-	{	 
-		for (let row = 0; row < this._numberOfRows; row++) 
-		{ 
-			for (let col = 0; col < this._numberOfCols; col++) 
-			{ 
-				this.dimCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, 0.85); 
-			} 
-		} 
-	}
 	
 	handIndexToRow(i)
 	{
