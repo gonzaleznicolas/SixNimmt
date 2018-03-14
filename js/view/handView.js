@@ -9,6 +9,28 @@ class HandView
 	}
 	
 	get Animation(){return this._animation;}
+
+	updateMessage() 
+	{ 
+		if (this._model.HandState == HandState.PlayCard)
+		{
+			if (this._model.CurrentlySelectedCardInHand == undefined) 
+			{ 
+				$('#handMessageContainer').children().hide();
+				$('#selectCardMessage').show(); 
+			} 
+			else 
+			{
+				$('#handMessageContainer').children().hide();
+				$('#playCardButton').show();
+			} 
+		}
+		else
+		{
+			$('#handMessageContainer').children().hide();
+			$('#notTimeToPlayCardMessage').show(); 
+		}
+	}
 	
 	resize()
 	{
@@ -18,5 +40,6 @@ class HandView
 	draw()
 	{
 		this._animation.Drawer.draw();
+		this.updateMessage();
 	}
 }

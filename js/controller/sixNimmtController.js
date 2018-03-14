@@ -30,12 +30,12 @@ class SixNimmtController {
 		if (clickedRow == this._model.SelectedRow)
 		{
 			this._model.SelectedRow = undefined;
-			this._tableView.Animation.Drawer.draw();
+			this._tableView.draw();
 		}
 		else if (clickedRow != undefined)
 		{
 			this._model.SelectedRow = clickedRow;
-			this._tableView.Animation.Drawer.draw();
+			this._tableView.draw();
 		}
 	}
 	
@@ -66,7 +66,7 @@ class SixNimmtController {
 		else
 			this._model.CurrentlySelectedCardInHand = this._handView.Animation.Drawer.handRowColToIndex(row, col);
 		
-		this._handView.Animation.Drawer.draw();
+		this._handView.draw();
 	}
 
 	onPlayCardClicked()

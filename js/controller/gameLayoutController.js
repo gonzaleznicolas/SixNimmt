@@ -4,11 +4,11 @@ class GameLayoutController
 {
 	constructor(scoreboardView, tableView, handView) {
 		this.setAllStringsToChosenLanguage();
+		
 		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
 		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/NUMBER_OF_ROWS_ON_TABLE_CANVAS);
 		lc.totalNumberOfColsOnTableCanvas = NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
 		lc.calculate();
-		this._gallery = $('.gallery');
 		
 		if (!bSpectatorMode)
 			this._flickity = this.setUpFlickity();
@@ -46,7 +46,7 @@ class GameLayoutController
 		let flickity = undefined;
 		try{
 			if (bFlickityEnabled)
-				flickity = new Flickity( this._gallery[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
+				flickity = new Flickity( $('.gallery')[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
 		}
 		catch (err)
 		{
@@ -62,7 +62,7 @@ class GameLayoutController
 	
 	setGallerySize()
 	{
-		this._gallery.css("width", lc.galleryWidth+"px");
+		$('.gallery').css("width", lc.galleryWidth+"px");
 		if (!bSpectatorMode && this._flickity)
 			this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
 	}
