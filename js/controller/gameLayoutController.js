@@ -77,16 +77,16 @@ class GameLayoutController
 		else
 			$("#game").css("flex-direction", "row");
 
-		this._tableView.Animation.Drawer.resize();
+		this._tableView.resize();
 		if (!bSpectatorMode)
-			this._handView.Animation.Drawer.resize();
+			this._handView.resize();
 		
 		this._scoreboardView.resize();
 		this.setGallerySize();
 
-		this._tableView.Animation.Drawer.draw();
+		this._tableView.draw();
 		if (!bSpectatorMode)
-			this._handView.Animation.Drawer.draw();
+			this._handView.draw();
 		
 		$("#game").css("visibility", "visible"); 
 	}

@@ -9,4 +9,14 @@ class TableView
 	}
 	
 	get Animation(){return this._animation;}
+	
+	resize()
+	{
+		this._animation.Drawer.resize();
+	}
+	
+	draw()
+	{
+		this._animation.Drawer.draw();
+	}
 }
