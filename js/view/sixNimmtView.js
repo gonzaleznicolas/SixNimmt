@@ -3,6 +3,7 @@
 class SixNimmtView
 {
 	constructor(sixNimmtModel) {
+		this.setAllStringsToChosenLanguage();
 		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
 		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/NUMBER_OF_ROWS_ON_TABLE_CANVAS);
 		lc.totalNumberOfColsOnTableCanvas = NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
@@ -32,6 +33,17 @@ class SixNimmtView
 	get TableAnimation() {return this._tableAnimation;}
 	get HandAnimation() {return this._handAnimation;}
 	get Flickity() {return this._flickity;}
+	
+	setAllStringsToChosenLanguage()
+	{
+		if (bSpanish)
+		{
+			$('#quitMenuOption')[0].innerHTML = "Terminar Juego";
+			$('#playCardButton')[0].innerHTML = "Poner Carta";
+			$('#selectCardMessage')[0].innerHTML = "For favor elige una carta";
+			$('#notTimeToPlayCardMessage')[0].innerHTML = "No es hora de elejir una carta";
+		}
+	}
 	
 	setUpFlickity()
 	{
