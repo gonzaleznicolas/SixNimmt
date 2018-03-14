@@ -23,10 +23,7 @@ let lc = undefined;
 
 $(function () {
 	lc = new LayoutCalculator();
-	sixNimmtModel = new SixNimmtModel();
-	sixNimmtView = new SixNimmtView(sixNimmtModel);
-	menuView = new MenuView();
-	sixNimmtController = new SixNimmtController(sixNimmtModel, sixNimmtView, menuView);
+	sixNimmtController = new SixNimmtController();
 });
 
 function getCardInfo(cardNumber)
