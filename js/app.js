@@ -19,14 +19,10 @@ let bAnimationInProgress = false;
 const HandState = Object.freeze({"PlayCard":1, "NotTimeToPlayCard":2})
 const TableState = Object.freeze({"SelectRowToTake":1, "Normal":2})
 
-let lc = undefined;
+let lc = undefined;	// layoutCalculator - initiallized in the gameController
 
 $(function () {
-	lc = new LayoutCalculator();
-	sixNimmtModel = new SixNimmtModel();
-	sixNimmtView = new SixNimmtView(sixNimmtModel);
-	menuView = new MenuView();
-	sixNimmtController = new SixNimmtController(sixNimmtModel, sixNimmtView, menuView);
+	controller = new GameController();
 });
 
 function getCardInfo(cardNumber)
@@ -49,43 +45,40 @@ function getCardInfo(cardNumber)
 }
 
 // TEMPORARY:
-let sixNimmtModel = undefined;
-let sixNimmtView = undefined;
-let menuView = undefined;
-let sixNimmtController = undefined;
+let controller = undefined;
 
 function move(row1, col1, row2, col2) {
-	sixNimmtView._tableAnimation.moveCard(row1, col1, row2, col2);
+	controller._tableView.Animation.moveCard(row1, col1, row2, col2);
 }
 
 function add(player, num)
 {
-	sixNimmtView._scoreboard.incrementScore(player, num);
+	controller._gameLayoutController._scoreboard.incrementScore(player, num);
 }
 
 function flip()
 {
-	sixNimmtView._tableAnimation.flipAllUpcomingCards();
-	sixNimmtModel.UpcomingCardsFaceUp = true;
+	controller._tableView.Animation.flipAllUpcomingCards();
+	controller._model.UpcomingCardsFaceUp = true;
 }
 
 function takeRow(i, b)
 {
-	sixNimmtView._tableAnimation.takeRow(i, b);
+	controller._tableView.Animation.takeRow(i, b);
 }
 
 function moveIthUpcomingCardToRowCol(i, r, c)
 {
-	sixNimmtView._tableAnimation.moveIthUpcomingCardToRowCol(i, r, c);
+	controller._tableView.Animation.moveIthUpcomingCardToRowCol(i, r, c);
 }
 
 function sortUpcomingCards()
 {
-	sixNimmtView._tableAnimation.sortUpcomingCards();
+	controller._tableView.Animation.sortUpcomingCards();
 }
 
 function moveRows(fromRow, toRow, downThisManyRows)
 {
-	sixNimmtView._tableAnimation.moveRows(fromRow, toRow, downThisManyRows);
+	controller._tableView.Animation.moveRows(fromRow, toRow, downThisManyRows);
 }
 

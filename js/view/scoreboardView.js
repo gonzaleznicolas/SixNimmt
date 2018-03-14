@@ -1,6 +1,6 @@
 "use strict";
 
-class Scoreboard
+class ScoreboardView
 {
 	constructor(players)
 	{

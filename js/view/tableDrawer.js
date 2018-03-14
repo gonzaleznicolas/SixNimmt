@@ -2,9 +2,9 @@
 
 class TableDrawer extends Drawer
 {
-	constructor(canvas, model)
+	constructor(model)
 	{
-		super(canvas, model);
+		super($('#tableCanvas')[0], model);
 		this._numberOfRows = NUMBER_OF_ROWS_ON_TABLE_CANVAS;
 		this._numberOfCols = NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN ;
 		

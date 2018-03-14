@@ -2,9 +2,9 @@
  
 class HandDrawer extends Drawer 
 { 
-	constructor(canvas, model) 
+	constructor(model) 
 	{ 
-		super(canvas, model); 
+		super($('#handCanvas')[0], model); 
 		this._numberOfRows = NUMBER_OF_ROWS_ON_HAND_CANVAS; 
 		this._numberOfCols = NUMBER_OF_COLS_ON_HAND_CANVAS ;
 
@@ -30,43 +30,8 @@ class HandDrawer extends Drawer
 				}
 				numberOfCardsDrawn++;
 			} 
-		} 
-		if (this._model.HandState == HandState.PlayCard)
-			this.updateMessageBasedOnCardSelection(); 
-	}
-	
-	// this logic should actually go in the controller. move it there in the future.
-	// it should be in charge of coordinating the model and the view.
-	respondToStateChange()
-	{
-		if (this._model.HandState == HandState.PlayCard)
-		{
-			this._model.CurrentlySelectedCardInHand = undefined;
-			this.draw();
-			this.updateMessageBasedOnCardSelection(); 
-		}
-		else
-		{
-			this._model.CurrentlySelectedCardInHand = undefined;
-			this.draw();
-			$('#handMessageContainer').children().hide();
-			$('#notTimeToPlayCardMessage').show(); 
 		}
 	}
- 
-	updateMessageBasedOnCardSelection() 
-	{ 
-		if (this._model.CurrentlySelectedCardInHand == undefined) 
-		{ 
-			$('#handMessageContainer').children().hide();
-			$('#selectCardMessage').show(); 
-		} 
-		else 
-		{
-			$('#handMessageContainer').children().hide();
-			$('#playCardButton').show();
-		} 
-	} 
 	
 	handIndexToRow(i)
 	{

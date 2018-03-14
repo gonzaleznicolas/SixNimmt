@@ -1,6 +1,6 @@
 "use strict";
 
-class SixNimmtModel {
+class GameModel {
 	constructor() {
 		
 		// TABLE

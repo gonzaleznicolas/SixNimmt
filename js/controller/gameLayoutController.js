@@ -1,26 +1,24 @@
 "use strict";
 
-class SixNimmtView
+class GameLayoutController
 {
-	constructor(sixNimmtModel) {
+	constructor(scoreboardView, tableView, handView) {
 		this.setAllStringsToChosenLanguage();
+		
 		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
 		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/NUMBER_OF_ROWS_ON_TABLE_CANVAS);
 		lc.totalNumberOfColsOnTableCanvas = NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
 		lc.calculate();
-		this._gallery = $('.gallery');
 		
 		if (!bSpectatorMode)
 			this._flickity = this.setUpFlickity();
 		
-		this._tableAnimation = new TableAnimation(sixNimmtModel);
+		this._scoreboardView = scoreboardView;
+		this._tableView = tableView;
+		this._handView = handView; // could be undefined
 		
 		if (bSpectatorMode)
 			$('.hand.galleryCell').remove();
-		else
-			this._handAnimation = new HandAnimation(sixNimmtModel);
-
-		this._scoreboard = new Scoreboard(["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Moises", "Jesus", "Jose", "Maria", "MMMMMM"]);
 		
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;
@@ -30,8 +28,6 @@ class SixNimmtView
 		$(window).on("orientationchange", this.onResizeWindow.bind(this));
 	}
 	
-	get TableAnimation() {return this._tableAnimation;}
-	get HandAnimation() {return this._handAnimation;}
 	get Flickity() {return this._flickity;}
 	
 	setAllStringsToChosenLanguage()
@@ -50,7 +46,7 @@ class SixNimmtView
 		let flickity = undefined;
 		try{
 			if (bFlickityEnabled)
-				flickity = new Flickity( this._gallery[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
+				flickity = new Flickity( $('.gallery')[0], { cellAlign: 'center', contain: true, wrapAround: true, pageDots: false} );
 		}
 		catch (err)
 		{
@@ -66,7 +62,7 @@ class SixNimmtView
 	
 	setGallerySize()
 	{
-		this._gallery.css("width", lc.galleryWidth+"px");
+		$('.gallery').css("width", lc.galleryWidth+"px");
 		if (!bSpectatorMode && this._flickity)
 			this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
 	}
@@ -81,16 +77,16 @@ class SixNimmtView
 		else
 			$("#game").css("flex-direction", "row");
 
-		this._tableAnimation.Drawer.resize();
+		this._tableView.resize();
 		if (!bSpectatorMode)
-			this._handAnimation.Drawer.resize();
+			this._handView.resize();
 		
-		this._scoreboard.resize();
+		this._scoreboardView.resize();
 		this.setGallerySize();
 
-		this._tableAnimation.Drawer.draw();
+		this._tableView.draw();
 		if (!bSpectatorMode)
-			this._handAnimation.Drawer.draw();
+			this._handView.draw();
 		
 		$("#game").css("visibility", "visible"); 
 	}
