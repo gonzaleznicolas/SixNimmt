@@ -4,7 +4,7 @@ class TableAnimation extends Animation
 {
 	constructor(model)
 	{
-		super( new TableDrawer($('#tableCanvas')[0], model), model );
+		super( new TableDrawer(model), model );
 	}
 
 	moveCard(startRow, startCol, endRow, endCol)

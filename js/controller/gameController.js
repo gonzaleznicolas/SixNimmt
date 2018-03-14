@@ -1,9 +1,11 @@
 "use strict";
 
-class SixNimmtController {
+class GameController {
 	constructor()
 	{
-		this._model = new SixNimmtModel();
+		lc = new LayoutCalculator();
+		
+		this._model = new GameModel();
 		this._menuView = new MenuView();
 
 		this._scoreboardView = new ScoreboardView(["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Moises", "Jesus", "Jose", "Maria", "MMMMMM"]);

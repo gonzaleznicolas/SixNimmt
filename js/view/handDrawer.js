@@ -2,9 +2,9 @@
  
 class HandDrawer extends Drawer 
 { 
-	constructor(canvas, model) 
+	constructor(model) 
 	{ 
-		super(canvas, model); 
+		super($('#handCanvas')[0], model); 
 		this._numberOfRows = NUMBER_OF_ROWS_ON_HAND_CANVAS; 
 		this._numberOfCols = NUMBER_OF_COLS_ON_HAND_CANVAS ;
 
