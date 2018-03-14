@@ -2,7 +2,7 @@
 
 class GameLayoutController
 {
-	constructor(tableAnimation, handAnimation) {
+	constructor(scoreboardView, tableAnimation, handAnimation) {
 		this.setAllStringsToChosenLanguage();
 		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
 		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/NUMBER_OF_ROWS_ON_TABLE_CANVAS);
@@ -13,13 +13,13 @@ class GameLayoutController
 		if (!bSpectatorMode)
 			this._flickity = this.setUpFlickity();
 		
+		this._scoreboardView = scoreboardView;
+		
 		this._tableAnimation = tableAnimation;
 		this._handAnimation = handAnimation; // could be undefined
 		
 		if (bSpectatorMode)
 			$('.hand.galleryCell').remove();
-
-		this._scoreboard = new Scoreboard(["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Moises", "Jesus", "Jose", "Maria", "MMMMMM"]);
 		
 		this.onResizeWindowHelper();
 		this._resizeTimeout = undefined;
@@ -84,7 +84,7 @@ class GameLayoutController
 		if (!bSpectatorMode)
 			this._handAnimation.Drawer.resize();
 		
-		this._scoreboard.resize();
+		this._scoreboardView.resize();
 		this.setGallerySize();
 
 		this._tableAnimation.Drawer.draw();

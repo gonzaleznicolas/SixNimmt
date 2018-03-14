@@ -6,13 +6,14 @@ class SixNimmtController {
 		this._model = new SixNimmtModel();
 		this._menuView = new MenuView();
 
-		this._tableAnimation = new TableAnimation(this._model);
+		this._scoreboardView = new ScoreboardView(["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Moises", "Jesus", "Jose", "Maria", "MMMMMM"]);
+		this._tableView = new TableView(this._model);
 		if (!bSpectatorMode)
 			this._handAnimation = new HandAnimation(this._model);
 		
-		this._gameLayoutController = new GameLayoutController(this._tableAnimation, this._handAnimation);
+		this._gameLayoutController = new GameLayoutController(this._scoreboardView, this._tableView.Animation, this._handAnimation);
 		
-		this._tableAnimation.Drawer.Canvas.addEventListener("click", this.onTableCanvasClicked.bind(this), false);
+		this._tableView.Animation.Drawer.Canvas.addEventListener("click", this.onTableCanvasClicked.bind(this), false);
 		this._handAnimation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
 		$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
 	}
@@ -21,20 +22,20 @@ class SixNimmtController {
 	{
 		if (this._model.TableState != TableState.SelectRowToTake)
 			return;
-		const canvasTop = this._tableAnimation.Drawer.getCanvasOffsetTop();
+		const canvasTop = this._tableView.Animation.Drawer.getCanvasOffsetTop();
 		const y = event.pageY - canvasTop;
 
-		const clickedRow = this._tableAnimation.Drawer.getCardRowFromY(y);
+		const clickedRow = this._tableView.Animation.Drawer.getCardRowFromY(y);
 		
 		if (clickedRow == this._model.SelectedRow)
 		{
 			this._model.SelectedRow = undefined;
-			this._tableAnimation.Drawer.draw();
+			this._tableView.Animation.Drawer.draw();
 		}
 		else if (clickedRow != undefined)
 		{
 			this._model.SelectedRow = clickedRow;
-			this._tableAnimation.Drawer.draw();
+			this._tableView.Animation.Drawer.draw();
 		}
 	}
 	

@@ -47,42 +47,41 @@ function getCardInfo(cardNumber)
 
 // TEMPORARY:
 let sixNimmtModel = undefined;
-let sixNimmtView = undefined;
 let menuView = undefined;
 let sixNimmtController = undefined;
 
 function move(row1, col1, row2, col2) {
-	sixNimmtView._tableAnimation.moveCard(row1, col1, row2, col2);
+	sixNimmtController._tableView.Animation.moveCard(row1, col1, row2, col2);
 }
 
 function add(player, num)
 {
-	sixNimmtView._scoreboard.incrementScore(player, num);
+	sixNimmtController._gameLayoutController._scoreboard.incrementScore(player, num);
 }
 
 function flip()
 {
-	sixNimmtView._tableAnimation.flipAllUpcomingCards();
-	sixNimmtModel.UpcomingCardsFaceUp = true;
+	sixNimmtController._tableView.Animation.flipAllUpcomingCards();
+	sixNimmtController._model.UpcomingCardsFaceUp = true;
 }
 
 function takeRow(i, b)
 {
-	sixNimmtView._tableAnimation.takeRow(i, b);
+	sixNimmtController._tableView.Animation.takeRow(i, b);
 }
 
 function moveIthUpcomingCardToRowCol(i, r, c)
 {
-	sixNimmtView._tableAnimation.moveIthUpcomingCardToRowCol(i, r, c);
+	sixNimmtController._tableView.Animation.moveIthUpcomingCardToRowCol(i, r, c);
 }
 
 function sortUpcomingCards()
 {
-	sixNimmtView._tableAnimation.sortUpcomingCards();
+	sixNimmtController._tableView.Animation.sortUpcomingCards();
 }
 
 function moveRows(fromRow, toRow, downThisManyRows)
 {
-	sixNimmtView._tableAnimation.moveRows(fromRow, toRow, downThisManyRows);
+	sixNimmtController._tableView.Animation.moveRows(fromRow, toRow, downThisManyRows);
 }
 
