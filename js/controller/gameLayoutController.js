@@ -2,7 +2,7 @@
 
 class GameLayoutController
 {
-	constructor(scoreboardView, tableAnimation, handAnimation) {
+	constructor(scoreboardView, tableView, handView) {
 		this.setAllStringsToChosenLanguage();
 		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
 		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/NUMBER_OF_ROWS_ON_TABLE_CANVAS);
@@ -14,9 +14,8 @@ class GameLayoutController
 			this._flickity = this.setUpFlickity();
 		
 		this._scoreboardView = scoreboardView;
-		
-		this._tableAnimation = tableAnimation;
-		this._handAnimation = handAnimation; // could be undefined
+		this._tableView = tableView;
+		this._handView = handView; // could be undefined
 		
 		if (bSpectatorMode)
 			$('.hand.galleryCell').remove();
@@ -29,8 +28,6 @@ class GameLayoutController
 		$(window).on("orientationchange", this.onResizeWindow.bind(this));
 	}
 	
-	get TableAnimation() {return this._tableAnimation;}
-	get HandAnimation() {return this._handAnimation;}
 	get Flickity() {return this._flickity;}
 	
 	setAllStringsToChosenLanguage()
@@ -80,16 +77,16 @@ class GameLayoutController
 		else
 			$("#game").css("flex-direction", "row");
 
-		this._tableAnimation.Drawer.resize();
+		this._tableView.Animation.Drawer.resize();
 		if (!bSpectatorMode)
-			this._handAnimation.Drawer.resize();
+			this._handView.Animation.Drawer.resize();
 		
 		this._scoreboardView.resize();
 		this.setGallerySize();
 
-		this._tableAnimation.Drawer.draw();
+		this._tableView.Animation.Drawer.draw();
 		if (!bSpectatorMode)
-			this._handAnimation.Drawer.draw();
+			this._handView.Animation.Drawer.draw();
 		
 		$("#game").css("visibility", "visible"); 
 	}

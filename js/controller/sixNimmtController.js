@@ -9,12 +9,12 @@ class SixNimmtController {
 		this._scoreboardView = new ScoreboardView(["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Moises", "Jesus", "Jose", "Maria", "MMMMMM"]);
 		this._tableView = new TableView(this._model);
 		if (!bSpectatorMode)
-			this._handAnimation = new HandAnimation(this._model);
+			this._handView = new HandView(this._model);
 		
-		this._gameLayoutController = new GameLayoutController(this._scoreboardView, this._tableView.Animation, this._handAnimation);
+		this._gameLayoutController = new GameLayoutController(this._scoreboardView, this._tableView, this._handView);
 		
 		this._tableView.Animation.Drawer.Canvas.addEventListener("click", this.onTableCanvasClicked.bind(this), false);
-		this._handAnimation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
+		this._handView.Animation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
 		$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
 	}
 	
@@ -43,38 +43,38 @@ class SixNimmtController {
 	{
 		if (this._model.HandState != HandState.PlayCard)
 			return;
-		const canvasLeft = this._handAnimation.Drawer.getCanvasOffsetLeft();
-		const canvasTop = this._handAnimation.Drawer.getCanvasOffsetTop();
+		const canvasLeft = this._handView.Animation.Drawer.getCanvasOffsetLeft();
+		const canvasTop = this._handView.Animation.Drawer.getCanvasOffsetTop();
 
 		const x = event.pageX - canvasLeft;
 		const y = event.pageY - canvasTop;
 
-		const rowCol = this._handAnimation.Drawer.getCardRowColFromXY(x, y);
+		const rowCol = this._handView.Animation.Drawer.getCardRowColFromXY(x, y);
 		
-		if (rowCol && this._model.Hand[this._handAnimation.Drawer.handRowColToIndex(rowCol.row, rowCol.col)])
+		if (rowCol && this._model.Hand[this._handView.Animation.Drawer.handRowColToIndex(rowCol.row, rowCol.col)])
 			this.toggleCardSelection(rowCol.row, rowCol.col);
 	}
 	
 	toggleCardSelection(row, col)
 	{
 		if (this._model.CurrentlySelectedCardInHand != undefined &&
-				row == this._handAnimation.Drawer.handIndexToRow(this._model.CurrentlySelectedCardInHand) &&
-				col == this._handAnimation.Drawer.handIndexToCol(this._model.CurrentlySelectedCardInHand))
+				row == this._handView.Animation.Drawer.handIndexToRow(this._model.CurrentlySelectedCardInHand) &&
+				col == this._handView.Animation.Drawer.handIndexToCol(this._model.CurrentlySelectedCardInHand))
 		{
 			this._model.CurrentlySelectedCardInHand = undefined;
 		}
 		else
-			this._model.CurrentlySelectedCardInHand = this._handAnimation.Drawer.handRowColToIndex(row, col);
+			this._model.CurrentlySelectedCardInHand = this._handView.Animation.Drawer.handRowColToIndex(row, col);
 		
-		this._handAnimation.Drawer.draw();
+		this._handView.Animation.Drawer.draw();
 	}
 
 	onPlayCardClicked()
 	{
 		// fade out played card
-		let selectedCardRow = this._handAnimation.Drawer.handIndexToRow(this._model.CurrentlySelectedCardInHand);
-		let selectedCardCol = this._handAnimation.Drawer.handIndexToCol(this._model.CurrentlySelectedCardInHand);
-		this._handAnimation.fadeAwayCard(selectedCardRow, selectedCardCol);
+		let selectedCardRow = this._handView.Animation.Drawer.handIndexToRow(this._model.CurrentlySelectedCardInHand);
+		let selectedCardCol = this._handView.Animation.Drawer.handIndexToCol(this._model.CurrentlySelectedCardInHand);
+		this._handView.Animation.fadeAwayCard(selectedCardRow, selectedCardCol);
 		
 		// move to table
 		if (!bSpectatorMode && bFlickityEnabled)
