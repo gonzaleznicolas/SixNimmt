@@ -2,6 +2,10 @@
 
 $(function () {
 		drawCow();
+		$('#newGame')[0].addEventListener("click", onNewGame, false);
+		$('#vsAI')[0].addEventListener("click", onNewGame, false);
+		$('#joinGame')[0].addEventListener("click", onNewGame, false);
+		$('#spectateGame')[0].addEventListener("click", onNewGame, false);
 });
 
 function drawCow()
@@ -15,4 +19,9 @@ function drawCow()
 		ctx.stroke();
 		ctx.fill();
 		ctx.closePath();
+}
+
+function onNewGame()
+{
+
 }
