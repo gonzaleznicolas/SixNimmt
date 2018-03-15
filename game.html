@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>6 Nimmt!</title>
+	<link rel="icon" href="img/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Yanone Kaffeesatz' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="flickity/flickity.css" />
+	<link rel="stylesheet" type="text/css" href="css/game.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu.css" />
+	<script src='jquery-3.3.1.js' defer></script>
+	<script src="flickity/flickity.pkgd.min.js" defer></script>
+	<script src="js/model/gameModel.js" defer"></script>
+	<script src="js/view/basicShapeDrawer.js" defer></script>
+	<script src='js/view/layoutCalculator.js' defer></script>
+	<script src='js/view/cardMovementLine.js' defer></script>
+	<script src="js/view/scoreboardElement.js" defer></script>
+	<script src="js/view/scoreboardView.js" defer></script>
+	<script src="js/view/menuView.js" defer></script>
+	<script src="js/view/drawer.js" defer></script>
+	<script src="js/view/tableDrawer.js" defer></script>
+	<script src="js/view/handDrawer.js" defer></script>
+	<script src="js/view/animation.js" defer></script>
+	<script src="js/view/tableAnimation.js" defer></script>
+	<script src="js/view/handAnimation.js" defer></script>
+	<script src="js/view/tableView.js" defer></script>
+	<script src="js/view/handView.js" defer></script>
+	<script src="js/controller/gameLayoutController.js" defer></script>
+	<script src="js/controller/gameController.js" defer></script>
+	<script src="js/app.js" defer></script>
+</head>
+<body>
+	<header>
+		<p id=headerText>Six Nimmt</p>
+	</header>
+	<div id="menuButton"><div></div><div></div><div></div></div>
+	<div id="menu">
+		<div id="quitMenuOption" class="menuOption">Quit Game</div><hr>
+	</div>
+	<div id="game">
+		<div class="gallery">
+			<div class="table galleryCell">
+				<canvas id="tableCanvas" width=0 height=0>Your browser does not support this game.</canvas>
+			</div>
+			<div class="hand galleryCell">
+				<div id="handContainer">
+					<canvas id="handCanvas" width=0 height=0>Your browser does not support this game.</canvas>
+					<div id="handMessageContainer">
+						<p id="playCardButton">Play Card</p>
+						<p id="selectCardMessage">Please select a card to play</p>
+						<p id="notTimeToPlayCardMessage">It is not time to play a card</p>
+					</div>
+				</div>
+			</div>
+		</div>		
+		<div id="scoreboard">
+		</div>
+		
+	</div>
+</body>
+</html>
