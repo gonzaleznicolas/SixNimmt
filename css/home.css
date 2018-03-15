@@ -54,9 +54,3 @@ h1 {
 iframe {
 	margin: 0 0 10em 0;
 }
-
-@media screen and (orientation: portrait) {
-	#gameOptions {
-		flex-direction: column;
-	}
-}
