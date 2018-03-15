@@ -14,27 +14,27 @@ body {
 	font-family: 'Bangers';
 }
 
-#afterLanguage {
-    visibility: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 h1 {
 	font-size: 8em;
 	margin: 30px;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
-.buttonContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap:wrap;
-    margin: 30px;
+img{
+	width: 100px;
+	height: 100px;
+	margin: 10px;
 }
 
-.button {
+.section {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap:wrap;
+}
+
+.button{
 	display: flex;
 	justify-content: center;
 	font-size: 3em;
@@ -51,6 +51,17 @@ h1 {
 	color: rgba(127, 80, 147, 1);
 }
 
-iframe {
-	margin: 0 0 10em 0;
+a {
+	text-decoration: none;
+	color: white;
 }
+
+#instructionsSection{
+	visibility: hidden;
+}
+
+#gameOptionsSection{
+	visibility: hidden;
+}
+
+
