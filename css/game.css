@@ -13,10 +13,6 @@ body{
 	background: var(--nimmtPurple);
 }
 
-@media (max-width: 700px) {
-	
-}
-
 header{
 	top: 0;
 	left: 0;
