@@ -16,8 +16,11 @@ class GameController {
 		this._gameLayoutController = new GameLayoutController(this._scoreboardView, this._tableView, this._handView);
 		
 		this._tableView.Animation.Drawer.Canvas.addEventListener("click", this.onTableCanvasClicked.bind(this), false);
-		this._handView.Animation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
-		$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
+		if (!bSpectatorMode)
+		{
+				this._handView.Animation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
+				$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
+		}
 	}
 	
 	onTableCanvasClicked(event)
