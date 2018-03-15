@@ -2,11 +2,35 @@
 
 $(function () {
 		drawCow();
+		$('#english')[0].addEventListener("click", onEnglish, false);
+		$('#espanol')[0].addEventListener("click", onSpanish, false);
 		$('#newGame')[0].addEventListener("click", onNewGame, false);
 		$('#vsAI')[0].addEventListener("click", onNewGame, false);
 		$('#joinGame')[0].addEventListener("click", onNewGame, false);
 		$('#spectateGame')[0].addEventListener("click", onNewGame, false);
 });
+
+function onEnglish() {
+		hideLangShowOptions();
+}
+
+function onSpanish() {
+		$('#newGame')[0].innerHTML = "Iniciar nuevo juego";
+		$('#vsAI')[0].innerHTML = "Jugar contra computador";
+		$('#joinGame')[0].innerHTML = "Unirse a juego";
+		$('#spectateGame')[0].innerHTML = "Ver juego";
+		// change video
+		hideLangShowOptions();
+}
+
+function hideLangShowOptions() {
+		$('#language').slideUp("slow");
+		$('#afterLanguage').css("visibility", "visible");
+}
+
+function onNewGame() {
+
+}
 
 function drawCow()
 {
@@ -19,9 +43,4 @@ function drawCow()
 		ctx.stroke();
 		ctx.fill();
 		ctx.closePath();
-}
-
-function onNewGame()
-{
-
 }

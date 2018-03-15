@@ -14,19 +14,27 @@ body {
 	font-family: 'Bangers';
 }
 
+#afterLanguage {
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 h1 {
 	font-size: 8em;
 	margin: 30px;
 }
 
-#buttonContainer {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	margin: 30px;
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap:wrap;
+    margin: 30px;
 }
 
-.option {
+.button {
 	display: flex;
 	justify-content: center;
 	font-size: 3em;
@@ -38,7 +46,7 @@ h1 {
 	overflow: hidden;
 }
 
-.option:hover {
+.button:hover {
 	background: white;
 	color: rgba(127, 80, 147, 1);
 }
@@ -48,14 +56,7 @@ iframe {
 }
 
 @media screen and (orientation: portrait) {
-	#buttonContainer {
+	#gameOptions {
 		flex-direction: column;
-	}
-}
-
-@media screen and (orientation: landscape) {
-	#buttonContainer {
-		flex-direction: row;
-		flex-wrap: wrap;
 	}
 }
