@@ -30,15 +30,17 @@
 	<div id="inputSection" class="section">
         <form id="form">
             <div id="nickName" class="inputFieldContainer">
-                <img id="nickNameStatus" class="statusImg" src="img/check.png">
+                <img id="nickNameStatus" class="statusImg" src="">
                 <label id="nickNamePrompt" class="inputPrompt">Nickname:</label>
-                <input type="text" name="nickNameInput" placeholder="A nickname for yourself...">
+                <input type="text" name="nickNameInput" placeholder="max 6 characters">
             </div>
+            <div id="nickNameError" class="error">That nickname is taken by someone in the game you are trying to join. Try again.</div>
             <div id="code" class="inputFieldContainer">
-                <img id="codeStatus" class="statusImg" src="img/x.png">
+                <img id="codeStatus" class="statusImg" src="">
                 <label id="codePrompt" class="inputPrompt">Game Code:</label>
-                <input type="text" name="codeInput" placeholder="4 digit code for game to join..">
+                <input type="text" name="codeInput" placeholder="4 digit code">
             </div>
+            <div id="codeError" class="error">That code does not identify an open game. Try again.</div>
             <input type="submit" value="Submit">
         </form>
 	</div>

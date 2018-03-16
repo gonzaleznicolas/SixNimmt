@@ -69,11 +69,34 @@ form{
 .statusImg {
    width: 0.8em;
    height: 0.8em;
-   /*visibility: hidden;*/
+   visibility: hidden;
 }
 
 .inputPrompt{
     margin: 0 0.5em 0 0.2em;
+   	white-space: nowrap;
+	overflow: hidden;
+}
+
+input[type=text]{
+    font-size: 0.7em;
+    font-family: 'Bangers';
+    padding: 0.1em;
+    width: 10em;
+    color: rgba(127, 80, 147, 1);
+}
+
+.error{
+    font-size: 0.7em;
+    color: rgba(235, 117, 117, 1);
+}
+
+#nickNameError{
+    display: none;
+}
+
+#codeError{
+    display: none;
 }
 
 .button:hover {

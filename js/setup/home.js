@@ -68,7 +68,9 @@ function onJoinGame() {
 
 		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
 		$("#codeStatus").attr("src", "img/x.png").css("visibility", "visible");
-		$('#form').children().show();
+		$('#form').children().hide();
+		$('#nickName').show();
+		$('#code').show();
 		$('#inputSection').css("visibility", "visible");
 }
 
