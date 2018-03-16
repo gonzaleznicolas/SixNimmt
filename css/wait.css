@@ -6,120 +6,28 @@
 }
 
 body {
-	--nimmtPurple: rgba(127, 80, 147, 1);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background: var(--nimmtPurple);
-	color: rgba(255, 255, 255, 1);
-	font-family: 'Bangers';
-	margin: 0 0 10vh 0;
+ --nimmtPurple: rgba(127, 80, 147, 1);
+ background: var(--nimmtPurple);
 }
 
-h1 {
-	font-size: 8em;
-	margin: 30px;
-	white-space: nowrap;
-	overflow: hidden;
+#loadAnimation{
+ display:flex;
+ flex-direction: column;
+ justify-content: center;
+ width: 300px;
 }
 
-.lang{
-	width: 130px;
-	height: 80px;
-	margin: 10px;
-	border-radius: 10px;
+#dots{
+ display:flex;
+ flex-direction: row;
+ justify-content: center;
 }
 
-.instructions {
-	text-decoration: none;
-	color: white;
-}
-
-.section {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	flex-wrap: wrap;
-	font-size: 3em;
-}
-
-.button{
-	display: flex;
-	justify-content: center;
-	margin: 10px;
-	border-radius: 0.5em;
-	padding: 0.5em;
-	background: rgba(0, 0, 0, 0.3);
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-form{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.inputFieldContainer {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	margin: 10px;
-}
-
-.statusImg {
-	width: 0.8em;
-	height: 0.8em;
-	visibility: hidden;
-}
-
-.inputPrompt{
-	margin: 0 0.5em 0 0.2em;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-input[type=text]{
-	font-size: 0.7em;
-	font-family: 'Bangers';
-	padding: 0.1em;
-	width: 10em;
-	color: var(--nimmtPurple);
-}
-
-.error{
-	font-size: 0.7em;
-	color: rgba(235, 117, 117, 1);
-}
-
-#nickNameError{
-	display: none;
-}
-
-#codeError{
-	display: none;
-}
-
-.button:hover {
-	background: rgba(188, 144, 204, 1);
-	color: white;
-}
-
-.button.selected {
-	background: white;
-	color: var(--nimmtPurple);
-}
-
-
-#instructionsSection {
-	visibility: hidden;
-}
-
-#gameOptionsSection{
-	visibility: hidden;
-}
-
-#inputSection {
-	visibility: hidden;
+#dots > div{
+ width: 14px;
+ height: 14px;
+ border-radius: 7px;
+ border: 1px solid black;
+ margin: 5px;
+ background: white;
 }
