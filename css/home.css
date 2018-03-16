@@ -28,6 +28,11 @@ h1 {
 	margin: 10px;
 }
 
+.instructions {
+	text-decoration: none;
+	color: white;
+}
+
 .section {
     display: flex;
     flex-direction: row;
@@ -47,32 +52,33 @@ h1 {
 	overflow: hidden;
 }
 
-.input {
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputFieldContainer {
     display: flex;
     flex-direction: row;
-    flex-wrap:wrap;
     justify-content: center;
-    margin: 30px 10px;
-    min-width: 1000px;
+    align-items: center;
+    margin: 10px;
 }
 
 .statusImg {
    width: 0.8em;
    height: 0.8em;
-   margin: 5px;
-   visibility: hidden;
+   /*visibility: hidden;*/
 }
 
-.inputBox {
-    background: white;
-    width: 5em;
-    height: 0.8em;
-    margin: 5px 30px;
+.inputPrompt{
+    margin: 0 0.5em 0 0.2em;
 }
 
 .button:hover {
-    background: white;
-    color: rgba(127, 80, 147, 1);
+    background: rgba(188, 144, 204, 1);
+    color: white;
 }
 
 .button.selected {
@@ -80,10 +86,6 @@ h1 {
     color: rgba(127, 80, 147, 1);
 }
 
-a {
-	text-decoration: none;
-	color: white;
-}
 
 #instructionsSection {
     visibility: hidden;

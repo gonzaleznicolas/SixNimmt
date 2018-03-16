@@ -47,31 +47,36 @@ function languageClicked() {
 function onNewGame() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#newGame').addClass("selected");
-		$('#inputSection').children().hide();
-		$('#nickName').show();
+
 		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
+		$('#form').children().hide();
+		$('#nickName').show();
 		$('#inputSection').css("visibility", "visible");
 }
 
 function onVsAI() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#vsAI').addClass("selected");
-		$('#inputSection').children().hide();
+
+		$('#form').children().hide();
+		$('#inputSection').css("visibility", "hidden");
 }
 
 function onJoinGame() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#joinGame').addClass("selected");
+
 		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
 		$("#codeStatus").attr("src", "img/x.png").css("visibility", "visible");
-		$('#inputSection').children().show();
+		$('#form').children().show();
 		$('#inputSection').css("visibility", "visible");
 }
 
 function onSpectateGame() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#spectateGame').addClass("selected");
-		$('#inputSection').children().hide();
+
+		$('#form').children().hide();
 		$('#code').show();
 		$('#inputSection').css("visibility", "visible");
 }
