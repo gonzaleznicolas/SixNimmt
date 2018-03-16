@@ -60,7 +60,6 @@ function onNewGame() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#newGame').addClass("selected");
 
-		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
 		$('#form').children().hide();
 		$('#nickName').show();
 		$('#inputSection').css("visibility", "visible");
@@ -78,11 +77,15 @@ function onJoinGame() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#joinGame').addClass("selected");
 
-		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
-		$("#codeStatus").attr("src", "img/x.png").css("visibility", "visible");
 		$('#form').children().hide();
 		$('#nickName').show();
 		$('#code').show();
+
+		// these 3 lines are temporary to show how to show errors
+		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
+		$("#codeStatus").attr("src", "img/x.png").css("visibility", "visible");
+		$("#codeError").show();
+
 		$('#inputSection').css("visibility", "visible");
 }
 
