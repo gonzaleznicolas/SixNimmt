@@ -1,13 +1,13 @@
 "use strict";
 
 $(function () {
-	drawCow();
-	$('#english')[0].addEventListener("click", onEnglish, false);
-	$('#espanol')[0].addEventListener("click", onSpanish, false);
-	$('#newGame')[0].addEventListener("click", onNewGame, false);
-	$('#vsAI')[0].addEventListener("click", onVsAI, false);
-	$('#joinGame')[0].addEventListener("click", onJoinGame, false);
-	$('#spectateGame')[0].addEventListener("click", onSpectateGame, false);
+		drawCow();
+		$('#english')[0].addEventListener("click", onEnglish, false);
+		$('#espanol')[0].addEventListener("click", onSpanish, false);
+		$('#newGame')[0].addEventListener("click", onNewGame, false);
+		$('#vsAI')[0].addEventListener("click", onVsAI, false);
+		$('#joinGame')[0].addEventListener("click", onJoinGame, false);
+		$('#spectateGame')[0].addEventListener("click", onSpectateGame, false);
 });
 
 function onEnglish() {
@@ -47,21 +47,30 @@ function languageClicked() {
 function onNewGame() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#newGame').addClass("selected");
+		$('#inputSection').children().hide();
+		$('#nickName').show();
+		$('#inputSection').css("visibility", "visible");
 }
 
 function onVsAI() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#vsAI').addClass("selected");
+		$('#inputSection').children().hide();
 }
 
 function onJoinGame() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#joinGame').addClass("selected");
+		$('#inputSection').children().show();
+		$('#inputSection').css("visibility", "visible");
 }
 
 function onSpectateGame() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#spectateGame').addClass("selected");
+		$('#inputSection').children().hide();
+		$('#code').show();
+		$('#inputSection').css("visibility", "visible");
 }
 
 function drawCow()

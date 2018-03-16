@@ -14,8 +14,8 @@
 	<h1>6 Nimmt!</h1>
 	<canvas id="cow" width="300" height="300">6 Nimmt!</canvas>
 	<div id="languageSection" class="section">
-		<img id="english" src="img/en.png" alt="English">
-		<img id="espanol" src="img/es.png" alt="Espanol">
+		<img id="english" class="lang" src="img/en.png" alt="English">
+		<img id="espanol" class="lang" src="img/es.png" alt="Espanol">
 	</div>
 	<div id="instructionsSection" class="section">
 		<a id="videoInstructions" class="button" href="https://www.youtube.com/watch?v=fF0lnDygoes" target="_blank"></a>
@@ -28,13 +28,17 @@
 		<div id="spectateGame" class="button"></div>
 	</div>
 	<div id="inputSection" class="section">
-		<div id="nickName">
+		<div id="nickName" class="input">
+<!--			<div class="statusImg transparent">
+			<img class="statusImg check" src="img/es.png" alt="ok">-->
+			<img class="statusImg x" src="img/en.png" alt="error">
 			<p id="nickNamePrompt"></p>
-			<input type="text" name="nickName"/>
 		</div>
-		<div id="code">
+		<div id="code" class="input">
+<!--			<div class="statusImg transparent">
+			<img class="statusImg check" src="img/es.png" alt="ok">-->
+			<img class="statusImg x" src="img/en.png" alt="error">
 			<p id="codePrompt"></p>
-			<input type="text" name="code"/>
 		</div>
 	</div>
 </body>
