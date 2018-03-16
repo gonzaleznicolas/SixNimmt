@@ -25,7 +25,7 @@ h1 {
 .lang{
 	width: 100px;
 	height: 100px;
-	margin: 10px;
+	margin: 30px;
 }
 
 .section {
@@ -55,12 +55,21 @@ h1 {
     margin: 30px 10px;
     white-space: nowrap;
     overflow: hidden;
+    min-width: 1000px;
 }
 
 .statusImg {
    width: 0.8em;
    height: 0.8em;
    margin: 5px;
+   visibility: hidden;
+}
+
+.inputBox {
+    background: white;
+    width: 5em;
+    height: 0.8em;
+    margin: 5px 30px;
 }
 
 .button:hover {
@@ -78,16 +87,8 @@ a {
 	color: white;
 }
 
-/*#languageSection{
+#languagesection{
     border-bottom: none;
-}
-
-.statusImg.check, .statusImg.x {
-    display: none;
-}*/
-
-.statusImg{
-    border: 1px solid black;
 }
 
 #instructionsSection {

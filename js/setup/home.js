@@ -49,6 +49,7 @@ function onNewGame() {
 		$('#newGame').addClass("selected");
 		$('#inputSection').children().hide();
 		$('#nickName').show();
+		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
 		$('#inputSection').css("visibility", "visible");
 }
 
@@ -61,6 +62,8 @@ function onVsAI() {
 function onJoinGame() {
 		$('#gameOptionsSection').children().removeClass("selected");
 		$('#joinGame').addClass("selected");
+		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
+		$("#codeStatus").attr("src", "img/x.png").css("visibility", "visible");
 		$('#inputSection').children().show();
 		$('#inputSection').css("visibility", "visible");
 }
