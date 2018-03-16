@@ -5,28 +5,37 @@ $(function () {
 	$('#english')[0].addEventListener("click", onEnglish, false);
 	$('#espanol')[0].addEventListener("click", onSpanish, false);
 	$('#newGame')[0].addEventListener("click", onNewGame, false);
-	$('#vsAI')[0].addEventListener("click", onNewGame, false);
-	$('#joinGame')[0].addEventListener("click", onNewGame, false);
-	$('#spectateGame')[0].addEventListener("click", onNewGame, false);
+	$('#vsAI')[0].addEventListener("click", onVsAI, false);
+	$('#joinGame')[0].addEventListener("click", onJoinGame, false);
+	$('#spectateGame')[0].addEventListener("click", onSpectateGame, false);
 });
 
 function onEnglish() {
 	$('#videoInstructions')[0].innerHTML = "Video Instructions";
 	$('#textInstructions')[0].innerHTML = "Text Instructions";
+
 	$('#newGame')[0].innerHTML = "New Game";
 	$('#vsAI')[0].innerHTML = "1v1 vs Computer";
 	$('#joinGame')[0].innerHTML = "Join Game";
 	$('#spectateGame')[0].innerHTML = "Spectate Game";
+
+	$('#nickNamePrompt')[0].innerHTML = "Nickname for yourself:";
+	$('#codePrompt')[0].innerHTML = "Game code:";
+
 	languageClicked();
 }
 
 function onSpanish() {
 	$('#videoInstructions')[0].innerHTML = "Video Instrucciones";
 	$('#textInstructions')[0].innerHTML = "Instrucciones Escritas";
+
 	$('#newGame')[0].innerHTML = "Iniciar nuevo juego";
 	$('#vsAI')[0].innerHTML = "Jugar contra computador";
 	$('#joinGame')[0].innerHTML = "Unirse a juego";
 	$('#spectateGame')[0].innerHTML = "Ver juego";
+
+	$('#nickNamePrompt')[0].innerHTML = "Tu apodo:";
+	$('#codePrompt')[0].innerHTML = "Codigo del juego:";
 	languageClicked();
 }
 
@@ -36,7 +45,23 @@ function languageClicked() {
 }
 
 function onNewGame() {
+		$('#gameOptionsSection').children().removeClass("selected");
+		$('#newGame').addClass("selected");
+}
 
+function onVsAI() {
+		$('#gameOptionsSection').children().removeClass("selected");
+		$('#vsAI').addClass("selected");
+}
+
+function onJoinGame() {
+		$('#gameOptionsSection').children().removeClass("selected");
+		$('#joinGame').addClass("selected");
+}
+
+function onSpectateGame() {
+		$('#gameOptionsSection').children().removeClass("selected");
+		$('#spectateGame').addClass("selected");
 }
 
 function drawCow()
