@@ -12,7 +12,7 @@ body {
 	background: rgba(127, 80, 147, 1);
 	color: rgba(255, 255, 255, 1);
 	font-family: 'Bangers';
-    margin: 0 0 10vh 0;
+	margin: 0 0 10vh 0;
 }
 
 h1 {
@@ -34,11 +34,11 @@ h1 {
 }
 
 .section {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    font-size: 3em;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
+	font-size: 3em;
 }
 
 .button{
@@ -53,65 +53,65 @@ h1 {
 }
 
 form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .inputFieldContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin: 10px;
 }
 
 .statusImg {
-   width: 0.8em;
-   height: 0.8em;
-   visibility: hidden;
+	width: 0.8em;
+	height: 0.8em;
+	visibility: hidden;
 }
 
 .inputPrompt{
-    margin: 0 0.5em 0 0.2em;
-   	white-space: nowrap;
+	margin: 0 0.5em 0 0.2em;
+	white-space: nowrap;
 	overflow: hidden;
 }
 
 input[type=text]{
-    font-size: 0.7em;
-    font-family: 'Bangers';
-    padding: 0.1em;
-    width: 10em;
-    color: rgba(127, 80, 147, 1);
+	font-size: 0.7em;
+	font-family: 'Bangers';
+	padding: 0.1em;
+	width: 10em;
+	color: rgba(127, 80, 147, 1);
 }
 
 .error{
-    font-size: 0.7em;
-    color: rgba(235, 117, 117, 1);
+	font-size: 0.7em;
+	color: rgba(235, 117, 117, 1);
 }
 
 #nickNameError{
-    display: none;
+	display: none;
 }
 
 #codeError{
-    display: none;
+	display: none;
 }
 
 .button:hover {
-    background: rgba(188, 144, 204, 1);
-    color: white;
+	background: rgba(188, 144, 204, 1);
+	color: white;
 }
 
 .button.selected {
-    background: white;
-    color: rgba(127, 80, 147, 1);
+	background: white;
+	color: rgba(127, 80, 147, 1);
 }
 
 
 #instructionsSection {
-    visibility: hidden;
+	visibility: hidden;
 }
 
 #gameOptionsSection{
@@ -119,5 +119,5 @@ input[type=text]{
 }
 
 #inputSection {
-    visibility: hidden;
+	visibility: hidden;
 }
