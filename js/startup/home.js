@@ -62,6 +62,7 @@ function onNewGame() {
 
 		$('#form').children().hide();
 		$('#nickName').show();
+		$('#submit').show();
 		$('#inputSection').css("visibility", "visible");
 }
 
@@ -79,6 +80,7 @@ function onJoinGame() {
 
 		$('#form').children().hide();
 		$('#nickName').show();
+		$('#submit').show();
 		$('#code').show();
 
 		// these 3 lines are temporary to show how to show errors
@@ -95,6 +97,7 @@ function onSpectateGame() {
 
 		$('#form').children().hide();
 		$('#code').show();
+		$('#submit').show();
 		$('#inputSection').css("visibility", "visible");
 }
 
