@@ -3,17 +3,42 @@
 const TypeOfLoadingScreen = Object.freeze({"PersonWhoStartedTheGame":1, "PersonJoiningOrSpectator":2})
 
 let loadingScreenType = TypeOfLoadingScreen.PersonWhoStartedTheGame;
-let nameOfPersonWhoStartedGame = "Nico";
 let gameCode = 3424;
+let bSpanish = true;
 
 $(function () {
+	bSpanish ? onSpanish() : onEnglish();
+
 	$("#code")[0].innerHTML = gameCode;
 	setRightButtons(loadingScreenType);
-	addPlayer(nameOfPersonWhoStartedGame);
+
+	// add all current players
+	addPlayer("Nico");
+
 	drawCow();
 	fadeCow();
  	animateDots();
 });
+
+function onEnglish() {
+	$('#theCodeIs')[0].innerHTML = "The game code is";
+	playerAllowance
+	$('#playerAllowance')[0].innerHTML = "2-10 players allowed";
+
+	$('#endGameBtn')[0].innerHTML = "End game";
+	$('#quitGameBtn')[0].innerHTML = "Quit game";
+	$('#startGameBtn')[0].innerHTML = "Start with current players";
+}
+
+function onSpanish() {
+	$('#theCodeIs')[0].innerHTML = "El codigo del juego es";
+	playerAllowance
+	$('#playerAllowance')[0].innerHTML = "2-10 jugadores permitidos";
+
+	$('#endGameBtn')[0].innerHTML = "Terminar juego";
+	$('#quitGameBtn')[0].innerHTML = "Salir";
+	$('#startGameBtn')[0].innerHTML = "Comenzar con estos jugadores";
+}
 
 function setRightButtons()
 {
@@ -47,6 +72,7 @@ function fadeCow()
 
 let nextDotIndex = 0;
 let animationSpeed = 400;
+// must add at least one player (dot) before calling this function
 function animateDots()
 {
 	nextDotIndex = (nextDotIndex + 1) % $("#dots").children().length;
