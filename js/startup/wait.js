@@ -1,11 +1,30 @@
 "use strict";
 
+const TypeOfLoadingScreen = Object.freeze({"PersonWhoStartedTheGame":1, "PersonJoiningOrSpectator":2})
+
+let loadingScreenType = TypeOfLoadingScreen.PersonJoiningOrSpectator;
+let nameOfPersonWhoStartedGame = "Nico";
+let gameCode = 3424;
 
 $(function () {
- drawCow();
- fadeCow();
- animateDots();
+	$("#code")[0].innerHTML = gameCode;
+	setRightButtons(loadingScreenType);
+	addPlayer(nameOfPersonWhoStartedGame);
+	drawCow();
+	fadeCow();
+ 	animateDots();
 });
+
+function setRightButtons()
+{
+	if (loadingScreenType == TypeOfLoadingScreen.PersonWhoStartedTheGame)
+		$("#quitGameBtn").hide();
+	else
+	{
+		$("#quitGameBtn").hide();
+		$("#startGameBtn").hide();
+	}
+}
 
 function drawCow()
 {
@@ -30,11 +49,14 @@ let nextDotIndex = 0;
 let animationSpeed = 400;
 function animateDots()
 {
- nextDotIndex = (nextDotIndex + 1) % $("#dots").children().length;
- $("#dots").children().eq(nextDotIndex).hide(animationSpeed, function () { $("#dots").children().eq(nextDotIndex).show(animationSpeed, animateDots); })
+	nextDotIndex = (nextDotIndex + 1) % $("#dots").children().length;
+	$("#dots").children().eq(nextDotIndex).hide(animationSpeed, function () { $("#dots").children().eq(nextDotIndex).show(animationSpeed, animateDots); })
 }
 
-function addPlayer()
+let numberOfPlayers = 0;
+function addPlayer(nickName)
 {
- $("#dots").append("<div></div>");
+	$("#dots").append("<div></div>");
+	$("#playersJoined").append("<li class=\"player\">"+nickName+"</li>");
+	numberOfPlayers++;
 }
