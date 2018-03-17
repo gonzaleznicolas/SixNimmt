@@ -8,17 +8,20 @@
 body {
 	--nimmtPurple: rgba(127, 80, 147, 1);
 	background: var(--nimmtPurple);
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	font-size: 3em;
+    font-size: 3em;
 	font-family: 'Bangers';
 	color: white;
 }
 
-.section{
-	margin: 15px;
+#mainContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.section {
+    margin: 15px;
 }
 
 #loadAnimation{
