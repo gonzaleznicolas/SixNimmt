@@ -6,28 +6,89 @@
 }
 
 body {
- --nimmtPurple: rgba(127, 80, 147, 1);
- background: var(--nimmtPurple);
+	--nimmtPurple: rgba(127, 80, 147, 1);
+	background: var(--nimmtPurple);
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	font-size: 3em;
+	font-family: 'Bangers';
+	color: white;
+}
+
+.section{
+	margin: 15px;
 }
 
 #loadAnimation{
- display:flex;
- flex-direction: column;
- align-items: center;
- margin: 30px;
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+	height: 330px;
+}
+
+#gameCode{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+#buttons{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+#playersJoined{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: center;
+}
+
+li{
+	margin: 0.5em 1em;
+}
+
+.button{
+	display: flex;
+	justify-content: center;
+	margin: 10px;
+	border-radius: 0.5em;
+	padding: 0.5em;
+	background: rgba(0, 0, 0, 0.3);
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.button:hover {
+	background: rgba(188, 144, 204, 1);
+	color: white;
+}
+
+#code
+{
+	color: rgba(235, 117, 117, 1);;
 }
 
 #dots{
- display:flex;
- flex-direction: row;
- justify-content: center;
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
 }
 
 #dots > div{
- width: 14px;
- height: 14px;
- border-radius: 7px;
- border: 1px solid black;
- margin: 5px;
- background: white;
+	width: 14px;
+	height: 14px;
+	border-radius: 7px;
+	border: 1px solid black;
+	margin: 5px;
+	background: white;
 }

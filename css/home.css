@@ -54,6 +54,16 @@ h1 {
 	overflow: hidden;
 }
 
+.button:hover {
+	background: rgba(188, 144, 204, 1);
+	color: white;
+}
+
+.button.selected {
+	background: white;
+	color: var(--nimmtPurple);
+}
+
 form{
 	display: flex;
 	flex-direction: column;
@@ -100,17 +110,6 @@ input[type=text]{
 #codeError{
 	display: none;
 }
-
-.button:hover {
-	background: rgba(188, 144, 204, 1);
-	color: white;
-}
-
-.button.selected {
-	background: white;
-	color: var(--nimmtPurple);
-}
-
 
 #instructionsSection {
 	visibility: hidden;
