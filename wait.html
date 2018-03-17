@@ -11,9 +11,18 @@
 	<script src="js/startup/wait.js" defer></script>
 </head>
 <body>
- <div id="loadAnimation">
-  <canvas id="cow" width="300" height="300">6 Nimmt!</canvas>
-	<div id="dots"><div></div></div>
- </div>
+<div id="loadAnimation" class="section">
+	<canvas id="cow" width="300" height="300">6 Nimmt!</canvas>
+	<div id="dots"></div>
+</div>
+<div id="gameCode" class="section">
+	<p>The game code is <p id="code"></p>2-10 players allowed.</p>
+</div>
+<div id="buttons" class="section">
+	<div id="endGameBtn" class="button">End Game</div>
+	<div id="quitGameBtn" class="button">Quit Game</div>
+	<div id="startGameBtn" class="button">Start with current players</div>
+</div>
+<ol id="playersJoined" class="section"></ol>
 </body>
 </html>
