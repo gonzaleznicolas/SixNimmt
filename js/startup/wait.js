@@ -6,11 +6,13 @@ let loadingScreenType = TypeOfLoadingScreen.PersonWhoStartedTheGame;
 let gameCode = 3424;
 let bSpanish = true;
 
+let numberOfPlayersSoFar = 0;
+
 $(function () {
 	bSpanish ? onSpanish() : onEnglish();
 
 	$("#code")[0].innerHTML = gameCode;
-	setRightButtons(loadingScreenType);
+	updateButtons();
 
 	// add all current players
 	addPlayer("Nico");
@@ -28,6 +30,7 @@ function onEnglish() {
 	$('#endGameBtn')[0].innerHTML = "End game";
 	$('#quitGameBtn')[0].innerHTML = "Quit game";
 	$('#startGameBtn')[0].innerHTML = "Start with current players";
+	$("#needMorePlayers")[0].innerHTML = "Need more players";
 }
 
 function onSpanish() {
@@ -38,16 +41,25 @@ function onSpanish() {
 	$('#endGameBtn')[0].innerHTML = "Terminar juego";
 	$('#quitGameBtn')[0].innerHTML = "Salir";
 	$('#startGameBtn')[0].innerHTML = "Comenzar con estos jugadores";
+	$("#needMorePlayers")[0].innerHTML = "Se necesitan mas jugadores";
 }
 
-function setRightButtons()
+function updateButtons()
 {
 	if (loadingScreenType == TypeOfLoadingScreen.PersonWhoStartedTheGame)
-		$("#quitGameBtn").hide();
+	{
+		$("#buttons").children().hide();
+		$("#endGameBtn").show();
+		if (numberOfPlayersSoFar >= 2)
+			$("#startGameBtn").show();
+		else {
+			$("#needMorePlayers").show();
+		}
+	}
 	else
 	{
-		$("#quitGameBtn").hide();
-		$("#startGameBtn").hide();
+		$("#buttons").children().hide();
+		$("#quitGameBtn").show();
 	}
 }
 
@@ -79,10 +91,12 @@ function animateDots()
 	$("#dots").children().eq(nextDotIndex).hide(animationSpeed, function () { $("#dots").children().eq(nextDotIndex).show(animationSpeed, animateDots); })
 }
 
-let numberOfPlayers = 0;
 function addPlayer(nickName)
 {
+	if (numberOfPlayersSoFar >= 10)
+		return;
 	$("#dots").append("<div></div>");
 	$("#playersJoined").append("<li class=\"player\">"+nickName+"</li>");
-	numberOfPlayers++;
+	numberOfPlayersSoFar++;
+	updateButtons();
 }
