@@ -24,6 +24,7 @@ $(function () {
 	$('#endGameBtn')[0].addEventListener("click", endGame, false);
 	$('#quitGameBtn')[0].addEventListener("click", quitGame, false);
 	$('#startGameBtn')[0].addEventListener("click", startGame, false);
+	$('#addAIBtn')[0].addEventListener("click", addAI, false);
 });
 
 function endGame()
@@ -41,6 +42,13 @@ function startGame()
 
 }
 
+let aiNum = 1;
+function addAI()
+{
+	addPlayer("AI" + aiNum);
+	aiNum++;
+}
+
 function onEnglish() {
 	$('#theCodeIs')[0].innerHTML = "The game code is";
 	playerAllowance
@@ -50,6 +58,7 @@ function onEnglish() {
 	$('#quitGameBtn')[0].innerHTML = "Quit game";
 	$('#startGameBtn')[0].innerHTML = "Start with current players";
 	$("#needMorePlayers")[0].innerHTML = "Need more players";
+	$('#addAIBtn')[0].innerHTML = "Add artificial player";
 }
 
 function onSpanish() {
@@ -61,6 +70,7 @@ function onSpanish() {
 	$('#quitGameBtn')[0].innerHTML = "Salir";
 	$('#startGameBtn')[0].innerHTML = "Comenzar con estos jugadores";
 	$("#needMorePlayers")[0].innerHTML = "Se necesitan mas jugadores";
+	$('#addAIBtn')[0].innerHTML = "Agregar jugador artificial";
 }
 
 function updateButtons()
@@ -69,6 +79,8 @@ function updateButtons()
 	{
 		$("#buttons").children().hide();
 		$("#endGameBtn").show();
+		if (numberOfPlayersSoFar < 10)
+			$('#addAIBtn').show();
 		if (numberOfPlayersSoFar >= 2)
 			$("#startGameBtn").show();
 		else {
@@ -126,5 +138,5 @@ function removePlayer(nickName)
 		return;
 	$("#dots").children().eq(0).remove();
 	$("#" + nickName.toLowerCase()).remove();
-
+	numberOfPlayersSoFar--;
 }
