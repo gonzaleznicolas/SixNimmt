@@ -103,6 +103,23 @@ input[type=text]{
 	color: rgba(235, 117, 117, 1);
 }
 
+#submit {
+    font-size: 1em;
+    background: transparent;
+    border: 0;
+    margin: 10px;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-family: "Bangers";
+}
+
+#submit:hover {
+    background: rgba(188, 144, 204, 1);
+    color: white;
+}
+
 #nickNameError{
 	display: none;
 }
