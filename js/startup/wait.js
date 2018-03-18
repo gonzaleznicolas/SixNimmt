@@ -96,7 +96,16 @@ function addPlayer(nickName)
 	if (numberOfPlayersSoFar >= 10)
 		return;
 	$("#dots").append("<div></div>");
-	$("#playersJoined").append("<li class=\"player\">"+nickName+"</li>");
+	$("#playersJoined").append("<li id=\"" + nickName.toLowerCase() + "\" class=\"player\">"+nickName+"</li>");
 	numberOfPlayersSoFar++;
 	updateButtons();
+}
+
+function removePlayer(nickName)
+{
+	if (numberOfPlayersSoFar <= 1)
+		return;
+	$("#dots").children().eq(0).remove();
+	$("#" + nickName.toLowerCase()).remove();
+
 }
