@@ -11,8 +11,8 @@ $(function () {
 });
 
 function onEnglish() {
-	$('#videoInstructions')[0].innerHTML = "Video Instructions";
-	$('#textInstructions')[0].innerHTML = "Text Instructions";
+	$('#videoRules')[0].innerHTML = "Video Rules";
+	$('#textRules')[0].innerHTML = "Text Rules";
 
 	$('#newGame')[0].innerHTML = "New Game";
 	$('#vsAI')[0].innerHTML = "1v1 vs Computer";
@@ -32,8 +32,8 @@ function onEnglish() {
 }
 
 function onSpanish() {
-	$('#videoInstructions')[0].innerHTML = "Video Instrucciones";
-	$('#textInstructions')[0].innerHTML = "Instrucciones Escritas";
+	$('#videoRules')[0].innerHTML = "Reglas en video";
+	$('#textRules')[0].innerHTML = "Reglas escritas";
 
 	$('#newGame')[0].innerHTML = "Iniciar nuevo juego";
 	$('#vsAI')[0].innerHTML = "Jugar contra computador";

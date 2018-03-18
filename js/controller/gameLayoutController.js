@@ -35,6 +35,9 @@ class GameLayoutController
 		if (bSpanish)
 		{
 			$('#quitMenuOption')[0].innerHTML = "Terminar Juego";
+			$('#textRules')[0].innerHTML = "Reglas escritas";
+			$('#videoRules')[0].innerHTML = "Reglas en video";
+
 			$('#playCardButton')[0].innerHTML = "Poner Carta";
 			$('#selectCardMessage')[0].innerHTML = "For favor elige una carta";
 			$('#notTimeToPlayCardMessage')[0].innerHTML = "No es hora de elejir una carta";
