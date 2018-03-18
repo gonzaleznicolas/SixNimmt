@@ -19,8 +19,27 @@ $(function () {
 
 	drawCow();
 	fadeCow();
- 	animateDots();
+	animateDots();
+
+	$('#endGameBtn')[0].addEventListener("click", endGame, false);
+	$('#quitGameBtn')[0].addEventListener("click", quitGame, false);
+	$('#startGameBtn')[0].addEventListener("click", startGame, false);
 });
+
+function endGame()
+{
+
+}
+
+function quitGame()
+{
+
+}
+
+function startGame()
+{
+
+}
 
 function onEnglish() {
 	$('#theCodeIs')[0].innerHTML = "The game code is";
