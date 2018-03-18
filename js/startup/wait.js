@@ -4,7 +4,7 @@ const TypeOfLoadingScreen = Object.freeze({"PersonWhoStartedTheGame":1, "PersonJ
 
 let loadingScreenType = TypeOfLoadingScreen.PersonWhoStartedTheGame;
 let gameCode = 3424;
-let bSpanish = true;
+let bSpanish = false;
 
 let numberOfPlayersSoFar = 0;
 
