@@ -27,6 +27,7 @@ function onEnglish() {
 
 	$('#nickNameTextBox').attr("placeholder", "max 6 characters");
 	$('#codeTextBox').attr("placeholder", "4 digit code");
+	$('#submit').attr("value", "Submit");
 
 	languageClicked();
 }
@@ -48,6 +49,8 @@ function onSpanish() {
 
 	$('#nickNameTextBox').attr("placeholder", "max 6 caracteres");
 	$('#codeTextBox').attr("placeholder", "codigo de 4 digitos");
+	$('#submit').attr("value", "Enviar");
+
 	languageClicked();
 }
 
