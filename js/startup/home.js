@@ -79,6 +79,7 @@ function onVsAI() {
 		$('#form').children().hide();
 		$('#formType')[0].value = FormType.vsAI;
 		$('#inputSection').css("visibility", "hidden");
+		$('#form').submit();
 }
 
 function onJoinGame() {
