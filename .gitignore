@@ -2,3 +2,5 @@
 \.vs/
 
 *.sqlite
+
+node_modules/
