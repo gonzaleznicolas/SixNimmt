@@ -1,5 +1,7 @@
 "use strict";
 
+const FormType = Object.freeze({ "NewGame": 1, "vsAI": 2, "JoinGame": 3, "SpectateGame": 4 })
+
 $(function () {
 		drawCow();
 		$('#english')[0].addEventListener("click", onEnglish, false);
@@ -64,6 +66,7 @@ function onNewGame() {
 		$('#newGame').addClass("selected");
 
 		$('#form').children().hide();
+		$('#formType')[0].value = FormType.NewGame;
 		$('#nickName').show();
 		$('#submit').show();
 		$('#inputSection').css("visibility", "visible");
@@ -74,6 +77,7 @@ function onVsAI() {
 		$('#vsAI').addClass("selected");
 
 		$('#form').children().hide();
+		$('#formType')[0].value = FormType.vsAI;
 		$('#inputSection').css("visibility", "hidden");
 }
 
@@ -82,6 +86,7 @@ function onJoinGame() {
 		$('#joinGame').addClass("selected");
 
 		$('#form').children().hide();
+		$('#formType')[0].value = FormType.JoinGame;
 		$('#nickName').show();
 		$('#submit').show();
 		$('#code').show();
@@ -99,6 +104,7 @@ function onSpectateGame() {
 		$('#spectateGame').addClass("selected");
 
 		$('#form').children().hide();
+		$('#formType')[0].value = FormType.SpectateGame;
 		$('#code').show();
 		$('#submit').show();
 		$('#inputSection').css("visibility", "visible");
