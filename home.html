@@ -28,7 +28,7 @@
 		<div id="spectateGame" class="button"></div>
 	</div>
 	<div id="inputSection" class="section">
-		<form id="form">
+		<form id="form" action="http://localhost:80/process_form" method="POST">
 			<!--This hidden input field will be set by the client side code to inform the server which form type
 				is being sent. i.e. new game, join game, 1v1 vs computer, spectate-->
 			<input type="hidden" id="formType" name="formType">
@@ -44,7 +44,7 @@
 				<input type="text" id="codeTextBox" name="codeInput" maxlength="4">
 			</div>
 			<div id="codeError" class="error"></div>
-			<input id="submit" type="submit">
+			<input id="submitButton" type="submit">
 		</form>
 	</div>
 </body>

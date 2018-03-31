@@ -29,7 +29,7 @@ function onEnglish() {
 
 	$('#nickNameTextBox').attr("placeholder", "max 6 characters");
 	$('#codeTextBox').attr("placeholder", "4 digit code");
-	$('#submit').attr("value", "Submit");
+	$('#submitButton').attr("value", "Submit");
 
 	languageClicked();
 }
@@ -51,7 +51,7 @@ function onSpanish() {
 
 	$('#nickNameTextBox').attr("placeholder", "max 6 caracteres");
 	$('#codeTextBox').attr("placeholder", "codigo de 4 digitos");
-	$('#submit').attr("value", "Enviar");
+	$('#submitButton').attr("value", "Enviar");
 
 	languageClicked();
 }
@@ -68,7 +68,7 @@ function onNewGame() {
 		$('#form').children().hide();
 		$('#formType')[0].value = FormType.NewGame;
 		$('#nickName').show();
-		$('#submit').show();
+		$('#submitButton').show();
 		$('#inputSection').css("visibility", "visible");
 }
 
@@ -89,7 +89,7 @@ function onJoinGame() {
 		$('#form').children().hide();
 		$('#formType')[0].value = FormType.JoinGame;
 		$('#nickName').show();
-		$('#submit').show();
+		$('#submitButton').show();
 		$('#code').show();
 
 		// these 3 lines are temporary to show how to show errors
@@ -107,7 +107,7 @@ function onSpectateGame() {
 		$('#form').children().hide();
 		$('#formType')[0].value = FormType.SpectateGame;
 		$('#code').show();
-		$('#submit').show();
+		$('#submitButton').show();
 		$('#inputSection').css("visibility", "visible");
 }
 
