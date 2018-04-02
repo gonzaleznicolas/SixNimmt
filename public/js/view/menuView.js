@@ -15,6 +15,18 @@ class MenuView
 		$('#quitMenuOption')[0].addEventListener("click", this.quit.bind(this), false);
 	}
 	
+	showMenuButton()
+	{
+		this._menuButton.css("visibility", "visible");
+	}
+	
+	hideMenuButton()
+	{
+		this._menuButton.css("visibility", "hidden");
+		this._menuBackground.hide();
+		this._menuElement.hide();
+	}
+	
 	menuButtonClicked()
 	{
 		this._menuBackground.toggle();
