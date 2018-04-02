@@ -66,7 +66,6 @@ function onNewGame() {
 		$('#newGame').addClass("selected");
 
 		$('#form').children().hide();
-		$('#formType')[0].value = FormType.NewGame;
 		$('#nickName').show();
 		$('#submitButton').show();
 		$('#inputSection').css("visibility", "visible");
@@ -77,7 +76,6 @@ function onVsAI() {
 		$('#vsAI').addClass("selected");
 
 		$('#form').children().hide();
-		$('#formType')[0].value = FormType.vsAI;
 		$('#inputSection').css("visibility", "hidden");
 		$('#form').submit();
 }
@@ -87,7 +85,6 @@ function onJoinGame() {
 		$('#joinGame').addClass("selected");
 
 		$('#form').children().hide();
-		$('#formType')[0].value = FormType.JoinGame;
 		$('#nickName').show();
 		$('#submitButton').show();
 		$('#code').show();
@@ -105,7 +102,6 @@ function onSpectateGame() {
 		$('#spectateGame').addClass("selected");
 
 		$('#form').children().hide();
-		$('#formType')[0].value = FormType.SpectateGame;
 		$('#code').show();
 		$('#submitButton').show();
 		$('#inputSection').css("visibility", "visible");

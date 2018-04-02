@@ -28,10 +28,7 @@
 		<div id="spectateGame" class="button"></div>
 	</div>
 	<div id="inputSection" class="section">
-		<form id="form" action="http://localhost:80/process_form" method="POST">
-			<!--This hidden input field will be set by the client side code to inform the server which form type
-				is being sent. i.e. new game, join game, 1v1 vs computer, spectate-->
-			<input type="hidden" id="formType" name="formType">
+		<form id="form">
 			<div id="nickName" class="inputFieldContainer">
 				<img id="nickNameStatus" class="statusImg" src="">
 				<label id="nickNamePrompt" class="inputPrompt">Nickname:</label>
