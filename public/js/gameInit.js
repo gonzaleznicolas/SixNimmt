@@ -4,7 +4,6 @@
 let bSpectatorMode = false;
 let numberOfPlayers = 10;
 let bFlickityEnabled = true;
-let bSpanish = true;
 
 // game constants
 const MAX_NUMBER_OF_PLAYERS = 10;
