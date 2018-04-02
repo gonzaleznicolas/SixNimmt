@@ -1,5 +1,6 @@
 "use strict";
 
+// the 4 key vars
 let bSpectatorMode = false;
 let numberOfPlayers = 10;
 let bFlickityEnabled = true;
