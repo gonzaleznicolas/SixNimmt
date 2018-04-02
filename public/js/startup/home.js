@@ -66,7 +66,7 @@ function onNewGame() {
 		$('#newGame').addClass("selected");
 
 		$('#form').children().hide();
-		$('#nickName').show();
+		$('#nickNameFormSection').show();
 		$('#submitButton').show();
 		$('#inputSection').css("visibility", "visible");
 }
@@ -77,7 +77,6 @@ function onVsAI() {
 
 		$('#form').children().hide();
 		$('#inputSection').css("visibility", "hidden");
-		$('#form').submit();
 }
 
 function onJoinGame() {
@@ -85,9 +84,9 @@ function onJoinGame() {
 		$('#joinGame').addClass("selected");
 
 		$('#form').children().hide();
-		$('#nickName').show();
+		$('#nickNameFormSection').show();
 		$('#submitButton').show();
-		$('#code').show();
+		$('#codeFormSection').show();
 
 		// these 3 lines are temporary to show how to show errors
 		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
@@ -102,14 +101,14 @@ function onSpectateGame() {
 		$('#spectateGame').addClass("selected");
 
 		$('#form').children().hide();
-		$('#code').show();
+		$('#codeFormSection').show();
 		$('#submitButton').show();
 		$('#inputSection').css("visibility", "visible");
 }
 
 function drawCow()
 {
-	let canvas = $("#cow")[0];
+	let canvas = $("#homeCow")[0];
 	let ctx = canvas.getContext("2d");
 	BasicShapeDrawer.drawDetailedCowShape(ctx, canvas.width / 2, canvas.height / 2, canvas.width, 0.9 * canvas.height);
 	ctx.fillStyle = 'white';

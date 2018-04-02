@@ -26,6 +26,7 @@
 	justify-content: space-around;
 	align-items: center;
 	padding: var(--margin) var(--margin);
+	visibility: hidden;
 }
 
 #menuButton div{

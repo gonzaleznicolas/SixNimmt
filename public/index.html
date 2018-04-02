@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>6 Nimmt!</title>
+	<link rel="icon" href="img/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Yanone Kaffeesatz' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="flickity/flickity.css" />
+	<link rel="stylesheet" type="text/css" href="css/singlePageApp.css" />
+	<link rel="stylesheet" type="text/css" href="css/game.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu.css" />
+	<link rel="stylesheet" type="text/css" href="css/home.css" />
+	<script src='jquery-3.3.1.js' defer></script>
+	<script src="flickity/flickity.pkgd.min.js" defer></script>
+	
+	<script src="js/view/basicShapeDrawer.js" defer></script>
+	<script src="js/startup/home.js" defer></script>
+	
+	<script src="js/model/gameModel.js" defer"></script>
+	<script src='js/view/layoutCalculator.js' defer></script>
+	<script src='js/view/cardMovementLine.js' defer></script>
+	<script src="js/view/scoreboardElement.js" defer></script>
+	<script src="js/view/scoreboardView.js" defer></script>
+	<script src="js/view/menuView.js" defer></script>
+	<script src="js/view/drawer.js" defer></script>
+	<script src="js/view/tableDrawer.js" defer></script>
+	<script src="js/view/handDrawer.js" defer></script>
+	<script src="js/view/animation.js" defer></script>
+	<script src="js/view/tableAnimation.js" defer></script>
+	<script src="js/view/handAnimation.js" defer></script>
+	<script src="js/view/tableView.js" defer></script>
+	<script src="js/view/handView.js" defer></script>
+	<script src="js/controller/gameLayoutController.js" defer></script>
+	<script src="js/controller/gameController.js" defer></script>
+	<script src="js/gameInit.js" defer></script>
+</head>
+<body>
+	<div id="homePage" class="page">
+		<h1>6 Nimmt!</h1>
+		<canvas id="homeCow" width="300" height="300">6 Nimmt!</canvas>
+		<div id="languageSection" class="section">
+			<img id="english" class="lang" src="img/en.png" alt="English">
+			<img id="espanol" class="lang" src="img/es.png" alt="Espanol">
+		</div>
+		<div id="instructionsSection" class="section">
+			<a id="videoRules" class="button instructions" href="https://www.youtube.com/watch?v=fF0lnDygoes" target="_blank"></a>
+			<a id="textRules" class="button instructions" href="https://www.youtube.com/watch?v=fF0lnDygoes" target="_blank"></a>
+		</div>
+		<div id="gameOptionsSection" class="section">
+			<div id="newGame" class="button"></div>
+			<div id="vsAI" class="button"></div>
+			<div id="joinGame" class="button"></div>
+			<div id="spectateGame" class="button"></div>
+		</div>
+		<div id="inputSection" class="section">
+			<form id="form">
+				<div id="nickNameFormSection" class="inputFieldContainer">
+					<img id="nickNameStatus" class="statusImg" src="">
+					<label id="nickNamePrompt" class="inputPrompt">Nickname:</label>
+					<input type="text" id="nickNameTextBox" name="nickNameInput" maxlength="6">
+				</div>
+				<div id="nickNameError" class="error"></div>
+				<div id="codeFormSection" class="inputFieldContainer">
+					<img id="codeStatus" class="statusImg" src="">
+					<label id="codePrompt" class="inputPrompt">Game Code:</label>
+					<input type="text" id="codeTextBox" name="codeInput" maxlength="4">
+				</div>
+				<div id="codeError" class="error"></div>
+				<input id="submitButton" type="submit">
+			</form>
+		</div>
+	</div>
+	<div id="gamePage" class="page">
+		<header>
+			<p id=headerText>Six Nimmt</p>
+		</header>
+		<div id="menuButton"><div></div><div></div><div></div></div>
+		<div id="menu">
+			<div id="quitMenuOption" class="menuOption">Quit Game</div><hr>
+			<div id="textRules" class="menuOption">Text Rules</div><hr>
+			<div id="videoRules" class="menuOption">Video Rules</div><hr>
+		</div>
+		<div id="game">
+			<div class="gallery">
+				<div class="table galleryCell">
+					<canvas id="tableCanvas" width=0 height=0>Your browser does not support this game.</canvas>
+				</div>
+				<div class="hand galleryCell">
+					<div id="handContainer">
+						<canvas id="handCanvas" width=0 height=0>Your browser does not support this game.</canvas>
+						<div id="handMessageContainer">
+							<p id="playCardButton">Play Card</p>
+							<p id="selectCardMessage">Please select a card to play</p>
+							<p id="notTimeToPlayCardMessage">It is not time to play a card</p>
+						</div>
+					</div>
+				</div>
+			</div>		
+			<div id="scoreboard">
+			</div>
+		</div>
+	</div>
+</body>
+</html>
