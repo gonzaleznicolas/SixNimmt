@@ -2,7 +2,7 @@
 
 class GameLayoutController
 {
-	constructor(scoreboardView, tableView, handView) {
+	constructor(scoreboardView, tableView, handView, menuView) {
 		this.setAllStringsToChosenLanguage();
 		
 		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
@@ -16,6 +16,7 @@ class GameLayoutController
 		this._scoreboardView = scoreboardView;
 		this._tableView = tableView;
 		this._handView = handView; // could be undefined
+		this._menuView = menuView;
 		
 		if (bSpectatorMode)
 			$('.hand.galleryCell').remove();
@@ -68,6 +69,18 @@ class GameLayoutController
 		$('.gallery').css("width", lc.galleryWidth+"px");
 		if (!bSpectatorMode && this._flickity)
 			this._flickity.resize();	// the gallery sets its height to fit the tallest galleryCell. But you need to call resize for it to redraw.
+	}
+	
+	showHeader()
+	{
+		$("header").css("visibility", "visible");
+		this._menuView.showMenuButton();
+	}
+	
+	hideHeader()
+	{
+		$("header").css("visibility", "hidden");
+		this._menuView.hideMenuButton();
 	}
 	
 	onResizeWindowHelper()

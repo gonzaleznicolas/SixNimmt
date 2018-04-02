@@ -13,7 +13,7 @@ class GameController {
 		if (!bSpectatorMode)
 			this._handView = new HandView(this._model);
 		
-		this._gameLayoutController = new GameLayoutController(this._scoreboardView, this._tableView, this._handView);
+		this._gameLayoutController = new GameLayoutController(this._scoreboardView, this._tableView, this._handView, this._menuView);
 		
 		this._tableView.Animation.Drawer.Canvas.addEventListener("click", this.onTableCanvasClicked.bind(this), false);
 		if (!bSpectatorMode)
