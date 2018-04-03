@@ -4,15 +4,12 @@ const TypeOfLoadingScreen = Object.freeze({"PersonWhoStartedTheGame":1, "PersonJ
 
 let loadingScreenType = TypeOfLoadingScreen.PersonWhoStartedTheGame;
 let gameCode = 3424;
-let bSpanish = false;
 
 let numberOfPlayersSoFar = 0;
 
 
 //replace this with function startWaitPage()
 $(function () {
-	bSpanish ? onSpanish() : onEnglish();
-
 	$("#code")[0].innerHTML = gameCode;
 	updateButtons();
 
@@ -51,30 +48,6 @@ function addAI()
 	aiNum++;
 }
 
-function onEnglish() {
-	$('#theCodeIs')[0].innerHTML = "The game code is";
-	playerAllowance
-	$('#playerAllowance')[0].innerHTML = "2-10 players allowed";
-
-	$('#endGameBtn')[0].innerHTML = "End game";
-	$('#quitGameBtn')[0].innerHTML = "Quit game";
-	$('#startGameBtn')[0].innerHTML = "Start with current players";
-	$("#needMorePlayers")[0].innerHTML = "Need more players";
-	$('#addAIBtn')[0].innerHTML = "Add artificial player";
-}
-
-function onSpanish() {
-	$('#theCodeIs')[0].innerHTML = "El codigo del juego es";
-	playerAllowance
-	$('#playerAllowance')[0].innerHTML = "2-10 jugadores permitidos";
-
-	$('#endGameBtn')[0].innerHTML = "Terminar juego";
-	$('#quitGameBtn')[0].innerHTML = "Salir";
-	$('#startGameBtn')[0].innerHTML = "Comenzar con estos jugadores";
-	$("#needMorePlayers")[0].innerHTML = "Se necesitan mas jugadores";
-	$('#addAIBtn')[0].innerHTML = "Agregar jugador artificial";
-}
-
 function updateButtons()
 {
 	if (loadingScreenType == TypeOfLoadingScreen.PersonWhoStartedTheGame)
@@ -98,7 +71,7 @@ function updateButtons()
 
 function drawCow()
 {
-	let canvas = $("#cow")[0];
+	let canvas = $("#waitCow")[0];
 	let ctx = canvas.getContext("2d");
 	BasicShapeDrawer.drawDetailedCowShape(ctx, canvas.width / 2, canvas.height / 2, canvas.width, 0.9 * canvas.height);
 	ctx.fillStyle = 'white';
@@ -111,7 +84,7 @@ function drawCow()
 
 function fadeCow()
 {
- $("#cow").fadeTo(2000, 0.3, function () { $("#cow").fadeTo(2000, 1, fadeCow) })
+ $("#waitCow").fadeTo(2000, 0.3, function () { $("#waitCow").fadeTo(2000, 1, fadeCow) })
 }
 
 

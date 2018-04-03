@@ -26,7 +26,13 @@ function translateToEnglish()
 	$('#submitButton').attr("value", "Submit");
 
 	// wait
-	
+	$('#theCodeIs')[0].innerHTML = "The game code is";
+	$('#playerAllowance')[0].innerHTML = "2-10 players allowed";
+	$('#endGameBtn')[0].innerHTML = "End game";
+	$('#quitGameBtn')[0].innerHTML = "Quit game";
+	$('#startGameBtn')[0].innerHTML = "Start with current players";
+	$("#needMorePlayers")[0].innerHTML = "Need more players";
+	$('#addAIBtn')[0].innerHTML = "Add artificial player";
 	
 	// game
 	$('#quitMenuOption')[0].innerHTML = "Quit Game";
@@ -62,7 +68,13 @@ function translateToSpanish()
 	$('#submitButton').attr("value", "Enviar");
 	
 	// wait
-	
+	$('#theCodeIs')[0].innerHTML = "El codigo del juego es";
+	$('#playerAllowance')[0].innerHTML = "2-10 jugadores permitidos";
+	$('#endGameBtn')[0].innerHTML = "Terminar juego";
+	$('#quitGameBtn')[0].innerHTML = "Salir";
+	$('#startGameBtn')[0].innerHTML = "Comenzar con estos jugadores";
+	$("#needMorePlayers")[0].innerHTML = "Se necesitan mas jugadores";
+	$('#addAIBtn')[0].innerHTML = "Agregar jugador artificial";
 	
 	// game
 	$('#quitMenuOption')[0].innerHTML = "Terminar Juego";

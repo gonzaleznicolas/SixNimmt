@@ -8,15 +8,17 @@
 	<link href='https://fonts.googleapis.com/css?family=Yanone Kaffeesatz' rel='stylesheet'>
 	<link rel="stylesheet" type="text/css" href="flickity/flickity.css" />
 	<link rel="stylesheet" type="text/css" href="css/singlePageApp.css" />
+	<link rel="stylesheet" type="text/css" href="css/home.css" />
+	<link rel="stylesheet" type="text/css" href="css/wait.css" />
 	<link rel="stylesheet" type="text/css" href="css/game.css" />
 	<link rel="stylesheet" type="text/css" href="css/menu.css" />
-	<link rel="stylesheet" type="text/css" href="css/home.css" />
 	<script src='jquery-3.3.1.js' defer></script>
 	<script src="flickity/flickity.pkgd.min.js" defer></script>
 	
 	<script src="js/startup/translator.js" defer></script>
 	<script src="js/view/basicShapeDrawer.js" defer></script>
 	<script src="js/startup/home.js" defer></script>
+	<script src="js/startup/wait.js" defer></script>
 	
 	<script src="js/model/gameModel.js" defer"></script>
 	<script src='js/view/layoutCalculator.js' defer></script>
@@ -71,6 +73,27 @@
 				<input id="submitButton" type="submit">
 			</form>
 		</div>
+	</div>
+	<div id="waitPage" class="page">
+		<div id="mainContainer">
+			<div id="loadAnimation" class="section">
+				<canvas id="waitCow" width="300" height="300">6 Nimmt!</canvas>
+				<div id="dots"></div>
+			</div>
+			<div id="gameCode" class="section">
+				<p id="theCodeIs"></p>
+				<p id="code"></p>
+				<p id="playerAllowance"></p>
+			</div>
+			<div id="buttons" class="section">
+				<div id="endGameBtn" class="button"></div>
+				<div id="quitGameBtn" class="button"></div>
+				<div id="addAIBtn" class="button"></div>
+				<div id="startGameBtn" class="button"></div>
+				<div id="needMorePlayers"></div>
+			</div>
+		</div>
+		<ol id="playersJoined"></ol>
 	</div>
 	<div id="gamePage" class="page">
 		<header>
