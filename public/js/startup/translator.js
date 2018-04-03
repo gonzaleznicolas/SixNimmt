@@ -35,13 +35,14 @@ function translateToEnglish()
 	$('#addAIBtn')[0].innerHTML = "Add artificial player";
 	
 	// game
-	$('#quitMenuOption')[0].innerHTML = "Quit Game";
-	$('#textRulesMenuOption')[0].innerHTML = "Text Rules";
-	$('#videoRulesMenuOption')[0].innerHTML = "Video Rules";
-
 	$('#playCardButton')[0].innerHTML = "Play Card";
 	$('#selectCardMessage')[0].innerHTML = "Please select a card to play";
 	$('#notTimeToPlayCardMessage')[0].innerHTML = "It is not time to play a card";
+
+	// menu
+	$('#quitMenuOption')[0].innerHTML = "Quit Game";
+	$('#textRulesMenuOption')[0].innerHTML = "Text Rules";
+	$('#videoRulesMenuOption')[0].innerHTML = "Video Rules";
 }
 
 function translateToSpanish()
@@ -77,11 +78,12 @@ function translateToSpanish()
 	$('#addAIBtn')[0].innerHTML = "Agregar jugador artificial";
 	
 	// game
-	$('#quitMenuOption')[0].innerHTML = "Terminar Juego";
-	$('#textRulesMenuOption')[0].innerHTML = "Reglas escritas";
-	$('#videoRulesMenuOption')[0].innerHTML = "Reglas en video";
-
 	$('#playCardButton')[0].innerHTML = "Poner Carta";
 	$('#selectCardMessage')[0].innerHTML = "For favor elige una carta";
 	$('#notTimeToPlayCardMessage')[0].innerHTML = "No es hora de elejir una carta";
+
+	// menu
+	$('#quitMenuOption')[0].innerHTML = "Terminar Juego";
+	$('#textRulesMenuOption')[0].innerHTML = "Reglas escritas";
+	$('#videoRulesMenuOption')[0].innerHTML = "Reglas en video";
 }
