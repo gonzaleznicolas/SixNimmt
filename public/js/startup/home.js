@@ -37,6 +37,7 @@ function onNewGame() {
 	$('#nickNameFormSection').show();
 	$('#submitButton').show();
 	$('#inputSection').css("visibility", "visible");
+	formType = FormType.NewGame;
 }
 
 function onVsAI() {
@@ -45,6 +46,7 @@ function onVsAI() {
 
 	$('#form').children().hide();
 	$('#inputSection').css("visibility", "hidden");
+	formType = FormType.vsAI;
 }
 
 function onJoinGame() {
@@ -62,6 +64,7 @@ function onJoinGame() {
 	$("#codeError").show();
 
 	$('#inputSection').css("visibility", "visible");
+	formType = FormType.JoinGame;
 }
 
 function onSpectateGame() {
@@ -72,9 +75,33 @@ function onSpectateGame() {
 	$('#codeFormSection').show();
 	$('#submitButton').show();
 	$('#inputSection').css("visibility", "visible");
+	formType = FormType.SpectateGame;
 }
 
 function onSubmitForm() {
+	if (formType == FormType.JoinGame)
+	{
+		let objToSend = {formType: formType,
+			nickName: $("#nickNameTextBox").val(),
+			gameCode: $("#codeTextBox").val()};
+
+		$.ajax({
+			url: "http://localhost/form",
+			type: "POST",
+			data: JSON.stringify(objToSend),
+			dataType: "json",
+			contentType: "application/json",
+			success: joinGameSuccess,
+			error: joinGameError
+		});
+	}
+}
+
+function joinGameSuccess(response){
+
+}
+
+function joinGameError(resjqXHR, status, errorThrownponse){
 	
 }
 
