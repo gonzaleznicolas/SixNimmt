@@ -25,3 +25,19 @@ body{
 .page{
 	border: 1px solid black;
 }
+
+.button{
+	display: flex;
+	justify-content: center;
+	margin: 10px;
+	border-radius: 0.5em;
+	padding: 0.5em;
+	background: rgba(0, 0, 0, 0.3);
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.button:hover {
+	background: rgba(188, 144, 204, 1);
+	color: white;
+}

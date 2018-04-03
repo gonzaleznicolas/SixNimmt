@@ -3,7 +3,7 @@
 const FormType = Object.freeze({ "NewGame": 1, "vsAI": 2, "JoinGame": 3, "SpectateGame": 4 })
 
 $(function () {
-		drawCow();
+		drawCow($("#homeCow")[0]);
 		$('#english')[0].addEventListener("click", onUKClicked, false);
 		$('#espanol')[0].addEventListener("click", onSpainClicked, false);
 		$('#newGame')[0].addEventListener("click", onNewGame, false);
@@ -72,9 +72,8 @@ function onSpectateGame() {
 		$('#inputSection').css("visibility", "visible");
 }
 
-function drawCow()
+function drawCow(canvas)
 {
-	let canvas = $("#homeCow")[0];
 	let ctx = canvas.getContext("2d");
 	BasicShapeDrawer.drawDetailedCowShape(ctx, canvas.width / 2, canvas.height / 2, canvas.width, 0.9 * canvas.height);
 	ctx.fillStyle = 'white';

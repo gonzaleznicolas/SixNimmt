@@ -16,7 +16,7 @@ $(function () {
 	// add all current players
 	addPlayer("Nico");
 
-	drawCow();
+	drawCow($("#waitCow")[0]);
 	fadeCow();
 	animateDots();
 
@@ -69,22 +69,9 @@ function updateButtons()
 	}
 }
 
-function drawCow()
-{
-	let canvas = $("#waitCow")[0];
-	let ctx = canvas.getContext("2d");
-	BasicShapeDrawer.drawDetailedCowShape(ctx, canvas.width / 2, canvas.height / 2, canvas.width, 0.9 * canvas.height);
-	ctx.fillStyle = 'white';
-	ctx.strokeStyle = 'black';
-	ctx.lineWidth = 3;
-	ctx.stroke();
-	ctx.fill();
-	ctx.closePath();
-}
-
 function fadeCow()
 {
- $("#waitCow").fadeTo(2000, 0.3, function () { $("#waitCow").fadeTo(2000, 1, fadeCow) })
+	$("#waitCow").fadeTo(2000, 0.3, function () { $("#waitCow").fadeTo(2000, 1, fadeCow) })
 }
 
 
