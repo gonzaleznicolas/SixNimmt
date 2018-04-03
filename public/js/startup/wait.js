@@ -8,6 +8,8 @@ let bSpanish = false;
 
 let numberOfPlayersSoFar = 0;
 
+
+//replace this with function startWaitPage()
 $(function () {
 	bSpanish ? onSpanish() : onEnglish();
 
