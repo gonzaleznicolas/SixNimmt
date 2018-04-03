@@ -30,8 +30,8 @@ function translateToEnglish()
 	
 	// game
 	$('#quitMenuOption')[0].innerHTML = "Quit Game";
-	$('#textRules')[0].innerHTML = "Text Rules";
-	$('#videoRules')[0].innerHTML = "Video Rules";
+	$('#textRulesMenuOption')[0].innerHTML = "Text Rules";
+	$('#videoRulesMenuOption')[0].innerHTML = "Video Rules";
 
 	$('#playCardButton')[0].innerHTML = "Play Card";
 	$('#selectCardMessage')[0].innerHTML = "Please select a card to play";
@@ -66,8 +66,8 @@ function translateToSpanish()
 	
 	// game
 	$('#quitMenuOption')[0].innerHTML = "Terminar Juego";
-	$('#textRules')[0].innerHTML = "Reglas escritas";
-	$('#videoRules')[0].innerHTML = "Reglas en video";
+	$('#textRulesMenuOption')[0].innerHTML = "Reglas escritas";
+	$('#videoRulesMenuOption')[0].innerHTML = "Reglas en video";
 
 	$('#playCardButton')[0].innerHTML = "Poner Carta";
 	$('#selectCardMessage')[0].innerHTML = "For favor elige una carta";
