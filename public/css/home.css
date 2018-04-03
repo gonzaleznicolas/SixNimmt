@@ -39,7 +39,7 @@ h1 {
 	color: var(--nimmtPurple);
 }
 
-form{
+#form{
 	display: flex;
 	flex-direction: column;
 	align-items: center;

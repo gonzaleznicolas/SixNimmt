@@ -23,7 +23,7 @@ function translateToEnglish()
 
 	$('#nickNameTextBox').attr("placeholder", "max 6 characters");
 	$('#codeTextBox').attr("placeholder", "4 digit code");
-	$('#submitButton').attr("value", "Submit");
+	$('#submitButton')[0].innerHTML = "Submit";
 
 	// wait
 	$('#theCodeIs')[0].innerHTML = "The game code is";
@@ -66,7 +66,7 @@ function translateToSpanish()
 
 	$('#nickNameTextBox').attr("placeholder", "max 6 caracteres");
 	$('#codeTextBox').attr("placeholder", "codigo de 4 digitos");
-	$('#submitButton').attr("value", "Enviar");
+	$('#submitButton')[0].innerHTML = "Enviar";
 	
 	// wait
 	$('#theCodeIs')[0].innerHTML = "El codigo del juego es";
