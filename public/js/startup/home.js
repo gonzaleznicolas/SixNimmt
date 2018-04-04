@@ -65,11 +65,6 @@ function onJoinGame() {
 	$('#submitButton').show();
 	$('#codeFormSection').show();
 
-	// these 3 lines are temporary to show how to show errors
-	$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
-	$("#codeStatus").attr("src", "img/x.png").css("visibility", "visible");
-	$("#codeError").show();
-
 	$('#inputSection').css("visibility", "visible");
 	formType = FormType.JoinGame;
 }
