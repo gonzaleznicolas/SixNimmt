@@ -64,6 +64,7 @@ function isAlphanumeric(str)
 
 function isNumeric(str)
 {
+	str = str.toString().trim();
 	return str.match(/^[0-9]*$/) != null;
 }
 
