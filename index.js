@@ -1,7 +1,13 @@
+'use strict';
+
 let express = require('express');
 let app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
+
+let GameManager = require('./gameManager.js');
+
+let gameManager = new GameManager();
 
 // allow files in public directory to be served as static files
 app.use(express.static('public'));
