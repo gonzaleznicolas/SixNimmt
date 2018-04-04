@@ -2,6 +2,7 @@
 
 const FormType = Object.freeze({ "NewGame": 1, "vsAI": 2, "JoinGame": 3, "SpectateGame": 4 })
 let formType = undefined;
+let socket = undefined;
 
 $(function () {
 	drawCow($("#homeCow")[0]);
@@ -12,6 +13,9 @@ $(function () {
 	$('#joinGame')[0].addEventListener("click", onJoinGame, false);
 	$('#spectateGame')[0].addEventListener("click", onSpectateGame, false);
 	$('#submitButton')[0].addEventListener("click", onSubmitForm, false);
+
+	socket = io();
+	socket.on("newGameFormResult", onNewGameFormResult);
 });
 
 function onUKClicked() {
@@ -30,6 +34,7 @@ function languageClicked() {
 }
 
 function onNewGame() {
+	hideAllErrorStatus();
 	$('#gameOptionsSection').children().removeClass("selected");
 	$('#newGame').addClass("selected");
 
@@ -41,6 +46,7 @@ function onNewGame() {
 }
 
 function onVsAI() {
+	hideAllErrorStatus();
 	$('#gameOptionsSection').children().removeClass("selected");
 	$('#vsAI').addClass("selected");
 
@@ -50,6 +56,7 @@ function onVsAI() {
 }
 
 function onJoinGame() {
+	hideAllErrorStatus();
 	$('#gameOptionsSection').children().removeClass("selected");
 	$('#joinGame').addClass("selected");
 
@@ -68,6 +75,7 @@ function onJoinGame() {
 }
 
 function onSpectateGame() {
+	hideAllErrorStatus();
 	$('#gameOptionsSection').children().removeClass("selected");
 	$('#spectateGame').addClass("selected");
 
@@ -79,10 +87,22 @@ function onSpectateGame() {
 }
 
 function onSubmitForm() {
-	let socket = io();
 	if (formType == FormType.NewGame)
 	{
 		socket.emit('newGame', {nickName: $("#nickNameTextBox").val()});
+	}
+}
+
+function onNewGameFormResult(data) {
+	if (data.valid)
+	{
+		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
+		$("#nickNameError").hide();
+	}
+	else
+	{
+		$("#nickNameStatus").attr("src", "img/x.png").css("visibility", "visible");
+		$("#nickNameError").show();
 	}
 }
 
@@ -96,4 +116,36 @@ function drawCow(canvas)
 	ctx.stroke();
 	ctx.fill();
 	ctx.closePath();
+}
+
+function hideAllErrorStatus()
+{
+	$("#nickNameStatus").css("visibility", "hidden");
+	$("#nickNameError").hide();
+	$("#codeStatus").css("visibility", "hidden");
+	$("#codeError").hide();
+}
+
+function showNickNameError()
+{
+	$("#nickNameStatus").attr("src", "img/x.png").css("visibility", "visible");
+	$("#nickNameError").show();
+}
+
+function showCodeError()
+{
+	$("#codeStatus").attr("src", "img/x.png").css("visibility", "visible");
+	$("#codeError").show();
+}
+
+function showNickNameSuccess()
+{
+	$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
+	$("#nickNameError").hide();
+}
+
+function showCodeSuccess()
+{
+	$("#codeStatus").attr("src", "img/check.png").css("visibility", "visible");
+	$("#codeError").hide();
 }

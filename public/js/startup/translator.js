@@ -18,7 +18,7 @@ function translateToEnglish()
 	$('#nickNamePrompt')[0].innerHTML = "Nickname for yourself:";
 	$('#codePrompt')[0].innerHTML = "Game code:";
 
-	$('#nickNameError')[0].innerHTML = "That nickname is taken by someone in the game you are trying to join. Try again.";
+	$('#nickNameError')[0].innerHTML = "That nickname is taken or invalid.<br>Choose alphanumeric name with 1-6 characters.";
 	$('#codeError')[0].innerHTML = "That code does not identify an open game. Try again.";
 
 	$('#nickNameTextBox').attr("placeholder", "max 6 characters");
@@ -61,7 +61,7 @@ function translateToSpanish()
 	$('#nickNamePrompt')[0].innerHTML = "Tu apodo:";
 	$('#codePrompt')[0].innerHTML = "Codigo del juego:";
 
-	$('#nickNameError')[0].innerHTML = "Ese apodo esta ocupado. Intenta otro.";
+	$('#nickNameError')[0].innerHTML = "Ese apodo esta ocupado o es invalido.<br>Elige un apodo alfanumerico con 1-6 caracteres.";
 	$('#codeError')[0].innerHTML = "Ese codigo no corresponde a un juego activo.";
 
 	$('#nickNameTextBox').attr("placeholder", "max 6 caracteres");
