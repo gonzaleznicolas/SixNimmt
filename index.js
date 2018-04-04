@@ -31,10 +31,12 @@ let gameManager = new GameManager();
 
 function onNewGame(data){
 	console.log("New game started");
+	let nickName = capitalizeNickName(data.nickName);
 	let validForm = undefined;
-	if (isPossibleNickName(data.nickName))
+	if (isPossibleNickName(nickName))
 	{
-		validForm = {valid: true};
+		let gameCode = gameManager.addGame(nickName, this);
+		validForm = {valid: true, gameCode: gameCode};
 	}
 	else
 	{
@@ -59,12 +61,18 @@ function isPossibleCode(str)
 function isAlphanumeric(str)
 {
 	str = str.toString().trim();
-	return str.match(/^[0-9a-z]*$/) != null;
+	return str.match(/^[0-9a-zA-Z]*$/) != null;
 }
 
 function isNumeric(str)
 {
 	str = str.toString().trim();
 	return str.match(/^[0-9]*$/) != null;
+}
+
+function capitalizeNickName(name)
+{
+	let trimmed = name.toString().trim();
+	return trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
 }
 
