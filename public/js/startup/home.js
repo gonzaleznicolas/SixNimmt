@@ -79,30 +79,11 @@ function onSpectateGame() {
 }
 
 function onSubmitForm() {
-	if (formType == FormType.JoinGame)
+	let socket = io();
+	if (formType == FormType.NewGame)
 	{
-		let objToSend = {formType: formType,
-			nickName: $("#nickNameTextBox").val(),
-			gameCode: $("#codeTextBox").val()};
-
-		$.ajax({
-			url: "http://localhost/form",
-			type: "POST",
-			data: JSON.stringify(objToSend),
-			dataType: "json",
-			contentType: "application/json",
-			success: joinGameSuccess,
-			error: joinGameError
-		});
+		socket.emit('newGame', {nickName: $("#nickNameTextBox").val()});
 	}
-}
-
-function joinGameSuccess(response){
-
-}
-
-function joinGameError(resjqXHR, status, errorThrownponse){
-	
 }
 
 function drawCow(canvas)
