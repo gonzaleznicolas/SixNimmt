@@ -46,7 +46,7 @@ function onNewGameFormResult(data) {
 	{ 
 		showNickNameSuccess(); 
 		$("#homePage").hide(1000); 
-		launchWaitPage(data.gameCode, TypeOfLoadingScreen.PersonWhoStartedTheGame, data.firstPlayerName); 
+		launchWaitPage(data.gameCode, TypeOfLoadingScreen.PersonWhoStartedTheGame); 
 	}
 }
    
@@ -58,7 +58,7 @@ function onJoinGameFormResult(data) {
 		showCodeSuccess(); 
 
 		$("#homePage").hide(1000); 
-		launchWaitPage(data.gameCode, TypeOfLoadingScreen.PersonJoiningOrSpectator, data.nickName); 
+		launchWaitPage(data.gameCode, TypeOfLoadingScreen.PersonJoiningOrSpectator); 
 	} 
 	else 
 	{ 
