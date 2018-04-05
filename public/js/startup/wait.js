@@ -1,10 +1,5 @@
 "use strict";
 
-const TypeOfLoadingScreen = Object.freeze({"PersonWhoStartedTheGame":1, "PersonJoiningOrSpectator":2})
-let loadingScreenType;
-let gameCode;
-let playerList = [];
-
 //replace this with function startWaitPage()
 function startWaitPage(gc, lst, firstPlayer) {
 	gameCode = gc;
