@@ -1,20 +1,18 @@
 "use strict";
 
 const TypeOfLoadingScreen = Object.freeze({"PersonWhoStartedTheGame":1, "PersonJoiningOrSpectator":2})
-
-let loadingScreenType = TypeOfLoadingScreen.PersonWhoStartedTheGame;
-let gameCode = 3424;
-
-let numberOfPlayersSoFar = 0;
-
+let loadingScreenType;
+let gameCode;
+let numberOfPlayersSoFar;
 
 //replace this with function startWaitPage()
-$(function () {
+function startWaitPage(gc, lst, firstPlayer) {
+	gameCode = gc;
+	loadingScreenType = lst;
+	numberOfPlayersSoFar = 0;
 	$("#code")[0].innerHTML = gameCode;
 	updateButtons();
-
-	// add all current players
-	addPlayer("Nico");
+	addPlayer(firstPlayer);
 
 	drawCow($("#waitCow")[0]);
 	fadeCow();
@@ -24,7 +22,9 @@ $(function () {
 	$('#quitGameBtn')[0].addEventListener("click", quitGame, false);
 	$('#startGameBtn')[0].addEventListener("click", startGame, false);
 	$('#addAIBtn')[0].addEventListener("click", addAI, false);
-});
+
+	$("#waitPage").show(1000);
+}
 
 function endGame()
 {

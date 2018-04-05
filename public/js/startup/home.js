@@ -93,6 +93,9 @@ function onNewGameFormResult(data) {
 	{
 		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
 		$("#nickNameError").hide();
+
+		$("#homePage").hide(1000);
+		startWaitPage(data.gameCode, TypeOfLoadingScreen.PersonWhoStartedTheGame, data.firstPlayerName);
 	}
 	else
 	{
