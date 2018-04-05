@@ -53,6 +53,8 @@ function onJoinGame(data){
 	let nameValid = false;
 	let nickName = undefined;
 	let gc = undefined;
+	if (isPossibleNickName(data.nickName))
+		nameValid = true;
 	if (isPossibleCode(data.gameCode))
 	{
 		gc = parseInt(data.gameCode);
@@ -60,6 +62,7 @@ function onJoinGame(data){
 		{
 			let game = gameManager.getGame(gc);
 			codeValid = true;
+			nameValid = false;
 			nickName = capitalizeNickName(data.nickName);
 			if (isPossibleNickName(nickName))
 			{
