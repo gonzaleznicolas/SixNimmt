@@ -17,6 +17,7 @@ $(function () {
 	socket = io();
 	socket.on("newGameFormResult", onNewGameFormResult);
 	socket.on("joinGameFormResult", onJoinGameFormResult);
+	socket.on("playerList", onPlayerList);
 });
 
 function onUKClicked() {
@@ -120,8 +121,10 @@ function onJoinGameFormResult(data) {
 	}
 	else
 	{
-		$("#nickNameStatus").attr("src", "img/x.png").css("visibility", "visible");
-		$("#nickNameError").show();
+		if (!data.nameValid)
+			showNickNameError();
+		if (!data.codeValid)
+			showCodeError();
 	}
 }
 

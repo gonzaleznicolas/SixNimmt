@@ -19,7 +19,7 @@ module.exports = class GameManager
 		return this._games.get(code);
 	}
 
-	addGame(firstPlayerName, firstPlayerSocket)
+	addGame(firstPlayerName, firstPlayerSocket, io)
 	{
 		let candidateGameCode;
 		do{
@@ -27,7 +27,7 @@ module.exports = class GameManager
 		}
 		while (this._games.has(candidateGameCode));
 
-		this._games.set(candidateGameCode, new Game(firstPlayerName, firstPlayerSocket));
+		this._games.set(candidateGameCode, new Game(candidateGameCode, firstPlayerName, firstPlayerSocket, io));
 		return candidateGameCode;
 	}
 }

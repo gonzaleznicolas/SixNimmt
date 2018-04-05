@@ -36,7 +36,7 @@ function onNewGame(data){
 	let validForm = undefined;
 	if (isPossibleNickName(nickName))
 	{
-		let gameCode = gameManager.addGame(nickName, this);
+		let gameCode = gameManager.addGame(nickName, this, io);
 		validForm = {valid: true, gameCode: gameCode, firstPlayerName: nickName};
 	}
 	else

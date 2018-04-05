@@ -97,6 +97,10 @@ function addPlayer(nickName)
 	updateButtons();
 }
 
+function onPlayerList(data){
+	
+}
+
 function removePlayer(nickName)
 {
 	if (numberOfPlayersSoFar <= 1)
