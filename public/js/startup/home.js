@@ -17,6 +17,7 @@ $(function () {
 	socket = io();
 	socket.on("newGameFormResult", onNewGameFormResult);
 	socket.on("joinGameFormResult", onJoinGameFormResult);
+	socket.on("vsAIFormResult", onVsAIFormResult);
 	socket.on("playerList", onPlayerList);
 });
 
@@ -55,6 +56,7 @@ function onVsAI() {
 	$('#form').children().hide();
 	$('#inputSection').css("visibility", "hidden");
 	formType = FormType.vsAI;
+	onSubmitForm();
 }
 
 function onJoinGame() {
@@ -92,6 +94,10 @@ function onSubmitForm() {
 	{
 		socket.emit('joinGame', {gameCode: $("#codeTextBox").val(), nickName: $("#nickNameTextBox").val()})
 	}
+	else if (formType == FormType.vsAI)
+	{
+		socket.emit('vsAI', {})
+	}
 }
 
 function onNewGameFormResult(data) {
@@ -101,11 +107,6 @@ function onNewGameFormResult(data) {
 		showNickNameSuccess();
 		$("#homePage").hide(1000);
 		startWaitPage(data.gameCode, TypeOfLoadingScreen.PersonWhoStartedTheGame, data.firstPlayerName);
-	}
-	else
-	{
-		$("#nickNameStatus").attr("src", "img/x.png").css("visibility", "visible");
-		$("#nickNameError").show();
 	}
 }
 
@@ -126,6 +127,12 @@ function onJoinGameFormResult(data) {
 		if (!data.codeValid)
 			showCodeError();
 	}
+}
+
+function onVsAIFormResult(data)
+{
+	$("#homePage").hide(1000);
+	$("#gamePage").show(1000);
 }
 
 function drawCow(canvas)

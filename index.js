@@ -26,6 +26,7 @@ io.on('connection', function(socket) {
 
 	socket.on("newGame", onNewGame);
 	socket.on("joinGame", onJoinGame);
+	socket.on("vsAI", onVsAI);
  });
 
 let gameManager = new GameManager();
@@ -74,6 +75,12 @@ function onJoinGame(data){
 
 	this.emit("joinGameFormResult", {codeValid: codeValid, nameValid: nameValid, 
 									gameCode: data.gameCode, nickName: nickName});
+}
+
+function onVsAI(data)
+{
+	gameManager.addGame("You", this, io);
+	this.emit("vsAIFormResult", {});
 }
 
 function isPossibleNickName(str)
