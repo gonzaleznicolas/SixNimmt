@@ -25,6 +25,7 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on("newGame", onNewGame);
+	socket.on("joinGame", onJoinGame);
  });
 
 let gameManager = new GameManager();
@@ -44,6 +45,35 @@ function onNewGame(data){
 	}
 
 	this.emit("newGameFormResult", validForm);
+}
+
+function onJoinGame(data){
+	let codeValid = false;
+	let nameValid = false;
+	let nickName = undefined;
+	let gc = undefined;
+	if (isPossibleCode(data.gameCode))
+	{
+		gc = parseInt(data.gameCode);
+		if (gameManager.gameExists(gc) && gameManager.getGame(gc).Open)
+		{
+			let game = gameManager.getGame(gc);
+			codeValid = true;
+			nickName = capitalizeNickName(data.nickName);
+			if (isPossibleNickName(nickName))
+			{
+				if (game.nameAvailable(nickName))
+				{
+					nameValid = true;
+					game.addPlayer(nickName, this);
+				}
+			}
+			
+		}
+	}
+
+	this.emit("joinGameFormResult", {codeValid: codeValid, nameValid: nameValid, 
+									gameCode: data.gameCode, nickName: nickName});
 }
 
 function isPossibleNickName(str)

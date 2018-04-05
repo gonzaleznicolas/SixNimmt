@@ -16,6 +16,7 @@ $(function () {
 
 	socket = io();
 	socket.on("newGameFormResult", onNewGameFormResult);
+	socket.on("joinGameFormResult", onJoinGameFormResult);
 });
 
 function onUKClicked() {
@@ -86,16 +87,36 @@ function onSubmitForm() {
 	{
 		socket.emit('newGame', {nickName: $("#nickNameTextBox").val()});
 	}
+	else if (formType == FormType.JoinGame)
+	{
+		socket.emit('joinGame', {gameCode: $("#codeTextBox").val(), nickName: $("#nickNameTextBox").val()})
+	}
 }
 
 function onNewGameFormResult(data) {
+	hideAllErrorStatus();
 	if (data.valid)
 	{
-		$("#nickNameStatus").attr("src", "img/check.png").css("visibility", "visible");
-		$("#nickNameError").hide();
-
+		showNickNameSuccess();
 		$("#homePage").hide(1000);
 		startWaitPage(data.gameCode, TypeOfLoadingScreen.PersonWhoStartedTheGame, data.firstPlayerName);
+	}
+	else
+	{
+		$("#nickNameStatus").attr("src", "img/x.png").css("visibility", "visible");
+		$("#nickNameError").show();
+	}
+}
+
+function onJoinGameFormResult(data) {
+	hideAllErrorStatus();
+	if (data.codeValid && data.nameValid)
+	{
+		showNickNameSuccess();
+		showCodeSuccess();
+
+		$("#homePage").hide(1000);
+		startWaitPage(data.gameCode, TypeOfLoadingScreen.PersonJoiningOrSpectator, data.nickName);
 	}
 	else
 	{

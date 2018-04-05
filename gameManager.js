@@ -9,6 +9,16 @@ module.exports = class GameManager
 		this._games = new Map();
 	}
 
+	gameExists(code)
+	{
+		return this._games.has(code);
+	}
+
+	getGame(code)
+	{
+		return this._games.get(code);
+	}
+
 	addGame(firstPlayerName, firstPlayerSocket)
 	{
 		let candidateGameCode;
