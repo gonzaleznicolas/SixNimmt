@@ -1,6 +1,6 @@
 'use strict';
 
-let Game = require('./Game.js');
+let Game = require('./game.js');
 
 module.exports = class GameManager
 {
