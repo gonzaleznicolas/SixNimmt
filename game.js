@@ -10,7 +10,7 @@ module.exports = class Game
 		this._gameCode = gameCode;
 		this._roomName = "room_" + this._gameCode;
 		this._players = new Map();
-		this._players.set(firstPlayerName, new Player(firstPlayerName, firstPlayerSocket));
+		this.addPlayer(firstPlayerName, firstPlayerSocket);
 		this._open = true;
 	}
 

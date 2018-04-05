@@ -3,17 +3,16 @@
 const TypeOfLoadingScreen = Object.freeze({"PersonWhoStartedTheGame":1, "PersonJoiningOrSpectator":2})
 let loadingScreenType;
 let gameCode;
-let numberOfPlayersSoFar;
+let playerList = [];
 
 //replace this with function startWaitPage()
 function startWaitPage(gc, lst, firstPlayer) {
 	gameCode = gc;
 	loadingScreenType = lst;
-	numberOfPlayersSoFar = 0;
 	$("#code")[0].innerHTML = gameCode;
+	onPlayerList(playerList);
 	updateButtons();
-	addPlayer(firstPlayer);
-
+	
 	drawCow($("#waitCow")[0]);
 	fadeCow();
 	animateDots();
@@ -41,22 +40,20 @@ function startGame()
 
 }
 
-let aiNum = 1;
 function addAI()
 {
-	addPlayer("AI" + aiNum);
-	aiNum++;
+
 }
 
-function updateButtons()
+function updateButtons(numPlayers)
 {
 	if (loadingScreenType == TypeOfLoadingScreen.PersonWhoStartedTheGame)
 	{
 		$("#buttons").children().hide();
 		$("#endGameBtn").show();
-		if (numberOfPlayersSoFar < 10)
+		if (numPlayers < 10)
 			$('#addAIBtn').show();
-		if (numberOfPlayersSoFar >= 2)
+		if (numPlayers >= 2)
 			$("#startGameBtn").show();
 		else {
 			$("#needMorePlayers").show();
@@ -84,28 +81,13 @@ function animateDots()
 	$("#dots").children().eq(nextDotIndex).hide(animationSpeed, function () { $("#dots").children().eq(nextDotIndex).show(animationSpeed, animateDots); })
 }
 
-function addPlayer(nickName)
-{
-	if (numberOfPlayersSoFar >= 10)
-		return;
-	
-	
-	
-	$("#dots").append("<div></div>");
-	$("#playersJoined").append("<li id=\"" + nickName.toLowerCase() + "\" class=\"player\">"+nickName+"</li>");
-	numberOfPlayersSoFar++;
-	updateButtons();
-}
-
 function onPlayerList(data){
-	
-}
-
-function removePlayer(nickName)
-{
-	if (numberOfPlayersSoFar <= 1)
-		return;
-	$("#dots").children().eq(0).remove();
-	$("#" + nickName.toLowerCase()).remove();
-	numberOfPlayersSoFar--;
+	playerList = data;
+	$("#dots").empty();
+	$("#playersJoined").empty();
+	data.forEach( (playerName) => {
+		$("#dots").append("<div></div>");
+		$("#playersJoined").append("<li id=\"" + playerName.toLowerCase() + "\" class=\"player\">"+playerName+"</li>");
+	});
+	updateButtons(data.length);
 }
