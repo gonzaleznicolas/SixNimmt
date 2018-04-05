@@ -34,7 +34,7 @@ function onSubmitForm() {
 	} 
 	else if (formType == FormType.vsAI) 
 	{ 
-		socket.emit('vsAI', {}) 
+		socket.emit('vsAI') 
 	} 
 } 
    
@@ -67,7 +67,7 @@ function onJoinGameFormResult(data) {
 	} 
 } 
 
-function onVsAIFormResult(data) 
+function onVsAIFormResult() 
 { 
 	$("#homePage").hide(1000); 
 	$("#gamePage").show(1000); 

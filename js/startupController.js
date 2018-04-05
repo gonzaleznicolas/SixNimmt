@@ -61,7 +61,7 @@ function onJoinGame(data){
 				if (game.nameAvailable(nickName))
 				{
 					nameValid = true;
-					game.addPlayer(nickName, this);
+					game.addHumanPlayer(nickName, this);
 				}
 			}
 			
@@ -72,9 +72,10 @@ function onJoinGame(data){
 									gameCode: data.gameCode, nickName: nickName});
 }
 
-function onVsAI(data)
+function onVsAI()
 {
-	gameManager.addGame("You", this, io);
-	this.emit("vsAIFormResult", {});
+	let gc = gameManager.addGame("You", this, io);
+	let aiName = gameManager.getGame(gc).addArtificialPlayer();
+	this.emit("vsAIFormResult");
 }
 

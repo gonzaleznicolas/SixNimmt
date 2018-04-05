@@ -1,6 +1,7 @@
 'use strict';
 
-let Player = require('./player.js');
+let ArtificialPlayer = require('./artificialPlayer.js');
+let HumanPlayer = require('./humanPlayer.js');
 
 module.exports = class Game
 {
@@ -10,7 +11,7 @@ module.exports = class Game
 		this._gameCode = gameCode;
 		this._roomName = "room_" + this._gameCode;
 		this._players = new Map();
-		this.addPlayer(firstPlayerName, firstPlayerSocket);
+		this.addHumanPlayer(firstPlayerName, firstPlayerSocket);
 		this._open = true;
 	}
 
@@ -21,10 +22,24 @@ module.exports = class Game
 		return !this._players.has(name);
 	}
 
-	addPlayer(name, socket)
+	addHumanPlayer(name, socket)
 	{
-		this._players.set(name, new Player(name, socket));
+		this._players.set(name, new HumanPlayer(name, socket));
 		socket.join(this._roomName);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+	}
+
+	// returns AI name
+	addArtificialPlayer()
+	{
+		let name = "Alfonzo";
+		let n = 1;
+		while (this._players.has(name))
+		{
+			name = "AI"+n;
+		}
+		this._players.set(name, new ArtificialPlayer(name));
+		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+		return name;
 	}
 }

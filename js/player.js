@@ -2,9 +2,8 @@
 
 module.exports = class Player
 {
-	constructor(name, socket)
+	constructor(name)
 	{
 		this._name = name;
-		this._socket = socket;
 	}
 }
