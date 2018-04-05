@@ -18,6 +18,14 @@ module.exports = class Game
 
 	get Open() {return this._open;}
 
+	updateOpen()
+	{
+		if (this._players.size >= 10)
+			this._open = false;
+		else
+			this._open = true;
+	}
+
 	nameAvailable(name)
 	{
 		return !this._players.has(name);
@@ -28,6 +36,7 @@ module.exports = class Game
 		this._players.set(name, new HumanPlayer(name, socket));
 		socket.join(this._roomName);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+		this.updateOpen();
 	}
 
 	// returns AI name
@@ -41,6 +50,7 @@ module.exports = class Game
 		}
 		this._players.set(name, new ArtificialPlayer(name));
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+		this.updateOpen();
 		return name;
 	}
 
