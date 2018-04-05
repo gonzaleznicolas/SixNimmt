@@ -1,13 +1,7 @@
 "use strict";
 
 //replace this with function startWaitPage()
-function startWaitPage(gc, lst, firstPlayer) {
-	gameCode = gc;
-	loadingScreenType = lst;
-	$("#code")[0].innerHTML = gameCode;
-	onPlayerList(playerList);
-	updateButtons();
-	
+function startWaitPageUI() {
 	drawCow($("#waitCow")[0]);
 	fadeCow();
 	animateDots();
@@ -82,7 +76,7 @@ function onPlayerList(data){
 	$("#playersJoined").empty();
 	data.forEach( (playerName) => {
 		$("#dots").append("<div></div>");
-		$("#playersJoined").append("<li id=\"" + playerName.toLowerCase() + "\" class=\"player\">"+playerName+"</li>");
+		$("#playersJoined").append("<li class=\"player\">"+playerName+"</li>");
 	});
 	updateButtons(data.length);
 }

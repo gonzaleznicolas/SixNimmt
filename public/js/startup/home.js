@@ -1,6 +1,6 @@
 "use strict";
 
-function startHomePage(){
+function startHomePageUI(){
 	drawCow($("#homeCow")[0]);
 	$('#english')[0].addEventListener("click", onUKClicked, false);
 	$('#espanol')[0].addEventListener("click", onSpainClicked, false);

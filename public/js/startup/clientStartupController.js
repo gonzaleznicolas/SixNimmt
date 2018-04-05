@@ -9,13 +9,21 @@ let gameCode = undefined;
 let playerList = [];
 
 $(function () {
-	startHomePage();
+	startHomePageUI();
 	socket = io();
 	socket.on("newGameFormResult", onNewGameFormResult); 
 	socket.on("joinGameFormResult", onJoinGameFormResult); 
 	socket.on("vsAIFormResult", onVsAIFormResult); 
 	socket.on("playerList", onPlayerList); 
 });
+
+function launchWaitPage(gc, lst){
+	gameCode = gc;
+	loadingScreenType = lst;
+	$("#code")[0].innerHTML = gameCode;
+
+	startWaitPageUI();
+}
 
 function onSubmitForm() { 
 	if (formType == FormType.NewGame) 
@@ -38,7 +46,7 @@ function onNewGameFormResult(data) {
 	{ 
 		showNickNameSuccess(); 
 		$("#homePage").hide(1000); 
-		startWaitPage(data.gameCode, TypeOfLoadingScreen.PersonWhoStartedTheGame, data.firstPlayerName); 
+		launchWaitPage(data.gameCode, TypeOfLoadingScreen.PersonWhoStartedTheGame, data.firstPlayerName); 
 	}
 }
    
@@ -50,7 +58,7 @@ function onJoinGameFormResult(data) {
 		showCodeSuccess(); 
 
 		$("#homePage").hide(1000); 
-		startWaitPage(data.gameCode, TypeOfLoadingScreen.PersonJoiningOrSpectator, data.nickName); 
+		launchWaitPage(data.gameCode, TypeOfLoadingScreen.PersonJoiningOrSpectator, data.nickName); 
 	} 
 	else 
 	{ 
