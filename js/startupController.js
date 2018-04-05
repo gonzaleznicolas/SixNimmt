@@ -1,5 +1,6 @@
 'use strict';
 
+let StringFunctions = require('./stringFunctions.js');
 let GameManager = require('./gameManager.js');
 
 let io;
@@ -24,9 +25,9 @@ function onConnection(socket) {
 
 function onNewGame(data){
 	console.log("New game started");
-	let nickName = capitalizeNickName(data.nickName);
+	let nickName = StringFunctions.capitalizeNickName(data.nickName);
 	let validForm = undefined;
-	if (isPossibleNickName(nickName))
+	if (StringFunctions.isPossibleNickName(nickName))
 	{
 		let gameCode = gameManager.addGame(nickName, this, io);
 		validForm = {valid: true, gameCode: gameCode, firstPlayerName: nickName};
@@ -44,9 +45,9 @@ function onJoinGame(data){
 	let nameValid = false;
 	let nickName = undefined;
 	let gc = undefined;
-	if (isPossibleNickName(data.nickName))
+	if (StringFunctions.isPossibleNickName(data.nickName))
 		nameValid = true;
-	if (isPossibleCode(data.gameCode))
+	if (StringFunctions.isPossibleCode(data.gameCode))
 	{
 		gc = parseInt(data.gameCode);
 		if (gameManager.gameExists(gc) && gameManager.getGame(gc).Open)
@@ -54,8 +55,8 @@ function onJoinGame(data){
 			let game = gameManager.getGame(gc);
 			codeValid = true;
 			nameValid = false;
-			nickName = capitalizeNickName(data.nickName);
-			if (isPossibleNickName(nickName))
+			nickName = StringFunctions.capitalizeNickName(data.nickName);
+			if (StringFunctions.isPossibleNickName(nickName))
 			{
 				if (game.nameAvailable(nickName))
 				{
@@ -77,32 +78,3 @@ function onVsAI(data)
 	this.emit("vsAIFormResult", {});
 }
 
-function isPossibleNickName(str)
-{
-	str = str.toString();
-	return isAlphanumeric(str) && str.length <= 6 && str.length > 0;
-}
-
-function isPossibleCode(str)
-{
-	str = str.toString().trim();
-	return isNumeric(str) && str.length == 4;
-}
-
-function isAlphanumeric(str)
-{
-	str = str.toString().trim();
-	return str.match(/^[0-9a-zA-Z]*$/) != null;
-}
-
-function isNumeric(str)
-{
-	str = str.toString().trim();
-	return str.match(/^[0-9]*$/) != null;
-}
-
-function capitalizeNickName(name)
-{
-	let trimmed = name.toString().trim();
-	return trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
-}
