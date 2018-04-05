@@ -61,7 +61,7 @@ function translateToSpanish()
 	$('#nickNamePrompt')[0].innerHTML = "Tu apodo:";
 	$('#codePrompt')[0].innerHTML = "Codigo del juego:";
 
-	$('#nickNameError')[0].innerHTML = "Ese apodo esta ocupado o es invalido.<br>Elige un apodo alfanumerico con 1-6 caracteres.";
+	$('#nickNameError')[0].innerHTML = "Ese apodo no esta disponible o es invalido.<br>Elige un apodo alfanumerico con 1-6 caracteres.";
 	$('#codeError')[0].innerHTML = "Ese codigo no corresponde a un juego activo.";
 
 	$('#nickNameTextBox').attr("placeholder", "max 6 caracteres");

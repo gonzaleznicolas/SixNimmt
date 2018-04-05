@@ -20,8 +20,6 @@ $(function () {
 function launchWaitPage(gc, lst){
 	gameCode = gc;
 	loadingScreenType = lst;
-	$("#code")[0].innerHTML = gameCode;
-
 	startWaitPageUI();
 }
 
@@ -73,4 +71,8 @@ function onVsAIFormResult(data)
 { 
 	$("#homePage").hide(1000); 
 	$("#gamePage").show(1000); 
-} 
+}
+
+function onPlayerList(data){
+	updatePlayerListAndButtons(data);
+}

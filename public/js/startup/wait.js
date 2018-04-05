@@ -2,6 +2,7 @@
 
 //replace this with function startWaitPage()
 function startWaitPageUI() {
+	$("#code")[0].innerHTML = gameCode;
 	drawCow($("#waitCow")[0]);
 	fadeCow();
 	animateDots();
@@ -55,6 +56,16 @@ function updateButtons(numPlayers)
 	}
 }
 
+function updatePlayerList(playerList)
+{
+	$("#dots").empty();
+	$("#playersJoined").empty();
+	playerList.forEach( (playerName) => {
+		$("#dots").append("<div></div>");
+		$("#playersJoined").append("<li class=\"player\">"+playerName+"</li>");
+	});
+}
+
 function fadeCow()
 {
 	$("#waitCow").fadeTo(2000, 0.3, function () { $("#waitCow").fadeTo(2000, 1, fadeCow) })
@@ -70,13 +81,7 @@ function animateDots()
 	$("#dots").children().eq(nextDotIndex).hide(animationSpeed, function () { $("#dots").children().eq(nextDotIndex).show(animationSpeed, animateDots); })
 }
 
-function onPlayerList(data){
-	playerList = data;
-	$("#dots").empty();
-	$("#playersJoined").empty();
-	data.forEach( (playerName) => {
-		$("#dots").append("<div></div>");
-		$("#playersJoined").append("<li class=\"player\">"+playerName+"</li>");
-	});
-	updateButtons(data.length);
+function updatePlayerListAndButtons(playerList){
+	updatePlayerList(playerList)
+	updateButtons(playerList.length);
 }
