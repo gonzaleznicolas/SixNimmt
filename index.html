@@ -40,89 +40,95 @@
 	<script src="js/gameInit.js" defer></script>
 </head>
 <body>
-	<div id="homePage" class="page">
-		<h1>6 Nimmt!</h1>
-		<canvas id="homeCow" width="300" height="300">6 Nimmt!</canvas>
-		<div id="languageSection" class="section">
-			<img id="english" class="lang" src="img/en.png" alt="English">
-			<img id="espanol" class="lang" src="img/es.png" alt="Espanol">
-		</div>
-		<div id="instructionsSection" class="section">
-			<a id="videoRules" class="button instructions" href="https://www.youtube.com/watch?v=fF0lnDygoes" target="_blank"></a>
-			<a id="textRules" class="button instructions" href="https://www.youtube.com/watch?v=fF0lnDygoes" target="_blank"></a>
-		</div>
-		<div id="gameOptionsSection" class="section">
-			<div id="newGame" class="button"></div>
-			<div id="vsAI" class="button"></div>
-			<div id="joinGame" class="button"></div>
-			<div id="spectateGame" class="button"></div>
-		</div>
-		<div id="inputSection" class="section">
-			<div id="form">
-				<div id="nickNameFormSection" class="inputFieldContainer">
-					<img id="nickNameStatus" class="statusImg" src="">
-					<label id="nickNamePrompt" class="inputPrompt">Nickname:</label>
-					<input type="text" id="nickNameTextBox" name="nickNameInput" maxlength="6">
-				</div>
-				<div id="nickNameError" class="error"></div>
-				<div id="codeFormSection" class="inputFieldContainer">
-					<img id="codeStatus" class="statusImg" src="">
-					<label id="codePrompt" class="inputPrompt">Game Code:</label>
-					<input type="text" id="codeTextBox" name="codeInput" maxlength="4">
-				</div>
-				<div id="codeError" class="error"></div>
-				<button id="submitButton">
-				</div>
+	<div id="homePage">
+		<div id="homePageContainer">
+			<h1>6 Nimmt!</h1>
+			<canvas id="homeCow" width="300" height="300">6 Nimmt!</canvas>
+			<div id="languageSection" class="section">
+				<img id="english" class="lang" src="img/en.png" alt="English">
+				<img id="espanol" class="lang" src="img/es.png" alt="Espanol">
+			</div>
+			<div id="instructionsSection" class="section">
+				<a id="videoRules" class="button instructions" href="https://www.youtube.com/watch?v=fF0lnDygoes" target="_blank"></a>
+				<a id="textRules" class="button instructions" href="https://www.youtube.com/watch?v=fF0lnDygoes" target="_blank"></a>
+			</div>
+			<div id="gameOptionsSection" class="section">
+				<div id="newGame" class="button"></div>
+				<div id="vsAI" class="button"></div>
+				<div id="joinGame" class="button"></div>
+				<div id="spectateGame" class="button"></div>
+			</div>
+			<div id="inputSection" class="section">
+				<div id="form">
+					<div id="nickNameFormSection" class="inputFieldContainer">
+						<img id="nickNameStatus" class="statusImg" src="">
+						<label id="nickNamePrompt" class="inputPrompt">Nickname:</label>
+						<input type="text" id="nickNameTextBox" name="nickNameInput" maxlength="6">
+					</div>
+					<div id="nickNameError" class="error"></div>
+					<div id="codeFormSection" class="inputFieldContainer">
+						<img id="codeStatus" class="statusImg" src="">
+						<label id="codePrompt" class="inputPrompt">Game Code:</label>
+						<input type="text" id="codeTextBox" name="codeInput" maxlength="4">
+					</div>
+					<div id="codeError" class="error"></div>
+					<button id="submitButton">
+					</div>
+			</div>
 		</div>
 	</div>
-	<div id="waitPage" class="page">
-		<div id="mainContainer">
-			<div id="loadAnimation" class="section">
-				<canvas id="waitCow" width="300" height="300">6 Nimmt!</canvas>
-				<div id="dots"></div>
-			</div>
-			<div id="gameCode" class="section">
-				<p id="theCodeIs"></p>
-				<p id="code"></p>
-				<p id="playerAllowance"></p>
-			</div>
-			<div id="buttons" class="section">
-				<div id="endGameBtn" class="button"></div>
-				<div id="quitGameBtn" class="button"></div>
-				<div id="addAIBtn" class="button"></div>
-				<div id="startGameBtn" class="button"></div>
-				<div id="needMorePlayers"></div>
-			</div>
-		</div>
-		<ol id="playersJoined"></ol>
-	</div>
-	<div id="gamePage" class="page">
-		<header>
-			<p id=headerText>Six Nimmt</p>
-		</header>
-		<div id="menuButton"><div></div><div></div><div></div></div>
-		<div id="menu">
-			<div id="quitMenuOption" class="menuOption"></div><hr>
-			<div id="textRulesMenuOption" class="menuOption"></div><hr>
-			<div id="videoRulesMenuOption" class="menuOption"></div>
-		</div>
-		<div id="game">
-			<div class="gallery">
-				<div class="table galleryCell">
-					<canvas id="tableCanvas" width=0 height=0>Your browser does not support this game.</canvas>
+	<div id="waitPage">
+		<div id="waitPageContainer">
+			<div id="mainContainer">
+				<div id="loadAnimation" class="section">
+					<canvas id="waitCow" width="300" height="300">6 Nimmt!</canvas>
+					<div id="dots"></div>
 				</div>
-				<div class="hand galleryCell">
-					<div id="handContainer">
-						<canvas id="handCanvas" width=0 height=0>Your browser does not support this game.</canvas>
-						<div id="handMessageContainer">
-							<p id="playCardButton"></p>
-							<p id="selectCardMessage"></p>
-							<p id="notTimeToPlayCardMessage"></p>
+				<div id="gameCode" class="section">
+					<p id="theCodeIs"></p>
+					<p id="code"></p>
+					<p id="playerAllowance"></p>
+				</div>
+				<div id="buttons" class="section">
+					<div id="endGameBtn" class="button"></div>
+					<div id="quitGameBtn" class="button"></div>
+					<div id="addAIBtn" class="button"></div>
+					<div id="startGameBtn" class="button"></div>
+					<div id="needMorePlayers"></div>
+				</div>
+			</div>
+			<ol id="playersJoined"></ol>
+		</div>
+	</div>
+	<div id="gamePage">
+		<div id="gamePageContainer">
+			<header>
+				<p id=headerText>Six Nimmt</p>
+			</header>
+			<div id="menuButton"><div></div><div></div><div></div></div>
+			<div id="menu">
+				<div id="quitMenuOption" class="menuOption"></div><hr>
+				<div id="textRulesMenuOption" class="menuOption"></div><hr>
+				<div id="videoRulesMenuOption" class="menuOption"></div>
+			</div>
+			<div id="game">
+				<div class="gallery">
+					<div class="table galleryCell">
+						<canvas id="tableCanvas" width=0 height=0>Your browser does not support this game.</canvas>
+					</div>
+					<div class="hand galleryCell">
+						<div id="handContainer">
+							<canvas id="handCanvas" width=0 height=0>Your browser does not support this game.</canvas>
+							<div id="handMessageContainer">
+								<p id="playCardButton"></p>
+								<p id="selectCardMessage"></p>
+								<p id="notTimeToPlayCardMessage"></p>
+							</div>
 						</div>
 					</div>
+				</div>		
+				<div id="scoreboard">
 				</div>
-			</div>		
-			<div id="scoreboard">
 			</div>
 		</div>
 	</div>
