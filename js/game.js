@@ -13,6 +13,7 @@ module.exports = class Game
 		this._players = new Map();
 		this.addHumanPlayer(firstPlayerName, firstPlayerSocket);
 		this._open = true;
+		this._spectators = [];
 	}
 
 	get Open() {return this._open;}
@@ -41,5 +42,12 @@ module.exports = class Game
 		this._players.set(name, new ArtificialPlayer(name));
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
 		return name;
+	}
+
+	addSpectator(socket)
+	{
+		this._spectators.push(socket);
+		socket.join(this._roomName);
+		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
 	}
 }

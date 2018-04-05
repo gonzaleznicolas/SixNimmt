@@ -21,6 +21,7 @@ function onConnection(socket) {
 	socket.on("newGame", onNewGame);
 	socket.on("joinGame", onJoinGame);
 	socket.on("vsAI", onVsAI);
+	socket.on("spectateGame", onSpectateGame);
  }
 
 function onNewGame(data){
@@ -79,3 +80,19 @@ function onVsAI()
 	this.emit("vsAIFormResult");
 }
 
+function onSpectateGame(data)
+{
+	let codeValid = false;
+	let gc = undefined;
+	if (StringFunctions.isPossibleCode(data.gameCode))
+	{
+		gc = parseInt(data.gameCode);
+		if (gameManager.gameExists(gc))
+		{
+			gameManager.getGame(gc).addSpectator(this);
+			codeValid = true;
+		}
+	}
+
+	this.emit("spectateGameFormResult", {codeValid: codeValid, gameCode: data.gameCode});
+}

@@ -11,9 +11,10 @@ let playerList = [];
 $(function () {
 	startHomePageUI();
 	socket = io();
-	socket.on("newGameFormResult", onNewGameFormResult); 
-	socket.on("joinGameFormResult", onJoinGameFormResult); 
-	socket.on("vsAIFormResult", onVsAIFormResult); 
+	socket.on("newGameFormResult", onNewGameFormResult);
+	socket.on("joinGameFormResult", onJoinGameFormResult);
+	socket.on("vsAIFormResult", onVsAIFormResult);
+	socket.on("spectateGameFormResult", onSpectateFormResult);
 	socket.on("playerList", onPlayerList); 
 });
 
@@ -30,12 +31,16 @@ function onSubmitForm() {
 	} 
 	else if (formType == FormType.JoinGame) 
 	{ 
-		socket.emit('joinGame', {gameCode: $("#codeTextBox").val(), nickName: $("#nickNameTextBox").val()}) 
+		socket.emit('joinGame', {gameCode: $("#codeTextBox").val(), nickName: $("#nickNameTextBox").val()});
 	} 
 	else if (formType == FormType.vsAI) 
 	{ 
-		socket.emit('vsAI') 
-	} 
+		socket.emit('vsAI');
+	}
+	else if (formType == FormType.SpectateGame)
+	{
+		socket.emit('spectateGame', {gameCode: $("#codeTextBox").val()});
+	}
 } 
    
 function onNewGameFormResult(data) { 
@@ -71,6 +76,22 @@ function onVsAIFormResult()
 { 
 	$("#homePage").hide(1000); 
 	$("#gamePage").show(1000); 
+}
+
+function onSpectateFormResult(data)
+{
+	hideAllErrorStatus(); 
+	if (data.codeValid) 
+	{
+		showCodeSuccess(); 
+
+		$("#homePage").hide(1000); 
+		launchWaitPage(data.gameCode, TypeOfLoadingScreen.PersonJoiningOrSpectator); 
+	} 
+	else 
+	{ 
+		showCodeError(); 
+	} 
 }
 
 function onPlayerList(data){
