@@ -2,6 +2,10 @@
 
 let bSpanish = false;
 
+let areYouSureYouWantToLeave;
+let leave;
+let stay;
+
 function translateToEnglish()
 {
 	bSpanish = false;
@@ -43,6 +47,10 @@ function translateToEnglish()
 	$('#quitMenuOption')[0].innerHTML = "Quit Game";
 	$('#textRulesMenuOption')[0].innerHTML = "Text Rules";
 	$('#videoRulesMenuOption')[0].innerHTML = "Video Rules";
+
+	areYouSureYouWantToLeave = "Are you sure you want to leave this game?";
+	leave = "Leave";
+	stay = "Stay";
 }
 
 function translateToSpanish()
@@ -86,4 +94,8 @@ function translateToSpanish()
 	$('#quitMenuOption')[0].innerHTML = "Terminar Juego";
 	$('#textRulesMenuOption')[0].innerHTML = "Reglas escritas";
 	$('#videoRulesMenuOption')[0].innerHTML = "Reglas en video";
+
+	areYouSureYouWantToLeave = "Seguro que quires salir?";
+	leave = "Salirme";
+	stay = "Quedarme";
 }

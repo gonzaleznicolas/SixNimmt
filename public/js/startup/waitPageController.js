@@ -18,8 +18,13 @@ function addAIFromWaitPage()
 
 function quitGame()
 {
-	socket.emit("quitDuringWait");
-	location.reload();
+	new Dialog(areYouSureYouWantToLeave,
+			leave, stay, 
+			function(){
+				socket.emit("quitDuringWait");
+				location.reload();
+			},
+			undefined);
 }
 
 function endGame()

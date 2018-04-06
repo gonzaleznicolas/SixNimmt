@@ -41,3 +41,30 @@ body{
 	background: rgba(188, 144, 204, 1);
 	color: white;
 }
+
+.dialog {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	padding: calc(2*var(--margin));
+	border-radius: var(--margin);
+	border: 1px solid black;
+	z-index: 3;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 3em;
+	background: white;
+	color: var(--nimmtPurple);
+}
+
+.dialogPrompt {
+	margin: 10px;
+}
+
+.dialogButtonContainer {
+	color: var(--nimmtPurple);
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
