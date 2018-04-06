@@ -23,7 +23,7 @@ module.exports = class Game extends EventEmitter
 	{
 		if (player instanceof HumanPlayer)
 		{
-			player.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
+			player.on("playerAddAIFromWaitPage", this.onPlayerAddAIFromWaitPage.bind(this));
 			player.on("quitGame", this.onPlayerLeave.bind(this));
 			player.on("endGame", this.onEndGame.bind(this));
 			player.on("startGame", this.onStartGame.bind(this));
@@ -109,7 +109,7 @@ module.exports = class Game extends EventEmitter
 		this.emit("gameEnded", this._gameCode);
 	}
 
-	onAddAIFromWaitPage(player)
+	onPlayerAddAIFromWaitPage(player)
 	{
 		this.addArtificialPlayer();
 	}

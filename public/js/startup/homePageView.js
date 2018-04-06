@@ -4,11 +4,11 @@ function startHomePageUI(){
 	drawCow($("#homeCow")[0]);
 	$('#english')[0].addEventListener("click", onUKClicked, false);
 	$('#espanol')[0].addEventListener("click", onSpainClicked, false);
-	$('#newGame')[0].addEventListener("click", onNewGame, false);
-	$('#vsAI')[0].addEventListener("click", onVsAI, false);
-	$('#joinGame')[0].addEventListener("click", onJoinGame, false);
-	$('#spectateGame')[0].addEventListener("click", onSpectateGame, false);
-	$('#submitButton')[0].addEventListener("click", onSubmitForm, false);
+	$('#newGame')[0].addEventListener("click", onNewGameClicked, false);
+	$('#vsAI')[0].addEventListener("click", onVsAIClicked, false);
+	$('#joinGame')[0].addEventListener("click", onJoinGameClicked, false);
+	$('#spectateGame')[0].addEventListener("click", onSpectateGameClicked, false);
+	$('#submitButton')[0].addEventListener("click", onSubmitFormClicked, false);
 }
 
 function onUKClicked() {
@@ -26,7 +26,7 @@ function languageClicked() {
 	$('#gameOptionsSection').css("visibility", "visible");
 }
 
-function onNewGame() {
+function onNewGameClicked() {
 	hideAllErrorStatus();
 	$('#gameOptionsSection').children().removeClass("selected");
 	$('#newGame').addClass("selected");
@@ -38,7 +38,7 @@ function onNewGame() {
 	formType = FormType.NewGame;
 }
 
-function onVsAI() {
+function onVsAIClicked() {
 	hideAllErrorStatus();
 	$('#gameOptionsSection').children().removeClass("selected");
 	$('#vsAI').addClass("selected");
@@ -49,7 +49,7 @@ function onVsAI() {
 	onSubmitForm();
 }
 
-function onJoinGame() {
+function onJoinGameClicked() {
 	hideAllErrorStatus();
 	$('#gameOptionsSection').children().removeClass("selected");
 	$('#joinGame').addClass("selected");
@@ -63,7 +63,7 @@ function onJoinGame() {
 	formType = FormType.JoinGame;
 }
 
-function onSpectateGame() {
+function onSpectateGameClicked() {
 	hideAllErrorStatus();
 	$('#gameOptionsSection').children().removeClass("selected");
 	$('#spectateGame').addClass("selected");

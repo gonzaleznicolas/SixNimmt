@@ -11,31 +11,35 @@ let playerList = [];
 $(function () {
 	startHomePageUI();
 	socket = io();
-	socket.on("newGameFormResult", onNewGameFormResult);
-	socket.on("joinGameFormResult", onJoinGameFormResult);
-	socket.on("vsAIFormResult", onVsAIFormResult);
-	socket.on("spectateGameFormResult", onSpectateFormResult);
+
+	// form results
+	socket.on("serverNewGameFormResult", onNewGameFormResult);
+	socket.on("serverJoinGameFormResult", onJoinGameFormResult);
+	socket.on("server1v1vsAIFormResult", onVsAIFormResult);
+	socket.on("serverSpectateGameFormResult", onSpectateFormResult);
+
+	// wait screen updates
 	socket.on("gameTerminated", onGameTerminated);
 	socket.on("playerList", onPlayerList);
 	socket.on("startGame", startGame);
 });
 
-function onSubmitForm() { 
+function onSubmitFormClicked() { 
 	if (formType == FormType.NewGame) 
 	{ 
-		socket.emit('newGame', {nickName: $("#nickNameTextBox").val()}); 
+		socket.emit('clientNewGame', {nickName: $("#nickNameTextBox").val()}); 
 	} 
 	else if (formType == FormType.JoinGame) 
 	{ 
-		socket.emit('joinGame', {gameCode: $("#codeTextBox").val(), nickName: $("#nickNameTextBox").val()});
+		socket.emit('clientJoinGame', {gameCode: $("#codeTextBox").val(), nickName: $("#nickNameTextBox").val()});
 	} 
 	else if (formType == FormType.vsAI) 
 	{ 
-		socket.emit('vsAI');
+		socket.emit('client1v1vsAI');
 	}
 	else if (formType == FormType.SpectateGame)
 	{
-		socket.emit('spectateGame', {gameCode: $("#codeTextBox").val()});
+		socket.emit('clientSpectateGame', {gameCode: $("#codeTextBox").val()});
 	}
 }
    

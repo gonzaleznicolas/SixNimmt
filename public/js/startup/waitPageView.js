@@ -8,10 +8,10 @@ function startWaitPageUI() {
 	animateDots();
 	updatePlayerListAndButtons(playerList);
 
-	$('#endGameBtn')[0].addEventListener("click", endGame, false);
-	$('#quitGameBtn')[0].addEventListener("click", quitGame, false);
+	$('#endGameBtn')[0].addEventListener("click", onEndGameClicked, false);
+	$('#quitGameBtn')[0].addEventListener("click", onQuitGameClicked, false);
 	$('#startGameBtn')[0].addEventListener("click", onStartGameClicked, false);
-	$('#addAIBtn')[0].addEventListener("click", addAIFromWaitPage, false);
+	$('#addAIBtn')[0].addEventListener("click", onAddAIFromWaitPageClicked, false);
 
 	$("#waitPage").show(1000);
 }

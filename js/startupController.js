@@ -18,13 +18,13 @@ function onConnection(socket) {
 	   console.log('A user disconnected');
 	});
 
-	socket.on("newGame", onNewGame);
-	socket.on("joinGame", onJoinGame);
-	socket.on("vsAI", onVsAI);
-	socket.on("spectateGame", onSpectateGame);
+	socket.on("clientNewGame", onClientNewGame);
+	socket.on("clientJoinGame", onClientJoinGame);
+	socket.on("client1v1vsAI", onClient1v1vsAI);
+	socket.on("clientSpectateGame", onClientSpectateGame);
  }
 
-function onNewGame(data){
+function onClientNewGame(data){
 	console.log("New game started");
 	let nickName = StringFunctions.capitalizeNickName(data.nickName);
 	let validForm = undefined;
@@ -38,10 +38,10 @@ function onNewGame(data){
 		validForm = {valid: false};
 	}
 
-	this.emit("newGameFormResult", validForm);
+	this.emit("serverNewGameFormResult", validForm);
 }
 
-function onJoinGame(data){
+function onClientJoinGame(data){
 	let codeValid = false;
 	let nameValid = false;
 	let nickName = undefined;
@@ -69,18 +69,18 @@ function onJoinGame(data){
 		}
 	}
 
-	this.emit("joinGameFormResult", {codeValid: codeValid, nameValid: nameValid, 
+	this.emit("serverJoinGameFormResult", {codeValid: codeValid, nameValid: nameValid, 
 									gameCode: data.gameCode, nickName: nickName});
 }
 
-function onVsAI()
+function onClient1v1vsAI()
 {
 	let gc = gameManager.addGame("You", this, io);
 	let aiName = gameManager.getGame(gc).addArtificialPlayer();
-	this.emit("vsAIFormResult");
+	this.emit("server1v1vsAIFormResult");
 }
 
-function onSpectateGame(data)
+function onClientSpectateGame(data)
 {
 	let codeValid = false;
 	let gc = undefined;
@@ -94,5 +94,5 @@ function onSpectateGame(data)
 		}
 	}
 
-	this.emit("spectateGameFormResult", {codeValid: codeValid, gameCode: data.gameCode});
+	this.emit("serverSpectateGameFormResult", {codeValid: codeValid, gameCode: data.gameCode});
 }

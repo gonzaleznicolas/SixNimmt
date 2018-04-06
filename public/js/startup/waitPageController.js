@@ -11,12 +11,12 @@ function onPlayerList(data){
 	updatePlayerListAndButtons(data);
 }
 
-function addAIFromWaitPage()
+function onAddAIFromWaitPageClicked()
 {
-	socket.emit("addAIFromWaitPage");
+	socket.emit("clientAddAIFromWaitPage");
 }
 
-function quitGame()
+function onQuitGameClicked()
 {
 	new Dialog(areYouSureYouWantToLeaveStr,
 			leaveStr, 
@@ -27,7 +27,7 @@ function quitGame()
 			stayStr, undefined);
 }
 
-function endGame()
+function onEndGameClicked()
 {
 	new Dialog(areYouSureYouWantToEndGameStr,
 		endGameStr, 

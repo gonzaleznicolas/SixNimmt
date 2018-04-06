@@ -9,7 +9,7 @@ module.exports = class HumanPlayer extends Player
 		super(name, bStartedGame);
 		this._socket = socket;
 		
-		this._socket.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
+		this._socket.on("clientAddAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
 		this._socket.on("endGame", this.onEndGame.bind(this));
 		this._socket.on("quitDuringWait", this.onQuitGame.bind(this));
 		this._socket.on("disconnect", this.onQuitGame.bind(this));
@@ -28,9 +28,9 @@ module.exports = class HumanPlayer extends Player
 		this.emit('endGame', this);
 	}
 
-	onAddAIFromWaitPage()
+	onClientAddAIFromWaitPage()
 	{
-		this.emit('addAIFromWaitPage', this);
+		this.emit('playerAddAIFromWaitPage', this);
 	}
 
 	onQuitGame()
