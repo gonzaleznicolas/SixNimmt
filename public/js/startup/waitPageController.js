@@ -38,7 +38,7 @@ function endGame()
 		cancelStr, undefined);
 }
 
-function startGame()
+function onStartGameClicked()
 {
-
+	socket.emit("startGame");
 }

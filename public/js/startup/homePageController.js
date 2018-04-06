@@ -16,7 +16,8 @@ $(function () {
 	socket.on("vsAIFormResult", onVsAIFormResult);
 	socket.on("spectateGameFormResult", onSpectateFormResult);
 	socket.on("gameTerminated", onGameTerminated);
-	socket.on("playerList", onPlayerList); 
+	socket.on("playerList", onPlayerList);
+	socket.on("startGame", startGame);
 });
 
 function onSubmitForm() { 
@@ -69,8 +70,7 @@ function onJoinGameFormResult(data) {
 
 function onVsAIFormResult() 
 { 
-	$("#homePage").hide(1000); 
-	$("#gamePage").show(1000); 
+	onStartGameClicked();
 }
 
 function onSpectateFormResult(data)
@@ -96,4 +96,15 @@ function onGameTerminated(terminatorPlayerName)
 		function(){
 			location.reload();
 		});
+}
+
+function startGame(data)
+{
+	playerList = data;
+	numberOfPlayers = playerList.length;
+	$("#homePage").hide(1000);
+	$("#waitPage").hide(1000);
+	$("#gamePage").show(1000, function(){
+		controller = new GameController();
+	});
 }

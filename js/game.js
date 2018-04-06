@@ -26,6 +26,7 @@ module.exports = class Game extends EventEmitter
 			player.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
 			player.on("quitGame", this.onPlayerLeave.bind(this));
 			player.on("endGame", this.onEndGame.bind(this));
+			player.on("startGame", this.onStartGame.bind(this));
 		}
 	}
 
@@ -116,5 +117,15 @@ module.exports = class Game extends EventEmitter
 	onPlayerLeave(player)
 	{
 		this.removePlayer(player.Name);
+	}
+
+	onStartGame(playerStartingGame)
+	{
+		if (playerStartingGame.StartedGame &&
+			this._players.size >= 2 && this._players.size <= 10)
+		{
+			this._open = false;
+			this._io.sockets.in(this._roomName).emit('startGame', Array.from(this._players.keys()));
+		}
 	}
 }

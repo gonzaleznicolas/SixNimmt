@@ -4,7 +4,7 @@ class GameLayoutController
 {
 	constructor(scoreboardView, tableView, handView, menuView) {
 		this.setAllStringsToChosenLanguage();
-		
+
 		lc.deFactoSpaceForOneFlickityArrow = bSpectatorMode || !bFlickityEnabled ? 0 : lc.spaceForOneFlickityArrow;
 		lc.additionalColsOnTableCanvasForCardsPlayedThisTurn = Math.ceil(numberOfPlayers/NUMBER_OF_ROWS_ON_TABLE_CANVAS);
 		lc.totalNumberOfColsOnTableCanvas = NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TURN + lc.additionalColsOnTableCanvasForCardsPlayedThisTurn;
@@ -17,6 +17,8 @@ class GameLayoutController
 		this._tableView = tableView;
 		this._handView = handView; // could be undefined
 		this._menuView = menuView;
+
+		this.showHeader();
 		
 		if (bSpectatorMode)
 			$('.hand.galleryCell').remove();

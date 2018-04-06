@@ -10,7 +10,7 @@ function startWaitPageUI() {
 
 	$('#endGameBtn')[0].addEventListener("click", endGame, false);
 	$('#quitGameBtn')[0].addEventListener("click", quitGame, false);
-	$('#startGameBtn')[0].addEventListener("click", startGame, false);
+	$('#startGameBtn')[0].addEventListener("click", onStartGameClicked, false);
 	$('#addAIBtn')[0].addEventListener("click", addAIFromWaitPage, false);
 
 	$("#waitPage").show(1000);

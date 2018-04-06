@@ -2,7 +2,7 @@
 
 // the 4 key vars
 let bSpectatorMode = false;
-let numberOfPlayers = 10;
+let numberOfPlayers;
 let bFlickityEnabled = true;
 
 // game constants
@@ -20,10 +20,6 @@ const HandState = Object.freeze({"PlayCard":1, "NotTimeToPlayCard":2})
 const TableState = Object.freeze({"SelectRowToTake":1, "Normal":2})
 
 let lc = undefined;	// layoutCalculator - initiallized in the gameController
-
-$(function () {
-	controller = new GameController();
-});
 
 function getCardInfo(cardNumber)
 {
