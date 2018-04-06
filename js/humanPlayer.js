@@ -10,7 +10,8 @@ module.exports = class HumanPlayer extends Player
 		this._socket = socket;
 		
 		this._socket.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
-		this._socket.on("quitDuringWait", this.onQuitGameDuringWait.bind(this));
+		this._socket.on("quitDuringWait", this.onQuitGame.bind(this));
+		this._socket.on("disconnect", this.onQuitGame.bind(this));
 	}
 
 	leaveRoom(roomName)
@@ -23,9 +24,9 @@ module.exports = class HumanPlayer extends Player
 		this.emit('addAIFromWaitPage', this);
 	}
 
-	onQuitGameDuringWait()
+	onQuitGame()
 	{
-		this.emit('quitDuringWait', this);
+		this.emit('quitGame', this);
 	}
 
 }

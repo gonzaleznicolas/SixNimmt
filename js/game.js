@@ -23,7 +23,7 @@ module.exports = class Game
 	subscribeToHumanPlayerEvents(player)
 	{
 		player.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
-		player.on("quitDuringWait", this.onQuitDuringWait.bind(this));
+		player.on("quitGame", this.onPlayerLeave.bind(this));
 	}
 
 	get Open() {return this._open;}
@@ -93,7 +93,7 @@ module.exports = class Game
 		this.addArtificialPlayer();
 	}
 
-	onQuitDuringWait(player)
+	onPlayerLeave(player)
 	{
 		this.removePlayer(player.Name);
 	}
