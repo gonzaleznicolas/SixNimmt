@@ -111,22 +111,26 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerEndGameFromWaitPage(player)
 	{
-		this.endGame(player);
+		if (this._gameState == GameStates.WaitForPlayers)
+			this.endGame(player);
 	}
 
 	onPlayerAddAIFromWaitPage(player)
 	{
-		this.addArtificialPlayer();
+		if (this._gameState == GameStates.WaitForPlayers)
+			this.addArtificialPlayer();
 	}
 
 	onPlayerQuitGame(player)
 	{
-		this.removePlayer(player.Name);
+		if (this._gameState == GameStates.WaitForPlayers)
+			this.removePlayer(player.Name);
 	}
 
 	onPlayerStartGameWithCurrentPlayers(playerStartingGame)
 	{
-		if (playerStartingGame.StartedGame &&
+		if (this._gameState == GameStates.WaitForPlayers &&
+			playerStartingGame.StartedGame &&
 			this._players.size >= 2 && this._players.size <= 10)
 		{
 			this._open = false;

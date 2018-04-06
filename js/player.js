@@ -1,6 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
+const Player = require('./playerStates.js');
 
 module.exports = class Player extends EventEmitter
 {
