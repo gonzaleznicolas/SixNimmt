@@ -9,6 +9,7 @@ module.exports = class HumanPlayer extends Player
 		super(name, bStartedGame);
 		this._socket = socket;
 		
+		// game setup messages from client
 		this._socket.on("clientAddAIFromWaitPage", this.onClientAddAIFromWaitPage.bind(this));
 		this._socket.on("clientEndGameFromWaitPage", this.onClientEndGameFromWaitPage.bind(this));
 		this._socket.on("clientQuitGame", this.onClientQuitGame.bind(this));

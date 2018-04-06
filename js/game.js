@@ -19,6 +19,8 @@ module.exports = class Game extends EventEmitter
 		this._open = true;
 	}
 
+	get Open() {return this._open;}
+
 	subscribeToPlayerEvents(player)
 	{
 		if (player instanceof HumanPlayer)
@@ -29,8 +31,6 @@ module.exports = class Game extends EventEmitter
 			player.on("playerStartGameWithCurrentPlayers", this.onPlayerStartGameWithCurrentPlayers.bind(this));
 		}
 	}
-
-	get Open() {return this._open;}
 
 	updateOpen()
 	{
@@ -103,15 +103,15 @@ module.exports = class Game extends EventEmitter
 		}
 	}
 
-	onPlayerEndGameFromWaitPage(player)
-	{
-		this.endGame(player);
-	}
-
 	endGame(playerWhoEndedTheGame)
 	{
 		playerWhoEndedTheGame.Socket.broadcast.to(this._roomName).emit("serverGameTerminated", playerWhoEndedTheGame.Name);
 		this.emit("gameEndedFromWaitPage", this._gameCode);
+	}
+
+	onPlayerEndGameFromWaitPage(player)
+	{
+		this.endGame(player);
 	}
 
 	onPlayerAddAIFromWaitPage(player)
