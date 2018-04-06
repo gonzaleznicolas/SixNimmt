@@ -16,21 +16,6 @@ function startWaitPageUI() {
 	$("#waitPage").show(1000);
 }
 
-function endGame()
-{
-
-}
-
-function quitGame()
-{
-
-}
-
-function startGame()
-{
-
-}
-
 function updateButtons(numPlayers)
 {
 	if (loadingScreenType == TypeOfLoadingScreen.PersonWhoStartedTheGame)

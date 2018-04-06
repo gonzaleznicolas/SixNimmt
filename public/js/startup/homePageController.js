@@ -18,12 +18,6 @@ $(function () {
 	socket.on("playerList", onPlayerList); 
 });
 
-function launchWaitPage(gc, lst){
-	gameCode = gc;
-	loadingScreenType = lst;
-	startWaitPageUI();
-}
-
 function onSubmitForm() { 
 	if (formType == FormType.NewGame) 
 	{ 
@@ -41,11 +35,6 @@ function onSubmitForm() {
 	{
 		socket.emit('spectateGame', {gameCode: $("#codeTextBox").val()});
 	}
-}
-
-function addAIFromWaitPage()
-{
-	socket.emit("addAIFromWaitPage");
 }
    
 function onNewGameFormResult(data) { 
@@ -97,9 +86,4 @@ function onSpectateFormResult(data)
 	{ 
 		showCodeError(); 
 	} 
-}
-
-function onPlayerList(data){
-	playerList = data;
-	updatePlayerListAndButtons(data);
 }

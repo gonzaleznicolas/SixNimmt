@@ -23,6 +23,7 @@ module.exports = class Game
 	subscribeToHumanPlayerEvents(player)
 	{
 		player.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
+		player.on("quitDuringWait", this.onQuitDuringWait.bind(this));
 	}
 
 	get Open() {return this._open;}
@@ -60,7 +61,7 @@ module.exports = class Game
 			name = "AI"+n;
 			n++;
 		} while (this._players.has(name));
-		
+
 		let player = new ArtificialPlayer(name);
 		this._players.set(name, player);
 		this.subscribeToPlayerEvents(player);
@@ -76,8 +77,24 @@ module.exports = class Game
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
 	}
 
+	removePlayer(name)
+	{
+		if (!this._players.has(name))
+			return;
+		let player = this._players.get(name);
+		if (player.leaveRoom)
+			player.leaveRoom(this._roomName);
+		this._players.delete(name);
+		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+	}
+
 	onAddAIFromWaitPage(player)
 	{
 		this.addArtificialPlayer();
+	}
+
+	onQuitDuringWait(player)
+	{
+		this.removePlayer(player.Name);
 	}
 }

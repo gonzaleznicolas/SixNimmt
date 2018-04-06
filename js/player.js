@@ -9,4 +9,6 @@ module.exports = class Player extends EventEmitter
 		super();
 		this._name = name;
 	}
+
+	get Name() {return this._name;}
 }
