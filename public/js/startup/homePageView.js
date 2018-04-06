@@ -46,7 +46,7 @@ function onVsAIClicked() {
 	$('#form').children().hide();
 	$('#inputSection').css("visibility", "hidden");
 	formType = FormType.vsAI;
-	onSubmitForm();
+	onSubmitFormClicked();
 }
 
 function onJoinGameClicked() {

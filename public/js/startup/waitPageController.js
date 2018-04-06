@@ -21,7 +21,7 @@ function onQuitGameClicked()
 	new Dialog(areYouSureYouWantToLeaveStr,
 			leaveStr, 
 			function(){
-				socket.emit("quitDuringWait");
+				socket.emit("clientQuitGameFromWaitPage");
 				location.reload();
 			},
 			stayStr, undefined);
@@ -32,7 +32,7 @@ function onEndGameClicked()
 	new Dialog(areYouSureYouWantToEndGameStr,
 		endGameStr, 
 		function(){
-			socket.emit("endGame");
+			socket.emit("clientEndGameFromWaitPage");
 			location.reload();
 		},
 		cancelStr, undefined);
@@ -40,5 +40,5 @@ function onEndGameClicked()
 
 function onStartGameClicked()
 {
-	socket.emit("startGame");
+	socket.emit("clientStartGameWithCurrentPlayers");
 }

@@ -9,11 +9,11 @@ module.exports = class HumanPlayer extends Player
 		super(name, bStartedGame);
 		this._socket = socket;
 		
-		this._socket.on("clientAddAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
-		this._socket.on("endGame", this.onEndGame.bind(this));
-		this._socket.on("quitDuringWait", this.onQuitGame.bind(this));
-		this._socket.on("disconnect", this.onQuitGame.bind(this));
-		this._socket.on("startGame", this.onStartGame.bind(this));
+		this._socket.on("clientAddAIFromWaitPage", this.onClientAddAIFromWaitPage.bind(this));
+		this._socket.on("clientEndGameFromWaitPage", this.onClientEndGameFromWaitPage.bind(this));
+		this._socket.on("clientQuitGame", this.onClientQuitGame.bind(this));
+		this._socket.on("disconnect", this.onClientQuitGame.bind(this));
+		this._socket.on("clientStartGameWithCurrentPlayers", this.onClientStartGameWithCurrentPlayers.bind(this));
 	}
 
 	get Socket() {return this._socket;}
@@ -23,9 +23,9 @@ module.exports = class HumanPlayer extends Player
 		this._socket.leave(roomName);
 	}
 
-	onEndGame()
+	onClientEndGameFromWaitPage()
 	{
-		this.emit('endGame', this);
+		this.emit('playerEndGameFromWaitPage', this);
 	}
 
 	onClientAddAIFromWaitPage()
@@ -33,14 +33,14 @@ module.exports = class HumanPlayer extends Player
 		this.emit('playerAddAIFromWaitPage', this);
 	}
 
-	onQuitGame()
+	onClientQuitGame()
 	{
-		this.emit('quitGame', this);
+		this.emit('playerQuitGame', this);
 	}
 
-	onStartGame()
+	onClientStartGameWithCurrentPlayers()
 	{
-		this.emit("startGame", this);
+		this.emit("playerStartGameWithCurrentPlayers", this);
 	}
 
 }

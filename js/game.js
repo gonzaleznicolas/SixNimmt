@@ -24,9 +24,9 @@ module.exports = class Game extends EventEmitter
 		if (player instanceof HumanPlayer)
 		{
 			player.on("playerAddAIFromWaitPage", this.onPlayerAddAIFromWaitPage.bind(this));
-			player.on("quitGame", this.onPlayerLeave.bind(this));
-			player.on("endGame", this.onEndGame.bind(this));
-			player.on("startGame", this.onStartGame.bind(this));
+			player.on("playerQuitGame", this.onPlayerQuitGame.bind(this));
+			player.on("playerEndGameFromWaitPage", this.onPlayerEndGameFromWaitPage.bind(this));
+			player.on("playerStartGameWithCurrentPlayers", this.onPlayerStartGameWithCurrentPlayers.bind(this));
 		}
 	}
 
@@ -58,7 +58,7 @@ module.exports = class Game extends EventEmitter
 		this._players.set(name, player);
 		this.subscribeToPlayerEvents(player);
 		socket.join(this._roomName);
-		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+		this._io.sockets.in(this._roomName).emit('serverPlayerList', Array.from(this._players.keys()));
 		this.updateOpen();
 	}
 
@@ -75,7 +75,7 @@ module.exports = class Game extends EventEmitter
 		let player = new ArtificialPlayer(name);
 		this._players.set(name, player);
 		this.subscribeToPlayerEvents(player);
-		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+		this._io.sockets.in(this._roomName).emit('serverPlayerList', Array.from(this._players.keys()));
 		this.updateOpen();
 		return name;
 	}
@@ -83,7 +83,7 @@ module.exports = class Game extends EventEmitter
 	addSpectator(socket)
 	{
 		socket.join(this._roomName);
-		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+		this._io.sockets.in(this._roomName).emit('serverPlayerList', Array.from(this._players.keys()));
 	}
 
 	removePlayer(name)
@@ -95,18 +95,23 @@ module.exports = class Game extends EventEmitter
 		if (player instanceof HumanPlayer)
 			player.leaveRoom(this._roomName);
 		this._players.delete(name);
-		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+		this._io.sockets.in(this._roomName).emit('serverPlayerList', Array.from(this._players.keys()));
 		this.updateOpen();
 		if ((bPlayerStartedGame && this._gameState == GameStates.WaitForPlayers) || !this.gameHasHumanPlayersLeft())
 		{
-			this.onEndGame(player);
+			this.endGame(player);
 		}
 	}
 
-	onEndGame(player)
+	onPlayerEndGameFromWaitPage(player)
 	{
-		player.Socket.broadcast.to(this._roomName).emit("gameTerminated", player.Name);
-		this.emit("gameEnded", this._gameCode);
+		this.endGame(player);
+	}
+
+	endGame(playerWhoEndedTheGame)
+	{
+		playerWhoEndedTheGame.Socket.broadcast.to(this._roomName).emit("serverGameTerminated", playerWhoEndedTheGame.Name);
+		this.emit("gameEndedFromWaitPage", this._gameCode);
 	}
 
 	onPlayerAddAIFromWaitPage(player)
@@ -114,18 +119,18 @@ module.exports = class Game extends EventEmitter
 		this.addArtificialPlayer();
 	}
 
-	onPlayerLeave(player)
+	onPlayerQuitGame(player)
 	{
 		this.removePlayer(player.Name);
 	}
 
-	onStartGame(playerStartingGame)
+	onPlayerStartGameWithCurrentPlayers(playerStartingGame)
 	{
 		if (playerStartingGame.StartedGame &&
 			this._players.size >= 2 && this._players.size <= 10)
 		{
 			this._open = false;
-			this._io.sockets.in(this._roomName).emit('startGame', Array.from(this._players.keys()));
+			this._io.sockets.in(this._roomName).emit('serverStartGame', Array.from(this._players.keys()));
 		}
 	}
 }

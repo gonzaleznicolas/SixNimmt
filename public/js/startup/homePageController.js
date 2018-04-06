@@ -19,9 +19,9 @@ $(function () {
 	socket.on("serverSpectateGameFormResult", onSpectateFormResult);
 
 	// wait screen updates
-	socket.on("gameTerminated", onGameTerminated);
-	socket.on("playerList", onPlayerList);
-	socket.on("startGame", startGame);
+	socket.on("serverGameTerminated", onServerGameTerminated);
+	socket.on("serverPlayerList", onPlayerList);
+	socket.on("serverStartGame", onServerStartGame);
 });
 
 function onSubmitFormClicked() { 
@@ -93,7 +93,7 @@ function onSpectateFormResult(data)
 	} 
 }
 
-function onGameTerminated(terminatorPlayerName)
+function onServerGameTerminated(terminatorPlayerName)
 {
 	new Dialog(thisGameHasBeenTerminatedStr+terminatorPlayerName,
 		okStr, 
@@ -102,7 +102,7 @@ function onGameTerminated(terminatorPlayerName)
 		});
 }
 
-function startGame(data)
+function onServerStartGame(data)
 {
 	playerList = data;
 	numberOfPlayers = playerList.length;
