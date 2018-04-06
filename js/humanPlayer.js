@@ -8,5 +8,13 @@ module.exports = class HumanPlayer extends Player
 	{
 		super(name);
 		this._socket = socket;
+		
+		this._socket.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
 	}
+
+	onAddAIFromWaitPage()
+	{
+		this.emit('addAIFromWaitPage', this);
+	}
+
 }

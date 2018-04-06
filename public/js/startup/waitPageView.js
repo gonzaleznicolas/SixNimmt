@@ -11,7 +11,7 @@ function startWaitPageUI() {
 	$('#endGameBtn')[0].addEventListener("click", endGame, false);
 	$('#quitGameBtn')[0].addEventListener("click", quitGame, false);
 	$('#startGameBtn')[0].addEventListener("click", startGame, false);
-	$('#addAIBtn')[0].addEventListener("click", addAI, false);
+	$('#addAIBtn')[0].addEventListener("click", addAIFromWaitPage, false);
 
 	$("#waitPage").show(1000);
 }
@@ -27,11 +27,6 @@ function quitGame()
 }
 
 function startGame()
-{
-
-}
-
-function addAI()
 {
 
 }

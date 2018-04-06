@@ -41,7 +41,12 @@ function onSubmitForm() {
 	{
 		socket.emit('spectateGame', {gameCode: $("#codeTextBox").val()});
 	}
-} 
+}
+
+function addAIFromWaitPage()
+{
+	socket.emit("addAIFromWaitPage");
+}
    
 function onNewGameFormResult(data) { 
 	hideAllErrorStatus(); 

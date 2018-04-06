@@ -16,6 +16,15 @@ module.exports = class Game
 		this._spectators = [];
 	}
 
+	subscribeToPlayerEvents(player)
+	{
+	}
+
+	subscribeToHumanPlayerEvents(player)
+	{
+		player.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
+	}
+
 	get Open() {return this._open;}
 
 	updateOpen()
@@ -33,7 +42,10 @@ module.exports = class Game
 
 	addHumanPlayer(name, socket)
 	{
-		this._players.set(name, new HumanPlayer(name, socket));
+		let player = new HumanPlayer(name, socket);
+		this._players.set(name, player);
+		this.subscribeToPlayerEvents(player);
+		this.subscribeToHumanPlayerEvents(player);
 		socket.join(this._roomName);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
 		this.updateOpen();
@@ -42,13 +54,16 @@ module.exports = class Game
 	// returns AI name
 	addArtificialPlayer()
 	{
-		let name = "Alfonzo";
 		let n = 1;
-		while (this._players.has(name))
-		{
+		let name;
+		do{
 			name = "AI"+n;
-		}
-		this._players.set(name, new ArtificialPlayer(name));
+			n++;
+		} while (this._players.has(name));
+		
+		let player = new ArtificialPlayer(name);
+		this._players.set(name, player);
+		this.subscribeToPlayerEvents(player);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
 		this.updateOpen();
 		return name;
@@ -59,5 +74,10 @@ module.exports = class Game
 		this._spectators.push(socket);
 		socket.join(this._roomName);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+	}
+
+	onAddAIFromWaitPage(player)
+	{
+		this.addArtificialPlayer();
 	}
 }
