@@ -37,17 +37,6 @@
 	background-color: rgba(255, 255, 255, 1);
 }
 
-.menuBackground{
-	position: fixed;
-	z-index: 2;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	display: none;
-	background: rgba(0,0,0,0.6);
-}
-
 #menu{
 	display: flex;
 	flex-direction: column;

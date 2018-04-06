@@ -5,7 +5,7 @@ class MenuView
 	constructor()
 	{
 		this._menuElement = $('#menu');
-		this._menuBackground = $(document.createElement("div")).addClass("menuBackground");
+		this._menuBackground = $(document.createElement("div")).addClass("dimBackground");
 		$('header').after(this._menuBackground);
 		this._menuButton = $("#menuButton");
 		

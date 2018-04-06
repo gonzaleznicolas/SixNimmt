@@ -18,7 +18,10 @@ class Dialog
 			this._option1Element = $(document.createElement("div")).addClass("button");
 			this._option1Element[0].innerHTML = option1Text;
 			this._option1Element.click(option1handler);
-			this._option1Element.click(function(){this.remove()}.bind(this._dialogElement)); // close dialog
+			this._option1Element.click(function(){
+				this._dialogElement.remove();
+				this._dialogBackground.remove();
+			}.bind(this)); // close dialog
 			this._dialogButtonContainer.append(this._option1Element);
 		}
 
@@ -27,10 +30,16 @@ class Dialog
 			this._option2Element = $(document.createElement("div")).addClass("button");
 			this._option2Element[0].innerHTML = option2Text;
 			this._option2Element.click(option2handler);
-			this._option2Element.click(function(){this.remove()}.bind(this._dialogElement)); // close dialog
+			this._option2Element.click(function(){
+				this._dialogElement.remove();
+				this._dialogBackground.remove();
+			}.bind(this)); // close dialog
 			this._dialogButtonContainer.append(this._option2Element);
 		}
-		
+
+		this._dialogBackground = $(document.createElement("div")).addClass("dimBackground");
+		$("body").append(this._dialogBackground);
+		this._dialogBackground.show();
 		$("body").append(this._dialogElement);
 	}
 }
