@@ -52,7 +52,8 @@ li{
 
 #code
 {
-	color: rgba(235, 117, 117, 1);;
+	color: rgba(235, 117, 117, 1);
+	font-family: "Comic Sans MS";
 }
 
 #dots{
