@@ -22,13 +22,12 @@ module.exports = class Game extends EventEmitter
 
 	subscribeToPlayerEvents(player)
 	{
-	}
-
-	subscribeToHumanPlayerEvents(player)
-	{
-		player.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
-		player.on("quitGame", this.onPlayerLeave.bind(this));
-		player.on("endGame", this.onEndGame.bind(this));
+		if (player instanceof HumanPlayer)
+		{
+			player.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
+			player.on("quitGame", this.onPlayerLeave.bind(this));
+			player.on("endGame", this.onEndGame.bind(this));
+		}
 	}
 
 	get Open() {return this._open;}
@@ -58,7 +57,6 @@ module.exports = class Game extends EventEmitter
 		let player = new HumanPlayer(name, bStartedGame, socket);
 		this._players.set(name, player);
 		this.subscribeToPlayerEvents(player);
-		this.subscribeToHumanPlayerEvents(player);
 		socket.join(this._roomName);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
 		this.updateOpen();
