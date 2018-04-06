@@ -24,6 +24,7 @@ module.exports = class Game
 	{
 		player.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));
 		player.on("quitGame", this.onPlayerLeave.bind(this));
+		player.on("endGame", this.onEndGame.bind(this));
 	}
 
 	get Open() {return this._open;}
@@ -86,6 +87,11 @@ module.exports = class Game
 			player.leaveRoom(this._roomName);
 		this._players.delete(name);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+	}
+
+	onEndGame(player)
+	{
+		player.Socket.broadcast.to(this._roomName).emit("gameTerminated", player.Name);
 	}
 
 	onAddAIFromWaitPage(player)

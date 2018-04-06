@@ -15,6 +15,7 @@ $(function () {
 	socket.on("joinGameFormResult", onJoinGameFormResult);
 	socket.on("vsAIFormResult", onVsAIFormResult);
 	socket.on("spectateGameFormResult", onSpectateFormResult);
+	socket.on("gameTerminated", onGameTerminated);
 	socket.on("playerList", onPlayerList); 
 });
 
@@ -86,4 +87,13 @@ function onSpectateFormResult(data)
 	{ 
 		showCodeError(); 
 	} 
+}
+
+function onGameTerminated(terminatorPlayerName)
+{
+	new Dialog(thisGameHasBeenTerminatedStr+terminatorPlayerName,
+		okStr, 
+		function(){
+			location.reload();
+		});
 }

@@ -2,9 +2,15 @@
 
 let bSpanish = false;
 
-let areYouSureYouWantToLeave;
-let leave;
-let stay;
+let areYouSureYouWantToLeaveStr;
+let leaveStr;
+let stayStr;
+let areYouSureYouWantToEndGameStr;
+let endGameStr;
+let cancelStr;
+let thisGameHasBeenTerminatedStr;
+let okStr = "OK";
+
 
 function translateToEnglish()
 {
@@ -48,9 +54,15 @@ function translateToEnglish()
 	$('#textRulesMenuOption')[0].innerHTML = "Text Rules";
 	$('#videoRulesMenuOption')[0].innerHTML = "Video Rules";
 
-	areYouSureYouWantToLeave = "Are you sure you want to leave this game?";
-	leave = "Leave";
-	stay = "Stay";
+	areYouSureYouWantToLeaveStr = "Are you sure you want to leave this game?";
+	leaveStr = "Leave";
+	stayStr = "Stay";
+
+	areYouSureYouWantToEndGameStr = "Are you sure you want to end this game for everyone connected?";
+	endGameStr = "End game";
+	cancelStr = "Cancel";
+
+	thisGameHasBeenTerminatedStr = "This game has been terminated by ";
 }
 
 function translateToSpanish()
@@ -95,7 +107,13 @@ function translateToSpanish()
 	$('#textRulesMenuOption')[0].innerHTML = "Reglas escritas";
 	$('#videoRulesMenuOption')[0].innerHTML = "Reglas en video";
 
-	areYouSureYouWantToLeave = "Seguro que quires salir?";
-	leave = "Salirme";
-	stay = "Quedarme";
+	areYouSureYouWantToLeaveStr = "Seguro que quires salir?";
+	leaveStr = "Salirme";
+	stayStr = "Quedarme";
+
+	areYouSureYouWantToEndGameStr = "Seguro que quieres terminar este juego para todos los conectados?";
+	endGameStr = "Terminar juego";
+	cancelStr = "Cancelar";
+
+	thisGameHasBeenTerminatedStr = "Este juego ha sido terminado por ";
 }

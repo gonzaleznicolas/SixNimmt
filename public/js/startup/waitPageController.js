@@ -18,18 +18,24 @@ function addAIFromWaitPage()
 
 function quitGame()
 {
-	new Dialog(areYouSureYouWantToLeave,
-			leave, stay, 
+	new Dialog(areYouSureYouWantToLeaveStr,
+			leaveStr, 
 			function(){
 				socket.emit("quitDuringWait");
 				location.reload();
 			},
-			undefined);
+			stayStr, undefined);
 }
 
 function endGame()
 {
-
+	new Dialog(areYouSureYouWantToEndGameStr,
+		endGameStr, 
+		function(){
+			socket.emit("endGame");
+			location.reload();
+		},
+		cancelStr, undefined);
 }
 
 function startGame()
