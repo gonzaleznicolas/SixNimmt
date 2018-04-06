@@ -6,6 +6,7 @@ function startWaitPageUI() {
 	drawCow($("#waitCow")[0]);
 	fadeCow();
 	animateDots();
+	updatePlayerListAndButtons(playerList);
 
 	$('#endGameBtn')[0].addEventListener("click", endGame, false);
 	$('#quitGameBtn')[0].addEventListener("click", quitGame, false);
@@ -56,7 +57,7 @@ function updateButtons(numPlayers)
 	}
 }
 
-function updatePlayerList(playerList)
+function updatePlayerList(listOfPlayers)
 {
 	$("#dots").empty();
 	$("#playersJoined").empty();
@@ -81,7 +82,7 @@ function animateDots()
 	$("#dots").children().eq(nextDotIndex).hide(animationSpeed, function () { $("#dots").children().eq(nextDotIndex).show(animationSpeed, animateDots); })
 }
 
-function updatePlayerListAndButtons(playerList){
-	updatePlayerList(playerList)
-	updateButtons(playerList.length);
+function updatePlayerListAndButtons(listOfPlayers){
+	updatePlayerList(listOfPlayers)
+	updateButtons(listOfPlayers.length);
 }

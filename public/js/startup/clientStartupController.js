@@ -95,5 +95,6 @@ function onSpectateFormResult(data)
 }
 
 function onPlayerList(data){
+	playerList = data;
 	updatePlayerListAndButtons(data);
 }
