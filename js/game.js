@@ -17,7 +17,6 @@ module.exports = class Game extends EventEmitter
 		this._players = new Map();
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 		this._open = true;
-		this._spectators = [];
 	}
 
 	subscribeToPlayerEvents(player)
@@ -82,7 +81,6 @@ module.exports = class Game extends EventEmitter
 
 	addSpectator(socket)
 	{
-		this._spectators.push(socket);
 		socket.join(this._roomName);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
 	}
