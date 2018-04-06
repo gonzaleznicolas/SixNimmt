@@ -46,6 +46,13 @@ module.exports = class Game extends EventEmitter
 		return !this._players.has(name);
 	}
 
+	gameHasHumanPlayersLeft()
+	{
+		return Array.from(this._players).some( (name_player) => {
+			return name_player[1] instanceof HumanPlayer
+		 });
+	}
+
 	addHumanPlayer(name, bStartedGame, socket)
 	{
 		let player = new HumanPlayer(name, bStartedGame, socket);
@@ -88,12 +95,12 @@ module.exports = class Game extends EventEmitter
 			return;
 		let player = this._players.get(name);
 		let bPlayerStartedGame = player.StartedGame;
-		if (player.leaveRoom)
+		if (player instanceof HumanPlayer)
 			player.leaveRoom(this._roomName);
 		this._players.delete(name);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
 		this.updateOpen();
-		if ((bPlayerStartedGame && this._gameState == GameStates.WaitForPlayers)) // || !this.gameHasHumanPlayersLeft())
+		if ((bPlayerStartedGame && this._gameState == GameStates.WaitForPlayers) || !this.gameHasHumanPlayersLeft())
 		{
 			this.onEndGame(player);
 		}
