@@ -106,7 +106,7 @@ module.exports = class Game extends EventEmitter
 	endGame(playerWhoEndedTheGame)
 	{
 		playerWhoEndedTheGame.Socket.broadcast.to(this._roomName).emit("serverGameTerminated", playerWhoEndedTheGame.Name);
-		this.emit("gameEndedFromWaitPage", this._gameCode);
+		this.emit("gameEnded", this._gameCode);
 	}
 
 	onPlayerEndGameFromWaitPage(player)
