@@ -89,6 +89,7 @@ module.exports = class Game extends EventEmitter
 			player.leaveRoom(this._roomName);
 		this._players.delete(name);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
+		this.updateOpen();
 	}
 
 	onEndGame(player)
