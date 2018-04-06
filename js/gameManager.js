@@ -1,6 +1,6 @@
 'use strict';
 
-let Game = require('./game.js');
+const Game = require('./game.js');
 
 module.exports = class GameManager
 {
@@ -27,7 +27,13 @@ module.exports = class GameManager
 		}
 		while (this._games.has(candidateGameCode));
 
-		this._games.set(candidateGameCode, new Game(candidateGameCode, firstPlayerName, firstPlayerSocket, io));
+		let game = new Game(candidateGameCode, firstPlayerName, firstPlayerSocket, io);
+		game.on('gameEnded', this.deleteGame.bind(this));
+		this._games.set(candidateGameCode, game);
 		return candidateGameCode;
+	}
+
+	deleteGame(gameCode){
+		this._games.delete(gameCode);
 	}
 }

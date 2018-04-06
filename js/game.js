@@ -1,12 +1,14 @@
 'use strict';
 
-let ArtificialPlayer = require('./artificialPlayer.js');
-let HumanPlayer = require('./humanPlayer.js');
+const ArtificialPlayer = require('./artificialPlayer.js');
+const HumanPlayer = require('./humanPlayer.js');
+const EventEmitter = require('events');
 
-module.exports = class Game
+module.exports = class Game extends EventEmitter
 {
 	constructor(gameCode, firstPlayerName, firstPlayerSocket, io)
 	{
+		super();
 		this._io = io;
 		this._gameCode = gameCode;
 		this._roomName = "room_" + this._gameCode;
@@ -92,6 +94,7 @@ module.exports = class Game
 	onEndGame(player)
 	{
 		player.Socket.broadcast.to(this._roomName).emit("gameTerminated", player.Name);
+		this.emit("gameEnded", this._gameCode);
 	}
 
 	onAddAIFromWaitPage(player)
