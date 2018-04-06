@@ -3,6 +3,7 @@
 const ArtificialPlayer = require('./artificialPlayer.js');
 const HumanPlayer = require('./humanPlayer.js');
 const EventEmitter = require('events');
+const GameStates = require('./gameStates.js');
 
 module.exports = class Game extends EventEmitter
 {
@@ -10,10 +11,11 @@ module.exports = class Game extends EventEmitter
 	{
 		super();
 		this._io = io;
+		this._gameState = GameStates.WaitForPlayers;
 		this._gameCode = gameCode;
 		this._roomName = "room_" + this._gameCode;
 		this._players = new Map();
-		this.addHumanPlayer(firstPlayerName, firstPlayerSocket);
+		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 		this._open = true;
 		this._spectators = [];
 	}
@@ -44,9 +46,9 @@ module.exports = class Game extends EventEmitter
 		return !this._players.has(name);
 	}
 
-	addHumanPlayer(name, socket)
+	addHumanPlayer(name, bStartedGame, socket)
 	{
-		let player = new HumanPlayer(name, socket);
+		let player = new HumanPlayer(name, bStartedGame, socket);
 		this._players.set(name, player);
 		this.subscribeToPlayerEvents(player);
 		this.subscribeToHumanPlayerEvents(player);
@@ -85,11 +87,16 @@ module.exports = class Game extends EventEmitter
 		if (!this._players.has(name))
 			return;
 		let player = this._players.get(name);
+		let bPlayerStartedGame = player.StartedGame;
 		if (player.leaveRoom)
 			player.leaveRoom(this._roomName);
 		this._players.delete(name);
 		this._io.sockets.in(this._roomName).emit('playerList', Array.from(this._players.keys()));
 		this.updateOpen();
+		if ((bPlayerStartedGame && this._gameState == GameStates.WaitForPlayers)) // || !this.gameHasHumanPlayersLeft())
+		{
+			this.onEndGame(player);
+		}
 	}
 
 	onEndGame(player)

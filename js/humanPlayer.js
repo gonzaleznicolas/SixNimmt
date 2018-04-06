@@ -4,9 +4,9 @@ const Player = require('./player.js');
 
 module.exports = class HumanPlayer extends Player
 {
-	constructor(name, socket)
+	constructor(name, bStartedGame, socket)
 	{
-		super(name);
+		super(name, bStartedGame);
 		this._socket = socket;
 		
 		this._socket.on("addAIFromWaitPage", this.onAddAIFromWaitPage.bind(this));

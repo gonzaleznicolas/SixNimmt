@@ -62,7 +62,7 @@ function onJoinGame(data){
 				if (game.nameAvailable(nickName))
 				{
 					nameValid = true;
-					game.addHumanPlayer(nickName, this);
+					game.addHumanPlayer(nickName, false, this);
 				}
 			}
 			

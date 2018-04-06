@@ -6,6 +6,6 @@ module.exports = class ArtificialPlayer extends Player
 {
 	constructor(name)
 	{
-		super(name);
+		super(name, false);
 	}
 }
