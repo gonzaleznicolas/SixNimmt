@@ -4,6 +4,7 @@ const ArtificialPlayer = require('./artificialPlayer.js');
 const HumanPlayer = require('./humanPlayer.js');
 const EventEmitter = require('events');
 const GameStates = require('./gameStates.js');
+const Spectator = require('./spectator.js');
 
 module.exports = class Game extends EventEmitter
 {
@@ -17,6 +18,7 @@ module.exports = class Game extends EventEmitter
 		this._players = new Map();
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 		this._open = true;
+		this._spectators = [];
 	}
 
 	get Open() {return this._open;}
@@ -82,6 +84,7 @@ module.exports = class Game extends EventEmitter
 
 	addSpectator(socket)
 	{
+		this._spectators.push(new Spectator(socket));
 		socket.join(this._roomName);
 		this._io.sockets.in(this._roomName).emit('serverPlayerList', Array.from(this._players.keys()));
 	}
@@ -130,12 +133,15 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerStartGameWithCurrentPlayers(playerStartingGame)
 	{
-		if (this._gameState == GameStates.WaitForPlayers &&
-			playerStartingGame.StartedGame &&
-			this._players.size >= 2 && this._players.size <= 10)
-		{
-			this._open = false;
-			this._io.sockets.in(this._roomName).emit('serverStartGame', Array.from(this._players.keys()));
-		}
+		// if (this._gameState == GameStates.WaitForPlayers &&
+		// 	playerStartingGame.StartedGame &&
+		// 	this._players.size >= 2 && this._players.size <= 10)
+		// {
+		// 	this._open = false;
+
+		// 	this._players.forEach(function (player){
+		// 		player.startGame(Array.from(this._players.keys()));
+		// 	}.bind(this));
+		// }
 	}
 }
