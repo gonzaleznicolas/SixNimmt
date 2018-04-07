@@ -26,12 +26,14 @@ module.exports = class HumanPlayer extends Player
 
 	onClientEndGameFromWaitPage()
 	{
-		this.emit('playerEndGameFromWaitPage', this);
+		if (this._bStartedGame)
+			this.emit('playerEndGameFromWaitPage', this);
 	}
 
 	onClientAddAIFromWaitPage()
 	{
-		this.emit('playerAddAIFromWaitPage', this);
+		if (this._bStartedGame)
+			this.emit('playerAddAIFromWaitPage', this);
 	}
 
 	onClientQuitGame()
@@ -41,7 +43,8 @@ module.exports = class HumanPlayer extends Player
 
 	onClientStartGameWithCurrentPlayers()
 	{
-		this.emit("playerStartGameWithCurrentPlayers", this);
+		if (this._bStartedGame)
+			this.emit("playerStartGameWithCurrentPlayers", this);
 	}
 
 }

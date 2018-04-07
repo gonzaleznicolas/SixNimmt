@@ -111,13 +111,13 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerEndGameFromWaitPage(player)
 	{
-		if (this._gameState == GameStates.WaitForPlayers)
+		if (this._gameState == GameStates.WaitForPlayers && player.StartedGame)
 			this.endGame(player);
 	}
 
 	onPlayerAddAIFromWaitPage(player)
 	{
-		if (this._gameState == GameStates.WaitForPlayers)
+		if (this._gameState == GameStates.WaitForPlayers && player.StartedGame)
 			this.addArtificialPlayer();
 	}
 
@@ -125,6 +125,7 @@ module.exports = class Game extends EventEmitter
 	{
 		if (this._gameState == GameStates.WaitForPlayers)
 			this.removePlayer(player.Name);
+		// if in the middle of game, replace with an AI
 	}
 
 	onPlayerStartGameWithCurrentPlayers(playerStartingGame)
