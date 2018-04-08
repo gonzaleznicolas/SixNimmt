@@ -1,14 +1,18 @@
 "use strict";
 
 class GameController {
-	constructor()
+	constructor(initializationData)
 	{
+		bSpectatorMode = initializationData.isSpectator;
+		numberOfPlayers = initializationData.playerList.length;
+		let listOfPlayers = initializationData.playerList;
+
 		lc = new LayoutCalculator();
 		
 		this._model = new GameModel();
 		this._menuView = new MenuView();
 
-		this._scoreboardView = new ScoreboardView(["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Moises", "Jesus", "Jose", "Maria", "MMMMMM"]);
+		this._scoreboardView = new ScoreboardView(listOfPlayers);
 		this._tableView = new TableView(this._model);
 		if (!bSpectatorMode)
 			this._handView = new HandView(this._model);

@@ -107,10 +107,9 @@ function onServerGameTerminated(terminatorPlayerName)
 
 function onServerStartGame(data)
 {
-	numberOfPlayers = data.length;
 	$("#homePage").hide(1000);
 	$("#waitPage").hide(1000);
 	$("#gamePage").show(1000, function(){
-		controller = new GameController();
+		controller = new GameController(data);
 	});
 }

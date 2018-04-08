@@ -30,6 +30,14 @@ module.exports = class HumanPlayer extends Player
 		this._socket.emit("serverGameTerminated", nameOfPlayerWhoEndedTheGame);
 	}
 
+	startGame(playerList)
+	{
+		this._socket.emit("serverStartGame", {
+			isSpectator: false,
+			playerList: playerList
+		});
+	}
+
 	// CLIENT EVENT HANDLERS
 
 	onClientEndGameFromWaitPage()

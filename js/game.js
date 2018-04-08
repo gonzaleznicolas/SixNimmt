@@ -136,6 +136,22 @@ module.exports = class Game extends EventEmitter
 		});
 	}
 
+	tellAllPlayersGameStarted()
+	{
+		let listOfPlayers = Array.from(this._players.keys());
+		this._players.forEach(function (player){
+			player.startGame(listOfPlayers);
+		}.bind(this));
+	}
+
+	tellAllSpectatorsGameStarted()
+	{
+		let listOfPlayers = Array.from(this._players.keys());
+		this._spectators.forEach(function (player){
+			player.startGame(listOfPlayers);
+		}.bind(this));
+	}
+
 	// PLAYER EVENT HANDLERS
 
 	onPlayerEndGameFromWaitPage(player)
@@ -163,15 +179,14 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerStartGameWithCurrentPlayers(player)
 	{
-		// if (this._gameState == GameStates.WaitForPlayers &&
-		// 	player.StartedGame &&
-		// 	this._players.size >= 2 && this._players.size <= 10)
-		// {
-		// 	this._open = false;
-		// 	this._gameState == GameStates.WaitForAllPlayersToChooseTheirCard;
-		// 	this._players.forEach(function (player){
-		// 		player.startGame(Array.from(this._players.keys()));
-		// 	}.bind(this));
-		// }
+		if (this._gameState == GameStates.WaitForPlayers &&
+			player.StartedGame &&
+			this._players.size >= 2 && this._players.size <= 10)
+		{
+			this._open = false;
+			this._gameState == GameStates.WaitForAllPlayersToChooseTheirCard;
+			this.tellAllPlayersGameStarted();
+			this.tellAllSpectatorsGameStarted();
+		}
 	}
 }

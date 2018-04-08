@@ -15,7 +15,8 @@ module.exports = class Player extends EventEmitter
 	get Name() {return this._name;}
 	get StartedGame() {return this._bStartedGame};
 
-	// OVERRIDEN ONLY BY HumanPlayer
+	// METHODS TO BE IMPLEMENTED BY ANY CLASS DERIVING OFF OF PLAYER
 	updatePlayerList(playerList){}
 	terminateGame(nameOfPlayerWhoEndedTheGame){}
+	startGame(playerList){}
 }
