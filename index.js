@@ -3,7 +3,7 @@
 let express = require('express');
 let app = express();
 let http = require('http').Server(app);
-require('./js/startupController.js')(require('socket.io')(http));
+require('./js/setupController.js')(require('socket.io')(http));
 
 // allow files in public directory to be served as static files
 app.use(express.static('public'));
