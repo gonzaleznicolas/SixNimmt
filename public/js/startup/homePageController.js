@@ -52,6 +52,10 @@ function onNewGameFormResult(data) {
 		$("#homePage").hide(1000); 
 		launchWaitPage(data.gameCode, TypeOfLoadingScreen.PersonWhoStartedTheGame); 
 	}
+	else 
+	{ 
+		showNickNameError(); 
+	} 
 }
    
 function onJoinGameFormResult(data) { 
