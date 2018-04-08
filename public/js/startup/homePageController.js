@@ -12,15 +12,15 @@ $(function () {
 	startHomePageUI();
 	socket = io();
 
-	// form results
+	// SERVER FORM RESULTS
 	socket.on("serverNewGameFormResult", onNewGameFormResult);
 	socket.on("serverJoinGameFormResult", onJoinGameFormResult);
 	socket.on("server1v1vsAIFormResult", onVsAIFormResult);
 	socket.on("serverSpectateGameFormResult", onSpectateFormResult);
 
-	// wait screen updates
-	socket.on("serverGameTerminated", onServerGameTerminated);
+	// SERVER EVENTS DURING WAIT SCREEN
 	socket.on("serverPlayerList", onPlayerList);
+	socket.on("serverGameTerminated", onServerGameTerminated);
 	socket.on("serverStartGame", onServerStartGame);
 });
 
@@ -42,7 +42,9 @@ function onSubmitFormClicked() {
 		socket.emit('clientSpectateGame', {gameCode: $("#codeTextBox").val()});
 	}
 }
-   
+
+// FORM RESULT HANDLERS
+
 function onNewGameFormResult(data) { 
 	hideAllErrorStatus(); 
 	if (data.valid) 
@@ -92,6 +94,8 @@ function onSpectateFormResult(data)
 		showCodeError(); 
 	} 
 }
+
+// SERVER EVENT HANDLERS
 
 function onServerGameTerminated(terminatorPlayerName)
 {

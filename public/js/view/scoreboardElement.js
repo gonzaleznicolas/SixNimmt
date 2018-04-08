@@ -7,7 +7,7 @@ class ScoreboardElement
 			this._div = $(document.createElement("div"));
 			this._div.addClass("scoreboardElement");
 			this._playerName = playerName;
-			this._playerScore = Math.floor(Math.random()*300);
+			this._playerScore = 0;
 			this.updateText();
 		}
 

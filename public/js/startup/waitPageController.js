@@ -6,10 +6,7 @@ function launchWaitPage(gc, lst){
 	startWaitPageUI();
 }
 
-function onPlayerList(data){
-	playerList = data;
-	updatePlayerListAndButtons(data);
-}
+// WAIT PAGE BUTTON CLICK HANDLERS
 
 function onAddAIFromWaitPageClicked()
 {
@@ -41,4 +38,11 @@ function onEndGameClicked()
 function onStartGameClicked()
 {
 	socket.emit("clientStartGameWithCurrentPlayers");
+}
+
+// SERVER EVENT HANDLERS
+
+function onPlayerList(data){
+	playerList = data;
+	updatePlayerListAndButtons(data);
 }

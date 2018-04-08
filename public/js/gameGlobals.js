@@ -1,9 +1,9 @@
 "use strict";
 
-// the 4 key vars
-let bSpectatorMode = false;
+let bSpectatorMode;
 let numberOfPlayers;
 let bFlickityEnabled = true;
+let lc = undefined;	// layoutCalculator - initiallized in the gameController
 
 // game constants
 const MAX_NUMBER_OF_PLAYERS = 10;
@@ -18,8 +18,6 @@ let bAnimationInProgress = false;
 // global enums
 const HandState = Object.freeze({"PlayCard":1, "NotTimeToPlayCard":2})
 const TableState = Object.freeze({"SelectRowToTake":1, "Normal":2})
-
-let lc = undefined;	// layoutCalculator - initiallized in the gameController
 
 function getCardInfo(cardNumber)
 {

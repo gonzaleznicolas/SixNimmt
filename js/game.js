@@ -161,14 +161,14 @@ module.exports = class Game extends EventEmitter
 		// if in the middle of game, replace with an AI. if there are no human players left, end game.
 	}
 
-	onPlayerStartGameWithCurrentPlayers(playerStartingGame)
+	onPlayerStartGameWithCurrentPlayers(player)
 	{
 		// if (this._gameState == GameStates.WaitForPlayers &&
-		// 	playerStartingGame.StartedGame &&
+		// 	player.StartedGame &&
 		// 	this._players.size >= 2 && this._players.size <= 10)
 		// {
 		// 	this._open = false;
-
+		// 	this._gameState == GameStates.WaitForAllPlayersToChooseTheirCard;
 		// 	this._players.forEach(function (player){
 		// 		player.startGame(Array.from(this._players.keys()));
 		// 	}.bind(this));
