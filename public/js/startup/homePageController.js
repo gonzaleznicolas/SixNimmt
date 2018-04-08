@@ -6,7 +6,7 @@ let formType = undefined;
 let socket = undefined;
 let loadingScreenType = undefined;
 let gameCode = undefined;
-let playerList = [];
+let waitPagePlayerList = [];
 
 $(function () {
 	startHomePageUI();
@@ -18,7 +18,7 @@ $(function () {
 	socket.on("server1v1vsAIFormResult", onVsAIFormResult);
 	socket.on("serverSpectateGameFormResult", onSpectateFormResult);
 
-	// SERVER EVENTS DURING WAIT SCREEN
+	// SERVER EVENTS DURING WAIT PAGE
 	socket.on("serverPlayerList", onPlayerList);
 	socket.on("serverGameTerminated", onServerGameTerminated);
 	socket.on("serverStartGame", onServerStartGame);
@@ -108,8 +108,8 @@ function onServerGameTerminated(terminatorPlayerName)
 
 function onServerStartGame(data)
 {
-	playerList = data;
-	numberOfPlayers = playerList.length;
+	waitPagePlayerList = data;
+	numberOfPlayers = waitPagePlayerList.length;
 	$("#homePage").hide(1000);
 	$("#waitPage").hide(1000);
 	$("#gamePage").show(1000, function(){
