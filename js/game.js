@@ -117,11 +117,11 @@ module.exports = class Game extends EventEmitter
 
 		this._players.forEach(function (player){
 			player.updatePlayerList(playerList);
-		}.bind(this));
+		});
 
 		this._spectators.forEach(function (spectator){
 			spectator.updatePlayerList(playerList);
-		}.bind(this));
+		});
 	}
 
 	tellAllPlayersAndSpectatorsThatTheGameGotTerminated(nameOfPlayerWhoEndedTheGame)
@@ -129,11 +129,11 @@ module.exports = class Game extends EventEmitter
 		this._players.forEach(function (player){
 			if (player.Name != nameOfPlayerWhoEndedTheGame)
 				player.terminateGame(nameOfPlayerWhoEndedTheGame);
-		}.bind(this));
+		});
 
 		this._spectators.forEach(function (spectator){
 			spectator.terminateGame(nameOfPlayerWhoEndedTheGame);
-		}.bind(this));
+		});
 	}
 
 	onPlayerEndGameFromWaitPage(player)
