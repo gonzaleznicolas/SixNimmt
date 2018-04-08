@@ -28,10 +28,16 @@ module.exports = class GameManager
 		while (this._games.has(candidateGameCode));
 
 		let game = new Game(candidateGameCode, firstPlayerName, firstPlayerSocket);
+
+		// GAME TO GAME MANAGER - EVENTS
 		game.on('gameEnded', this.deleteGame.bind(this));
+
+
 		this._games.set(candidateGameCode, game);
 		return candidateGameCode;
 	}
+
+	// GAME TO GAME MANAGER - EVENT HANDLERS
 
 	deleteGame(gameCode){
 		this._games.delete(gameCode);

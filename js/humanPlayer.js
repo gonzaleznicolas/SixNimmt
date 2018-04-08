@@ -9,12 +9,14 @@ module.exports = class HumanPlayer extends Player
 		super(name, bStartedGame);
 		this._socket = socket;
 		
-		// game setup messages from client
+		// CLIENT TO SERVER - WAIT PAGE EVENTS
 		this._socket.on("clientAddAIFromWaitPage", this.onClientAddAIFromWaitPage.bind(this));
 		this._socket.on("clientEndGameFromWaitPage", this.onClientEndGameFromWaitPage.bind(this));
+		this._socket.on("clientStartGameWithCurrentPlayers", this.onClientStartGameWithCurrentPlayers.bind(this));
+
+		// CLIENT TO SERVER - GAME EVENTS
 		this._socket.on("clientQuitGame", this.onClientQuitGame.bind(this));
 		this._socket.on("disconnect", this.onClientQuitGame.bind(this));
-		this._socket.on("clientStartGameWithCurrentPlayers", this.onClientStartGameWithCurrentPlayers.bind(this));
 	}
 
 	get Socket() {return this._socket;}
@@ -38,7 +40,7 @@ module.exports = class HumanPlayer extends Player
 		});
 	}
 
-	// CLIENT EVENT HANDLERS
+	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS
 
 	onClientEndGameFromWaitPage()
 	{
@@ -52,14 +54,16 @@ module.exports = class HumanPlayer extends Player
 			this.emit('playerAddAIFromWaitPage', this);
 	}
 
-	onClientQuitGame()
-	{
-		this.emit('playerQuitGame', this);
-	}
-
 	onClientStartGameWithCurrentPlayers()
 	{
 		if (this._bStartedGame)
 			this.emit("playerStartGameWithCurrentPlayers", this);
+	}
+
+	// CLIENT TO SERVER - GAME EVENT HANDLERS
+
+	onClientQuitGame()
+	{
+		this.emit('playerQuitGame', this);
 	}
 }

@@ -39,9 +39,3 @@ function onStartGameClicked()
 {
 	socket.emit("clientStartGameWithCurrentPlayers");
 }
-
-// SERVER EVENT HANDLERS
-
-function onPlayerList(listOfPlayers){
-	updatePlayerListAndButtons(listOfPlayers);
-}

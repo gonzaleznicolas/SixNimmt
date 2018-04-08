@@ -11,16 +11,18 @@ $(function () {
 	startHomePageUI();
 	socket = io();
 
-	// SERVER FORM RESULTS
+	// SERVER TO CLIENT - FORM RESULT EVENTS
 	socket.on("serverNewGameFormResult", onNewGameFormResult);
 	socket.on("serverJoinGameFormResult", onJoinGameFormResult);
 	socket.on("server1v1vsAIFormResult", onVsAIFormResult);
 	socket.on("serverSpectateGameFormResult", onSpectateFormResult);
 
-	// SERVER EVENTS DURING WAIT PAGE
+	// SERVER TO CLIENT - WAIT PAGE EVENTS
 	socket.on("serverPlayerList", onPlayerList);
-	socket.on("serverGameTerminated", onServerGameTerminated);
 	socket.on("serverStartGame", onServerStartGame);
+
+	// SERVER TO CLIENT - GAME EVENTS
+	socket.on("serverGameTerminated", onServerGameTerminated);
 });
 
 function onSubmitFormClicked() { 
@@ -42,7 +44,7 @@ function onSubmitFormClicked() {
 	}
 }
 
-// FORM RESULT HANDLERS
+// SERVER TO CLIENT - FORM RESULT HANDLERS
 
 function onNewGameFormResult(data) { 
 	hideAllErrorStatus(); 
@@ -99,7 +101,21 @@ function onSpectateFormResult(data)
 	} 
 }
 
-// SERVER EVENT HANDLERS
+// SERVER TO CLIENT - WAIT PAGE EVENT HANDLERS
+function onServerStartGame(data)
+{
+	$("#homePage").hide(1000);
+	$("#waitPage").hide(1000);
+	$("#gamePage").show(1000, function(){
+		controller = new GameController(data);
+	});
+}
+
+function onPlayerList(listOfPlayers){
+	updatePlayerListAndButtons(listOfPlayers);
+}
+
+// SERVER TO CLIENT - GAME EVENT HANDLERS
 
 function onServerGameTerminated(terminatorPlayerName)
 {
@@ -108,13 +124,4 @@ function onServerGameTerminated(terminatorPlayerName)
 		function(){
 			location.reload();
 		});
-}
-
-function onServerStartGame(data)
-{
-	$("#homePage").hide(1000);
-	$("#waitPage").hide(1000);
-	$("#gamePage").show(1000, function(){
-		controller = new GameController(data);
-	});
 }

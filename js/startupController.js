@@ -19,11 +19,15 @@ function onConnection(socket) {
 	   this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents = false;
 	});
 
+	// CLIENT TO SERVER - FORM SUBMITTED EVENTS
 	socket.on("clientNewGame", onClientNewGame);
 	socket.on("clientJoinGame", onClientJoinGame);
 	socket.on("client1v1vsAI", onClient1v1vsAI);
 	socket.on("clientSpectateGame", onClientSpectateGame);
- }
+}
+
+
+// CLIENT TO SERVER - FORM SUBMITTED EVENT HANDLERS
 
 function onClientNewGame(data){
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
@@ -78,7 +82,7 @@ function onClientJoinGame(data){
 	}
 
 	this.emit("serverJoinGameFormResult", {codeValid: codeValid, nameValid: nameValid, 
-									gameCode: data.gameCode, nickName: nickName});
+									gameCode: data.gameCode});
 }
 
 function onClient1v1vsAI()

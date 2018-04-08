@@ -25,10 +25,13 @@ module.exports = class Game extends EventEmitter
 	{
 		if (player instanceof HumanPlayer)
 		{
+			// PLAYER TO GAME - WAIT PAGE EVENTS
 			player.on("playerAddAIFromWaitPage", this.onPlayerAddAIFromWaitPage.bind(this));
-			player.on("playerQuitGame", this.onPlayerQuitGame.bind(this));
 			player.on("playerEndGameFromWaitPage", this.onPlayerEndGameFromWaitPage.bind(this));
 			player.on("playerStartGameWithCurrentPlayers", this.onPlayerStartGameWithCurrentPlayers.bind(this));
+
+			// PLAYER TO GAME - GAME EVENTS
+			player.on("playerQuitGame", this.onPlayerQuitGame.bind(this));
 		}
 	}
 
@@ -152,7 +155,7 @@ module.exports = class Game extends EventEmitter
 		}.bind(this));
 	}
 
-	// PLAYER EVENT HANDLERS
+	// PLAYER TO GAME - WAIT PAGE EVENT HANDLERS
 
 	onPlayerEndGameFromWaitPage(player)
 	{
@@ -166,17 +169,6 @@ module.exports = class Game extends EventEmitter
 			this.addArtificialPlayer();
 	}
 
-	onPlayerQuitGame(player)
-	{
-		if (this._gameState == GameStates.WaitForPlayers)
-		{
-			this.removePlayer(player.Name);
-			if (player.StartedGame)
-				this.endGame(player);
-		}
-		// if in the middle of game, replace with an AI. if there are no human players left, end game.
-	}
-
 	onPlayerStartGameWithCurrentPlayers(player)
 	{
 		if (this._gameState == GameStates.WaitForPlayers &&
@@ -188,5 +180,18 @@ module.exports = class Game extends EventEmitter
 			this.tellAllPlayersGameStarted();
 			this.tellAllSpectatorsGameStarted();
 		}
+	}
+
+	// PLAYER TO GAME - GAME EVENT HANDLERS
+
+	onPlayerQuitGame(player)
+	{
+		if (this._gameState == GameStates.WaitForPlayers)
+		{
+			this.removePlayer(player.Name);
+			if (player.StartedGame)
+				this.endGame(player);
+		}
+		// if in the middle of game, replace with an AI. if there are no human players left, end game.
 	}
 }
