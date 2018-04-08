@@ -95,10 +95,8 @@ module.exports = class Game extends EventEmitter
 
 	removePlayer(name)
 	{
-		if (!this._players.has(name))
+		if (!this._players.delete(name))
 			return;
-		let player = this._players.get(name);
-		this._players.delete(name);
 		this.updateAllPlayersAndSpectatorsWithPlayerList();
 		this.updateOpen();
 	}
