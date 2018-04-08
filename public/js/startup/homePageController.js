@@ -46,7 +46,7 @@ function onSubmitFormClicked() {
 
 function onNewGameFormResult(data) { 
 	hideAllErrorStatus(); 
-	if (data.valid) 
+	if (data.nameValid) 
 	{ 
 		showNickNameSuccess(); 
 		$("#homePage").hide(1000); 
@@ -78,7 +78,8 @@ function onJoinGameFormResult(data) {
 } 
 
 function onVsAIFormResult() 
-{ 
+{
+	$("#homePage").hide(1000); 
 	onStartGameClicked();
 }
 

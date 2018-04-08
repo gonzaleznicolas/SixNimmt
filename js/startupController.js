@@ -30,23 +30,20 @@ function onClientNewGame(data){
 		return;
 	console.log("New game started");
 	let nickName = StringFunctions.capitalizeNickName(data.nickName);
-	let validForm = undefined;
+	let nameValid = false;
+	let gameCode = undefined;
 	if (StringFunctions.isPossibleNickName(nickName))
 	{
-		let gameCode = gameManager.addGame(nickName, this, io);
-		validForm = {valid: true, gameCode: gameCode, firstPlayerName: nickName};
+		gameCode = gameManager.addGame(nickName, this, io);
+		nameValid = true;
 
 		// so that if this socket fires a home page event while in game, we ignore it.
 		// This is part of the effort to ignore any events emmitted by the client when the server is not expecting it.
 		// Do not trust anything from the client.
 		this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents = true;
 	}
-	else
-	{
-		validForm = {valid: false};
-	}
 
-	this.emit("serverNewGameFormResult", validForm);
+	this.emit("serverNewGameFormResult", {nameValid: nameValid, gameCode: gameCode});
 }
 
 function onClientJoinGame(data){
