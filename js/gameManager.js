@@ -27,7 +27,7 @@ module.exports = class GameManager
 		}
 		while (this._games.has(candidateGameCode));
 
-		let game = new Game(candidateGameCode, firstPlayerName, firstPlayerSocket, io);
+		let game = new Game(candidateGameCode, firstPlayerName, firstPlayerSocket);
 		game.on('gameEnded', this.deleteGame.bind(this));
 		this._games.set(candidateGameCode, game);
 		return candidateGameCode;

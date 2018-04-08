@@ -8,17 +8,15 @@ const Spectator = require('./spectator.js');
 
 module.exports = class Game extends EventEmitter
 {
-	constructor(gameCode, firstPlayerName, firstPlayerSocket, io)
+	constructor(gameCode, firstPlayerName, firstPlayerSocket)
 	{
 		super();
-		this._io = io;
 		this._gameState = GameStates.WaitForPlayers;
 		this._gameCode = gameCode;
-		this._roomName = "room_" + this._gameCode;
 		this._players = new Map();
-		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 		this._open = true;
 		this._spectators = [];
+		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
 
 	get Open() {return this._open;}
@@ -59,9 +57,8 @@ module.exports = class Game extends EventEmitter
 		let player = new HumanPlayer(name, bStartedGame, socket);
 		this._players.set(name, player);
 		this.subscribeToPlayerEvents(player);
-		socket.join(this._roomName);
-		this._io.sockets.in(this._roomName).emit('serverPlayerList', Array.from(this._players.keys()));
 		this.updateOpen();
+		this.updateAllPlayersAndSpectatorsWithPlayerList();
 	}
 
 	// returns AI name
@@ -77,16 +74,17 @@ module.exports = class Game extends EventEmitter
 		let player = new ArtificialPlayer(name);
 		this._players.set(name, player);
 		this.subscribeToPlayerEvents(player);
-		this._io.sockets.in(this._roomName).emit('serverPlayerList', Array.from(this._players.keys()));
 		this.updateOpen();
+		this.updateAllPlayersAndSpectatorsWithPlayerList();
 		return name;
 	}
 
 	addSpectator(socket)
 	{
-		this._spectators.push(new Spectator(socket));
-		socket.join(this._roomName);
-		this._io.sockets.in(this._roomName).emit('serverPlayerList', Array.from(this._players.keys()));
+		let spectator = new Spectator(socket);
+		this._spectators.push(spectator);
+
+		spectator.updatePlayerList(Array.from(this._players.keys()));
 	}
 
 	removePlayer(name)
@@ -95,12 +93,11 @@ module.exports = class Game extends EventEmitter
 			return;
 		let player = this._players.get(name);
 		let bPlayerStartedGame = player.StartedGame;
-		if (player instanceof HumanPlayer)
-			player.leaveRoom(this._roomName);
 		this._players.delete(name);
-		this._io.sockets.in(this._roomName).emit('serverPlayerList', Array.from(this._players.keys()));
+		this.updateAllPlayersAndSpectatorsWithPlayerList();
 		this.updateOpen();
-		if ((bPlayerStartedGame && this._gameState == GameStates.WaitForPlayers) || !this.gameHasHumanPlayersLeft())
+		if ((bPlayerStartedGame && this._gameState == GameStates.WaitForPlayers) ||
+			(!this.gameHasHumanPlayersLeft() && this._gameState != GameStates.WaitForPlayers))
 		{
 			this.endGame(player);
 		}
@@ -108,8 +105,35 @@ module.exports = class Game extends EventEmitter
 
 	endGame(playerWhoEndedTheGame)
 	{
-		playerWhoEndedTheGame.Socket.broadcast.to(this._roomName).emit("serverGameTerminated", playerWhoEndedTheGame.Name);
+		this.tellAllPlayersAndSpectatorsThatTheGameGotTerminated(playerWhoEndedTheGame.Name);
+
+		// tell the gameManager to remove this game
 		this.emit("gameEnded", this._gameCode);
+	}
+
+	updateAllPlayersAndSpectatorsWithPlayerList()
+	{
+		let playerList = Array.from(this._players.keys());
+
+		this._players.forEach(function (player){
+			player.updatePlayerList(playerList);
+		}.bind(this));
+
+		this._spectators.forEach(function (spectator){
+			spectator.updatePlayerList(playerList);
+		}.bind(this));
+	}
+
+	tellAllPlayersAndSpectatorsThatTheGameGotTerminated(nameOfPlayerWhoEndedTheGame)
+	{
+		this._players.forEach(function (player){
+			if (player.Name != nameOfPlayerWhoEndedTheGame)
+				player.terminateGame(nameOfPlayerWhoEndedTheGame);
+		}.bind(this));
+
+		this._spectators.forEach(function (spectator){
+			spectator.terminateGame(nameOfPlayerWhoEndedTheGame);
+		}.bind(this));
 	}
 
 	onPlayerEndGameFromWaitPage(player)

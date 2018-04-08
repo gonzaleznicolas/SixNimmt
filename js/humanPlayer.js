@@ -18,11 +18,19 @@ module.exports = class HumanPlayer extends Player
 	}
 
 	get Socket() {return this._socket;}
-
-	leaveRoom(roomName)
+	
+	// MESSAGES FROM THE GAME
+	updatePlayerList(playerList)
 	{
-		this._socket.leave(roomName);
+		this._socket.emit('serverPlayerList', playerList);
 	}
+
+	terminateGame(nameOfPlayerWhoEndedTheGame)
+	{
+		this._socket.emit("serverGameTerminated", nameOfPlayerWhoEndedTheGame);
+	}
+
+	// MESSAGES FROM THE CLIENT
 
 	onClientEndGameFromWaitPage()
 	{
@@ -46,5 +54,4 @@ module.exports = class HumanPlayer extends Player
 		if (this._bStartedGame)
 			this.emit("playerStartGameWithCurrentPlayers", this);
 	}
-
 }
