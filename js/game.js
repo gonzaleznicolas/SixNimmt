@@ -111,6 +111,8 @@ module.exports = class Game extends EventEmitter
 		this.emit("gameEnded", this._gameCode);
 	}
 
+	// GENERAL GAME UPDATES FOR PLAYERS AND SPECTATORS
+
 	updateAllPlayersAndSpectatorsWithPlayerList()
 	{
 		let playerList = Array.from(this._players.keys());
@@ -135,6 +137,8 @@ module.exports = class Game extends EventEmitter
 			spectator.terminateGame(nameOfPlayerWhoEndedTheGame);
 		});
 	}
+
+	// PLAYER EVENT HANDLERS
 
 	onPlayerEndGameFromWaitPage(player)
 	{

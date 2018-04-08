@@ -19,7 +19,7 @@ module.exports = class HumanPlayer extends Player
 
 	get Socket() {return this._socket;}
 	
-	// MESSAGES FROM THE GAME
+	// UPDATES FROM THE GAME
 	updatePlayerList(playerList)
 	{
 		this._socket.emit('serverPlayerList', playerList);
@@ -30,7 +30,7 @@ module.exports = class HumanPlayer extends Player
 		this._socket.emit("serverGameTerminated", nameOfPlayerWhoEndedTheGame);
 	}
 
-	// MESSAGES FROM THE CLIENT
+	// CLIENT EVENT HANDLERS
 
 	onClientEndGameFromWaitPage()
 	{
