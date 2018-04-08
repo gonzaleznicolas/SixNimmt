@@ -6,7 +6,6 @@ let formType = undefined;
 let socket = undefined;
 let loadingScreenType = undefined;
 let gameCode = undefined;
-let waitPagePlayerList = [];
 
 $(function () {
 	startHomePageUI();
@@ -108,8 +107,7 @@ function onServerGameTerminated(terminatorPlayerName)
 
 function onServerStartGame(data)
 {
-	waitPagePlayerList = data;
-	numberOfPlayers = waitPagePlayerList.length;
+	numberOfPlayers = data.length;
 	$("#homePage").hide(1000);
 	$("#waitPage").hide(1000);
 	$("#gamePage").show(1000, function(){

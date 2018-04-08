@@ -6,7 +6,6 @@ function startWaitPageUI() {
 	drawCow($("#waitCow")[0]);
 	fadeCow();
 	animateDots();
-	updatePlayerListAndButtons(waitPagePlayerList);
 
 	$('#endGameBtn')[0].addEventListener("click", onEndGameClicked, false);
 	$('#quitGameBtn')[0].addEventListener("click", onQuitGameClicked, false);

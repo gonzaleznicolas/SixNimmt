@@ -42,7 +42,6 @@ function onStartGameClicked()
 
 // SERVER EVENT HANDLERS
 
-function onPlayerList(data){
-	waitPagePlayerList = data;
-	updatePlayerListAndButtons(data);
+function onPlayerList(listOfPlayers){
+	updatePlayerListAndButtons(listOfPlayers);
 }
