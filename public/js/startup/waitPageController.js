@@ -18,7 +18,7 @@ function onQuitGameClicked()
 	new Dialog(areYouSureYouWantToLeaveStr,
 			leaveStr, 
 			function(){
-				socket.emit("clientQuitGameFromWaitPage");
+				socket.emit("clientQuitGame");
 				location.reload();
 			},
 			stayStr, undefined);
