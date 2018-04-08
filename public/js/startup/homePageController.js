@@ -6,6 +6,7 @@ let formType = undefined;
 let socket = undefined;
 let loadingScreenType = undefined;
 let gameCode = undefined;
+let waitPagePlayerList = []; 
 
 $(function () {
 	startHomePageUI();
@@ -112,6 +113,7 @@ function onServerStartGame(data)
 }
 
 function onPlayerList(listOfPlayers){
+	waitPagePlayerList = listOfPlayers;
 	updatePlayerListAndButtons(listOfPlayers);
 }
 

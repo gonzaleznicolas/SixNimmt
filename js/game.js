@@ -13,9 +13,10 @@ module.exports = class Game extends EventEmitter
 		super();
 		this._gameState = GameStates.WaitForPlayers;
 		this._gameCode = gameCode;
-		this._players = new Map();
 		this._open = true;
+		this._players = new Map();
 		this._spectators = [];
+		this._deck = undefined;
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
 
@@ -104,6 +105,34 @@ module.exports = class Game extends EventEmitter
 		this.updateOpen();
 	}
 
+	initializeCardsAndHands()
+	{
+		this.initFullDeck();
+		this._players.forEach(function (player) {
+			let hand = new Set();
+
+			let randomCardInDeck;
+			let randomIndexInDeck;
+			for (let i = 0; i < 10; i++)
+			{
+				randomIndexInDeck = Math.floor(Math.random() * (this._deck.length));
+				randomCardInDeck = this._deck[randomIndexInDeck];
+				this._deck.splice(randomIndexInDeck, 1);
+				hand.add(randomCardInDeck);
+			}
+			player.Hand = hand;
+		}.bind(this));
+	}
+
+	initFullDeck()
+	{
+		this._deck = [];
+		for (let card = 1; card <= 104; card++)
+		{
+			this._deck.push(card);
+		}
+	}
+
 	endGame(playerWhoEndedTheGame)
 	{
 		this.tellAllPlayersAndSpectatorsThatTheGameGotTerminated(playerWhoEndedTheGame.Name);
@@ -177,6 +206,7 @@ module.exports = class Game extends EventEmitter
 		{
 			this._open = false;
 			this._gameState == GameStates.WaitForAllPlayersToChooseTheirCard;
+			this.initializeCardsAndHands();
 			this.tellAllPlayersGameStarted();
 			this.tellAllSpectatorsGameStarted();
 		}
