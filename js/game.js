@@ -34,6 +34,12 @@ module.exports = class Game extends EventEmitter
 
 	updateOpen()
 	{
+		if (this._gameState != GameStates.WaitForPlayers)
+		{
+			this._open = false;
+			return;
+		}
+
 		if (this._players.size >= 10)
 			this._open = false;
 		else
@@ -92,15 +98,9 @@ module.exports = class Game extends EventEmitter
 		if (!this._players.has(name))
 			return;
 		let player = this._players.get(name);
-		let bPlayerStartedGame = player.StartedGame;
 		this._players.delete(name);
 		this.updateAllPlayersAndSpectatorsWithPlayerList();
 		this.updateOpen();
-		if ((bPlayerStartedGame && this._gameState == GameStates.WaitForPlayers) ||
-			(!this.gameHasHumanPlayersLeft() && this._gameState != GameStates.WaitForPlayers))
-		{
-			this.endGame(player);
-		}
 	}
 
 	endGame(playerWhoEndedTheGame)
@@ -151,8 +151,12 @@ module.exports = class Game extends EventEmitter
 	onPlayerQuitGame(player)
 	{
 		if (this._gameState == GameStates.WaitForPlayers)
+		{
 			this.removePlayer(player.Name);
-		// if in the middle of game, replace with an AI
+			if (player.StartedGame)
+				this.endGame(player);
+		}
+		// if in the middle of game, replace with an AI. if there are no human players left, end game.
 	}
 
 	onPlayerStartGameWithCurrentPlayers(playerStartingGame)
