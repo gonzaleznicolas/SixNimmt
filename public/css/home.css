@@ -68,7 +68,7 @@ h1 {
 
 input[type=text]{
 	font-size: 0.7em;
-	font-family: 'Luckiest Guy';
+	font-family: 'Bangers';
 	padding: 0.1em;
 	width: 10em;
 	color: var(--nimmtPurple);
@@ -88,7 +88,7 @@ input[type=text]{
     padding: 0.5em;
     background: rgba(0, 0, 0, 0.3);
     color: white;
-    font-family: "Luckiest Guy";
+    font-family: "Bangers";
 }
 
 #submitButton:hover {
