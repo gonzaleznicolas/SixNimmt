@@ -7,7 +7,7 @@ class GameController {
 		numberOfPlayers = initializationData.playerList.length;
 		let listOfPlayers = initializationData.playerList;
 		let hand = initializationData.hand;
-		let table = initializationData.gameBoard;
+		let table = initializationData.table;
 
 		lc = new LayoutCalculator();
 		

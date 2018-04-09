@@ -19,12 +19,12 @@ module.exports = class Spectator
 		this._socket.emit("serverGameTerminated", nameOfPlayerWhoEndedTheGame);
 	}
 
-	startGame(playerList, gameBoard)
+	startGame(playerList, table)
 	{
 		this._socket.emit("serverStartGame", {
 			isSpectator: true,
 			playerList: playerList,
-			gameBoard: gameBoard
+			table: table
 		});
 	}
 }

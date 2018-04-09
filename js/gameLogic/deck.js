@@ -11,19 +11,19 @@ module.exports = class Deck
 		}
 	}
 
-	// returns a set with 10 cards from the deck and removes those cards from the deck
-	getAHand()
+	// returns a set with n cards from the deck and removes those cards from the deck
+	takeCards(n)
 	{
-		let hand = new Set();
+		let cards = new Set();
 		let randomCardInDeck;
 		let randomIndexInDeck;
-		for (let i = 0; i < 10; i++)
+		for (let i = 0; i < n; i++)
 		{
 			randomIndexInDeck = Math.floor(Math.random() * (this._cards.length));
 			randomCardInDeck = this._cards[randomIndexInDeck];
 			this._cards.splice(randomIndexInDeck, 1);
-			hand.add(randomCardInDeck);
+			cards.add(randomCardInDeck);
 		}
-		return hand;
+		return cards;
 	}
 }

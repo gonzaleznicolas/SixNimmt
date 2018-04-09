@@ -21,5 +21,5 @@ module.exports = class Player extends EventEmitter
 	// METHODS TO BE IMPLEMENTED BY ANY CLASS DERIVING OFF OF PLAYER
 	updatePlayerList(playerList){}
 	terminateGame(nameOfPlayerWhoEndedTheGame){}
-	startGame(playerList, gameBoard){}
+	startGame(playerList, table){}
 }

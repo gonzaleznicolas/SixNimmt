@@ -3,25 +3,25 @@
 const NUMBER_OF_ROWS = 4;
 const NUMBER_OF_COLS = 6;
 
-module.exports = class GameBoard 
+module.exports = class Table 
 { 
 	constructor() 
 	{
-		this._board = undefined;
-		this.initEmptyBoard();
+		this._table = undefined;
+		this.initEmptyTable();
 	}
 
-	get Board() {return this._board;}
+	get Table() {return this._table;}
 
-	initEmptyBoard()
+	initEmptyTable()
 	{
-		this._board = [];
+		this._table = [];
 		for (let row = 0; row < NUMBER_OF_ROWS; row++)
 		{
-			this._board[row] = [];
+			this._table[row] = [];
 			for (let col = 0; col < NUMBER_OF_COLS; col++)
 			{
-				this._board[row][col] = null;
+				this._table[row][col] = null;
 			}
 		}
 	}
@@ -29,11 +29,11 @@ module.exports = class GameBoard
 	setInitialFourCards(unsortedArrayOfFourCards)
 	{
 		if (unsortedArrayOfFourCards.length != 4)
-			throw "Need exactly 4 initial cards on the game board";
+			throw "Need exactly 4 initial cards on the table";
 		let sortedAscending = unsortedArrayOfFourCards.sort((a, b) => a-b);
 		for (let row = 0; row < NUMBER_OF_ROWS; row++)
 		{
-			this._board[row][0] = sortedAscending[row];
+			this._table[row][0] = sortedAscending[row];
 		}
 	}
 }

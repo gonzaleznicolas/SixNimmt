@@ -6,7 +6,7 @@ const Spectator = require('./participants/spectator.js');
 const EventEmitter = require('events');
 const GameStates = require('./gameStates.js');
 const Deck = require('./deck.js');
-const GameBoard = require('./gameBoard.js');
+const Table = require('./table.js');
 
 module.exports = class Game extends EventEmitter
 {
@@ -19,7 +19,7 @@ module.exports = class Game extends EventEmitter
 		this._players = new Map();
 		this._spectators = [];
 		this._deck = new Deck();
-		this._gameBoard = new GameBoard();
+		this._table = new Table();
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
 
@@ -111,10 +111,14 @@ module.exports = class Game extends EventEmitter
 	initializePlayerHands()
 	{
 		this._players.forEach(function (player) {
-			player.Hand = this._deck.getAHand();
+			player.Hand = this._deck.takeCards(10);
 		}.bind(this));
 	}
 
+	initializeTableCards()
+	{
+		this._table.setInitialFourCards(Array.from(this._deck.takeCards(4)));
+	}
 
 	endGame(playerWhoEndedTheGame)
 	{
@@ -154,18 +158,18 @@ module.exports = class Game extends EventEmitter
 	tellAllPlayersGameStarted()
 	{
 		let listOfPlayers = Array.from(this._players.keys());
-		let gameBoard = this._gameBoard.Board;
+		let table = this._table.Table;
 		this._players.forEach(function (player){
-			player.startGame(listOfPlayers, gameBoard);
+			player.startGame(listOfPlayers, table);
 		}.bind(this));
 	}
 
 	tellAllSpectatorsGameStarted()
 	{
 		let listOfPlayers = Array.from(this._players.keys());
-		let gameBoard = this._gameBoard.Board;
+		let table = this._table.Table;
 		this._spectators.forEach(function (player){
-			player.startGame(listOfPlayers, gameBoard);
+			player.startGame(listOfPlayers, table);
 		}.bind(this));
 	}
 
@@ -192,7 +196,7 @@ module.exports = class Game extends EventEmitter
 			this._open = false;
 			this._gameState == GameStates.WaitForAllPlayersToChooseTheirCard;
 			this.initializePlayerHands();
-			this.initializeGameBoardCards();
+			this.initializeTableCards();
 			this.tellAllPlayersGameStarted();
 			this.tellAllSpectatorsGameStarted();
 		}
