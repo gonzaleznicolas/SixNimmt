@@ -2,7 +2,7 @@
 
 class GameModel {
 	constructor(hand, table) {
-		if (hand.length != 10)
+		if (!hand && hand.length != 10)
 			throw "Hand must initially have 10 cards";
 		if (table.length != 4 || table[0].length != 6)
 			throw "Table must have exactly 4 rows and 6 columns";
@@ -12,12 +12,16 @@ class GameModel {
 		
 		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put null where there is no card
 		this._table = undefined;
-		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put undefined where there is no card
+		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put null where there is no card
 		// or the card in that position should not have a player name on it.
-		this._playerNamesOnTableCards = [["Nico", undefined, undefined, undefined, undefined, undefined],
-												[undefined, undefined, undefined, undefined, undefined, "Judith"],
-												[undefined, undefined, "Nata", undefined, undefined, undefined],
-												[undefined, undefined, undefined, undefined, undefined, undefined]]; 
+		this._playerNamesOnTableCards = [];
+		for (let row = 0; row < 4; row++)
+		{
+			this._playerNamesOnTableCards[row] = [];
+			for (let col = 0; col < 6; col++)
+				this._playerNamesOnTableCards[row][col] = null;
+		}
+		
 		this._tableState = TableState.Normal;
 		this._selectedRow = undefined;
 		
@@ -30,9 +34,11 @@ class GameModel {
 		// UPCOMING CARDS
 		
 		this._UpcomingCardsFaceUp = false;
-		this._upcomingCards = [4,undefined,43,55, 103, 37, 63, 24, 75, 1];
-		this._playerNamesOnUpcomingCards = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
+		this._upcomingCards = [];
+		this._playerNamesOnUpcomingCards = [];
 		this._highlightedUpcomingCard = undefined; // every other upcoming card will be dimmed out
+
+		// SET INITIAL VALUES
 
 		this.Hand = hand;
 		this.Table = table;
