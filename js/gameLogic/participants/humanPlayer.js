@@ -47,20 +47,32 @@ module.exports = class HumanPlayer extends Player
 
 	onClientEndGameFromWaitPage()
 	{
-		if (this._bStartedGame && this._state == PlayerStates.WaitPage)
-			this.emit('playerEndGameFromWaitPage', this);
+		if (!this._bStartedGame || this._state != PlayerStates.WaitPage)
+		{
+			console.log("clientEndGameFromWaitPage received at unexpected time. Ignored.");
+			return;
+		}
+		this.emit('playerEndGameFromWaitPage', this);
 	}
 
 	onClientAddAIFromWaitPage()
 	{
-		if (this._bStartedGame && this._state == PlayerStates.WaitPage)
-			this.emit('playerAddAIFromWaitPage', this);
+		if (!this._bStartedGame || this._state != PlayerStates.WaitPage)
+		{
+			console.log("clientAddAIFromWaitPage received at unexpected time. Ignored.");
+			return;
+		}
+		this.emit('playerAddAIFromWaitPage', this);
 	}
 
 	onClientStartGameWithCurrentPlayers()
 	{
-		if (this._bStartedGame && this._state == PlayerStates.WaitPage)
-			this.emit("playerStartGameWithCurrentPlayers", this);
+		if (!this._bStartedGame || this._state != PlayerStates.WaitPage)
+		{
+			console.log("clientStartGameWithCurrentPlayers received at unexpected time. Ignored.");
+			return;
+		}
+		this.emit("playerStartGameWithCurrentPlayers", this);
 	}
 
 	// CLIENT TO SERVER - GAME EVENT HANDLERS

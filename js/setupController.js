@@ -31,7 +31,10 @@ function onConnection(socket) {
 
 function onClientNewGame(data){
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
+	{
+		console.log("clientNewGame received at unexpected time. Ignored.");
 		return;
+	}
 	console.log("New game started");
 	let nickName = StringFunctions.capitalizeNickName(data.nickName);
 	let nameValid = false;
@@ -52,7 +55,10 @@ function onClientNewGame(data){
 
 function onClientJoinGame(data){
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
+	{
+		console.log("clientJoinGame received at unexpected time. Ignored.");
 		return;
+	}
 	let codeValid = false;
 	let nameValid = false;
 	let nickName = undefined;
@@ -88,7 +94,10 @@ function onClientJoinGame(data){
 function onClient1v1vsAI()
 {
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
+	{
+		console.log("client1v1vsAI received at unexpected time. Ignored.");
 		return;
+	}
 	let gc = gameManager.addGame("You", this, io);
 	let aiName = gameManager.getGame(gc).addArtificialPlayer();
 	this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents = true;
@@ -98,7 +107,10 @@ function onClient1v1vsAI()
 function onClientSpectateGame(data)
 {
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
+	{
+		console.log("clientSpectateGame received at unexpected time. Ignored.");
 		return;
+	}
 	let codeValid = false;
 	let gc = undefined;
 	if (StringFunctions.isPossibleCode(data.gameCode))

@@ -54,7 +54,10 @@ function onSubmitFormClicked() {
 
 function onNewGameFormResult(data) { 
 	if (state != ClientState.WaitingForFormResult)
+	{
+		console.log("serverNewGameFormResult received at unexpected time. Ignored.");
 		return;
+	}
 	hideAllErrorStatus(); 
 	if (data.nameValid) 
 	{ 
@@ -71,7 +74,10 @@ function onNewGameFormResult(data) {
    
 function onJoinGameFormResult(data) {
 	if (state != ClientState.WaitingForFormResult)
+	{
+		console.log("serverJoinGameFormResult received at unexpected time. Ignored.");
 		return;
+	}
 	hideAllErrorStatus(); 
 	if (data.codeValid && data.nameValid) 
 	{
@@ -94,7 +100,10 @@ function onJoinGameFormResult(data) {
 function onVsAIFormResult() 
 {
 	if (state != ClientState.WaitingForFormResult)
+	{
+		console.log("server1v1vsAIFormResult received at unexpected time. Ignored.");
 		return;
+	}
 	$("#homePage").hide(1000); 
 	onStartGameClicked();
 	state = ClientState.WaitPage;
@@ -103,7 +112,10 @@ function onVsAIFormResult()
 function onSpectateFormResult(data)
 {
 	if (state != ClientState.WaitingForFormResult)
+	{
+		console.log("serverSpectateGameFormResult received at unexpected time. Ignored.");
 		return;
+	}
 	hideAllErrorStatus(); 
 	if (data.codeValid) 
 	{
@@ -123,7 +135,10 @@ function onSpectateFormResult(data)
 function onServerStartGame(data)
 {
 	if (state != ClientState.WaitPage)
+	{
+		console.log("serverStartGame message received at unexpected time. Ignored.");
 		return;
+	}
 	$("#homePage").hide(1000);
 	$("#waitPage").hide(1000);
 	$("#gamePage").show(1000, function(){
@@ -134,7 +149,10 @@ function onServerStartGame(data)
 function onPlayerList(listOfPlayers){
 	// the first player list arrives before the form result does, so accept this message if in state WaitingForFormResult
 	if (state != ClientState.WaitPage && state != ClientState.WaitingForFormResult)
+	{
+		console.log("serverPlayerList message received at unexpected time. Ignored.");
 		return;
+	}
 	waitPagePlayerList = listOfPlayers;
 	updatePlayerListAndButtons(listOfPlayers);
 }

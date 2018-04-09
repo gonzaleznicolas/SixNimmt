@@ -178,14 +178,22 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerEndGameFromWaitPage(player)
 	{
-		if (this._state == GameStates.WaitForPlayers && player.StartedGame && player.State == PlayerStates.WaitPage)
-			this.endGame(player);
+		if (this._state != GameStates.WaitForPlayers || !player.StartedGame || player.State != PlayerStates.WaitPage)
+		{
+			console.log("playerEndGameFromWaitPage message received at unexpected time. Ignored.");
+			return;
+		}
+		this.endGame(player);
 	}
 
 	onPlayerAddAIFromWaitPage(player)
 	{
-		if (this._state == GameStates.WaitForPlayers && player.StartedGame && player.State == PlayerStates.WaitPage)
-			this.addArtificialPlayer();
+		if (this._state != GameStates.WaitForPlayers || !player.StartedGame || player.State != PlayerStates.WaitPage)
+		{
+			console.log("playerAddAIFromWaitPage message received at unexpected time. Ignored.");
+			return;
+		}
+		this.addArtificialPlayer();
 	}
 
 	onPlayerStartGameWithCurrentPlayers(player)
@@ -202,6 +210,11 @@ module.exports = class Game extends EventEmitter
 			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
 			this.tellAllPlayersGameStarted();
 			this.tellAllSpectatorsGameStarted();
+		}
+		else
+		{
+			console.log("playerStartGameWithCurrentPlayers message received at unexpected time. Ignored.");
+			return;
 		}
 	}
 
