@@ -5,6 +5,7 @@ const HumanPlayer = require('./participants/humanPlayer.js');
 const Spectator = require('./participants/spectator.js');
 const EventEmitter = require('events');
 const GameStates = require('./gameStates.js');
+const PlayerStates = require('./playerStates.js');
 const Deck = require('./deck.js');
 const Table = require('./table.js');
 
@@ -13,7 +14,7 @@ module.exports = class Game extends EventEmitter
 	constructor(gameCode, firstPlayerName, firstPlayerSocket)
 	{
 		super();
-		this._gameState = GameStates.WaitForPlayers;
+		this._state = GameStates.WaitForPlayers;
 		this._gameCode = gameCode;
 		this._open = true;
 		this._players = new Map();
@@ -41,7 +42,7 @@ module.exports = class Game extends EventEmitter
 
 	updateOpen()
 	{
-		if (this._gameState != GameStates.WaitForPlayers)
+		if (this._state != GameStates.WaitForPlayers)
 		{
 			this._open = false;
 			return;
@@ -177,26 +178,27 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerEndGameFromWaitPage(player)
 	{
-		if (this._gameState == GameStates.WaitForPlayers && player.StartedGame)
+		if (this._state == GameStates.WaitForPlayers && player.StartedGame)
 			this.endGame(player);
 	}
 
 	onPlayerAddAIFromWaitPage(player)
 	{
-		if (this._gameState == GameStates.WaitForPlayers && player.StartedGame)
+		if (this._state == GameStates.WaitForPlayers && player.StartedGame)
 			this.addArtificialPlayer();
 	}
 
 	onPlayerStartGameWithCurrentPlayers(player)
 	{
-		if (this._gameState == GameStates.WaitForPlayers &&
+		if (this._state == GameStates.WaitForPlayers &&
 			player.StartedGame &&
 			this._players.size >= 2 && this._players.size <= 10)
 		{
 			this._open = false;
-			this._gameState == GameStates.WaitForAllPlayersToChooseTheirCard;
+			this._state == GameStates.WaitForAllPlayersToChooseTheirCard;
 			this.initializePlayerHands();
 			this.initializeTableCards();
+			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
 			this.tellAllPlayersGameStarted();
 			this.tellAllSpectatorsGameStarted();
 		}
@@ -206,7 +208,7 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerQuitGame(player)
 	{
-		if (this._gameState == GameStates.WaitForPlayers)
+		if (this._state == GameStates.WaitForPlayers)
 		{
 			this.removePlayer(player.Name);
 			if (player.StartedGame)
