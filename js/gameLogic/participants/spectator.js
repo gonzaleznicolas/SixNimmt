@@ -22,9 +22,9 @@ module.exports = class Spectator
 	startGame(playerList, table)
 	{
 		this._socket.emit("serverStartGame", {
-			isSpectator: true,
 			playerList: playerList,
-			table: table
+			table: table,
+			isSpectator: true
 		});
 	}
 }
