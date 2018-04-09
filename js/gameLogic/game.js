@@ -1,10 +1,11 @@
 'use strict';
 
-const ArtificialPlayer = require('./artificialPlayer.js');
-const HumanPlayer = require('./humanPlayer.js');
+const ArtificialPlayer = require('./participants/artificialPlayer.js');
+const HumanPlayer = require('./participants/humanPlayer.js');
 const EventEmitter = require('events');
 const GameStates = require('./gameStates.js');
-const Spectator = require('./spectator.js');
+const Deck = require('./deck.js');
+const Spectator = require('./participants/spectator.js');
 
 module.exports = class Game extends EventEmitter
 {
@@ -16,7 +17,7 @@ module.exports = class Game extends EventEmitter
 		this._open = true;
 		this._players = new Map();
 		this._spectators = [];
-		this._deck = undefined;
+		this._deck = new Deck();
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
 
@@ -105,33 +106,13 @@ module.exports = class Game extends EventEmitter
 		this.updateOpen();
 	}
 
-	initializeCardsAndHands()
+	initializePlayerHands()
 	{
-		this.initFullDeck();
 		this._players.forEach(function (player) {
-			let hand = new Set();
-
-			let randomCardInDeck;
-			let randomIndexInDeck;
-			for (let i = 0; i < 10; i++)
-			{
-				randomIndexInDeck = Math.floor(Math.random() * (this._deck.length));
-				randomCardInDeck = this._deck[randomIndexInDeck];
-				this._deck.splice(randomIndexInDeck, 1);
-				hand.add(randomCardInDeck);
-			}
-			player.Hand = hand;
+			player.Hand = this._deck.getAHand();
 		}.bind(this));
 	}
 
-	initFullDeck()
-	{
-		this._deck = [];
-		for (let card = 1; card <= 104; card++)
-		{
-			this._deck.push(card);
-		}
-	}
 
 	endGame(playerWhoEndedTheGame)
 	{
@@ -206,7 +187,7 @@ module.exports = class Game extends EventEmitter
 		{
 			this._open = false;
 			this._gameState == GameStates.WaitForAllPlayersToChooseTheirCard;
-			this.initializeCardsAndHands();
+			this.initializePlayerHands();
 			this.tellAllPlayersGameStarted();
 			this.tellAllSpectatorsGameStarted();
 		}
