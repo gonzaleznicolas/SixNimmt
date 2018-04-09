@@ -22,7 +22,7 @@ class HandDrawer extends Drawer
 				cardNumber = this._model.Hand[numberOfCardsDrawn];
 				this.drawCard(this._cardCoordinates[row][col].x, this._cardCoordinates[row][col].y, this._cardWidth, cardNumber);
 				
-				if (this._model.HandState == HandState.PlayCard
+				if (state == ClientState.ChooseCard
 				&& this._model.CurrentlySelectedCardInHand != undefined
 				&& this._model.CurrentlySelectedCardInHand != numberOfCardsDrawn)
 				{

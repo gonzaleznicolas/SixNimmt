@@ -29,7 +29,6 @@ class GameModel {
 		
 		this._hand = undefined;
 		this._currentlySelectedCardInHand = undefined;
-		this._handState = HandState.PlayCard;
 		
 		// UPCOMING CARDS
 		
@@ -57,8 +56,6 @@ class GameModel {
 	set Hand(hand) {this._hand = hand.sort((a, b) => a-b);}
 	get CurrentlySelectedCardInHand() {return this._currentlySelectedCardInHand;}
 	set CurrentlySelectedCardInHand(i) {this._currentlySelectedCardInHand = i;}
-	get HandState() {return this._handState;}
-	set HandState(state) {this._handState = state;}
 	
 	get UpcomingCardsFaceUp() {return this._UpcomingCardsFaceUp;}
 	set UpcomingCardsFaceUp(b) {this._UpcomingCardsFaceUp = b;}

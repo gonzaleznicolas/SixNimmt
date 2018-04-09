@@ -12,7 +12,7 @@ class HandView
 
 	updateMessage() 
 	{ 
-		if (this._model.HandState == HandState.PlayCard)
+		if (state == ClientState.ChooseCard)
 		{
 			if (this._model.CurrentlySelectedCardInHand == undefined) 
 			{ 

@@ -57,7 +57,7 @@ class GameController {
 	
 	onHandCanvasClicked(event)
 	{
-		if (this._model.HandState != HandState.PlayCard)
+		if (state != ClientState.ChooseCard)
 			return;
 		const canvasLeft = this._handView.Animation.Drawer.getCanvasOffsetLeft();
 		const canvasTop = this._handView.Animation.Drawer.getCanvasOffsetTop();
