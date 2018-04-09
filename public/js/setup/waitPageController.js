@@ -1,6 +1,7 @@
 "use strict";
 
 function launchWaitPage(gc, lst){
+	state = ClientState.WaitPage;
 	gameCode = gc;
 	loadingScreenType = lst;
 	startWaitPageUI();

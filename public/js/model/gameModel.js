@@ -2,7 +2,7 @@
 
 class GameModel {
 	constructor(hand, table) {
-		if (!hand && hand.length != 10)
+		if (hand && hand.length != 10)
 			throw "Hand must initially have 10 cards";
 		if (table.length != 4 || table[0].length != 6)
 			throw "Table must have exactly 4 rows and 6 columns";
@@ -40,7 +40,8 @@ class GameModel {
 
 		// SET INITIAL VALUES
 
-		this.Hand = hand;
+		if (hand)
+			this.Hand = hand;
 		this.Table = table;
 	}
 	

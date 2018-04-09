@@ -9,6 +9,11 @@ class GameController {
 		let hand = initializationData.hand;
 		let table = initializationData.table;
 
+		if (bSpectatorMode)
+			state = ClientState.WaitForRestToPlayTheirCard;
+		else
+			state = ClientState.ChooseCard;
+
 		lc = new LayoutCalculator();
 		
 		this._model = new GameModel(hand, table);

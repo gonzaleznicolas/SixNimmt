@@ -1,6 +1,7 @@
 'use strict';
 
 const Player = require('./player.js');
+const PlayerStates = require('./playerStates.js');
 
 module.exports = class ArtificialPlayer extends Player
 {

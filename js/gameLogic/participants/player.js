@@ -12,7 +12,7 @@ module.exports = class Player extends EventEmitter
 		this._name = name;
 		this._bStartedGame = bStartedGame;
 		this._hand = undefined;
-		this._state = PlayerStates.ChooseCard;
+		this._state = PlayerStates.WaitPage;
 	}
 
 	get Name() {return this._name;}

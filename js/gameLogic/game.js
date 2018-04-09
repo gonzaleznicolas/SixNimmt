@@ -5,7 +5,7 @@ const HumanPlayer = require('./participants/humanPlayer.js');
 const Spectator = require('./participants/spectator.js');
 const EventEmitter = require('events');
 const GameStates = require('./gameStates.js');
-const PlayerStates = require('./playerStates.js');
+const PlayerStates = require('./participants/playerStates.js');
 const Deck = require('./deck.js');
 const Table = require('./table.js');
 
@@ -178,13 +178,13 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerEndGameFromWaitPage(player)
 	{
-		if (this._state == GameStates.WaitForPlayers && player.StartedGame)
+		if (this._state == GameStates.WaitForPlayers && player.StartedGame && player.State == PlayerStates.WaitPage)
 			this.endGame(player);
 	}
 
 	onPlayerAddAIFromWaitPage(player)
 	{
-		if (this._state == GameStates.WaitForPlayers && player.StartedGame)
+		if (this._state == GameStates.WaitForPlayers && player.StartedGame && player.State == PlayerStates.WaitPage)
 			this.addArtificialPlayer();
 	}
 
@@ -192,6 +192,7 @@ module.exports = class Game extends EventEmitter
 	{
 		if (this._state == GameStates.WaitForPlayers &&
 			player.StartedGame &&
+			player.State == PlayerStates.WaitPage &&
 			this._players.size >= 2 && this._players.size <= 10)
 		{
 			this._open = false;

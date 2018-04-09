@@ -1,6 +1,7 @@
 'use strict';
 
 const Player = require('./player.js');
+const PlayerStates = require('./playerStates.js');
 
 module.exports = class HumanPlayer extends Player
 {
@@ -46,19 +47,19 @@ module.exports = class HumanPlayer extends Player
 
 	onClientEndGameFromWaitPage()
 	{
-		if (this._bStartedGame)
+		if (this._bStartedGame && this._state == PlayerStates.WaitPage)
 			this.emit('playerEndGameFromWaitPage', this);
 	}
 
 	onClientAddAIFromWaitPage()
 	{
-		if (this._bStartedGame)
+		if (this._bStartedGame && this._state == PlayerStates.WaitPage)
 			this.emit('playerAddAIFromWaitPage', this);
 	}
 
 	onClientStartGameWithCurrentPlayers()
 	{
-		if (this._bStartedGame)
+		if (this._bStartedGame && this._state == PlayerStates.WaitPage)
 			this.emit("playerStartGameWithCurrentPlayers", this);
 	}
 

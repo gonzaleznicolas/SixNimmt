@@ -1,14 +1,18 @@
 "use strict";
 
-const FormType = Object.freeze({ "NewGame": 1, "vsAI": 2, "JoinGame": 3, "SpectateGame": 4 })
-const TypeOfLoadingScreen = Object.freeze({"PersonWhoStartedTheGame":1, "PersonJoiningOrSpectator":2})
+const FormType = Object.freeze({ NewGame: 1, vsAI: 2, JoinGame: 3, SpectateGame: 4 });
+const TypeOfLoadingScreen = Object.freeze({PersonWhoStartedTheGame:1, PersonJoiningOrSpectator:2});
+
 let formType = undefined;
 let socket = undefined;
 let loadingScreenType = undefined;
 let gameCode = undefined;
-let waitPagePlayerList = []; 
+let waitPagePlayerList = [];
+let state = undefined;
+
 
 $(function () {
+	state = ClientState.NotPastFormYet;
 	startHomePageUI();
 	socket = io();
 
@@ -43,11 +47,14 @@ function onSubmitFormClicked() {
 	{
 		socket.emit('clientSpectateGame', {gameCode: $("#codeTextBox").val()});
 	}
+	state = ClientState.WaitingForFormResult;
 }
 
 // SERVER TO CLIENT - FORM RESULT HANDLERS
 
 function onNewGameFormResult(data) { 
+	if (state != ClientState.WaitingForFormResult)
+		return;
 	hideAllErrorStatus(); 
 	if (data.nameValid) 
 	{ 
@@ -57,11 +64,14 @@ function onNewGameFormResult(data) {
 	}
 	else 
 	{ 
-		showNickNameError(); 
-	} 
+		showNickNameError();
+		state = ClientState.NotPastFormYet;
+	}
 }
    
-function onJoinGameFormResult(data) { 
+function onJoinGameFormResult(data) {
+	if (state != ClientState.WaitingForFormResult)
+		return;
 	hideAllErrorStatus(); 
 	if (data.codeValid && data.nameValid) 
 	{
@@ -77,17 +87,23 @@ function onJoinGameFormResult(data) {
 			showNickNameError(); 
 		if (!data.codeValid) 
 			showCodeError(); 
+		state = ClientState.NotPastFormYet;
 	} 
 } 
 
 function onVsAIFormResult() 
 {
+	if (state != ClientState.WaitingForFormResult)
+		return;
 	$("#homePage").hide(1000); 
 	onStartGameClicked();
+	state = ClientState.WaitPage;
 }
 
 function onSpectateFormResult(data)
 {
+	if (state != ClientState.WaitingForFormResult)
+		return;
 	hideAllErrorStatus(); 
 	if (data.codeValid) 
 	{
@@ -98,13 +114,16 @@ function onSpectateFormResult(data)
 	} 
 	else 
 	{ 
-		showCodeError(); 
+		showCodeError();
+		state = ClientState.NotPastFormYet;
 	} 
 }
 
 // SERVER TO CLIENT - WAIT PAGE EVENT HANDLERS
 function onServerStartGame(data)
 {
+	if (state != ClientState.WaitPage)
+		return;
 	$("#homePage").hide(1000);
 	$("#waitPage").hide(1000);
 	$("#gamePage").show(1000, function(){
@@ -113,6 +132,9 @@ function onServerStartGame(data)
 }
 
 function onPlayerList(listOfPlayers){
+	// the first player list arrives before the form result does, so accept this message if in state WaitingForFormResult
+	if (state != ClientState.WaitPage && state != ClientState.WaitingForFormResult)
+		return;
 	waitPagePlayerList = listOfPlayers;
 	updatePlayerListAndButtons(listOfPlayers);
 }
