@@ -32,12 +32,13 @@ module.exports = class HumanPlayer extends Player
 		this._socket.emit("serverGameTerminated", nameOfPlayerWhoEndedTheGame);
 	}
 
-	startGame(playerList)
+	startGame(playerList, gameBoard)
 	{
 		this._socket.emit("serverStartGame", {
 			isSpectator: false,
 			playerList: playerList,
-			hand: Array.from(this._hand)
+			hand: Array.from(this._hand),
+			gameBoard: gameBoard
 		});
 	}
 

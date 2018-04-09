@@ -1,15 +1,17 @@
 "use strict";
 
 class GameModel {
-	constructor(hand) {
+	constructor(hand, table) {
+		if (hand.length != 10)
+			throw "Hand must initially have 10 cards";
+		if (table.length != 4 || table[0].length != 6)
+			throw "Table must have exactly 4 rows and 6 columns";
+
 		
 		// TABLE
 		
-		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put undefined where there is no card
-		this._table = [[5,20,3,4,5, 5],
-									[1,2,3,22,50, 104],
-									[5,undefined,undefined,undefined,undefined, undefined],
-									[1,90,3,4,45, undefined]];
+		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put null where there is no card
+		this._table = undefined;
 		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put undefined where there is no card
 		// or the card in that position should not have a player name on it.
 		this._playerNamesOnTableCards = [["Nico", undefined, undefined, undefined, undefined, undefined],
@@ -21,7 +23,7 @@ class GameModel {
 		
 		// HAND
 		
-		this.Hand = hand;
+		this._hand = undefined;
 		this._currentlySelectedCardInHand = undefined;
 		this._handState = HandState.PlayCard;
 		
@@ -31,9 +33,13 @@ class GameModel {
 		this._upcomingCards = [4,undefined,43,55, 103, 37, 63, 24, 75, 1];
 		this._playerNamesOnUpcomingCards = ["Guillo", "Nata", "Nico", "MMMMMM", "Mateo", "Erin", "Bob", "Jose", "Chris", "MMMMMM"];
 		this._highlightedUpcomingCard = undefined; // every other upcoming card will be dimmed out
+
+		this.Hand = hand;
+		this.Table = table;
 	}
 	
 	get Table() {return this._table;}
+	set Table(table) {this._table = table;}
 	get PlayerNamesOnTableCards() {return this._playerNamesOnTableCards;}
 	get TableState() {return this._tableState;}
 	set TableState(state) {this._tableState = state;}

@@ -7,10 +7,11 @@ class GameController {
 		numberOfPlayers = initializationData.playerList.length;
 		let listOfPlayers = initializationData.playerList;
 		let hand = initializationData.hand;
+		let table = initializationData.gameBoard;
 
 		lc = new LayoutCalculator();
 		
-		this._model = new GameModel(hand);
+		this._model = new GameModel(hand, table);
 		this._menuView = new MenuView();
 
 		this._scoreboardView = new ScoreboardView(listOfPlayers);

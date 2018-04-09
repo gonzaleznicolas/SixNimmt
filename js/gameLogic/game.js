@@ -2,10 +2,11 @@
 
 const ArtificialPlayer = require('./participants/artificialPlayer.js');
 const HumanPlayer = require('./participants/humanPlayer.js');
+const Spectator = require('./participants/spectator.js');
 const EventEmitter = require('events');
 const GameStates = require('./gameStates.js');
 const Deck = require('./deck.js');
-const Spectator = require('./participants/spectator.js');
+const GameBoard = require('./gameBoard.js');
 
 module.exports = class Game extends EventEmitter
 {
@@ -18,6 +19,7 @@ module.exports = class Game extends EventEmitter
 		this._players = new Map();
 		this._spectators = [];
 		this._deck = new Deck();
+		this._gameBoard = new GameBoard();
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
 
@@ -152,16 +154,18 @@ module.exports = class Game extends EventEmitter
 	tellAllPlayersGameStarted()
 	{
 		let listOfPlayers = Array.from(this._players.keys());
+		let gameBoard = this._gameBoard.Board;
 		this._players.forEach(function (player){
-			player.startGame(listOfPlayers);
+			player.startGame(listOfPlayers, gameBoard);
 		}.bind(this));
 	}
 
 	tellAllSpectatorsGameStarted()
 	{
 		let listOfPlayers = Array.from(this._players.keys());
+		let gameBoard = this._gameBoard.Board;
 		this._spectators.forEach(function (player){
-			player.startGame(listOfPlayers);
+			player.startGame(listOfPlayers, gameBoard);
 		}.bind(this));
 	}
 
@@ -188,6 +192,7 @@ module.exports = class Game extends EventEmitter
 			this._open = false;
 			this._gameState == GameStates.WaitForAllPlayersToChooseTheirCard;
 			this.initializePlayerHands();
+			this.initializeGameBoardCards();
 			this.tellAllPlayersGameStarted();
 			this.tellAllSpectatorsGameStarted();
 		}
