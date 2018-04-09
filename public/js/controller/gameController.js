@@ -95,5 +95,9 @@ class GameController {
 		// move to table
 		if (!bSpectatorMode && bFlickityEnabled)
 			setTimeout(function(flickity) {flickity.select(0);}, 500, this._gameLayoutController.Flickity); // give time for the fade away
+		
+		// tell server which card was played
+		let playedCard = this._model.Hand[this._model.CurrentlySelectedCardInHand];
+		socket.emit('clientPlayCard', playedCard);
 	}
 }

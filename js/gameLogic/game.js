@@ -37,6 +37,7 @@ module.exports = class Game extends EventEmitter
 
 			// PLAYER TO GAME - GAME EVENTS
 			player.on("playerQuitGame", this.onPlayerQuitGame.bind(this));
+			player.on("playerPlayCard", this.onPlayerPlayCard.bind(this));
 		}
 	}
 
@@ -178,7 +179,7 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerEndGameFromWaitPage(player)
 	{
-		if (this._state != GameStates.WaitForPlayers || !player.StartedGame || player.State != PlayerStates.WaitPage)
+		if (this._state != GameStates.WaitForPlayers)
 		{
 			console.log("playerEndGameFromWaitPage message received at unexpected time. Ignored.");
 			return;
@@ -188,7 +189,7 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerAddAIFromWaitPage(player)
 	{
-		if (this._state != GameStates.WaitForPlayers || !player.StartedGame || player.State != PlayerStates.WaitPage)
+		if (this._state != GameStates.WaitForPlayers)
 		{
 			console.log("playerAddAIFromWaitPage message received at unexpected time. Ignored.");
 			return;
@@ -199,8 +200,6 @@ module.exports = class Game extends EventEmitter
 	onPlayerStartGameWithCurrentPlayers(player)
 	{
 		if (this._state == GameStates.WaitForPlayers &&
-			player.StartedGame &&
-			player.State == PlayerStates.WaitPage &&
 			this._players.size >= 2 && this._players.size <= 10)
 		{
 			this._open = false;
@@ -229,5 +228,14 @@ module.exports = class Game extends EventEmitter
 				this.endGame(player);
 		}
 		// if in the middle of game, replace with an AI. if there are no human players left, end game.
+	}
+
+	onPlayerPlayCard(data)
+	{
+		if (this._state != GameStates.WaitForAllPlayersToChooseTheirCard)
+		{
+			console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			return;
+		}
 	}
 }

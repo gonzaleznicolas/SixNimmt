@@ -18,6 +18,7 @@ module.exports = class HumanPlayer extends Player
 		// CLIENT TO SERVER - GAME EVENTS
 		this._socket.on("clientQuitGame", this.onClientQuitGame.bind(this));
 		this._socket.on("disconnect", this.onClientQuitGame.bind(this));
+		this._socket.on("clientPlayCard", this.onClientPlayCard.bind(this));
 	}
 
 	get Socket() {return this._socket;}
@@ -80,5 +81,15 @@ module.exports = class HumanPlayer extends Player
 	onClientQuitGame()
 	{
 		this.emit('playerQuitGame', this);
+	}
+
+	onClientPlayCard(playedCard)
+	{
+		if (this._state != PlayerStates.ChooseCard || !this._hand.has(playedCard))
+		{
+			console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			return;
+		}
+		this.emit('playerPlayCard', {player: this, playedCard: playedCard});
 	}
 }
