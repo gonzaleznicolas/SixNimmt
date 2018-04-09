@@ -159,7 +159,7 @@ class Drawer
 		const ctx = this._ctx;
 
 		const fontPixels = 0.5*this._cardHeight;
-		ctx.font = "bold "+fontPixels+"px Bangers";
+		ctx.font = "bold "+fontPixels+"px Luckiest Guy";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		const centreXofNumber= x + (cardWidth/2);

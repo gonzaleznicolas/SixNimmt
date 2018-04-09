@@ -10,10 +10,10 @@ header{
 }
 
 #headerText{
-	font-size: var(--menuButtonSideLength);
+	font-size: calc(var(--menuButtonSideLength)*0.8);
 	color: rgba(255, 255, 255, 1);
 	margin-left: 75px;
-	font-family: 'Bangers';
+	font-family: 'Luckiest Guy';
 }
 
 #game {
@@ -59,7 +59,7 @@ header{
 #handMessageContainer{
 	display: flex;
 	flex-flow: row;
-	font-family: 'Bangers'; 
+	font-family: 'Luckiest Guy'; 
 	color: rgba(255, 255, 255, 1); 
 }
 
