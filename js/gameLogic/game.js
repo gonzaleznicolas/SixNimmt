@@ -203,7 +203,7 @@ module.exports = class Game extends EventEmitter
 			this._players.size >= 2 && this._players.size <= 10)
 		{
 			this._open = false;
-			this._state == GameStates.WaitForAllPlayersToChooseTheirCard;
+			this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
 			this.initializePlayerHands();
 			this.initializeTableCards();
 			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
