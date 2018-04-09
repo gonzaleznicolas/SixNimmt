@@ -6,10 +6,11 @@ class GameController {
 		bSpectatorMode = initializationData.isSpectator;
 		numberOfPlayers = initializationData.playerList.length;
 		let listOfPlayers = initializationData.playerList;
+		let hand = initializationData.hand;
 
 		lc = new LayoutCalculator();
 		
-		this._model = new GameModel();
+		this._model = new GameModel(hand);
 		this._menuView = new MenuView();
 
 		this._scoreboardView = new ScoreboardView(listOfPlayers);

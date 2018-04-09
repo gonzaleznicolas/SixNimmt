@@ -1,7 +1,7 @@
 "use strict";
 
 class GameModel {
-	constructor() {
+	constructor(hand) {
 		
 		// TABLE
 		
@@ -21,7 +21,7 @@ class GameModel {
 		
 		// HAND
 		
-		this._hand = [55,20,3,4,11, 1, 32, 43];
+		this.Hand = hand;
 		this._currentlySelectedCardInHand = undefined;
 		this._handState = HandState.PlayCard;
 		
@@ -41,6 +41,7 @@ class GameModel {
 	set SelectedRow(i) {this._selectedRow = i}
 	
 	get Hand() {return this._hand;}
+	set Hand(hand) {this._hand = hand.sort((a, b) => a-b);}
 	get CurrentlySelectedCardInHand() {return this._currentlySelectedCardInHand;}
 	set CurrentlySelectedCardInHand(i) {this._currentlySelectedCardInHand = i;}
 	get HandState() {return this._handState;}
