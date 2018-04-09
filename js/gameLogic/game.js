@@ -8,6 +8,7 @@ const GameStates = require('./gameStates.js');
 const PlayerStates = require('./participants/playerStates.js');
 const Deck = require('./deck.js');
 const Table = require('./table.js');
+const UpcomingCards = require('./upcomingCards.js');
 
 module.exports = class Game extends EventEmitter
 {
@@ -21,6 +22,7 @@ module.exports = class Game extends EventEmitter
 		this._spectators = [];
 		this._deck = new Deck();
 		this._table = new Table();
+		this._upcomingCards = new UpcomingCards();
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
 
@@ -175,6 +177,20 @@ module.exports = class Game extends EventEmitter
 		}.bind(this));
 	}
 
+	updateAllPlayersAndSpectatorsWithUpcomingCards()
+	{
+		let cards = this._upcomingCards.Cards;
+		let namesOnCards = this._upcomingCards.NamesOnCards;
+
+		this._players.forEach(function (player){
+			player.updateUpcomingCards(cards, namesOnCards);
+		});
+
+		this._spectators.forEach(function (spectator){
+			spectator.updateUpcomingCards(cards, namesOnCards);
+		});
+	}
+
 	// PLAYER TO GAME - WAIT PAGE EVENT HANDLERS
 
 	onPlayerEndGameFromWaitPage(player)
@@ -237,5 +253,7 @@ module.exports = class Game extends EventEmitter
 			console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
 			return;
 		}
+		this._upcomingCards.playCard(data.playedCard, data.player.Name);
+		this.updateAllPlayersAndSpectatorsWithUpcomingCards();
 	}
 }

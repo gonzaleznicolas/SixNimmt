@@ -44,6 +44,14 @@ module.exports = class HumanPlayer extends Player
 		});
 	}
 
+	updateUpcomingCards(cards, namesOnCards)
+	{
+		this._socket.emit("serverUpcomingCards", {
+			cards: cards,
+			namesOnCards: namesOnCards
+		});
+	}
+
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS
 
 	onClientEndGameFromWaitPage()

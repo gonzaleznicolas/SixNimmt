@@ -27,4 +27,12 @@ module.exports = class Spectator
 			isSpectator: true
 		});
 	}
+
+	updateUpcomingCards(cards, namesOnCards)
+	{
+		this._socket.emit("serverUpcomingCards", {
+			cards: cards,
+			namesOnCards: namesOnCards
+		});
+	}
 }

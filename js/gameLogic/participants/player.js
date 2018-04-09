@@ -26,4 +26,5 @@ module.exports = class Player extends EventEmitter
 	updatePlayerList(playerList){}
 	terminateGame(nameOfPlayerWhoEndedTheGame){}
 	startGame(playerList, table){}
+	updateUpcomingCards(cards, namesOnCards){}
 }

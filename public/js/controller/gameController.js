@@ -32,6 +32,17 @@ class GameController {
 				this._handView.Animation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
 				$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
 		}
+
+		// SERVER TO CLIENT - GAME EVENTS
+		socket.on("serverUpcomingCards", this.onServerUpcomingCards.bind(this));
+	}
+
+	onServerUpcomingCards(data)
+	{
+		// check state is right. make new state for waiting for played card response
+		this._model.UpcomingCards = data.cards;
+		this._model.PlayerNamesOnUpcomingCards = data.namesOnCards;
+		this._tableView.draw();
 	}
 	
 	onTableCanvasClicked(event)

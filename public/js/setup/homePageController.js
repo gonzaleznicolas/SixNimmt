@@ -23,7 +23,7 @@ $(function () {
 	socket.on("serverSpectateGameFormResult", onSpectateFormResult);
 
 	// SERVER TO CLIENT - WAIT PAGE EVENTS
-	socket.on("serverPlayerList", onPlayerList);
+	socket.on("serverPlayerList", onServerPlayerList);
 	socket.on("serverStartGame", onServerStartGame);
 
 	// SERVER TO CLIENT - GAME EVENTS
@@ -146,7 +146,7 @@ function onServerStartGame(data)
 	});
 }
 
-function onPlayerList(listOfPlayers){
+function onServerPlayerList(listOfPlayers){
 	// the first player list arrives before the form result does, so accept this message if in state WaitingForFormResult
 	if (state != ClientState.WaitPage && state != ClientState.WaitingForFormResult)
 	{

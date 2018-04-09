@@ -20,4 +20,6 @@ module.exports = class ArtificialPlayer extends Player
 	{
 
 	}
+
+	updateUpcomingCards(cards, namesOnCards){}
 }
