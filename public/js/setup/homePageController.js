@@ -2,13 +2,6 @@
 
 const FormType = Object.freeze({ NewGame: 1, vsAI: 2, JoinGame: 3, SpectateGame: 4 });
 const TypeOfLoadingScreen = Object.freeze({PersonWhoStartedTheGame:1, PersonJoiningOrSpectator:2});
-const ClientStates = Object.freeze({
-	NotPastFormYet:1,
-	WaitingForFormResult:2,
-	WaitPage: 3,
-	ChooseCard: 4,
-	WaitForRestToPlayTheirCard: 5
-});
 
 let formType = undefined;
 let socket = undefined;
@@ -16,6 +9,7 @@ let loadingScreenType = undefined;
 let gameCode = undefined;
 let waitPagePlayerList = [];
 let state = undefined;
+
 
 $(function () {
 	state = ClientStates.NotPastFormYet;
