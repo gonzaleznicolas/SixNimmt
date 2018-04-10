@@ -73,6 +73,7 @@ module.exports = class Game extends EventEmitter
 	addHumanPlayer(name, bStartedGame, socket)
 	{
 		let player = new HumanPlayer(name, bStartedGame, socket);
+		player.State = PlayerStates.WaitPage;
 		this._players.set(name, player);
 		this.subscribeToPlayerEvents(player);
 		this.updateOpen();
@@ -91,6 +92,7 @@ module.exports = class Game extends EventEmitter
 		} while (this._players.has(name));
 
 		let player = new ArtificialPlayer(name);
+		player.State = PlayerStates.WaitPage;
 		this._players.set(name, player);
 		this.subscribeToPlayerEvents(player);
 		this.updateOpen();
@@ -254,6 +256,7 @@ module.exports = class Game extends EventEmitter
 			return;
 		}
 		this._upcomingCards.playCard(data.playedCard, data.player.Name);
+		data.player.State = PlayerStates.WaitForRestToPlayTheirCard;
 		console.log(`Player ${data.player.Name} in game ${this._gameCode} has played card ${data.playedCard}`);
 		this.updateAllPlayersAndSpectatorsWithUpcomingCards();
 	}

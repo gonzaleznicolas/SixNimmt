@@ -106,7 +106,6 @@ module.exports = class HumanPlayer extends Player
 			console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
 			return;
 		}
-		this._state = PlayerStates.WaitForRestToPlayTheirCard;
 		this._hand.delete(playedCard);
 		this.emit('playerPlayCard', {player: this, playedCard: playedCard});
 		this.updateHand();
