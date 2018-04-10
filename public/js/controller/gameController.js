@@ -37,9 +37,15 @@ class GameController {
 		socket.on("serverUpcomingCards", this.onServerUpcomingCards.bind(this));
 	}
 
+	// SERVER TO CLIENT - GAME EVENT HANDLERS
 	onServerUpcomingCards(data)
 	{
 		// check state is right. make new state for waiting for played card response
+		if (state != ClientState.WaitForRestToPlayTheirCard || state != ClientState.ChooseCard)
+		{
+			console.log("serverUpcomingCards message received at unexpected time. Ignored.");
+			return;
+		}
 		this._model.UpcomingCards = data.cards;
 		this._model.PlayerNamesOnUpcomingCards = data.namesOnCards;
 		this._tableView.draw();
@@ -109,6 +115,7 @@ class GameController {
 		
 		// tell server which card was played
 		let playedCard = this._model.Hand[this._model.CurrentlySelectedCardInHand];
+		state = ClientState.WaitForRestToPlayTheirCard;
 		socket.emit('clientPlayCard', playedCard);
 	}
 }
