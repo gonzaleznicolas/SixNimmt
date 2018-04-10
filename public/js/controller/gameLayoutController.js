@@ -29,6 +29,9 @@ class GameLayoutController
 															// 'this' will be window, not this object, and it wont find setCanvasSize.
 															// event handlers are by default called with 'this' set to the window object
 		$(window).on("orientationchange", this.onResizeWindow.bind(this));
+
+		// redraw when the fonts are loaded. Often the first time the cards get a bad default font.
+		setTimeout(this.onResizeWindow.bind(this), 1000);
 	}
 	
 	get Flickity() {return this._flickity;}
