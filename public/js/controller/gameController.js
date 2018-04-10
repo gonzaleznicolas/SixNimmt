@@ -120,11 +120,11 @@ class GameController {
 		// fade out played card
 		let selectedCardRow = this._handView.Animation.Drawer.handIndexToRow(this._model.CurrentlySelectedCardInHand);
 		let selectedCardCol = this._handView.Animation.Drawer.handIndexToCol(this._model.CurrentlySelectedCardInHand);
-		this._handView.Animation.fadeAwayCard(selectedCardRow, selectedCardCol);
+		let xy = this._handView.Animation.Drawer.CardCoordinates[selectedCardRow][selectedCardCol];
+		this._handView.Animation.Drawer.clearCardSpace(xy.x, xy.y);
 		
 		// move to table
-		if (!bSpectatorMode && bFlickityEnabled)
-			setTimeout(function(flickity) {flickity.select(0);}, 500, this._gameLayoutController.Flickity); // give time for the fade away
+		this._gameLayoutController.Flickity.select(0);
 		
 		// tell server which card was played
 		let playedCard = this._model.Hand[this._model.CurrentlySelectedCardInHand];

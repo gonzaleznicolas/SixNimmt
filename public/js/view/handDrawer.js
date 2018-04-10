@@ -13,6 +13,7 @@ class HandDrawer extends Drawer
 	 
 	draw() 
 	{
+		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
 		let numberOfCardsDrawn = 0;
 		let cardNumber = undefined;
 		for (let row = 0; row < this._numberOfRows && numberOfCardsDrawn < this._model.Hand.length ; row++) 
