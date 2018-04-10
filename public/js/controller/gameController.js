@@ -41,7 +41,7 @@ class GameController {
 	onServerUpcomingCards(data)
 	{
 		// check state is right. make new state for waiting for played card response
-		if (state != ClientStates.WaitForRestToPlayTheirCard || state != ClientStates.ChooseCard)
+		if (state != ClientStates.WaitForRestToPlayTheirCard && state != ClientStates.ChooseCard)
 		{
 			console.log("serverUpcomingCards message received at unexpected time. Ignored.");
 			return;

@@ -24,6 +24,7 @@ module.exports = class Game extends EventEmitter
 		this._table = new Table();
 		this._upcomingCards = new UpcomingCards();
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
+		console.log("Game with code " + gameCode + " created.");
 	}
 
 	get Open() {return this._open;}
@@ -76,6 +77,7 @@ module.exports = class Game extends EventEmitter
 		this.subscribeToPlayerEvents(player);
 		this.updateOpen();
 		this.updateAllPlayersAndSpectatorsWithPlayerList();
+		console.log(`Human player ${name} has been added to game ${this._gameCode}`);
 	}
 
 	// returns AI name
@@ -93,6 +95,7 @@ module.exports = class Game extends EventEmitter
 		this.subscribeToPlayerEvents(player);
 		this.updateOpen();
 		this.updateAllPlayersAndSpectatorsWithPlayerList();
+		console.log(`Artificial player ${name} has been added to game ${this._gameCode}`);
 		return name;
 	}
 
@@ -102,6 +105,7 @@ module.exports = class Game extends EventEmitter
 		this._spectators.push(spectator);
 
 		spectator.updatePlayerList(Array.from(this._players.keys()));
+		console.log(`Spectator has been added to game ${this._gameCode}`);
 	}
 
 	removePlayer(name)
@@ -110,6 +114,7 @@ module.exports = class Game extends EventEmitter
 			return;
 		this.updateAllPlayersAndSpectatorsWithPlayerList();
 		this.updateOpen();
+		console.log(name + " removed from game " + this._gameCode);
 	}
 
 	initializePlayerHands()
@@ -254,6 +259,7 @@ module.exports = class Game extends EventEmitter
 			return;
 		}
 		this._upcomingCards.playCard(data.playedCard, data.player.Name);
+		console.log(`Player ${data.player.Name} in game ${this._gameCode} has played card ${data.playedCard}`);
 		this.updateAllPlayersAndSpectatorsWithUpcomingCards();
 	}
 }
