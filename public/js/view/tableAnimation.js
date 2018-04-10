@@ -6,26 +6,6 @@ class TableAnimation extends Animation
 	{
 		super( new TableDrawer(model), model );
 	}
-
-	moveCard(startRow, startCol, endRow, endCol)
-	{
-		const start = this._drawer.CardCoordinates[startRow][startCol];
-		const end = this._drawer.CardCoordinates[endRow][endCol];
-		
-		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
-		this._nextPt = null;
-		if (!this._line.done)
-			requestAnimationFrame(this.moveCardHelper.bind(this));
-	}
-	
-	moveCardHelper()
-	{
-		this._nextPt = this._line.nextPoint();
-		this._drawer.draw();
-		this._drawer.drawFaceDownCard(this._nextPt.x, this._nextPt.y, this._drawer.CardWidth);
-		if (!this._line.done)
-			requestAnimationFrame(this.moveCardHelper.bind(this));
-	}
 	
 	// call this function before updating the model
 	// precondition: fromRow <= toRow

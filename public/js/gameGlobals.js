@@ -47,10 +47,6 @@ function getCardInfo(cardNumber)
 // TEMPORARY:
 let controller = undefined;
 
-function move(row1, col1, row2, col2) {
-	controller._tableView.Animation.moveCard(row1, col1, row2, col2);
-}
-
 function add(player, num)
 {
 	controller._gameLayoutController._scoreboard.incrementScore(player, num);
