@@ -38,10 +38,12 @@ module.exports = class Game extends EventEmitter
 			player.on("playerEndGameFromWaitPage", this.onPlayerEndGameFromWaitPage.bind(this));
 			player.on("playerStartGameWithCurrentPlayers", this.onPlayerStartGameWithCurrentPlayers.bind(this));
 
-			// PLAYER TO GAME - GAME EVENTS
+			// PLAYER TO GAME - GAME EVENTS - game events that only human players will emit
 			player.on("playerQuitGame", this.onPlayerQuitGame.bind(this));
-			player.on("playerPlayCard", this.onPlayerPlayCard.bind(this));
 		}
+
+		// PLAYER TO GAME - GAME EVENTS - game events that any players will emit
+		player.on("playerPlayCard", this.onPlayerPlayCard.bind(this));
 	}
 
 	updateOpen()
@@ -225,8 +227,8 @@ module.exports = class Game extends EventEmitter
 			this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
 			this.initializePlayerHands();
 			this.initializeTableCards();
-			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
 			this.tellAllPlayersAndSpectatorsGameStarted();
+			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
 		}
 		else
 		{

@@ -40,8 +40,7 @@ module.exports = class Player extends EventEmitter
 	Event Name:
 		"playerPlayCard"
 	Payload:
-		{ player: Player (the player playing card)
-		playedCard: int (the card being played) }
+		{player: Player (the player playing card) , playedCard: int (the card being played) }
 	When it must be sent:
 		The player must be in the state ChooseCard.
 		It is the player's responsibility to make sure that the playedCard
