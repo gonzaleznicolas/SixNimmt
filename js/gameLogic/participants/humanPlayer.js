@@ -52,6 +52,11 @@ module.exports = class HumanPlayer extends Player
 		});
 	}
 
+	updateHand()
+	{
+		this._socket.emit("serverUpdatedHand", Array.from(this._hand));
+	}
+
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS
 
 	onClientEndGameFromWaitPage()
@@ -99,6 +104,8 @@ module.exports = class HumanPlayer extends Player
 			return;
 		}
 		this._state = PlayerStates.WaitForRestToPlayTheirCard;
+		this._hand.delete(playedCard);
 		this.emit('playerPlayCard', {player: this, playedCard: playedCard});
+		this.updateHand();
 	}
 }
