@@ -12,7 +12,7 @@ let state = undefined;
 
 
 $(function () {
-	state = ClientState.NotPastFormYet;
+	state = ClientStates.NotPastFormYet;
 	startHomePageUI();
 	socket = io();
 
@@ -47,13 +47,13 @@ function onSubmitFormClicked() {
 	{
 		socket.emit('clientSpectateGame', {gameCode: $("#codeTextBox").val()});
 	}
-	state = ClientState.WaitingForFormResult;
+	state = ClientStates.WaitingForFormResult;
 }
 
 // SERVER TO CLIENT - FORM RESULT HANDLERS
 
 function onNewGameFormResult(data) { 
-	if (state != ClientState.WaitingForFormResult)
+	if (state != ClientStates.WaitingForFormResult)
 	{
 		console.log("serverNewGameFormResult received at unexpected time. Ignored.");
 		return;
@@ -68,12 +68,12 @@ function onNewGameFormResult(data) {
 	else 
 	{ 
 		showNickNameError();
-		state = ClientState.NotPastFormYet;
+		state = ClientStates.NotPastFormYet;
 	}
 }
    
 function onJoinGameFormResult(data) {
-	if (state != ClientState.WaitingForFormResult)
+	if (state != ClientStates.WaitingForFormResult)
 	{
 		console.log("serverJoinGameFormResult received at unexpected time. Ignored.");
 		return;
@@ -93,25 +93,25 @@ function onJoinGameFormResult(data) {
 			showNickNameError(); 
 		if (!data.codeValid) 
 			showCodeError(); 
-		state = ClientState.NotPastFormYet;
+		state = ClientStates.NotPastFormYet;
 	} 
 } 
 
 function onVsAIFormResult() 
 {
-	if (state != ClientState.WaitingForFormResult)
+	if (state != ClientStates.WaitingForFormResult)
 	{
 		console.log("server1v1vsAIFormResult received at unexpected time. Ignored.");
 		return;
 	}
 	$("#homePage").hide(1000); 
 	onStartGameClicked();
-	state = ClientState.WaitPage;
+	state = ClientStates.WaitPage;
 }
 
 function onSpectateFormResult(data)
 {
-	if (state != ClientState.WaitingForFormResult)
+	if (state != ClientStates.WaitingForFormResult)
 	{
 		console.log("serverSpectateGameFormResult received at unexpected time. Ignored.");
 		return;
@@ -127,14 +127,14 @@ function onSpectateFormResult(data)
 	else 
 	{ 
 		showCodeError();
-		state = ClientState.NotPastFormYet;
+		state = ClientStates.NotPastFormYet;
 	} 
 }
 
 // SERVER TO CLIENT - WAIT PAGE EVENT HANDLERS
 function onServerStartGame(data)
 {
-	if (state != ClientState.WaitPage)
+	if (state != ClientStates.WaitPage)
 	{
 		console.log("serverStartGame message received at unexpected time. Ignored.");
 		return;
@@ -148,7 +148,7 @@ function onServerStartGame(data)
 
 function onServerPlayerList(listOfPlayers){
 	// the first player list arrives before the form result does, so accept this message if in state WaitingForFormResult
-	if (state != ClientState.WaitPage && state != ClientState.WaitingForFormResult)
+	if (state != ClientStates.WaitPage && state != ClientStates.WaitingForFormResult)
 	{
 		console.log("serverPlayerList message received at unexpected time. Ignored.");
 		return;

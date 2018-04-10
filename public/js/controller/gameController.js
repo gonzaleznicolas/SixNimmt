@@ -10,9 +10,9 @@ class GameController {
 		let table = initializationData.table;
 
 		if (bSpectatorMode)
-			state = ClientState.WaitForRestToPlayTheirCard;
+			state = ClientStates.WaitForRestToPlayTheirCard;
 		else
-			state = ClientState.ChooseCard;
+			state = ClientStates.ChooseCard;
 
 		lc = new LayoutCalculator();
 		
@@ -41,7 +41,7 @@ class GameController {
 	onServerUpcomingCards(data)
 	{
 		// check state is right. make new state for waiting for played card response
-		if (state != ClientState.WaitForRestToPlayTheirCard || state != ClientState.ChooseCard)
+		if (state != ClientStates.WaitForRestToPlayTheirCard || state != ClientStates.ChooseCard)
 		{
 			console.log("serverUpcomingCards message received at unexpected time. Ignored.");
 			return;
@@ -74,7 +74,7 @@ class GameController {
 	
 	onHandCanvasClicked(event)
 	{
-		if (state != ClientState.ChooseCard)
+		if (state != ClientStates.ChooseCard)
 			return;
 		const canvasLeft = this._handView.Animation.Drawer.getCanvasOffsetLeft();
 		const canvasTop = this._handView.Animation.Drawer.getCanvasOffsetTop();
@@ -115,7 +115,7 @@ class GameController {
 		
 		// tell server which card was played
 		let playedCard = this._model.Hand[this._model.CurrentlySelectedCardInHand];
-		state = ClientState.WaitForRestToPlayTheirCard;
+		state = ClientStates.WaitForRestToPlayTheirCard;
 		socket.emit('clientPlayCard', playedCard);
 	}
 }

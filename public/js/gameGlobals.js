@@ -17,7 +17,7 @@ let bAnimationInProgress = false;
 
 // global enums
 const TableState = Object.freeze({SelectRowToTake:1, Normal:2})
-const ClientState = Object.freeze({
+const ClientStates = Object.freeze({
 	NotPastFormYet:1,
 	WaitingForFormResult:2,
 	WaitPage: 3,
