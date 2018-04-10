@@ -11,6 +11,7 @@ module.exports = class UpcomingCards
     
     get Cards() {return this._cards;}
     get NamesOnCards() {return this._namesOnCards;}
+    get Size() {return this._cards.length}
 
     reset()
     {

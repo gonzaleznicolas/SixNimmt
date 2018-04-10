@@ -72,6 +72,15 @@ module.exports = class Game extends EventEmitter
 		 });
 	}
 
+	everyPlayerInState(state)
+	{
+		let bEveryPlayerInState = true;
+		this._players.forEach( (player) => {
+			bEveryPlayerInState = bEveryPlayerInState && player.State == state;
+		});
+		return bEveryPlayerInState;
+	}
+
 	addHumanPlayer(name, bStartedGame, socket)
 	{
 		let player = new HumanPlayer(name, bStartedGame, socket);
@@ -261,5 +270,12 @@ module.exports = class Game extends EventEmitter
 		data.player.State = PlayerStates.WaitForRestToPlayTheirCard;
 		console.log(`Player ${data.player.Name} in game ${this._gameCode} has played card ${data.playedCard}`);
 		this.updateAllPlayersAndSpectatorsWithUpcomingCards();
+
+		// if every player has played their card
+		if (this._upcomingCards.Size == this._players.size && 
+			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
+		{
+			console.log(`Every player in game ${this._gameCode} has played their card`);
+		}
 	}
 }

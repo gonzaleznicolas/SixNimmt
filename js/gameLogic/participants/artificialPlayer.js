@@ -19,6 +19,7 @@ module.exports = class ArtificialPlayer extends Player
 			setTimeout(this.playACard.bind(this), secondsToWaitBeforeSelectingCard*1000);
 		}
 	}
+	get State() {return this._state;} // if you override the setter you have to override the getter as well
 
 	// METHODS CALLED FROM WITHIN THE HumanPlayer
 
