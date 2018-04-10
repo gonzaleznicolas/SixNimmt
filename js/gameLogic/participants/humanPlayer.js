@@ -22,8 +22,16 @@ module.exports = class HumanPlayer extends Player
 	}
 
 	get Socket() {return this._socket;}
+
+	// METHODS CALLED FROM WITHIN THE HumanPlayer
+
+	updateHand()
+	{
+		this._socket.emit("serverUpdatedHand", Array.from(this._hand));
+	}
 	
-	// UPDATES FROM THE GAME
+	// METHODS CALLED BY THE GAME. METHODS ANY PLAYER MUST IMPLEMENT
+
 	updatePlayerList(playerList)
 	{
 		this._socket.emit('serverPlayerList', playerList);
@@ -50,11 +58,6 @@ module.exports = class HumanPlayer extends Player
 			cards: cards,
 			namesOnCards: namesOnCards
 		});
-	}
-
-	updateHand()
-	{
-		this._socket.emit("serverUpdatedHand", Array.from(this._hand));
 	}
 
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS

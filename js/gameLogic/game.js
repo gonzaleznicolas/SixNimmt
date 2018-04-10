@@ -164,19 +164,15 @@ module.exports = class Game extends EventEmitter
 		});
 	}
 
-	tellAllPlayersGameStarted()
+	tellAllPlayersAndSpectatorsGameStarted()
 	{
 		let listOfPlayers = Array.from(this._players.keys());
 		let table = this._table.Table;
+
 		this._players.forEach(function (player){
 			player.startGame(listOfPlayers, table);
 		}.bind(this));
-	}
 
-	tellAllSpectatorsGameStarted()
-	{
-		let listOfPlayers = Array.from(this._players.keys());
-		let table = this._table.Table;
 		this._spectators.forEach(function (player){
 			player.startGame(listOfPlayers, table);
 		}.bind(this));
@@ -228,8 +224,7 @@ module.exports = class Game extends EventEmitter
 			this.initializePlayerHands();
 			this.initializeTableCards();
 			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
-			this.tellAllPlayersGameStarted();
-			this.tellAllSpectatorsGameStarted();
+			this.tellAllPlayersAndSpectatorsGameStarted();
 		}
 		else
 		{
