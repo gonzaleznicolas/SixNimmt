@@ -65,7 +65,7 @@ class TableAnimation extends Animation
 			bAnimationInProgress = false;
 	}
 	
-	sortUpcomingCards()
+	sortUpcomingCards(callback)
 	{
 		// step 1: make an array newPosition where the index is the old position of a card, and the content is the new position.
 		// eg. suppose at position 5 we had the card with number 1. in the newPosition array we are making here, at index 5
@@ -73,6 +73,8 @@ class TableAnimation extends Animation
 		// newPosition[5]=0.
 		
 		bAnimationInProgress = true;
+
+		this._sortUpcomingCardsCallback = callback;
 		
 		let newPosition = [];
 		let sortedUpcomingCards = this._model.UpcomingCards.slice().sort((a, b)=> a-b); // sort a copy of unsorted UpcomingCards
@@ -122,7 +124,10 @@ class TableAnimation extends Animation
 		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {return element.line.done}))
 			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
 		else
+		{
 			bAnimationInProgress = false;
+			this._sortUpcomingCardsCallback();
+		}
 	}
 	
 	// call this function before updating the model (before removing the card from upcoming card array and putting it in the table array)
@@ -210,8 +215,9 @@ class TableAnimation extends Animation
 		}
 	}
 	
-	flipAllUpcomingCards()
+	flipAllUpcomingCards(callback)
 	{
+		this._flipAllUpcomingCardsCallback = callback;
 		bAnimationInProgress = true;
 		this._fcBackW = this._drawer.CardWidth; // back of the card starts full width
 		requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
@@ -256,6 +262,9 @@ class TableAnimation extends Animation
 		if ((-1) * this._fcBackW < this._drawer.CardWidth)
 				requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 		else
+		{
 			bAnimationInProgress = false;
+			this._flipAllUpcomingCardsCallback();
+		}
 	}
 }

@@ -38,6 +38,11 @@ class GameController {
 		socket.on("serverUpdatedHand", this.onServerUpdatedHand.bind(this));
 	}
 
+	a()
+	{
+		this._tableView.Animation.flipAllUpcomingCards(this.a.bind(this));
+	}
+
 	// SERVER TO CLIENT - GAME EVENT HANDLERS
 
 	onServerUpcomingCards(data)
