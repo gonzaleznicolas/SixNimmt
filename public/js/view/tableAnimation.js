@@ -148,7 +148,7 @@ class TableAnimation extends Animation
 	{
 		bAnimationInProgress = true;
 		this._callback = callback;
-		this._drawer.DontDrawTheseUpcomingCardsOnDraw = [i];
+		this._model.OnlyDrawUpcomingCardsAfterThisIndex = i; // this should be done by whoever calls the animation. not responsibility of animation
 		let upcomingCardStartRow = this._drawer.upcomingCardsIndexToRow(i);
 		let upcomingCardStartCol = this._drawer.upcomingCardsIndexToCol(i);
 		
@@ -179,7 +179,6 @@ class TableAnimation extends Animation
 			requestAnimationFrame(this.moveIthUpcomingCardToRowColHelper.bind(this));
 		else
 		{
-			this._drawer.DontDrawTheseUpcomingCardsOnDraw = [];
 			bAnimationInProgress = false;
 			if (this._callback)
 				this._callback();
