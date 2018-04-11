@@ -12,15 +12,6 @@ class GameModel {
 		
 		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put null where there is no card
 		this._table = undefined;
-		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put null where there is no card
-		// or the card in that position should not have a player name on it.
-		this._playerNamesOnTableCards = [];
-		for (let row = 0; row < 4; row++)
-		{
-			this._playerNamesOnTableCards[row] = [];
-			for (let col = 0; col < 6; col++)
-				this._playerNamesOnTableCards[row][col] = null;
-		}
 		
 		this._tableState = TableState.Normal;
 		this._selectedRow = undefined;
@@ -49,7 +40,6 @@ class GameModel {
 	
 	get Table() {return this._table;}
 	set Table(table) {this._table = table;}
-	get PlayerNamesOnTableCards() {return this._playerNamesOnTableCards;}
 	get TableState() {return this._tableState;}
 	set TableState(state) {this._tableState = state;}
 	get SelectedRow() {return this._selectedRow}

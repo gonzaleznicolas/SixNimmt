@@ -60,7 +60,7 @@ class TableAnimation extends Animation
 				cardNumber = this._model.Table[row][col];
 				if (cardNumber)
 					this._drawer.drawCard(this._drawer.CardCoordinates[row][col].x, this._drawer.CardCoordinates[row][col].y + this._nextOffset.y, 
-											this._drawer.CardWidth, cardNumber, this._model.PlayerNamesOnTableCards[row][col]);
+											this._drawer.CardWidth, cardNumber);
 			}
 		}
 		if (!this._line.done)
@@ -203,7 +203,6 @@ class TableAnimation extends Animation
 		const end = this._drawer.CardCoordinates[this._endRow][this._endCol];
 		
 		this._movingCardNumber = this._model.Table[rowIndex][indexOfLastCardInTheRow];
-		this._movingCardName = this._model.PlayerNamesOnTableCards[rowIndex][indexOfLastCardInTheRow];
 		this._line = new CardMovementLine(start.x, start.y, end.x, end.y);
 		if (!this._line.done)
 			this._drawer.clearExactCardSpace(start.x, start.y);
@@ -232,7 +231,7 @@ class TableAnimation extends Animation
 		if (this._nextPt)
 			this._drawer.clearExactCardSpace(this._nextPt.x, this._nextPt.y);
 		this._nextPt = this._line.nextPoint();
-		this._drawer.drawCard(this._nextPt.x, this._nextPt.y, this._drawer.CardWidth, this._movingCardNumber, this._movingCardName);
+		this._drawer.drawCard(this._nextPt.x, this._nextPt.y, this._drawer.CardWidth, this._movingCardNumber);
 		if (!this._line.done)
 			requestAnimationFrame(this.takeRowHelper.bind(this));
 		else
