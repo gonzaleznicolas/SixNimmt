@@ -126,7 +126,8 @@ class TableAnimation extends Animation
 		else
 		{
 			bAnimationInProgress = false;
-			this._sortUpcomingCardsCallback();
+			if (this._sortUpcomingCardsCallback)
+				this._sortUpcomingCardsCallback();
 		}
 	}
 	
@@ -217,8 +218,8 @@ class TableAnimation extends Animation
 	
 	flipAllUpcomingCards(callback)
 	{
-		this._flipAllUpcomingCardsCallback = callback;
 		bAnimationInProgress = true;
+		this._flipAllUpcomingCardsCallback = callback;
 		this._fcBackW = this._drawer.CardWidth; // back of the card starts full width
 		requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 	}
@@ -264,7 +265,8 @@ class TableAnimation extends Animation
 		else
 		{
 			bAnimationInProgress = false;
-			this._flipAllUpcomingCardsCallback();
+			if (this._flipAllUpcomingCardsCallback)
+				this._flipAllUpcomingCardsCallback();
 		}
 	}
 }
