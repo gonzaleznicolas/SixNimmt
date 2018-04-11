@@ -10,11 +10,11 @@ class TableAnimation extends Animation
 	// call this function before updating the model
 	// precondition: fromRow <= toRow
 	// note: fromRow toRow is inclusive.
-	moveRows(fromRow, toRow, downThisManyRows)
+	moveRows(fromRow, toRow, downThisManyRows, callback)
 	{
 		// if downThisManyRowsIs negative, move up
 		bAnimationInProgress = true;
-		
+		this._callback = callback;
 		// these rows are in the model before updating the move
 		this._fromRow = fromRow;
 		this._toRow = toRow;
@@ -34,7 +34,11 @@ class TableAnimation extends Animation
 		if (!this._line.done)
 			requestAnimationFrame(this.moveRowsHelper.bind(this));
 		else
+		{
 			bAnimationInProgress = false;
+			if (this._callback)
+				this._callback();
+		}
 	}
 	
 	moveRowsHelper()
@@ -62,7 +66,11 @@ class TableAnimation extends Animation
 		if (!this._line.done)
 			requestAnimationFrame(this.moveRowsHelper.bind(this));
 		else
+		{
 			bAnimationInProgress = false;
+			if (this._callback)
+				this._callback();
+		}
 	}
 	
 	sortUpcomingCards(callback)
@@ -74,7 +82,7 @@ class TableAnimation extends Animation
 		
 		bAnimationInProgress = true;
 
-		this._sortUpcomingCardsCallback = callback;
+		this._callback = callback;
 		
 		let newPosition = [];
 		let sortedUpcomingCards = this._model.UpcomingCards.slice().sort((a, b)=> a-b); // sort a copy of unsorted UpcomingCards
@@ -107,7 +115,11 @@ class TableAnimation extends Animation
 		if (!this._resourcesForCardOriginallyAtPositionI.every(element => {return element.line.done}))
 			requestAnimationFrame(this.sortUpcomingCardsHelper.bind(this));
 		else
+		{
 			bAnimationInProgress = false;
+			if (this._callback)
+				this._callback();
+		}
 	}
 	
 	sortUpcomingCardsHelper()
@@ -126,15 +138,16 @@ class TableAnimation extends Animation
 		else
 		{
 			bAnimationInProgress = false;
-			if (this._sortUpcomingCardsCallback)
-				this._sortUpcomingCardsCallback();
+			if (this._callback)
+				this._callback();
 		}
 	}
 	
 	// call this function before updating the model (before removing the card from upcoming card array and putting it in the table array)
-	moveIthUpcomingCardToRowCol(i, tableRow, tableCol)
+	moveIthUpcomingCardToRowCol(i, tableRow, tableCol, callback)
 	{
 		bAnimationInProgress = true;
+		this._callback = callback;
 		this._drawer.DontDrawTheseUpcomingCardsOnDraw = [i];
 		let upcomingCardStartRow = this._drawer.upcomingCardsIndexToRow(i);
 		let upcomingCardStartCol = this._drawer.upcomingCardsIndexToCol(i);
@@ -150,7 +163,11 @@ class TableAnimation extends Animation
 		if (!this._line.done)
 			requestAnimationFrame(this.moveIthUpcomingCardToRowColHelper.bind(this));
 		else
+		{
 			bAnimationInProgress = false;
+			if (this._callback)
+				this._callback();
+		}
 	}
 	
 	moveIthUpcomingCardToRowColHelper()
@@ -164,14 +181,16 @@ class TableAnimation extends Animation
 		{
 			this._drawer.DontDrawTheseUpcomingCardsOnDraw = [];
 			bAnimationInProgress = false;
+			if (this._callback)
+				this._callback();
 		}
 	}
 	
 
-	takeRow(rowIndex, bDisapearAtTheEnd = false)
+	takeRow(rowIndex, bDisapearAtTheEnd = false, callback = undefined)
 	{
 		bAnimationInProgress = true;
-		
+		this._callback = callback;
 		this._bDisapearAtTheEnd = bDisapearAtTheEnd;
 		// first, find the col of the last card in the row
 		let indexOfFirstUndefinedInTheRow = this._model.Table[rowIndex].findIndex(cardNum => {return cardNum == undefined});
@@ -195,8 +214,17 @@ class TableAnimation extends Animation
 		else
 		{
 			if (this._bDisapearAtTheEnd)
-				this.fadeAwayCard(this._endRow, this._endCol)
-			bAnimationInProgress = false;
+			{
+				// the fadeAwayCard animation will take care of setting bAnimationInProgress back to false
+				// and calling the callback
+				this.fadeAwayCard(this._endRow, this._endCol, this._callback)
+			}
+			else
+			{
+				bAnimationInProgress = false;
+				if (this._callback)
+					this._callback();
+			}
 		}
 	}
 	
@@ -211,15 +239,24 @@ class TableAnimation extends Animation
 		else
 		{
 			if (this._bDisapearAtTheEnd)
-				this.fadeAwayCard(this._endRow, this._endCol)
-			bAnimationInProgress = false;
+			{
+				// the fadeAwayCard animation will take care of setting bAnimationInProgress back to false
+				// and calling the callback
+				this.fadeAwayCard(this._endRow, this._endCol, this._callback)
+			}
+			else
+			{
+				bAnimationInProgress = false;
+				if (this._callback)
+					this._callback();
+			}
 		}
 	}
 	
 	flipAllUpcomingCards(callback)
 	{
 		bAnimationInProgress = true;
-		this._flipAllUpcomingCardsCallback = callback;
+		this._callback = callback;
 		this._fcBackW = this._drawer.CardWidth; // back of the card starts full width
 		requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 	}
@@ -265,8 +302,8 @@ class TableAnimation extends Animation
 		else
 		{
 			bAnimationInProgress = false;
-			if (this._flipAllUpcomingCardsCallback)
-				this._flipAllUpcomingCardsCallback();
+			if (this._callback)
+				this._callback();
 		}
 	}
 }
