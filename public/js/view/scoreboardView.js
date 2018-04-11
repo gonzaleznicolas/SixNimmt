@@ -7,10 +7,27 @@ class ScoreboardView
 		this._scoreboardContainer = $("#scoreboard");
 
 		// make a ScoreboardElement object for each player
-		this._scoreboardElements = players.map(playerName => {return new ScoreboardElement(playerName)});
+		this._scoreboardElements = players.map(playerName => {return new ScoreboardElement(playerName, 0)});
 
 		// put all the ScoreboardElements in the scoreboardContainer
 		this.putElementsInContainer();
+	}
+
+	// arrayOfNames and arrayOfScores are the same length and corresponding indices name and score correspond to eachother
+	resetScoreboard(arrayOfNames, arrayOfScores)
+	{
+		this._scoreboardElements = [];
+		this._scoreboardContainer.empty();
+
+		// set the scores
+		for (let i = 0; i < arrayOfNames.length; i++)
+		{
+			this._scoreboardElements.push( new ScoreboardElement(arrayOfNames[i], arrayOfScores[i]) );
+		}
+		this._scoreboardElements.sort( (a,b) => a-b);
+		this.putElementsInContainer()
+
+		this.resize();
 	}
 
 	incrementScore(playerName, incrementBy)

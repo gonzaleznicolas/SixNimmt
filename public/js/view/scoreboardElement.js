@@ -2,12 +2,12 @@
 
 class ScoreboardElement
 {
-		constructor(playerName)
+		constructor(playerName, playerScore)
 		{
 			this._div = $(document.createElement("div"));
 			this._div.addClass("scoreboardElement");
 			this._playerName = playerName;
-			this._playerScore = 0;
+			this._playerScore = playerScore;
 			this.updateText();
 		}
 
