@@ -7,7 +7,7 @@ module.exports = class Spectator
 		this._socket = socket; 
 	}
 
-	// UPDATES FROM THE GAME
+	// METHODS CALLED BY THE GAME
 
 	updatePlayerList(playerList)
 	{
