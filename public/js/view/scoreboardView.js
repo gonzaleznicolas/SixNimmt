@@ -14,7 +14,7 @@ class ScoreboardView
 	}
 
 	// arrayOfNames and arrayOfScores are the same length and corresponding indices name and score correspond to eachother
-	resetScoreboard(arrayOfNames, arrayOfScores)
+	setScoreboard(arrayOfNames, arrayOfScores)
 	{
 		this._scoreboardElements = [];
 		this._scoreboardContainer.empty();
