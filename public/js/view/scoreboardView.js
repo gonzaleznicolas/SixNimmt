@@ -24,13 +24,13 @@ class ScoreboardView
 		{
 			this._scoreboardElements.push( new ScoreboardElement(arrayOfNames[i], arrayOfScores[i]) );
 		}
-		this._scoreboardElements.sort( (a,b) => a-b);
+		this._scoreboardElements.sort( (element1, element2) => element1.Score - element2.Score);
 		this.putElementsInContainer()
 
 		this.resize();
 	}
 
-	incrementScore(playerName, incrementBy)
+	incrementScore(playerName, incrementBy, callback)
 	{
 		// if there is already an increment score animation in progress, wait half a second and try again.
 		if (this._indexOfElementBeingUpdated != undefined)
@@ -38,6 +38,7 @@ class ScoreboardView
 			setTimeout( this.incrementScore.bind(this), 500, playerName, incrementBy);
 			return;
 		}
+		this._callback = callback;
 		this._indexOfElementBeingUpdated = this._scoreboardElements.findIndex(element => element.Name == playerName);
 		this._elementBeingMoved = this._scoreboardElements[this._indexOfElementBeingUpdated];
 		this._elementBeingMoved.incrementScoreBy(incrementBy);
@@ -58,6 +59,9 @@ class ScoreboardView
 			setTimeout( function(element){element.makeWhite();}, 1000, this._elementBeingMoved);
 			this._elementBeingMoved = undefined;
 			this._indexOfElementBeingUpdated = undefined;
+			// call the callback just after we turn the moved element white again
+			if (this._callback)
+				setTimeout( this._callback , 1500);
 		}
 		else
 		{

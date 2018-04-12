@@ -40,7 +40,8 @@ class GameController {
 
 	a()
 	{
-		this._tableView.Animation.flipAllUpcomingCards(this.a.bind(this));
+		this._scoreboardView.incrementScore("Nico", 1, this.a.bind(this));
+		console.log("hi");
 	}
 
 	// SERVER TO CLIENT - GAME EVENT HANDLERS
