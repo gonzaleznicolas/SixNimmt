@@ -276,6 +276,7 @@ module.exports = class Game extends EventEmitter
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
+			
 		}
 	}
 }

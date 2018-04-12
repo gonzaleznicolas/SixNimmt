@@ -1,6 +1,6 @@
 'use strict';
 
-const Game = require('./gameLogic/game.js');
+const Game = require('./game/game.js');
 
 module.exports = class GameManager
 {
