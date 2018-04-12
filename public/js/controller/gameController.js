@@ -36,12 +36,25 @@ class GameController {
 		// SERVER TO CLIENT - GAME EVENTS
 		socket.on("serverUpcomingCards", this.onServerUpcomingCards.bind(this));
 		socket.on("serverUpdatedHand", this.onServerUpdatedHand.bind(this));
+		socket.on("serverRun", this.onServerRun.bind(this));
 	}
 
-	a()
+	// RUN MANAGEMENT
+
+	onServerRun(runObject)
 	{
-		this._scoreboardView.incrementScore("Nico", 3);
-		console.log("hi");
+		console.log("onServerRun");
+		
+		this.handleBeforeRun(runObject.before);
+	}
+
+	handleBeforeRun(before)
+	{
+		this._model.Table = before.table;
+		this._model.UpcomingCardsFaceUp = before.upcomingCards.bFaceUp;
+		this._model.UpcomingCards = before.upcomingCards.cards;
+		this._model.PlayerNamesOnUpcomingCards = before.upcomingCards.names;
+		this._tableView.draw();
 	}
 
 	// SERVER TO CLIENT - GAME EVENT HANDLERS

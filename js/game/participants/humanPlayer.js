@@ -60,6 +60,11 @@ module.exports = class HumanPlayer extends Player
 		});
 	}
 
+	run(runObject)
+	{
+		this._socket.emit("serverRun", runObject)
+	}
+
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS
 
 	onClientEndGameFromWaitPage()

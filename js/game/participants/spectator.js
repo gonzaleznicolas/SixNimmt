@@ -35,4 +35,9 @@ module.exports = class Spectator
 			namesOnCards: namesOnCards
 		});
 	}
+
+	run(runObject)
+	{
+		this._socket.emit("serverRun", runObject)
+	}
 }

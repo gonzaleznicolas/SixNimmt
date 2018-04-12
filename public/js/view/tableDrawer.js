@@ -87,7 +87,8 @@ class TableDrawer extends Drawer
 		const redColumn = 5; // if you place the 6th card (5th index) you take the whole row
 		for (let row = 0; row < this._numberOfRows; row++)
 		{
-			if (this._model.Table[row][redColumn - 1] != undefined)
+			let card = this._model.Table[row][redColumn - 1];
+			if (card != undefined)
 				this.drawWarningRectangle(this._cardCoordinates[row][redColumn].x, this._cardCoordinates[row][redColumn].y);
 		}
 	}

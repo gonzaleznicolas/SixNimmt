@@ -206,6 +206,17 @@ module.exports = class Game extends EventEmitter
 		});
 	}
 
+	updateAllPlayersAndSpectatorsWithRun(runObject)
+	{
+		this._players.forEach(function (player){
+			player.run(runObject);
+		});
+
+		this._spectators.forEach(function (spectator){
+			spectator.run(runObject);
+		});
+	}
+
 	// PLAYER TO GAME - WAIT PAGE EVENT HANDLERS
 
 	onPlayerEndGameFromWaitPage(player)
@@ -277,7 +288,8 @@ module.exports = class Game extends EventEmitter
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
-			GameLogic.turn(this._table, this._upcomingCards);
+			let runObject = GameLogic.run(this._table, this._upcomingCards);
+			this.updateAllPlayersAndSpectatorsWithRun(runObject);
 		}
 	}
 }

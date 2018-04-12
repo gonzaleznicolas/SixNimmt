@@ -10,7 +10,7 @@ module.exports = class GameLogic
 	{
 	}
 
-	static turn(table, upcomingCards)
+	static run(table, upcomingCards)
 	{
 		let before =	{
 						table: table,
@@ -22,5 +22,7 @@ module.exports = class GameLogic
 						}
 		let animationSequence = [];
 		animationSequence[0] = {animationType: AnimationTypes.FlipAllUpcomingCards};
+
+		return {before: before, animationSequence: animationSequence};
 	}
 }
