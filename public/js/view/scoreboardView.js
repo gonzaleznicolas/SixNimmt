@@ -55,13 +55,14 @@ class ScoreboardView
 			this._scoreboardElements[this._indexOfElementBeingUpdated+1].Score)
 		{
 			clearInterval(this._incrementScoreInterval);
-			// wait one second to make it white again
-			setTimeout( function(element){element.makeWhite();}, 1000, this._elementBeingMoved);
-			this._elementBeingMoved = undefined;
-			this._indexOfElementBeingUpdated = undefined;
-			// call the callback just after we turn the moved element white again
-			if (this._callback)
-				setTimeout( this._callback , 1500);
+			// wait one second to make it white again and end the animatino
+			setTimeout( function(){
+				this._elementBeingMoved.makeWhite();
+				this._elementBeingMoved = undefined;
+				this._indexOfElementBeingUpdated = undefined;
+				if (this._callback)
+					this._callback();
+			}.bind(this), 1000);
 		}
 		else
 		{

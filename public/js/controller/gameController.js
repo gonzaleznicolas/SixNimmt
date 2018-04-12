@@ -40,7 +40,7 @@ class GameController {
 
 	a()
 	{
-		this._scoreboardView.incrementScore("Nico", 1, this.a.bind(this));
+		this._scoreboardView.incrementScore("Nico", 3);
 		console.log("hi");
 	}
 
