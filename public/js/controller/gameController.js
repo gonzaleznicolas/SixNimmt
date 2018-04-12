@@ -45,7 +45,26 @@ class GameController {
 	{
 		console.log("onServerRun");
 		
-		this.handleBeforeRun(runObject.before);
+		this.handleBeforeRun(runObject.before); // synchronous
+
+		this._activeAnimationSequence = runObject.animationSequence;
+		this.handleRunAnimationSequence();
+	}
+
+	handleRunAnimationSequence()
+	{
+		let animation = this._activeAnimationSequence.shift();
+		if (animation)
+		{
+			if (animation.animationType == AnimationTypes.FlipAllUpcomingCards)
+			{
+				this._tableView.Animation.flipAllUpcomingCards(this.handleRunAnimationSequence.bind(this));
+			}
+			else if (animation.animationType == AnimationTypes.SortUpcomingCards)
+			{
+				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(this.handleRunAnimationSequence.bind(this));}.bind(this), 2000)
+			}
+		}
 	}
 
 	handleBeforeRun(before)

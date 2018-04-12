@@ -25,6 +25,11 @@ const ClientStates = Object.freeze({
 	WaitForRestToPlayTheirCard: 5
 });
 
+const AnimationTypes = Object.freeze({
+	FlipAllUpcomingCards:1,
+	SortUpcomingCards: 2
+});
+
 function getCardInfo(cardNumber)
 {
 	if (cardNumber )

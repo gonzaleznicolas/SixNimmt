@@ -289,7 +289,8 @@ module.exports = class Game extends EventEmitter
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
 			let runObject = GameLogic.run(this._table, this._upcomingCards);
-			this.updateAllPlayersAndSpectatorsWithRun(runObject);
+			// wait two seconds to start the animation
+			setTimeout(function() {this.updateAllPlayersAndSpectatorsWithRun(runObject);}.bind(this), 2000);
 		}
 	}
 }
