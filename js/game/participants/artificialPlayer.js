@@ -15,7 +15,7 @@ module.exports = class ArtificialPlayer extends Player
 		this._state = state;
 		if (this._state == PlayerStates.ChooseCard)
 		{
-			let secondsToWaitBeforeSelectingCard = Math.floor(Math.random() * (20-10)) + 10;
+			let secondsToWaitBeforeSelectingCard = Math.floor(Math.random() * (2-4)) + 2; // increase the wait time later. TEMP
 			setTimeout(this.playACard.bind(this), secondsToWaitBeforeSelectingCard*1000);
 		}
 	}
