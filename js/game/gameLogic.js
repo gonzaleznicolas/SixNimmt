@@ -13,7 +13,7 @@ module.exports = class GameLogic
 	static run(table, upcomingCards)
 	{
 		let before =	{
-						table: table,
+						table: table.Table,
 						upcomingCards: 	{
 										bFaceUp: false,
 										cards: upcomingCards.Cards,
