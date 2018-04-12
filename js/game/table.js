@@ -36,4 +36,15 @@ module.exports = class Table
 			this._table[row][0] = sortedAscending[row];
 		}
 	}
+
+	lastCardInRow(rowI)
+	{
+		let row = this._table[rowI];
+		for (let c = 0; c < row.length ; c++)
+		{
+			if (row[c] == null)
+				break;
+		}
+		return c;
+	}
 }

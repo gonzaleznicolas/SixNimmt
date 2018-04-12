@@ -24,4 +24,19 @@ module.exports = class UpcomingCards
         this._cards.push(card);
         this._namesOnCards.push(name);
     }
+
+    // returns next upcoming card. Does not remove the card.
+    next()
+    {
+        let card = undefined;
+        for (let i = 0; i < this._cards.length; i++)
+        {
+            if (this._cards[i] != undefined && this._cards[i] != null)
+            {
+                card = this._cards[i];
+                break;
+            }
+        }
+        return card;
+    }
 }

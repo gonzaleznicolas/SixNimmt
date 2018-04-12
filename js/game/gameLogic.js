@@ -1,0 +1,26 @@
+'use strict'; 
+
+const AnimationTypes = Object.freeze({
+	FlipAllUpcomingCards:1
+});
+ 
+module.exports = class GameLogic 
+{ 
+	constructor() 
+	{
+	}
+
+	static turn(table, upcomingCards)
+	{
+		let before =	{
+						table: table,
+						upcomingCards: 	{
+										bFaceUp: false,
+										cards: upcomingCards.Cards,
+										names: upcomingCards.NamesOnCards
+										}
+						}
+		let animationSequence = [];
+		animationSequence[0] = {animationType: AnimationTypes.FlipAllUpcomingCards};
+	}
+}

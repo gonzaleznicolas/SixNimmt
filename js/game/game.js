@@ -9,6 +9,7 @@ const PlayerStates = require('./participants/playerStates.js');
 const Deck = require('./deck.js');
 const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
+const GameLogic = require('./gameLogic.js');
 
 module.exports = class Game extends EventEmitter
 {
@@ -276,7 +277,7 @@ module.exports = class Game extends EventEmitter
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
-			
+			GameLogic.turn(this._table, this._upcomingCards);
 		}
 	}
 }
