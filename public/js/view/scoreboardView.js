@@ -13,17 +13,18 @@ class ScoreboardView
 		this.putElementsInContainer();
 	}
 
-	// arrayOfNames and arrayOfScores are the same length and corresponding indices name and score correspond to eachother
-	setScoreboard(arrayOfNames, arrayOfScores)
+	// array of {name: , score: } pairs
+	setScoreboard(scores)
 	{
 		this._scoreboardElements = [];
 		this._scoreboardContainer.empty();
 
 		// set the scores
-		for (let i = 0; i < arrayOfNames.length; i++)
+		for (let i = 0; i < scores.length; i++)
 		{
-			this._scoreboardElements.push( new ScoreboardElement(arrayOfNames[i], arrayOfScores[i]) );
+			this._scoreboardElements.push( new ScoreboardElement(scores[i].name, scores[i].score) );
 		}
+		
 		this._scoreboardElements.sort( (element1, element2) => element1.Score - element2.Score);
 		this.putElementsInContainer()
 
