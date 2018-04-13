@@ -51,22 +51,6 @@ class GameController {
 		this.handleRunAnimationSequence();
 	}
 
-	handleRunAnimationSequence()
-	{
-		let animation = this._activeAnimationSequence.shift();
-		if (animation)
-		{
-			if (animation.animationType == AnimationTypes.FlipAllUpcomingCards)
-			{
-				this._tableView.Animation.flipAllUpcomingCards(this.handleRunAnimationSequence.bind(this));
-			}
-			else if (animation.animationType == AnimationTypes.SortUpcomingCards)
-			{
-				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(this.handleRunAnimationSequence.bind(this));}.bind(this), 2000)
-			}
-		}
-	}
-
 	handleBeforeRun(before)
 	{
 		this._model.Table = before.table;
@@ -74,6 +58,36 @@ class GameController {
 		this._model.UpcomingCards = before.upcomingCards.cards;
 		this._model.PlayerNamesOnUpcomingCards = before.upcomingCards.names;
 		this._tableView.draw();
+	}
+
+	handleRunAnimationSequence()
+	{
+		let animation = this._activeAnimationSequence.shift();
+		if (animation)
+		{
+			if (animation.animationType == AnimationTypes.FlipAllUpcomingCards)
+			{
+				this._tableView.Animation.flipAllUpcomingCards(this.afterFlipAllUpcomingCards.bind(this));
+			}
+			else if (animation.animationType == AnimationTypes.SortUpcomingCards)
+			{
+				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(this.afterSortUpcomingCards.bind(this));}.bind(this), 2000)
+			}
+		}
+	}
+
+	afterFlipAllUpcomingCards()
+	{
+		this._model.UpcomingCardsFaceUp = true;
+		this._tableView.draw();
+		this.handleRunAnimationSequence();
+	}
+
+	afterSortUpcomingCards()
+	{
+		this._model.UpcomingCards.sort( (a, b) => a - b);
+		this._tableView.draw();
+		this.handleRunAnimationSequence();
 	}
 
 	// SERVER TO CLIENT - GAME EVENT HANDLERS
