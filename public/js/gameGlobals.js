@@ -27,7 +27,8 @@ const ClientStates = Object.freeze({
 
 const AnimationTypes = Object.freeze({
 	FlipAllUpcomingCards:1,
-	SortUpcomingCards: 2
+	SortUpcomingCards: 2,
+	MoveIthCardToRowCol: 3
 });
 
 function getCardInfo(cardNumber)

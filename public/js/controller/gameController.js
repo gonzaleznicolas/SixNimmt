@@ -83,6 +83,16 @@ class GameController {
 										animation.afterImage	// callback param
 									);}.bind(this), 1000)
 			}
+			else if (animation.animationType == AnimationTypes.MoveIthCardToRowCol)
+			{
+				setTimeout( function() {this._tableView.Animation.moveIthUpcomingCardToRowCol(
+										animation.animationParams.i,
+										animation.animationParams.tableRow,
+										animation.animationParams.tableCol,
+										this.afterAnimation.bind(this), // callback
+										animation.afterImage	// callback param
+									);}.bind(this), 1000)
+			}
 		}
 	}
 

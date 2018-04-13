@@ -14,7 +14,10 @@ module.exports = class UpcomingCards
 		let cloneArray = [];
 		for (let i = 0; i < originalArray.length; i++)
 		{
-			cloneArray[i] = {number: originalArray[i].number, name: originalArray[i].name};
+            if (originalArray[i])
+                cloneArray[i] = {number: originalArray[i].number, name: originalArray[i].name};
+            else
+              cloneArray[i] = null;
 		}
 
 		let clone = new UpcomingCards();

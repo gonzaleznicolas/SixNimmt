@@ -5,7 +5,8 @@ const UpcomingCards = require('./upcomingCards.js');
 
 const AnimationTypes = Object.freeze({
 	FlipAllUpcomingCards:1,
-	SortUpcomingCards: 2
+	SortUpcomingCards: 2,
+	MoveIthCardToRowCol: 3
 });
  
 module.exports = class GameLogic 
@@ -82,21 +83,45 @@ module.exports = class GameLogic
 			}
 		};
 
-		//
-		animationListIndex++;
-		tableAtThisPoint = Table.clone(tableAtThisPoint);
-		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
-		let alfdfd = 3;
-		let dfdf;
-		let b = tableAtThisPoint.cardSmallerThanLastCardInFirstRow(2);
-		dfdf = tableAtThisPoint.playCard(alfdfd);
-		dfdf = tableAtThisPoint.playCard(alfdfd);
-		dfdf = tableAtThisPoint.playCard(alfdfd);
-		dfdf = tableAtThisPoint.playCard(alfdfd);
+		// HANDLE UPCOMING CARDS
+		for ( let upcomingCardIndex = 0; upcomingCardIndex < upcomingCardsAtThisPoint.Size; upcomingCardIndex++)
+		{
+			animationListIndex++;
+			tableAtThisPoint = Table.clone(tableAtThisPoint);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
-
-
-
+			let card = upcomingCardsAtThisPoint.Cards[upcomingCardIndex];
+			if (tableAtThisPoint.cardSmallerThanLastCardInFirstRow(card.number))
+			{
+				console.log("Card smaller than last card in first row...");
+				break;
+			}
+			else
+			{
+				let rowCol = tableAtThisPoint.playCard(card.number);
+				upcomingCardsAtThisPoint.Cards[upcomingCardIndex] = null;
+				animationList[animationListIndex] =
+				{
+					animationType: AnimationTypes.MoveIthCardToRowCol,
+					animationParams:
+					{
+						i: upcomingCardIndex,
+						tableRow: rowCol.row,
+						tableCol: rowCol.col
+					},
+					afterImage:
+					{
+						table: tableAtThisPoint.Table,
+						upcomingCards:
+						{
+							bFaceUp: true,
+							cards: upcomingCardsAtThisPoint.Cards,
+							highlighted: null
+						}
+					}
+				};
+			}
+		}
 
 		return {beforeImage: beforeImage, animationList: animationList};
 	}
