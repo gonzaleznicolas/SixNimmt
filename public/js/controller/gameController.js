@@ -55,9 +55,7 @@ class GameController {
 		this._handView.draw();
 	}
 
-	// RUN MANAGEMENT
-
-	drawTableImage(tableImage)
+	updateModelAndDrawFromTableImage(tableImage)
 	{
 		this._model.Table = tableImage.table;
 		this._model.BUpcomingCardsFaceUp = tableImage.upcomingCards.bFaceUp;
@@ -83,14 +81,14 @@ class GameController {
 				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(
 										this.afterAnimation.bind(this), // callback
 										animation.afterImage	// callback param
-									);}.bind(this), 2000)
+									);}.bind(this), 1000)
 			}
 		}
 	}
 
 	afterAnimation(afterImage)
 	{
-		this.drawTableImage(afterImage);
+		this.updateModelAndDrawFromTableImage(afterImage);
 		this.handleAnimationList();
 	}
 
@@ -123,7 +121,7 @@ class GameController {
 	{
 		console.log("onServerAnimate");
 		
-		this.drawTableImage(animationSequence.beforeImage); // synchronous
+		this.updateModelAndDrawFromTableImage(animationSequence.beforeImage); // synchronous
 
 		this._activeAnimationList = animationSequence.animationList;
 		this.handleAnimationList();

@@ -16,49 +16,69 @@ module.exports = class GameLogic
 
 	static getAnimationSequence(table, upcomingCards)
 	{
+		// objects we will use to return the animationSequence
+		let beforeImage = undefined;
+		let animationList = [];
 
-		let beforeImage =
+		let tableAtThisPoint = Table.clone(table);
+		let upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCards);
+
+		// BEFORE
+
+		beforeImage =
 		{
-			table: Table.clone(table).Table,
+			table: tableAtThisPoint.Table,
 			upcomingCards:
 			{
 				bFaceUp: false,
-				cards: upcomingCards.Cards,
+				cards: upcomingCardsAtThisPoint.Cards,
 				highlighted: null
 			}
 		}
 
-		let animationList = [];
+		// FLIP
+
+		tableAtThisPoint = Table.clone(tableAtThisPoint);
+		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
 		animationList[0] =
 		{
 			animationType: AnimationTypes.FlipAllUpcomingCards,
 			afterImage:
 			{
-				table: Table.clone(table).Table,
+				table: tableAtThisPoint.Table,
 				upcomingCards:
 				{
 					bFaceUp: true,
-					cards: upcomingCards.Cards,
+					cards: upcomingCardsAtThisPoint.Cards,
 					highlighted: null
 				}
 			}
 		};
+
+		// SORT
+
+		tableAtThisPoint = Table.clone(tableAtThisPoint);
+		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+
+		upcomingCardsAtThisPoint.sort();
 
 		animationList[1] =
 		{
 			animationType: AnimationTypes.SortUpcomingCards,
 			afterImage:
 			{
-				table: Table.clone(table).Table,
+				table: tableAtThisPoint.Table,
 				upcomingCards:
 				{
 					bFaceUp: true,
-					cards: UpcomingCards.clone(upcomingCards).Cards.sort((a, b) => a.number - b.number),
+					cards: upcomingCardsAtThisPoint.Cards,
 					highlighted: null
 				}
 			}
 		};
+
+
 
 		return {beforeImage: beforeImage, animationList: animationList};
 	}

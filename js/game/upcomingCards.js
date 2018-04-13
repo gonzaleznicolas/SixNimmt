@@ -31,6 +31,11 @@ module.exports = class UpcomingCards
         this._cards = [];
     }
 
+    sort()
+    {
+        this._cards.sort((a, b) => a.number - b.number);
+    }
+
     playCard(number, name)
     {
         this._cards.push({number: number, name: name});
