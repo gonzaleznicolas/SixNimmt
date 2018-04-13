@@ -99,7 +99,7 @@ class GameController {
 				setTimeout( function() { 
 					this.dealWithAskPlayerToChooseARowToTakeAnimation(animation.animationParams.nameOfPlayerToChooseRow,
 																		animation.animationParams.tableImage);
-					}.bind(this), 2000);
+				}.bind(this), 2000);
 			}
 		}
 	}
@@ -118,8 +118,7 @@ class GameController {
 			state = ClientStates.SelectRowToTake;
 			this._headerView.setFlashingWithButton("Choose a row to take",
 													"Select Row",
-													function(){console.log("hi");
-												});
+													this.onSelectRowClicked.bind(this));
 		}
 		else
 		{
@@ -176,13 +175,23 @@ class GameController {
 		if (clickedRow == this._model.SelectedRow)
 		{
 			this._model.SelectedRow = undefined;
+			$('.headerButton').removeClass("selectedHeaderButton");
 			this._tableView.draw();
 		}
 		else if (clickedRow != undefined)
 		{
 			this._model.SelectedRow = clickedRow;
+			$('.headerButton').addClass("selectedHeaderButton");
 			this._tableView.draw();
 		}
+	}
+
+	onSelectRowClicked()
+	{
+		if (state != ClientStates.SelectRowToTake)
+			return;
+		if (!this._model.SelectedRow)
+			return;
 	}
 	
 	onHandCanvasClicked(event)

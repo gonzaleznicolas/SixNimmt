@@ -26,10 +26,16 @@ header{
 	font-size: 0.7em;
 	border-radius: 0.5em;
 	padding: 0.2em;
+	color: rgba(200, 200, 200,1);
+	background: rgba(128, 128, 128,1);
+}
+
+.selectedHeaderButton{
+	color: white;
 	background: rgba(0, 0, 0, 0.3);
 }
 
-.headerButton:hover {
+.selectedHeaderButton:hover {
 	background: rgba(188, 144, 204, 1);
 	color: white;
 }
