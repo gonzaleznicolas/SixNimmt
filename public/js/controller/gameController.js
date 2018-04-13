@@ -116,13 +116,12 @@ class GameController {
 		if (nameOfPlayerToChooseRow == this._name)
 		{
 			state = ClientStates.SelectRowToTake;
-			this._headerView.setFlashingWithButton("Choose a row to take",
-													"Select Row",
+			this._headerView.setFlashingWithButton(selectARowStr, selectRowStr,
 													this.onSelectRowClicked.bind(this));
 		}
 		else
 		{
-			this._headerView.setFlashing(`Waiting for ${nameOfPlayerToChooseRow} to pick a row to take`);
+			this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
 		}
 	}
 

@@ -2,6 +2,7 @@
 
 let bSpanish = false;
 
+// strings
 let areYouSureYouWantToLeaveStr;
 let leaveStr;
 let stayStr;
@@ -10,6 +11,10 @@ let endGameStr;
 let cancelStr;
 let thisGameHasBeenTerminatedStr;
 let okStr = "OK";
+let selectARowStr;
+let selectRowStr;
+let waitingForStr;
+let toPickARowStr;
 
 
 function translateToEnglish()
@@ -63,6 +68,11 @@ function translateToEnglish()
 	cancelStr = "Cancel";
 
 	thisGameHasBeenTerminatedStr = "This game has been terminated by ";
+
+	selectARowStr = "Select a row to take";
+	selectRowStr = "Select Row";
+	waitingForStr = "Waiting for";
+	toPickARowStr = "to pick a row to take";
 }
 
 function translateToSpanish()
@@ -116,4 +126,9 @@ function translateToSpanish()
 	cancelStr = "Cancelar";
 
 	thisGameHasBeenTerminatedStr = "Este juego ha sido terminado por ";
+
+	selectARowStr = "Elija una fila para llevarse";
+	selectRowStr = "Elejir fila";
+	waitingForStr = "Esperando a que";
+	toPickARowStr = "elija una fila";
 }
