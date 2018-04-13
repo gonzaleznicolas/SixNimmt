@@ -23,7 +23,7 @@ class GameModel {
 		
 		// UPCOMING CARDS
 		
-		this._UpcomingCardsFaceUp = false;
+		this._bUpcomingCardsFaceUp = false;
 
 		this._upcomingCards = [];
 		this._onlyDrawUpcomingCardsAfterThisIndex = -1;
@@ -48,8 +48,8 @@ class GameModel {
 	get CurrentlySelectedCardInHand() {return this._currentlySelectedCardInHand;}
 	set CurrentlySelectedCardInHand(i) {this._currentlySelectedCardInHand = i;}
 	
-	get UpcomingCardsFaceUp() {return this._UpcomingCardsFaceUp;}
-	set UpcomingCardsFaceUp(b) {this._UpcomingCardsFaceUp = b;}
+	get BUpcomingCardsFaceUp() {return this._bUpcomingCardsFaceUp;}
+	set BUpcomingCardsFaceUp(b) {this._bUpcomingCardsFaceUp = b;}
 	get UpcomingCards() {return this._upcomingCards;}
 	set UpcomingCards(array) {this._upcomingCards = array}
 	get HighlightedUpcomingCard() {return this._highlightedUpcomingCard;}

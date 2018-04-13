@@ -56,7 +56,7 @@ class TableDrawer extends Drawer
 					card = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
 					if (card)
 					{
-						if (this._model.UpcomingCardsFaceUp)
+						if (this._model.BUpcomingCardsFaceUp)
 							this.drawCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, card.number, card.name);
 						else
 							this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, card.name);

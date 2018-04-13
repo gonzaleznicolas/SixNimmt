@@ -60,7 +60,7 @@ function add(player, num)
 function flip()
 {
 	controller._tableView.Animation.flipAllUpcomingCards();
-	controller._model.UpcomingCardsFaceUp = true;
+	controller._model.BUpcomingCardsFaceUp = true;
 }
 
 function takeRow(i, b)

@@ -39,30 +39,36 @@ class GameController {
 		socket.on("serverRun", this.onServerRun.bind(this));
 	}
 
-	// RUN MANAGEMENT
-
-	onServerRun(runObject)
+	// FUNCTIONS CALLED WITHING THE GAME CONTROLLER
+	
+	toggleCardSelection(row, col)
 	{
-		console.log("onServerRun");
+		if (this._model.CurrentlySelectedCardInHand != undefined &&
+				row == this._handView.Animation.Drawer.handIndexToRow(this._model.CurrentlySelectedCardInHand) &&
+				col == this._handView.Animation.Drawer.handIndexToCol(this._model.CurrentlySelectedCardInHand))
+		{
+			this._model.CurrentlySelectedCardInHand = undefined;
+		}
+		else
+			this._model.CurrentlySelectedCardInHand = this._handView.Animation.Drawer.handRowColToIndex(row, col);
 		
-		this.drawTableImage(runObject.beforeImage); // synchronous
-
-		this._activeAnimationSequence = runObject.animationSequence;
-		this.handleRunAnimationSequence();
+		this._handView.draw();
 	}
+
+	// RUN MANAGEMENT
 
 	drawTableImage(tableImage)
 	{
 		this._model.Table = tableImage.table;
-		this._model.UpcomingCardsFaceUp = tableImage.upcomingCards.bFaceUp;
+		this._model.BUpcomingCardsFaceUp = tableImage.upcomingCards.bFaceUp;
 		this._model.UpcomingCards = tableImage.upcomingCards.cards;
-		this._model.HighlightedUpcomingCard = tableImage.upcomingCards.highlightedUpcomingCard;
+		this._model.HighlightedUpcomingCard = tableImage.upcomingCards.highlighted;
 		this._tableView.draw();
 	}
 
-	handleRunAnimationSequence()
+	handleRunAnimationList()
 	{
-		let animation = this._activeAnimationSequence.shift();
+		let animation = this._activeAnimationList.shift();
 		if (animation)
 		{
 			if (animation.animationType == AnimationTypes.FlipAllUpcomingCards)
@@ -85,7 +91,7 @@ class GameController {
 	afterAnimation(afterImage)
 	{
 		this.drawTableImage(afterImage);
-		this.handleRunAnimationSequence();
+		this.handleRunAnimationList();
 	}
 
 	// SERVER TO CLIENT - GAME EVENT HANDLERS
@@ -112,6 +118,18 @@ class GameController {
 		this._model.Hand = hand;
 		this._handView.draw();
 	}
+
+	onServerRun(runObject)
+	{
+		console.log("onServerRun");
+		
+		this.drawTableImage(runObject.beforeImage); // synchronous
+
+		this._activeAnimationList = runObject.animationList;
+		this.handleRunAnimationList();
+	}
+
+	// UI HANDLERS
 	
 	onTableCanvasClicked(event)
 	{
@@ -148,20 +166,6 @@ class GameController {
 		
 		if (rowCol && this._model.Hand[this._handView.Animation.Drawer.handRowColToIndex(rowCol.row, rowCol.col)])
 			this.toggleCardSelection(rowCol.row, rowCol.col);
-	}
-	
-	toggleCardSelection(row, col)
-	{
-		if (this._model.CurrentlySelectedCardInHand != undefined &&
-				row == this._handView.Animation.Drawer.handIndexToRow(this._model.CurrentlySelectedCardInHand) &&
-				col == this._handView.Animation.Drawer.handIndexToCol(this._model.CurrentlySelectedCardInHand))
-		{
-			this._model.CurrentlySelectedCardInHand = undefined;
-		}
-		else
-			this._model.CurrentlySelectedCardInHand = this._handView.Animation.Drawer.handRowColToIndex(row, col);
-		
-		this._handView.draw();
 	}
 
 	onPlayCardClicked()

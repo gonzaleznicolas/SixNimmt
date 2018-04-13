@@ -21,13 +21,13 @@ module.exports = class GameLogic
 			{
 				bFaceUp: false,
 				cards: upcomingCards.Cards,
-				highlightedUpcomingCard: null
+				highlighted: null
 			}
 		}
 
-		let animationSequence = [];
+		let animationList = [];
 
-		animationSequence[0] =
+		animationList[0] =
 		{
 			animationType: AnimationTypes.FlipAllUpcomingCards,
 			afterImage:
@@ -37,12 +37,12 @@ module.exports = class GameLogic
 				{
 					bFaceUp: true,
 					cards: upcomingCards.Cards,
-					highlightedUpcomingCard: null
+					highlighted: null
 				}
 			}
 		};
 
-		animationSequence[1] =
+		animationList[1] =
 		{
 			animationType: AnimationTypes.SortUpcomingCards,
 			afterImage:
@@ -52,11 +52,11 @@ module.exports = class GameLogic
 				{
 					bFaceUp: true,
 					cards: upcomingCards.Cards.slice(0).sort((a, b) => a.number - b.number),
-					highlightedUpcomingCard: null
+					highlighted: null
 				}
 			}
 		};
 
-		return {beforeImage: beforeImage, animationSequence: animationSequence};
+		return {beforeImage: beforeImage, animationList: animationList};
 	}
 }
