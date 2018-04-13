@@ -7,11 +7,11 @@ header{
 	position: fixed;
 	background: var(--nimmtPurple);
 	visibility: hidden;
+	color: white;
 }
 
 #headerText{
 	font-size: var(--menuButtonSideLength);
-	color: rgba(255, 255, 255, 1);
 	margin-left: 75px;
 	font-family: 'Bangers';
 }

@@ -18,7 +18,7 @@ class GameController {
 		
 		this._model = new GameModel(hand, table);
 		this._menuView = new MenuView();
-
+		this._headerView = new HeaderView();
 		this._scoreboardView = new ScoreboardView(listOfPlayers);
 		this._tableView = new TableView(this._model);
 		if (!bSpectatorMode)
