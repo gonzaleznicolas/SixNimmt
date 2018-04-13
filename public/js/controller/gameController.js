@@ -45,17 +45,18 @@ class GameController {
 	{
 		console.log("onServerRun");
 		
-		this.handleBeforeRun(runObject.before); // synchronous
+		this.drawTableImage(runObject.beforeImage); // synchronous
 
 		this._activeAnimationSequence = runObject.animationSequence;
 		this.handleRunAnimationSequence();
 	}
 
-	handleBeforeRun(before)
+	drawTableImage(tableImage)
 	{
-		this._model.Table = before.table;
-		this._model.UpcomingCardsFaceUp = before.upcomingCards.bFaceUp;
-		this._model.UpcomingCards = before.upcomingCards.cards;
+		this._model.Table = tableImage.table;
+		this._model.UpcomingCardsFaceUp = tableImage.upcomingCards.bFaceUp;
+		this._model.UpcomingCards = tableImage.upcomingCards.cards;
+		this._model.HighlightedUpcomingCard = tableImage.upcomingCards.highlightedUpcomingCard;
 		this._tableView.draw();
 	}
 
@@ -66,26 +67,24 @@ class GameController {
 		{
 			if (animation.animationType == AnimationTypes.FlipAllUpcomingCards)
 			{
-				this._tableView.Animation.flipAllUpcomingCards(this.afterFlipAllUpcomingCards.bind(this));
+				this._tableView.Animation.flipAllUpcomingCards(
+										this.afterAnimation.bind(this),	// callback
+										animation.afterImage	// callback param
+									);
 			}
 			else if (animation.animationType == AnimationTypes.SortUpcomingCards)
 			{
-				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(this.afterSortUpcomingCards.bind(this));}.bind(this), 2000)
+				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(
+										this.afterAnimation.bind(this), // callback
+										animation.afterImage	// callback param
+									);}.bind(this), 2000)
 			}
 		}
 	}
 
-	afterFlipAllUpcomingCards()
+	afterAnimation(afterImage)
 	{
-		this._model.UpcomingCardsFaceUp = true;
-		this._tableView.draw();
-		this.handleRunAnimationSequence();
-	}
-
-	afterSortUpcomingCards()
-	{
-		this._model.UpcomingCards.sort( (a, b) => a.number - b.number);
-		this._tableView.draw();
+		this.drawTableImage(afterImage);
 		this.handleRunAnimationSequence();
 	}
 

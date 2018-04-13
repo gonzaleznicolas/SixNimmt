@@ -10,11 +10,12 @@ class TableAnimation extends Animation
 	// call this function before updating the model
 	// precondition: fromRow <= toRow
 	// note: fromRow toRow is inclusive.
-	moveRows(fromRow, toRow, downThisManyRows, callback)
+	moveRows(fromRow, toRow, downThisManyRows, callback, callbackParam)
 	{
 		// if downThisManyRowsIs negative, move up
 		bAnimationInProgress = true;
 		this._callback = callback;
+		this._callbackParam = callbackParam;
 		// these rows are in the model before updating the move
 		this._fromRow = fromRow;
 		this._toRow = toRow;
@@ -37,7 +38,7 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
-				this._callback();
+				this._callback(this._callbackParam);
 		}
 	}
 	
@@ -69,11 +70,11 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
-				this._callback();
+				this._callback(this._callbackParam);
 		}
 	}
 	
-	sortUpcomingCards(callback)
+	sortUpcomingCards(callback, callbackParam)
 	{
 		// step 1: make an array newPosition where the index is the old position of a card, and the content is the new position.
 		// eg. suppose at position 5 we had the card with number 1. in the newPosition array we are making here, at index 5
@@ -83,7 +84,8 @@ class TableAnimation extends Animation
 		bAnimationInProgress = true;
 
 		this._callback = callback;
-		
+		this._callbackParam = callbackParam;
+
 		let newPosition = [];
 		let sortedUpcomingCards = this._model.UpcomingCards.slice().sort((a, b)=> a.number - b.number); // sort a copy of unsorted UpcomingCards
 		
@@ -118,7 +120,7 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
-				this._callback();
+				this._callback(this._callbackParam);
 		}
 	}
 	
@@ -139,15 +141,16 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
-				this._callback();
+				this._callback(this._callbackParam);
 		}
 	}
 	
 	// call this function before updating the model (before removing the card from upcoming card array and putting it in the table array)
-	moveIthUpcomingCardToRowCol(i, tableRow, tableCol, callback)
+	moveIthUpcomingCardToRowCol(i, tableRow, tableCol, callback, callbackParam)
 	{
 		bAnimationInProgress = true;
 		this._callback = callback;
+		this._callbackParam = callbackParam;
 		this._model.OnlyDrawUpcomingCardsAfterThisIndex = i; // TODO WIP this should be done by whoever calls the animation. not responsibility of animation
 		let upcomingCardStartRow = this._drawer.upcomingCardsIndexToRow(i);
 		let upcomingCardStartCol = this._drawer.upcomingCardsIndexToCol(i);
@@ -166,7 +169,7 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
-				this._callback();
+				this._callback(this._callbackParam);
 		}
 	}
 	
@@ -181,15 +184,16 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
-				this._callback();
+				this._callback(this._callbackParam);
 		}
 	}
 	
 
-	takeRow(rowIndex, bDisapearAtTheEnd = false, callback = undefined)
+	takeRow(rowIndex, bDisapearAtTheEnd = false, callback = undefined, callbackParam = undefined)
 	{
 		bAnimationInProgress = true;
 		this._callback = callback;
+		this._callbackParam = callbackParam;
 		this._bDisapearAtTheEnd = bDisapearAtTheEnd;
 		// first, find the col of the last card in the row
 		let indexOfFirstUndefinedInTheRow = this._model.Table[rowIndex].findIndex(cardNum => {return cardNum == undefined});
@@ -221,7 +225,7 @@ class TableAnimation extends Animation
 			{
 				bAnimationInProgress = false;
 				if (this._callback)
-					this._callback();
+					this._callback(this._callbackParam);
 			}
 		}
 	}
@@ -246,15 +250,16 @@ class TableAnimation extends Animation
 			{
 				bAnimationInProgress = false;
 				if (this._callback)
-					this._callback();
+					this._callback(this._callbackParam);
 			}
 		}
 	}
 	
-	flipAllUpcomingCards(callback)
+	flipAllUpcomingCards(callback, callbackParam)
 	{
 		bAnimationInProgress = true;
 		this._callback = callback;
+		this._callbackParam = callbackParam;
 		this._fcBackW = this._drawer.CardWidth; // back of the card starts full width
 		requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 	}
@@ -301,7 +306,7 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
-				this._callback();
+				this._callback(this._callbackParam);
 		}
 	}
 }

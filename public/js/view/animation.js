@@ -16,10 +16,11 @@ class Animation
 	
 	get Drawer() {return this._drawer;}
 	
-	fadeAwayCard(row, col, callback)
+	fadeAwayCard(row, col, callback, callbackParam)
 	{
 		bAnimationInProgress = true;
 		this._callback = callback;
+		this._callbackParam = callbackParam;
 		this._fadeIteration = 0;
 		this._fadeX = this._drawer.CardCoordinates[row][col].x;
 		this._fadeY = this._drawer.CardCoordinates[row][col].y;
@@ -39,7 +40,7 @@ class Animation
 			this._drawer.clearCardSpace(this._fadeX, this._fadeY);
 			bAnimationInProgress = false;
 			if (this._callback)
-				this._callback();
+				this._callback(this._callbackParam);
 		}
 	}
 }
