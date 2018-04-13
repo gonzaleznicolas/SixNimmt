@@ -141,7 +141,7 @@ class GameController {
 	
 	onTableCanvasClicked(event)
 	{
-		if (this._model.TableState != TableState.SelectRowToTake)
+		if (state != ClientStates.SelectRowToTake)
 			return;
 		const canvasTop = this._tableView.Animation.Drawer.getCanvasOffsetTop();
 		const y = event.pageY - canvasTop;

@@ -16,13 +16,14 @@ const NUMBER_OF_COLS_ON_TABLE_CANVAS_NOT_INCLUDING_COLS_FOR_CARDS_PLAYED_THIS_TU
 let bAnimationInProgress = false;
 
 // global enums
-const TableState = Object.freeze({SelectRowToTake:1, Normal:2})
 const ClientStates = Object.freeze({
 	NotPastFormYet:1,
 	WaitingForFormResult:2,
 	WaitPage: 3,
 	ChooseCard: 4,
-	WaitForRestToPlayTheirCard: 5
+	WaitForRestToPlayTheirCard: 5,
+	RoundAnimationInProgress: 6,
+	SelectRowToTake: 7
 });
 
 const AnimationTypes = Object.freeze({

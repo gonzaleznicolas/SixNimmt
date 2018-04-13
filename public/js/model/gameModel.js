@@ -12,8 +12,6 @@ class GameModel {
 		
 		// this array must always be of the dimensions of the table. 4 rows and 6 columns. Put null where there is no card
 		this._table = undefined;
-		
-		this._tableState = TableState.Normal;
 		this._selectedRow = undefined;
 		
 		// HAND
@@ -38,8 +36,6 @@ class GameModel {
 	
 	get Table() {return this._table;}
 	set Table(table) {this._table = table;}
-	get TableState() {return this._tableState;}
-	set TableState(state) {this._tableState = state;}
 	get SelectedRow() {return this._selectedRow}
 	set SelectedRow(i) {this._selectedRow = i}
 	
