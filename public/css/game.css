@@ -8,12 +8,30 @@ header{
 	background: var(--nimmtPurple);
 	visibility: hidden;
 	color: white;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
 }
 
-#headerText{
-	font-size: var(--menuButtonSideLength);
+#headerContent{
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	font-size: calc(var(--menuButtonSideLength) * 0.8);
 	margin-left: 75px;
-	font-family: 'Bangers';
+	font-family: 'Yanone Kaffeesatz';
+}
+
+.headerButton{
+	font-size: 0.7em;
+	border-radius: 0.5em;
+	padding: 0.2em;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.headerButton:hover {
+	background: rgba(188, 144, 204, 1);
+	color: white;
 }
 
 #game {

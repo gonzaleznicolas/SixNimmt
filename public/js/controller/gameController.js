@@ -114,7 +114,10 @@ class GameController {
 		if (nameOfPlayerToChooseRow == this._name)
 		{
 			state = ClientStates.SelectRowToTake;
-			this._headerView.setFlashing("Choose a row to take");
+			this._headerView.setFlashingWithButton("Choose a row to take",
+													"Select Row",
+													function(){console.log("hi");
+												});
 		}
 		else
 		{
