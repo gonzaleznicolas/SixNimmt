@@ -11,7 +11,22 @@ module.exports = class Table
 		this.initEmptyTable();
 	}
 
+	static clone(tableObj)
+	{
+		let originalArray = tableObj.Table;
+		let cloneArray = [];
+		for (let row = 0; row < originalArray.length; row++)
+		{
+			cloneArray[row] = originalArray[row].slice(0);
+		}
+
+		let clone = new Table();
+		clone.Table = cloneArray;
+		return clone;
+	}
+
 	get Table() {return this._table;}
+	set Table(table) {this._table = table}
 
 	initEmptyTable()
 	{
@@ -47,4 +62,14 @@ module.exports = class Table
 		}
 		return c;
 	}
+}
+
+function clone2Darray(original)
+{
+	let copy = [];
+	for (let row = 0; row < original.length; row++)
+	{
+		copy[row] = original[row].slice(0);
+	}
+	return copy;
 }

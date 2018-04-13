@@ -1,4 +1,7 @@
-'use strict'; 
+'use strict';
+
+const Table = require('./table.js');
+const UpcomingCards = require('./upcomingCards.js');
 
 const AnimationTypes = Object.freeze({
 	FlipAllUpcomingCards:1,
@@ -16,7 +19,7 @@ module.exports = class GameLogic
 
 		let beforeImage =
 		{
-			table: table.Table,
+			table: Table.clone(table).Table,
 			upcomingCards:
 			{
 				bFaceUp: false,
@@ -32,7 +35,7 @@ module.exports = class GameLogic
 			animationType: AnimationTypes.FlipAllUpcomingCards,
 			afterImage:
 			{
-				table: table.Table,
+				table: Table.clone(table).Table,
 				upcomingCards:
 				{
 					bFaceUp: true,
@@ -47,11 +50,11 @@ module.exports = class GameLogic
 			animationType: AnimationTypes.SortUpcomingCards,
 			afterImage:
 			{
-				table: table.Table,
+				table: Table.clone(table).Table,
 				upcomingCards:
 				{
 					bFaceUp: true,
-					cards: upcomingCards.Cards.slice(0).sort((a, b) => a.number - b.number),
+					cards: UpcomingCards.clone(upcomingCards).Cards.sort((a, b) => a.number - b.number),
 					highlighted: null
 				}
 			}
