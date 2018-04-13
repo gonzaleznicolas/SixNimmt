@@ -52,12 +52,9 @@ module.exports = class HumanPlayer extends Player
 		});
 	}
 
-	updateUpcomingCards(cards, namesOnCards)
+	updateUpcomingCards(upcomingCards)
 	{
-		this._socket.emit("serverUpcomingCards", {
-			cards: cards,
-			namesOnCards: namesOnCards
-		});
+		this._socket.emit("serverUpcomingCards", upcomingCards);
 	}
 
 	run(runObject)

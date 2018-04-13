@@ -56,7 +56,6 @@ class GameController {
 		this._model.Table = before.table;
 		this._model.UpcomingCardsFaceUp = before.upcomingCards.bFaceUp;
 		this._model.UpcomingCards = before.upcomingCards.cards;
-		this._model.PlayerNamesOnUpcomingCards = before.upcomingCards.names;
 		this._tableView.draw();
 	}
 
@@ -85,14 +84,14 @@ class GameController {
 
 	afterSortUpcomingCards()
 	{
-		this._model.UpcomingCards.sort( (a, b) => a - b);
+		this._model.UpcomingCards.sort( (a, b) => a.number - b.number);
 		this._tableView.draw();
 		this.handleRunAnimationSequence();
 	}
 
 	// SERVER TO CLIENT - GAME EVENT HANDLERS
 
-	onServerUpcomingCards(data)
+	onServerUpcomingCards(upcomingCards)
 	{
 		// check state is right. make new state for waiting for played card response
 		if (state != ClientStates.WaitForRestToPlayTheirCard && state != ClientStates.ChooseCard)
@@ -100,8 +99,7 @@ class GameController {
 			console.log("serverUpcomingCards message received at unexpected time. Ignored.");
 			return;
 		}
-		this._model.UpcomingCards = data.cards;
-		this._model.PlayerNamesOnUpcomingCards = data.namesOnCards;
+		this._model.UpcomingCards = upcomingCards;
 		this._tableView.draw();
 	}
 

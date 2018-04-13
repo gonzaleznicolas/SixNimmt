@@ -25,9 +25,7 @@ class GameModel {
 		
 		this._UpcomingCardsFaceUp = false;
 
-		// these two arrays should always be the same length. the card and the name of the player who played it.
 		this._upcomingCards = [];
-		this._playerNamesOnUpcomingCards = [];
 		this._onlyDrawUpcomingCardsAfterThisIndex = -1;
 		this._highlightedUpcomingCard = undefined; // every other upcoming card will be dimmed out
 
@@ -54,8 +52,6 @@ class GameModel {
 	set UpcomingCardsFaceUp(b) {this._UpcomingCardsFaceUp = b;}
 	get UpcomingCards() {return this._upcomingCards;}
 	set UpcomingCards(array) {this._upcomingCards = array}
-	get PlayerNamesOnUpcomingCards() {return this._playerNamesOnUpcomingCards;}
-	set PlayerNamesOnUpcomingCards(array) {this._playerNamesOnUpcomingCards = array}
 	get HighlightedUpcomingCard() {return this._highlightedUpcomingCard;}
 	set HighlightedUpcomingCard(h) {this._highlightedUpcomingCard = h;}
 	get OnlyDrawUpcomingCardsAfterThisIndex() {return this._onlyDrawUpcomingCardsAfterThisIndex;}

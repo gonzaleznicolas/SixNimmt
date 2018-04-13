@@ -185,24 +185,22 @@ module.exports = class Game extends EventEmitter
 
 		this._players.forEach(function (player){
 			player.startGame(listOfPlayers, table);
-		}.bind(this));
+		});
 
 		this._spectators.forEach(function (player){
 			player.startGame(listOfPlayers, table);
-		}.bind(this));
+		});
 	}
 
 	updateAllPlayersAndSpectatorsWithUpcomingCards()
 	{
-		let cards = this._upcomingCards.Cards;
-		let namesOnCards = this._upcomingCards.NamesOnCards;
-
+		let upcomingCards = this._upcomingCards.Cards;
 		this._players.forEach(function (player){
-			player.updateUpcomingCards(cards, namesOnCards);
+			player.updateUpcomingCards(upcomingCards);
 		});
 
 		this._spectators.forEach(function (spectator){
-			spectator.updateUpcomingCards(cards, namesOnCards);
+			spectator.updateUpcomingCards(upcomingCards);
 		});
 	}
 

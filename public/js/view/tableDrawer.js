@@ -44,6 +44,7 @@ class TableDrawer extends Drawer
 	drawUpcomingCards()
 	{
 		let numberOfCardsDrawn = 0;
+		let card = undefined;
 		let playerName = undefined;
 		let cardNumber = undefined;
 		for (let row = 0; row < this._numberOfRows && numberOfCardsDrawn < numberOfPlayers; row++)
@@ -52,14 +53,13 @@ class TableDrawer extends Drawer
 			{
 				if(this.upcomingCardsRowColToIndex(row, col) > this._model.OnlyDrawUpcomingCardsAfterThisIndex)
 				{
-					cardNumber = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
-					playerName = this._model.PlayerNamesOnUpcomingCards[numberOfCardsDrawn];
-					if (playerName && cardNumber)
+					card = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
+					if (card)
 					{
 						if (this._model.UpcomingCardsFaceUp)
-							this.drawCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, cardNumber, playerName);
+							this.drawCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, card.number, card.name);
 						else
-							this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, playerName);
+							this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, card.name);
 					}
 					if(this._model.HighlightedUpcomingCard != undefined && this._model.HighlightedUpcomingCard != this.upcomingCardsRowColToIndex(row, col))
 						this.dimCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, 0.85);

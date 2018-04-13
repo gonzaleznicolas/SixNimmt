@@ -39,6 +39,6 @@ module.exports = class ArtificialPlayer extends Player
 	updatePlayerList(playerList){}
 	terminateGame(nameOfPlayerWhoEndedTheGame){}
 	startGame(playerList, gameBoard){}
-	updateUpcomingCards(cards, namesOnCards){}
+	updateUpcomingCards(upcomingCards){}
 	run(runObject){}
 }

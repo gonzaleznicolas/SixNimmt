@@ -17,8 +17,7 @@ module.exports = class GameLogic
 						table: table.Table,
 						upcomingCards: 	{
 										bFaceUp: false,
-										cards: upcomingCards.Cards,
-										names: upcomingCards.NamesOnCards
+										cards: upcomingCards.Cards
 										}
 						}
 		let animationSequence = [];

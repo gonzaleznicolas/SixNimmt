@@ -85,10 +85,10 @@ class TableAnimation extends Animation
 		this._callback = callback;
 		
 		let newPosition = [];
-		let sortedUpcomingCards = this._model.UpcomingCards.slice().sort((a, b)=> a-b); // sort a copy of unsorted UpcomingCards
+		let sortedUpcomingCards = this._model.UpcomingCards.slice().sort((a, b)=> a.number - b.number); // sort a copy of unsorted UpcomingCards
 		
 		for (let i = 0; i < this._model.UpcomingCards.length; i++)
-			newPosition[i] = sortedUpcomingCards.findIndex(element => element==this._model.UpcomingCards[i]);
+			newPosition[i] = sortedUpcomingCards.findIndex(element => element.number == this._model.UpcomingCards[i].number);
 		
 		this._resourcesForCardOriginallyAtPositionI = [];
 		
@@ -102,8 +102,8 @@ class TableAnimation extends Animation
 			start = this._drawer.UpcomingCardCoordinates[startRow][startCol];
 			end = this._drawer.UpcomingCardCoordinates[endRow][endCol];
 			this._resourcesForCardOriginallyAtPositionI[i] = {
-				movingCardNumber : this._model.UpcomingCards[i],
-				movingCardName : this._model.PlayerNamesOnUpcomingCards[i],
+				movingCardNumber : this._model.UpcomingCards[i].number,
+				movingCardName : this._model.UpcomingCards[i].name,
 				line : new CardMovementLine(start.x, start.y, end.x, end.y),
 				nextPt : null
 			};
@@ -148,15 +148,15 @@ class TableAnimation extends Animation
 	{
 		bAnimationInProgress = true;
 		this._callback = callback;
-		this._model.OnlyDrawUpcomingCardsAfterThisIndex = i; // this should be done by whoever calls the animation. not responsibility of animation
+		this._model.OnlyDrawUpcomingCardsAfterThisIndex = i; // TODO WIP this should be done by whoever calls the animation. not responsibility of animation
 		let upcomingCardStartRow = this._drawer.upcomingCardsIndexToRow(i);
 		let upcomingCardStartCol = this._drawer.upcomingCardsIndexToCol(i);
 		
 		let startXY = this._drawer.UpcomingCardCoordinates[upcomingCardStartRow][upcomingCardStartCol];
 		let endXY = this._drawer.CardCoordinates[tableRow][tableCol];
 		
-		this._movingCardNumber = this._model.UpcomingCards[i];
-		this._movingCardName = this._model.PlayerNamesOnUpcomingCards[i];
+		this._movingCardNumber = this._model.UpcomingCards[i].number;
+		this._movingCardName = this._model.UpcomingCards[i].name;
 		
 		this._line = new CardMovementLine(startXY.x, startXY.y, endXY.x, endXY.y);
 		this._nextPt = null;
@@ -267,12 +267,12 @@ class TableAnimation extends Animation
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsProcessed < numberOfPlayers; col++)
 			{
-				playerName = this._model.PlayerNamesOnUpcomingCards[numberOfCardsProcessed];
+				playerName = this._model.UpcomingCards[numberOfCardsProcessed].name;
 				if (playerName)
 				{
 					x = this._drawer.UpcomingCardCoordinates[row][col].x;
 					y = this._drawer.UpcomingCardCoordinates[row][col].y;
-					number = this._model.UpcomingCards[numberOfCardsProcessed];
+					number = this._model.UpcomingCards[numberOfCardsProcessed].number;
 
 					this._drawer.clearCardSpace(x, y);
 					let xToKeepCardCenteredAsItShrinks = undefined;

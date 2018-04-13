@@ -99,7 +99,7 @@ function translateToSpanish()
 	
 	// game
 	$('#playCardButton')[0].innerHTML = "Poner Carta";
-	$('#selectCardMessage')[0].innerHTML = "For favor elige una carta";
+	$('#selectCardMessage')[0].innerHTML = "Por favor elige una carta";
 	$('#notTimeToPlayCardMessage')[0].innerHTML = "No es hora de elejir una carta";
 
 	// menu
