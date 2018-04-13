@@ -84,6 +84,16 @@ module.exports = class GameLogic
 
 		//
 		animationListIndex++;
+		tableAtThisPoint = Table.clone(tableAtThisPoint);
+		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+		let alfdfd = 3;
+		let dfdf;
+		let b = tableAtThisPoint.cardSmallerThanLastCardInFirstRow(2);
+		dfdf = tableAtThisPoint.playCard(alfdfd);
+		dfdf = tableAtThisPoint.playCard(alfdfd);
+		dfdf = tableAtThisPoint.playCard(alfdfd);
+		dfdf = tableAtThisPoint.playCard(alfdfd);
+
 
 
 

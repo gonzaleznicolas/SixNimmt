@@ -54,22 +54,55 @@ module.exports = class Table
 
 	lastCardInRow(rowI)
 	{
+		if (rowI >= NUMBER_OF_ROWS)
+			throw "You are trying to access a row which doesnt exist";
 		let row = this._table[rowI];
-		for (let c = 0; c < row.length ; c++)
+		if (row[0] == null)
+			throw "This row is empty. It has no last card."
+		let indexOfFirstNull = this._table[rowI].findIndex( (e) => e == null);
+		if (indexOfFirstNull == -1) // the row is full
+			return row[row.length-1];
+		return row[indexOfFirstNull-1]
+	}
+
+	// -1 if the next open position is the 7th (index 6) row
+	nextOpenPositionInRow(row)
+	{
+		return this._table[row].findIndex( (e) => e == null);
+	}
+
+	// returns the col that the card was put in
+	addCardToRow(card, row)
+	{
+		let col = this.nextOpenPositionInRow(row);
+		if (col == -1)
+			throw "Attempting to add a card to a full row";
+		this._table[row][col] = card;
+		return col;
+	}
+
+	cardSmallerThanLastCardInFirstRow(card)
+	{
+		return card < this.lastCardInRow(0);
+	}
+
+	// precondition: the card must not be smaller than the last card on the first row.
+	//               Check that before calling this function
+	// returns the {row: , col: } that this card was put in, and updates the table
+	playCard(card)
+	{
+		let rowToPlaceThisCardIn;
+		for ( let row = 0; row < NUMBER_OF_ROWS; row++)
 		{
-			if (row[c] == null)
+			rowToPlaceThisCardIn = row;
+			if ( card < this.lastCardInRow(row))
+			{
+				rowToPlaceThisCardIn = row - 1;
 				break;
+			}
 		}
-		return c;
+		let colThisCardWasPlacedIn = this.addCardToRow(card, rowToPlaceThisCardIn);
+		return {row: rowToPlaceThisCardIn, col: colThisCardWasPlacedIn};
 	}
 }
 
-function clone2Darray(original)
-{
-	let copy = [];
-	for (let row = 0; row < original.length; row++)
-	{
-		copy[row] = original[row].slice(0);
-	}
-	return copy;
-}
