@@ -96,8 +96,10 @@ class GameController {
 			}
 			else if (animation.animationType == AnimationTypes.AskPlayerToChooseARowToTake)
 			{
-				this.dealWithAskPlayerToChooseARowToTakeAnimation(animation.animationParams.nameOfPlayerToChooseRow,
-																	animation.animationParams.tableImage);
+				setTimeout( function() { 
+					this.dealWithAskPlayerToChooseARowToTakeAnimation(animation.animationParams.nameOfPlayerToChooseRow,
+																		animation.animationParams.tableImage);
+					}.bind(this), 2000);
 			}
 		}
 	}
