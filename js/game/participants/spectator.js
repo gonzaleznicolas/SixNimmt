@@ -24,7 +24,8 @@ module.exports = class Spectator
 		this._socket.emit("serverStartGame", {
 			playerList: playerList,
 			table: table,
-			isSpectator: true
+			isSpectator: true,
+			name: this._name
 		});
 	}
 

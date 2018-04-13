@@ -6,7 +6,8 @@ const UpcomingCards = require('./upcomingCards.js');
 const AnimationTypes = Object.freeze({
 	FlipAllUpcomingCards:1,
 	SortUpcomingCards: 2,
-	MoveIthCardToRowCol: 3
+	MoveIthCardToRowCol: 3,
+	AskPlayerToChooseARowToTake: 4
 });
  
 module.exports = class GameLogic 
@@ -15,16 +16,16 @@ module.exports = class GameLogic
 	{
 	}
 
-	static getAnimationSequence(table, upcomingCards)
+	static doAsMuchOfRoundAsPossible(originalTable, originalUpcomingCards)
 	{
-		// objects we will use to return the animationSequence
+		// objects we will use to create the animationSequence
 		let beforeImage = undefined;
 		let animationList = [];
 
 		//
 
-		let tableAtThisPoint = Table.clone(table);
-		let upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCards);
+		let tableAtThisPoint = Table.clone(originalTable);
+		let upcomingCardsAtThisPoint = UpcomingCards.clone(originalUpcomingCards);
 		let animationListIndex = 0;
 
 		// BEFORE
@@ -84,7 +85,10 @@ module.exports = class GameLogic
 		};
 
 		// HANDLE UPCOMING CARDS
-		for ( let upcomingCardIndex = 0; upcomingCardIndex < upcomingCardsAtThisPoint.Size; upcomingCardIndex++)
+		let needToAskThisPlayerForARowToTake = undefined; // undefined if no need to ask. turn complete by this animationSequence
+
+		let numberOfUpcomingCards = upcomingCardsAtThisPoint.Size;
+		for ( let upcomingCardIndex = 0; upcomingCardIndex < numberOfUpcomingCards; upcomingCardIndex++)
 		{
 			animationListIndex++;
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
@@ -94,7 +98,26 @@ module.exports = class GameLogic
 			if (tableAtThisPoint.cardSmallerThanLastCardInFirstRow(card.number))
 			{
 				console.log("Card smaller than last card in first row...");
-				
+				needToAskThisPlayerForARowToTake = card.name;
+				animationList[animationListIndex] =
+				{
+					animationType: AnimationTypes.AskPlayerToChooseARowToTake,
+					animationParams:
+					{
+						nameOfPlayerToChooseRow: card.name,
+						tableImage:
+						{
+							table: tableAtThisPoint.Table,
+							upcomingCards:
+							{
+								bFaceUp: true,
+								cards: upcomingCardsAtThisPoint.Cards,
+								highlighted: upcomingCardIndex
+							}
+						}
+					}
+				};
+
 				break;
 			}
 			else
@@ -124,6 +147,14 @@ module.exports = class GameLogic
 			}
 		}
 
-		return {beforeImage: beforeImage, animationList: animationList};
+		originalTable = tableAtThisPoint;
+		originalUpcomingCards = upcomingCardsAtThisPoint;
+
+		let animationSequence = {beforeImage: beforeImage, animationList: animationList};
+
+		return {
+			needToAskThisPlayerForARowToTake: needToAskThisPlayerForARowToTake,
+			animationSequence: animationSequence
+		};
 	}
 }

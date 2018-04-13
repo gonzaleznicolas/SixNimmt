@@ -155,9 +155,17 @@ module.exports = class Game extends EventEmitter
 	{
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
-		let animationSequence = GameLogic.getAnimationSequence(this._table, this._upcomingCards);
+		let details = GameLogic.doAsMuchOfRoundAsPossible(this._table, this._upcomingCards);
+		if (details.needToAskThisPlayerForARowToTake)
+		{
+			// the round did not complete. A certain player needs to choose a card
+			let playerWhoNeedsToChooseARowToTake = this._players.get(details.needToAskThisPlayerForARowToTake);
+			if (!playerWhoNeedsToChooseARowToTake)
+				throw "Somehow, a player not in the player map needs to choose a row to take ";
+			playerWhoNeedsToChooseARowToTake.State = PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake;
+		}
 		// wait a few seconds to start the animation
-		setTimeout(function() {this.updateAllPlayersAndSpectatorsWithAnimationSequence(animationSequence);}.bind(this), 1000);
+		setTimeout(function() {this.updateAllPlayersAndSpectatorsWithAnimationSequence(details.animationSequence);}.bind(this), 1000);
 	}
 
 	// GENERAL GAME UPDATES FOR PLAYERS AND SPECTATORS

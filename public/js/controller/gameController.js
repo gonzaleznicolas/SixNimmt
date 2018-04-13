@@ -3,6 +3,7 @@
 class GameController {
 	constructor(initializationData)
 	{
+		this._name = initializationData.name;
 		bSpectatorMode = initializationData.isSpectator;
 		numberOfPlayers = initializationData.playerList.length;
 		let listOfPlayers = initializationData.playerList;
@@ -64,7 +65,7 @@ class GameController {
 		this._tableView.draw();
 	}
 
-	handleAnimationList()
+	dealWithAnimationList()
 	{
 		let animation = this._activeAnimationList.shift();
 		if (animation)
@@ -93,13 +94,32 @@ class GameController {
 										animation.afterImage	// callback param
 									);}.bind(this), 1000)
 			}
+			else if (animation.animationType == AnimationTypes.AskPlayerToChooseARowToTake)
+			{
+				this.dealWithAskPlayerToChooseARowToTakeAnimation(animation.animationParams.nameOfPlayerToChooseRow,
+																	animation.animationParams.tableImage);
+			}
 		}
 	}
 
 	afterAnimation(afterImage)
 	{
 		this.updateModelAndDrawFromTableImage(afterImage);
-		this.handleAnimationList();
+		this.dealWithAnimationList();
+	}
+
+	dealWithAskPlayerToChooseARowToTakeAnimation(nameOfPlayerToChooseRow, tableImage)
+	{
+		this.updateModelAndDrawFromTableImage(tableImage);
+		if (nameOfPlayerToChooseRow == this._name)
+		{
+			state = ClientStates.SelectRowToTake;
+			this._headerView.setFlashing("Choose a row to take");
+		}
+		else
+		{
+			this._headerView.setFlashing(`Waiting for ${nameOfPlayerToChooseRow} to pick a row to take`);
+		}
 	}
 
 	// SERVER TO CLIENT - GAME EVENT HANDLERS
@@ -134,7 +154,7 @@ class GameController {
 		this.updateModelAndDrawFromTableImage(animationSequence.beforeImage); // synchronous
 
 		this._activeAnimationList = animationSequence.animationList;
-		this.handleAnimationList();
+		this.dealWithAnimationList();
 	}
 
 	// UI HANDLERS

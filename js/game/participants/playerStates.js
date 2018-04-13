@@ -6,5 +6,5 @@ module.exports = Object.freeze({
     WaitForRestToPlayTheirCard: 3,
     RoundAnimationInProgress: 4,
     WaitingToGetRestOfRoundAnimation: 5,
-    ChoosingRowToTake: 6
+    RoundAnimationInProgress_ExpectedToSendRowToTake: 6
 });

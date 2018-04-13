@@ -48,7 +48,8 @@ module.exports = class HumanPlayer extends Player
 			playerList: playerList,
 			table: table,
 			isSpectator: false,
-			hand: Array.from(this._hand)
+			hand: Array.from(this._hand),
+			name: this._name
 		});
 	}
 
