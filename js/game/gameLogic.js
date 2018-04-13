@@ -20,8 +20,11 @@ module.exports = class GameLogic
 		let beforeImage = undefined;
 		let animationList = [];
 
+		//
+
 		let tableAtThisPoint = Table.clone(table);
 		let upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCards);
+		let animationListIndex = 0;
 
 		// BEFORE
 
@@ -41,7 +44,7 @@ module.exports = class GameLogic
 		tableAtThisPoint = Table.clone(tableAtThisPoint);
 		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
-		animationList[0] =
+		animationList[animationListIndex] =
 		{
 			animationType: AnimationTypes.FlipAllUpcomingCards,
 			afterImage:
@@ -58,12 +61,13 @@ module.exports = class GameLogic
 
 		// SORT
 
+		animationListIndex++;
 		tableAtThisPoint = Table.clone(tableAtThisPoint);
 		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
 		upcomingCardsAtThisPoint.sort();
 
-		animationList[1] =
+		animationList[animationListIndex] =
 		{
 			animationType: AnimationTypes.SortUpcomingCards,
 			afterImage:
@@ -77,6 +81,10 @@ module.exports = class GameLogic
 				}
 			}
 		};
+
+		//
+		animationListIndex++;
+
 
 
 

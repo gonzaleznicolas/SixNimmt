@@ -266,7 +266,7 @@ module.exports = class Game extends EventEmitter
 			if (player.StartedGame)
 				this.endGame(player);
 		}
-		// if in the middle of game, replace with an AI. if there are no human players left, end game.
+		// WIP TODO if in the middle of game, replace with an AI. if there are no human players left, end game.
 	}
 
 	onPlayerPlayCard(data)
