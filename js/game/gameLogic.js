@@ -94,6 +94,7 @@ module.exports = class GameLogic
 			if (tableAtThisPoint.cardSmallerThanLastCardInFirstRow(card.number))
 			{
 				console.log("Card smaller than last card in first row...");
+				
 				break;
 			}
 			else

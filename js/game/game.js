@@ -151,6 +151,15 @@ module.exports = class Game extends EventEmitter
 		this.emit("gameEnded", this._gameCode);
 	}
 
+	doRound()
+	{
+		this._state = GameStates.RoundAnimationInProgress;
+		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
+		let animationSequence = GameLogic.getAnimationSequence(this._table, this._upcomingCards);
+		// wait a few seconds to start the animation
+		setTimeout(function() {this.updateAllPlayersAndSpectatorsWithAnimationSequence(animationSequence);}.bind(this), 1000);
+	}
+
 	// GENERAL GAME UPDATES FOR PLAYERS AND SPECTATORS
 
 	updateAllPlayersAndSpectatorsWithPlayerList()
@@ -286,10 +295,7 @@ module.exports = class Game extends EventEmitter
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
-
-			let animationSequence = GameLogic.getAnimationSequence(this._table, this._upcomingCards);
-			// wait two seconds to start the animation
-			setTimeout(function() {this.updateAllPlayersAndSpectatorsWithAnimationSequence(animationSequence);}.bind(this), 2000);
+			this.doRound();
 		}
 	}
 }
