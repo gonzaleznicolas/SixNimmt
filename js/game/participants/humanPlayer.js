@@ -57,9 +57,9 @@ module.exports = class HumanPlayer extends Player
 		this._socket.emit("serverUpcomingCards", upcomingCards);
 	}
 
-	run(runObject)
+	animate(animationSequence)
 	{
-		this._socket.emit("serverRun", runObject)
+		this._socket.emit("serverAnimate", animationSequence);
 	}
 
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS

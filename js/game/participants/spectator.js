@@ -33,8 +33,8 @@ module.exports = class Spectator
 		this._socket.emit("serverUpcomingCards", upcomingCards);
 	}
 
-	run(runObject)
+	animate(animationSequence)
 	{
-		this._socket.emit("serverRun", runObject)
+		this._socket.emit("serverAnimate", animationSequence);
 	}
 }

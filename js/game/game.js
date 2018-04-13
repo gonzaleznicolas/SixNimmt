@@ -204,14 +204,14 @@ module.exports = class Game extends EventEmitter
 		});
 	}
 
-	updateAllPlayersAndSpectatorsWithRun(runObject)
+	updateAllPlayersAndSpectatorsWithAnimationSequence(animationSequence)
 	{
 		this._players.forEach(function (player){
-			player.run(runObject);
+			player.animate(animationSequence);
 		});
 
 		this._spectators.forEach(function (spectator){
-			spectator.run(runObject);
+			spectator.animate(animationSequence);
 		});
 	}
 
@@ -286,9 +286,10 @@ module.exports = class Game extends EventEmitter
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
-			let runObject = GameLogic.run(this._table, this._upcomingCards);
+
+			let animationSequence = GameLogic.getAnimationSequence(this._table, this._upcomingCards);
 			// wait two seconds to start the animation
-			setTimeout(function() {this.updateAllPlayersAndSpectatorsWithRun(runObject);}.bind(this), 2000);
+			setTimeout(function() {this.updateAllPlayersAndSpectatorsWithAnimationSequence(animationSequence);}.bind(this), 2000);
 		}
 	}
 }

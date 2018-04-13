@@ -36,7 +36,7 @@ class GameController {
 		// SERVER TO CLIENT - GAME EVENTS
 		socket.on("serverUpcomingCards", this.onServerUpcomingCards.bind(this));
 		socket.on("serverUpdatedHand", this.onServerUpdatedHand.bind(this));
-		socket.on("serverRun", this.onServerRun.bind(this));
+		socket.on("serverAnimate", this.onServerAnimate.bind(this));
 	}
 
 	// FUNCTIONS CALLED WITHING THE GAME CONTROLLER
@@ -66,7 +66,7 @@ class GameController {
 		this._tableView.draw();
 	}
 
-	handleRunAnimationList()
+	handleAnimationList()
 	{
 		let animation = this._activeAnimationList.shift();
 		if (animation)
@@ -91,7 +91,7 @@ class GameController {
 	afterAnimation(afterImage)
 	{
 		this.drawTableImage(afterImage);
-		this.handleRunAnimationList();
+		this.handleAnimationList();
 	}
 
 	// SERVER TO CLIENT - GAME EVENT HANDLERS
@@ -119,14 +119,14 @@ class GameController {
 		this._handView.draw();
 	}
 
-	onServerRun(runObject)
+	onServerAnimate(animationSequence)
 	{
-		console.log("onServerRun");
+		console.log("onServerAnimate");
 		
-		this.drawTableImage(runObject.beforeImage); // synchronous
+		this.drawTableImage(animationSequence.beforeImage); // synchronous
 
-		this._activeAnimationList = runObject.animationList;
-		this.handleRunAnimationList();
+		this._activeAnimationList = animationSequence.animationList;
+		this.handleAnimationList();
 	}
 
 	// UI HANDLERS

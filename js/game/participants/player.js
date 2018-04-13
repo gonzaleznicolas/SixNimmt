@@ -33,7 +33,7 @@ module.exports = class Player extends EventEmitter
 	terminateGame(nameOfPlayerWhoEndedTheGame){}
 	startGame(playerList, table){}
 	updateUpcomingCards(upcomingCards){}
-	run(runObject){}
+	animate(animationSequence){}
 
 	// EVENTS TO BE EMITTED BY ANY CLASS DERIVING OFF OF PLAYER
 	

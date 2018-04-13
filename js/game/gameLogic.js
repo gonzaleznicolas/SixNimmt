@@ -14,7 +14,7 @@ module.exports = class GameLogic
 	{
 	}
 
-	static run(table, upcomingCards)
+	static getAnimationSequence(table, upcomingCards)
 	{
 
 		let beforeImage =
