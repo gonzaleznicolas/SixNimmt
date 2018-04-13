@@ -48,6 +48,20 @@ module.exports = class Player extends EventEmitter
 		was in fact in the players hand.
 		It is also the player's responsibility to delete the playedCard from its hand
 		before emitting this event.
-		Upon receiving this event, the game will change the player's state from to WaitForRestToPlayTheirCard.
+		Upon receiving this event, the game will change the player's state from ChooseCard
+		to WaitForRestToPlayTheirCard.
+	*/
+
+		/*
+	Event Name:
+		"playerRowToTake"
+	Payload:
+		int rowToTake (index of the row to take)
+	When it must be sent:
+		The player must be in the state RoundAnimationInProgress_ExpectedToSendRowToTake.
+		It is the player's responsibility to make sure that the 0 <= rowToTake <= 3
+		was in fact in the players hand.
+		Upon receiving this event, the game will change the player's state from RoundAnimationInProgress_ExpectedToSendRowToTake 
+		to RoundAnimationInProgress.
 	*/
 }

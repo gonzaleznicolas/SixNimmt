@@ -8,6 +8,12 @@ class HeaderView
 		this._flashInterval = undefined;
 	}
 
+	clear()
+	{
+		clearInterval(this._flashInterval);
+		this._headerContent.empty();
+	}
+
 	set(str)
 	{
 		clearInterval(this._flashInterval);

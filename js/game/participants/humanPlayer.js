@@ -19,6 +19,9 @@ module.exports = class HumanPlayer extends Player
 		this._socket.on("clientQuitGame", this.onClientQuitGame.bind(this));
 		this._socket.on("disconnect", this.onClientQuitGame.bind(this));
 		this._socket.on("clientPlayCard", this.onClientPlayCard.bind(this));
+		this._socket.on("clientRowToTake", this.onClientRowToTake.bind(this));
+		this._socket.on("clientDoneAnimationWaitingForOtherPlayerToSelectRowToTake",
+						this.onClientDoneAnimationWaitingForOtherPlayerToSelectRowToTake.bind(this));
 	}
 
 	get Socket() {return this._socket;}
@@ -112,5 +115,30 @@ module.exports = class HumanPlayer extends Player
 		this._hand.delete(playedCard);
 		this.emit('playerPlayCard', {player: this, playedCard: playedCard});
 		this.updateHand();
+	}
+
+	onClientRowToTake(rowToTakeIndex)
+	{
+		if (this._state != PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
+		{
+			console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			return;
+		}
+		if (rowToTakeIndex < 0 || rowToTakeIndex > 3)
+		{
+			console.log("Client has tried to take row out of bounds.");
+			return;
+		}
+		this.emit('playerRowToTake', rowToTakeIndex);
+	}
+
+	onClientDoneAnimationWaitingForOtherPlayerToSelectRowToTake()
+	{
+		if (this._state != PlayerStates.RoundAnimationInProgress)
+		{
+			console.log("clientDoneAnimationWaitingForOtherPlayerToSelectRowToTake was received at an unexpected time. Ignored.");
+			return;
+		}
+		this._state = PlayerStates.WaitingToGetRestOfRoundAnimation;
 	}
 }

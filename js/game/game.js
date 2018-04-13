@@ -45,6 +45,7 @@ module.exports = class Game extends EventEmitter
 
 		// PLAYER TO GAME - GAME EVENTS - game events that any players will emit
 		player.on("playerPlayCard", this.onPlayerPlayCard.bind(this));
+		//player.on("playerRowToTake", this.onPlayerRowToTake.bind(this));
 	}
 
 	updateOpen()

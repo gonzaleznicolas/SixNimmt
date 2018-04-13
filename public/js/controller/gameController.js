@@ -121,7 +121,9 @@ class GameController {
 		}
 		else
 		{
+			state = ClientStates.WaitingToGetRestOfRoundAnimation;
 			this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
+			this.emit('clientDoneAnimationWaitingForOtherPlayerToSelectRowToTake');
 		}
 	}
 
@@ -191,6 +193,9 @@ class GameController {
 			return;
 		if (!this._model.SelectedRow)
 			return;
+		state = ClientStates.RoundAnimationInProgress;
+		this._headerView.clear();
+		socket.emit('clientRowToTake', this._model.SelectedRow);
 	}
 	
 	onHandCanvasClicked(event)
