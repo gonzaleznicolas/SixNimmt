@@ -26,8 +26,8 @@ header{
 	font-size: 0.7em;
 	border-radius: 0.5em;
 	padding: 0.2em;
-	color: rgba(200, 200, 200,1);
-	background: rgba(128, 128, 128,1);
+	background: rgba(200, 200, 200,1);
+	color: rgba(128, 128, 128,1);
 }
 
 .selectedHeaderButton{
