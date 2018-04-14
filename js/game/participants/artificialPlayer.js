@@ -46,7 +46,7 @@ module.exports = class ArtificialPlayer extends Player
 	updateUpcomingCards(upcomingCards){}
 
 	// from this roundStepSequence, the artifical player must extract the information that it needs.
-	// The animation sequence always ends with either an animatino of type AskPlayerToChooseARowToTake
+	// The animation sequence always ends with either an animation of type AskPlayerToChooseARowToTake
 	// or an animation sayin the round ended
 	// If the last animation is of type AskPlayerToChooseARowToTake, the artificial player must check if its
 	// itself that must choose a row to take, and in that case raise the event necessary to let the game know

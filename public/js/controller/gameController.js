@@ -68,67 +68,67 @@ class GameController {
 
 	dealWithRoundStepSequence()
 	{
-		let animation = this._activeRoundStepSequence[0];
-		if (animation)
+		let step = this._activeRoundStepSequence[0];
+		if (step)
 		{
-			if (animation.animationType == RoundStepTypes.NoAnimationJustTheTableImage)
+			if (step.animationType == RoundStepTypes.NoAnimationJustTheTableImage)
 			{
-				this.afterAnimation(animation.afterImage);
+				this.afterStep(step.afterImage);
 			}
-			else if (animation.animationType == RoundStepTypes.FlipAllUpcomingCards)
+			else if (step.animationType == RoundStepTypes.FlipAllUpcomingCards)
 			{
 				this._tableView.Animation.flipAllUpcomingCards(
-										this.afterAnimation.bind(this),	// callback
-										animation.afterImage	// callback param
+										this.afterStep.bind(this),	// callback
+										step.afterImage	// callback param
 									);
 			}
-			else if (animation.animationType == RoundStepTypes.SortUpcomingCards)
+			else if (step.animationType == RoundStepTypes.SortUpcomingCards)
 			{
 				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(
-										this.afterAnimation.bind(this), // callback
-										animation.afterImage	// callback param
+										this.afterStep.bind(this), // callback
+										step.afterImage	// callback param
 									);}.bind(this), 1000);
 			}
-			else if (animation.animationType == RoundStepTypes.MoveIthCardToRowCol)
+			else if (step.animationType == RoundStepTypes.MoveIthCardToRowCol)
 			{
 				setTimeout( function() {this._tableView.Animation.moveIthUpcomingCardToRowCol(
-										animation.animationParams.i,
-										animation.animationParams.tableRow,
-										animation.animationParams.tableCol,
-										this.afterAnimation.bind(this), // callback
-										animation.afterImage	// callback param
+										step.animationParams.i,
+										step.animationParams.tableRow,
+										step.animationParams.tableCol,
+										this.afterStep.bind(this), // callback
+										step.afterImage	// callback param
 									);}.bind(this), 500);
 			}
-			else if (animation.animationType == RoundStepTypes.AskPlayerToChooseARowToTake)
+			else if (step.animationType == RoundStepTypes.AskPlayerToChooseARowToTake)
 			{
 				setTimeout( function() { 
-					this.dealWithAskPlayerToChooseARowToTakeAnimation(animation.animationParams.nameOfPlayerToChooseRow,
-																		animation.animationParams.tableImage);
+					this.dealWithAskPlayerToChooseARowToTakeAnimation(step.animationParams.nameOfPlayerToChooseRow,
+																		step.animationParams.tableImage);
 				}.bind(this), 500);
 			}
-			else if (animation.animationType == RoundStepTypes.TakeRow)
+			else if (step.animationType == RoundStepTypes.TakeRow)
 			{
 				setTimeout( function() {this._tableView.Animation.takeRow(
-										animation.animationParams.rowIndex,
-										animation.animationParams.bDisapearAtTheEnd,
-										this.afterAnimation.bind(this), // callback
-										animation.afterImage	// callback param
+										step.animationParams.rowIndex,
+										step.animationParams.bDisapearAtTheEnd,
+										this.afterStep.bind(this), // callback
+										step.afterImage	// callback param
 									);}.bind(this), 500);
 			}
-			else if (animation.animationType == RoundStepTypes.MoveRows)
+			else if (step.animationType == RoundStepTypes.MoveRows)
 			{
 				setTimeout( function() {this._tableView.Animation.moveRows(
-										animation.animationParams.fromRow,
-										animation.animationParams.toRow,
-										animation.animationParams.downThisManyRows,
-										this.afterAnimation.bind(this), // callback
-										animation.afterImage	// callback param
+										step.animationParams.fromRow,
+										step.animationParams.toRow,
+										step.animationParams.downThisManyRows,
+										this.afterStep.bind(this), // callback
+										step.afterImage	// callback param
 									);}.bind(this), 1500);
 			}
 		}
 	}
 
-	afterAnimation(afterImage)
+	afterStep(afterImage)
 	{
 		this.updateModelAndDrawFromTableImage(afterImage);
 		this._activeRoundStepSequence.shift();

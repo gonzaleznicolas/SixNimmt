@@ -56,7 +56,7 @@ class ScoreboardView
 			this._scoreboardElements[this._indexOfElementBeingUpdated+1].Score)
 		{
 			clearInterval(this._incrementScoreInterval);
-			// wait one second to make it white again and end the animatino
+			// wait one second to make it white again and end the animation
 			setTimeout( function(){
 				this._elementBeingMoved.makeWhite();
 				this._elementBeingMoved = undefined;
