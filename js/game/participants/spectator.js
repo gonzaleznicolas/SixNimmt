@@ -36,6 +36,6 @@ module.exports = class Spectator
 
 	animate(roundStepSequence)
 	{
-		this._socket.emit("serverAnimate", roundStepSequence);
+		this._socket.emit("serverRoundInfo", roundStepSequence);
 	}
 }

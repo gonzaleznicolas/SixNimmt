@@ -61,7 +61,7 @@ module.exports = class HumanPlayer extends Player
 
 	animate(roundStepSequence)
 	{
-		this._socket.emit("serverAnimate", roundStepSequence);
+		this._socket.emit("serverRoundInfo", roundStepSequence);
 	}
 
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS
