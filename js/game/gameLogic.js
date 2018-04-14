@@ -23,11 +23,10 @@ module.exports = class GameLogic
 		let animationSequence = [];
 
 		// INITIAL TABLE IMAGE
-		let animationSequenceIndex = 0;
 		let tableAtThisPoint = Table.clone(originalTable);
 		let upcomingCardsAtThisPoint = UpcomingCards.clone(originalUpcomingCards);
 
-		animationSequence[animationSequenceIndex] =
+		animationSequence.push(
 		{
 			animationType: AnimationTypes.NoAnimationJustTheTableImage,
 			afterImage:
@@ -40,15 +39,14 @@ module.exports = class GameLogic
 					highlighted: null
 				}
 			}
-		};
+		});
 
 		// FLIP
 
-		animationSequenceIndex++;
 		tableAtThisPoint = Table.clone(tableAtThisPoint);
 		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
-		animationSequence[animationSequenceIndex] =
+		animationSequence.push(
 		{
 			animationType: AnimationTypes.FlipAllUpcomingCards,
 			afterImage:
@@ -61,17 +59,16 @@ module.exports = class GameLogic
 					highlighted: null
 				}
 			}
-		};
+		});
 
 		// SORT
 
-		animationSequenceIndex++;
 		tableAtThisPoint = Table.clone(tableAtThisPoint);
 		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
 		upcomingCardsAtThisPoint.sort();
 
-		animationSequence[animationSequenceIndex] =
+		animationSequence.push(
 		{
 			animationType: AnimationTypes.SortUpcomingCards,
 			afterImage:
@@ -84,7 +81,7 @@ module.exports = class GameLogic
 					highlighted: null
 				}
 			}
-		};
+		});
 
 		// HANDLE UPCOMING CARDS
 		let needToAskThisPlayerForARowToTake = undefined; // undefined if no need to ask. turn complete by this animationSequence
@@ -92,7 +89,6 @@ module.exports = class GameLogic
 		let numberOfUpcomingCards = upcomingCardsAtThisPoint.Size;
 		for ( let upcomingCardIndex = 0; upcomingCardIndex < numberOfUpcomingCards; upcomingCardIndex++)
 		{
-			animationSequenceIndex++;
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
@@ -101,7 +97,7 @@ module.exports = class GameLogic
 			{
 				console.log("Card smaller than last card in first row...");
 				needToAskThisPlayerForARowToTake = card.name;
-				animationSequence[animationSequenceIndex] =
+				animationSequence.push(
 				{
 					animationType: AnimationTypes.AskPlayerToChooseARowToTake,
 					animationParams:
@@ -118,7 +114,7 @@ module.exports = class GameLogic
 							}
 						}
 					}
-				};
+				});
 
 				break;
 			}
@@ -126,7 +122,7 @@ module.exports = class GameLogic
 			{
 				let rowCol = tableAtThisPoint.playCard(card.number);
 				upcomingCardsAtThisPoint.Cards[upcomingCardIndex] = null;
-				animationSequence[animationSequenceIndex] =
+				animationSequence.push(
 				{
 					animationType: AnimationTypes.MoveIthCardToRowCol,
 					animationParams:
@@ -145,7 +141,7 @@ module.exports = class GameLogic
 							highlighted: null
 						}
 					}
-				};
+				});
 			}
 		}
 
