@@ -32,6 +32,10 @@ module.exports = class GameLogic
 		let tableAtThisPoint;
 		let upcomingCardsAtThisPoint;
 
+		// could be non zero. remember as we process each upcoming card, we set it to null.
+		// so if this is not the first turn of the round, the first upcoming card would not be at index 0
+		let indexOfFirstUpcomingCard = this._gamesUpcomingards.Cards.findIndex( (element) => element != null);
+
 		if (bStartOfRound)
 		{
 			// INITIAL TABLE IMAGE
@@ -97,26 +101,6 @@ module.exports = class GameLogic
 		}
 		else
 		{
-			// bStartOfRound is false which means we are starting off after a player chose a row to take
-			tableAtThisPoint = Table.clone(this._gamesTable);
-			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
-
-			// draw everything no cards hightlighted
-			animationSequence.push(
-			{
-				animationType: AnimationTypes.NoAnimationJustTheTableImage,
-				afterImage:
-				{
-					table: tableAtThisPoint.Table,
-					upcomingCards:
-					{
-						bFaceUp: true,
-						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: null
-					}
-				}
-			});
-
 			// take the row selected by the player
 			tableAtThisPoint = Table.clone(this._gamesTable);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
@@ -136,7 +120,7 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: null
+						highlighted: indexOfFirstUpcomingCard
 					}
 				}
 			});
@@ -161,7 +145,7 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: null
+						highlighted: indexOfFirstUpcomingCard
 					}
 				}
 			});

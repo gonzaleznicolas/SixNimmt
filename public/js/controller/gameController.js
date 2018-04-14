@@ -97,14 +97,14 @@ class GameController {
 										animation.animationParams.tableCol,
 										this.afterAnimation.bind(this), // callback
 										animation.afterImage	// callback param
-									);}.bind(this), 1000);
+									);}.bind(this), 500);
 			}
 			else if (animation.animationType == AnimationTypes.AskPlayerToChooseARowToTake)
 			{
 				setTimeout( function() { 
 					this.dealWithAskPlayerToChooseARowToTakeAnimation(animation.animationParams.nameOfPlayerToChooseRow,
 																		animation.animationParams.tableImage);
-				}.bind(this), 2000);
+				}.bind(this), 500);
 			}
 			else if (animation.animationType == AnimationTypes.TakeRow)
 			{
@@ -113,17 +113,17 @@ class GameController {
 										animation.animationParams.bDisapearAtTheEnd,
 										this.afterAnimation.bind(this), // callback
 										animation.afterImage	// callback param
-									);}.bind(this), 1000);
+									);}.bind(this), 500);
 			}
 			else if (animation.animationType == AnimationTypes.MoveRows)
 			{
-				this._tableView.Animation.moveRows(
+				setTimeout( function() {this._tableView.Animation.moveRows(
 										animation.animationParams.fromRow,
 										animation.animationParams.toRow,
 										animation.animationParams.downThisManyRows,
 										this.afterAnimation.bind(this), // callback
 										animation.afterImage	// callback param
-									);
+									);}.bind(this), 1500);
 			}
 		}
 	}
@@ -181,6 +181,7 @@ class GameController {
 	{
 		console.log("onServerAnimate");
 
+		this._headerView.clear();
 		if(this._activeAnimationSequence.length > 0)
 		{
 			this._activeAnimationSequence = this._activeAnimationSequence.concat(animationSequence);
