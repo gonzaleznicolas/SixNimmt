@@ -1,7 +1,7 @@
 'use strict';
 
 const Player = require('./player.js');
-const PlayerStates = require('./playerStates.js');
+const PlayerStates = require('../gameGlobals.js').PlayerStates;
 
 module.exports = class HumanPlayer extends Player
 {
@@ -127,6 +127,6 @@ module.exports = class HumanPlayer extends Player
 			console.log("Client has tried to take row out of bounds.");
 			return;
 		}
-		this.emit('playerRowToTake', rowToTakeIndex);
+		this.emit('playerRowToTake', {player: this, rowToTakeIndex: rowToTakeIndex});
 	}
 }

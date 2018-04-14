@@ -147,8 +147,20 @@ class GameController {
 		else
 		{
 			state = ClientStates.RoundAnimationInProgress;
-			this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
 			this._activeAnimationSequence.shift();
+	
+			if(this._activeAnimationSequence.length == 0)
+			{
+				this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
+			}
+			else
+			{
+				// if the activeAnimationSequence is not empty, it means there are more animations
+				// i.e. the following animations are for after whoever had to choose a card did so
+				// i.e. the row to be taken has already been selected. So instead of showing the sign
+				// saying "waiting for __ to play a card", just move on to the next animation
+				this.dealWithAnimationSequence();
+			}
 		}
 	}
 

@@ -1,7 +1,8 @@
 'use strict';
 
 const Player = require('./player.js');
-const PlayerStates = require('./playerStates.js');
+const PlayerStates = require('../gameGlobals.js').PlayerStates;
+const AnimationTypes = require('../gameGlobals.js').AnimationTypes;
 
 module.exports = class ArtificialPlayer extends Player
 {
@@ -29,7 +30,7 @@ module.exports = class ArtificialPlayer extends Player
 		{
 			console.log(`Artificial player ${this._name}: Cannot play a card. I have 0 cards left in my hand.`);
 		}
-		let cardToPlay = Array.from(this._hand)[0];
+		let cardToPlay = Math.min.apply(null , Array.from(this._hand));
 		this._hand.delete(cardToPlay);
 		this.emit('playerPlayCard', {player: this, playedCard: cardToPlay});
 	}
@@ -38,7 +39,26 @@ module.exports = class ArtificialPlayer extends Player
 
 	updatePlayerList(playerList){}
 	terminateGame(nameOfPlayerWhoEndedTheGame){}
+
+	// from the game board, see which cards are there and start to keep track of which cards have already come up
 	startGame(playerList, gameBoard){}
+
 	updateUpcomingCards(upcomingCards){}
-	animate(animationSequence){}
+
+	// from this animationSequence, the artifical player must extract the information that it needs.
+	// The animation sequence always ends with either an animatino of type AskPlayerToChooseARowToTake
+	// or an animation sayin the round ended
+	// If the last animation is of type AskPlayerToChooseARowToTake, the artificial player must check if its
+	// itself that must choose a row to take, and in that case raise the event necessary to let the game know
+	// which row it wants to take
+	animate(animationSequence)
+	{
+		let lastAnimation = animationSequence[animationSequence.length - 1];
+		if (lastAnimation.animationType == AnimationTypes.AskPlayerToChooseARowToTake &&
+			lastAnimation.animationParams.nameOfPlayerToChooseRow == this._name &&
+			this._state == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
+		{
+			this.emit('playerRowToTake', {player: this, rowToTakeIndex: 2});
+		}
+	}
 }

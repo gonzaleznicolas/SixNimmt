@@ -2,16 +2,7 @@
 
 const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
-
-const AnimationTypes = Object.freeze({
-	FlipAllUpcomingCards:1,
-	SortUpcomingCards: 2,
-	MoveIthCardToRowCol: 3,
-	AskPlayerToChooseARowToTake: 4,
-	NoAnimationJustTheTableImage: 5,
-	TakeRow: 6,
-	MoveRows: 7
-});
+const AnimationTypes = require('./gameGlobals.js').AnimationTypes;
  
 module.exports = class GameLogic 
 { 

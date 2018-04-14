@@ -4,8 +4,8 @@ const ArtificialPlayer = require('./participants/artificialPlayer.js');
 const HumanPlayer = require('./participants/humanPlayer.js');
 const Spectator = require('./participants/spectator.js');
 const EventEmitter = require('events');
-const GameStates = require('./gameStates.js');
-const PlayerStates = require('./participants/playerStates.js');
+const GameStates = require('./gameGlobals.js').GameStates;
+const PlayerStates = require('./gameGlobals.js').PlayerStates;
 const Deck = require('./deck.js');
 const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
@@ -313,9 +313,10 @@ module.exports = class Game extends EventEmitter
 		}
 	}
 
-	onPlayerRowToTake(rowToTakeIndex)
+	onPlayerRowToTake(data)
 	{
 		console.log("A player has chosen which row to take.");
-		this.startOrResumeRoundAnimation(false, rowToTakeIndex);
+		data.player.State = PlayerStates.RoundAnimationInProgress;
+		this.startOrResumeRoundAnimation(false, data.rowToTakeIndex);
 	}
 }
