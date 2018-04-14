@@ -34,7 +34,7 @@ module.exports = class Player extends EventEmitter
 	updateUpcomingCards(upcomingCards){}
 
 	// the player must not modify roundStepSequence. Just read. It belongs to the game.
-	animate(roundStepSequence){}
+	roundInfo(roundStepSequence){}
 
 	// EVENTS TO BE EMITTED BY ANY CLASS DERIVING OFF OF PLAYER
 	
@@ -53,7 +53,7 @@ module.exports = class Player extends EventEmitter
 		to WaitForRestToPlayTheirCard.
 	*/
 
-		/*
+	/*
 	Event Name:
 		"playerRowToTake"
 	Payload:

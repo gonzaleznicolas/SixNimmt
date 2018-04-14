@@ -51,7 +51,7 @@ module.exports = class ArtificialPlayer extends Player
 	// If the last step is of type AskPlayerToChooseARowToTake, the artificial player must check if its
 	// itself that must choose a row to take, and in that case raise the event necessary to let the game know
 	// which row it wants to take
-	animate(roundStepSequence)
+	roundInfo(roundStepSequence)
 	{
 		let lastAnimation = roundStepSequence[roundStepSequence.length - 1];
 		if (lastAnimation.stepType == RoundStepTypes.AskPlayerToChooseARowToTake &&

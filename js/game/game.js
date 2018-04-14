@@ -230,11 +230,11 @@ module.exports = class Game extends EventEmitter
 	updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence)
 	{
 		this._players.forEach(function (player){
-			player.animate(roundStepSequence);
+			player.roundInfo(roundStepSequence);
 		});
 
 		this._spectators.forEach(function (spectator){
-			spectator.animate(roundStepSequence);
+			spectator.roundInfo(roundStepSequence);
 		});
 	}
 

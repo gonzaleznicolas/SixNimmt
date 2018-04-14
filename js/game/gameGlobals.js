@@ -20,11 +20,11 @@ module.exports = Object.freeze(
 
 	RoundStepTypes:
 	{
-		FlipAllUpcomingCards:1,
-		SortUpcomingCards: 2,
-		MoveIthCardToRowCol: 3,
-		AskPlayerToChooseARowToTake: 4,
-		NoAnimationJustTheTableImage: 5,
+		NoAnimationJustTheTableImage: 1,
+		FlipAllUpcomingCards: 2,
+		SortUpcomingCards: 3,
+		MoveIthCardToRowCol: 4,
+		AskPlayerToChooseARowToTake: 5,
 		TakeRow: 6,
 		MoveRows: 7
 	}
