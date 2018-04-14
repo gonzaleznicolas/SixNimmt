@@ -189,15 +189,15 @@ module.exports = class GameLogic
 					stepParams:
 					{
 						nameOfPlayerToChooseRow: upcomingCardToPlace.name,
-						tableImage:
+					},
+					tableImage:
+					{
+						table: tableAtThisPoint.Table,
+						upcomingCards:
 						{
-							table: tableAtThisPoint.Table,
-							upcomingCards:
-							{
-								bFaceUp: true,
-								cards: upcomingCardsAtThisPoint.Cards,
-								highlighted: upcomingCardIndex
-							}
+							bFaceUp: true,
+							cards: upcomingCardsAtThisPoint.Cards,
+							highlighted: upcomingCardIndex
 						}
 					}
 				});
