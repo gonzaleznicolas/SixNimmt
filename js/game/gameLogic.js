@@ -14,7 +14,7 @@ module.exports = class GameLogic
 		this._gamesUpcomingards = gamesUpcomingCards;
 	}
 
-	// bStartOfRound means the animation is starting at the start of the round
+	// bStartOfRound = true means the round is starting rather than resuming after a player chose a row to take
 	// false means it is starting after a player chose which row to take
 	// rowToTake is only passed in if !bStartOfRound
 	doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake)
