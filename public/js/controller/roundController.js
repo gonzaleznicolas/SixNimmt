@@ -45,6 +45,7 @@ class RoundController {
 	afterStep(afterImage)
 	{
 		this.updateModelAndDrawFromTableImage(afterImage);
+		this._headerView.clear();
 		this._activeRoundStepSequence.shift();
 		this.dealWithRoundStepSequence();
 	}
@@ -85,7 +86,7 @@ class RoundController {
 		{
 			if (step.stepType == RoundStepTypes.NoAnimationJustTheTableImage)
 			{
-				this.afterStep(step.afterImage);
+				this.afterStep(step.tableImage);
 			}
 			else if (step.stepType == RoundStepTypes.FlipAllUpcomingCards)
 			{
@@ -96,10 +97,12 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.SortUpcomingCards)
 			{
-				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(
-										this.afterStep.bind(this), // callback
-										step.afterImage	// callback param
-									);}.bind(this), 1000);
+				setTimeout( function() {
+					this._headerView.set(sortCardsStr);
+					this._tableView.Animation.sortUpcomingCards(
+												this.afterStep.bind(this), // callback
+												step.afterImage	// callback param
+				);}.bind(this), 1000);
 			}
 			else if (step.stepType == RoundStepTypes.MoveIthCardToRowCol)
 			{

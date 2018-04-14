@@ -25,14 +25,14 @@ module.exports = class GameLogic
 
 		if (bStartOfRound)
 		{
-			// INITIAL TABLE IMAGE
+			// initial table image
 			tableAtThisPoint = Table.clone(this._gamesTable);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
 
 			roundStepSequence.push(
 			{
 				stepType: RoundStepTypes.NoAnimationJustTheTableImage,
-				afterImage:
+				tableImage:
 				{
 					table: tableAtThisPoint.Table,
 					upcomingCards:
@@ -44,8 +44,7 @@ module.exports = class GameLogic
 				}
 			});
 
-			// FLIP
-
+			// flip upcoming cards
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
@@ -64,11 +63,12 @@ module.exports = class GameLogic
 				}
 			});
 
-			// SORT
-
+			// sort upcoming cards
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
+			// sort the cards on the object so that when we draw, the cards are in the place that the
+			// animation moved them to
 			upcomingCardsAtThisPoint.sort();
 
 			roundStepSequence.push(

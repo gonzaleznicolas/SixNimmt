@@ -15,7 +15,7 @@ let selectARowStr;
 let selectRowStr;
 let waitingForStr;
 let toPickARowStr;
-
+let sortCardsStr;
 
 function translateToEnglish()
 {
@@ -73,6 +73,8 @@ function translateToEnglish()
 	selectRowStr = "Select Row";
 	waitingForStr = "Waiting for";
 	toPickARowStr = "to pick a row to take";
+
+	sortCardsStr = "Sort cards...";
 }
 
 function translateToSpanish()
@@ -131,4 +133,6 @@ function translateToSpanish()
 	selectRowStr = "Elejir fila";
 	waitingForStr = "Esperando a que";
 	toPickARowStr = "elija una fila";
+
+	sortCardsStr = "Organizando cartas...";
 }
