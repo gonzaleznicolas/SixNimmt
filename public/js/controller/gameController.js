@@ -87,7 +87,7 @@ class GameController {
 				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(
 										this.afterAnimation.bind(this), // callback
 										animation.afterImage	// callback param
-									);}.bind(this), 1000)
+									);}.bind(this), 1000);
 			}
 			else if (animation.animationType == AnimationTypes.MoveIthCardToRowCol)
 			{
@@ -97,7 +97,7 @@ class GameController {
 										animation.animationParams.tableCol,
 										this.afterAnimation.bind(this), // callback
 										animation.afterImage	// callback param
-									);}.bind(this), 1000)
+									);}.bind(this), 1000);
 			}
 			else if (animation.animationType == AnimationTypes.AskPlayerToChooseARowToTake)
 			{
@@ -113,7 +113,17 @@ class GameController {
 										animation.animationParams.bDisapearAtTheEnd,
 										this.afterAnimation.bind(this), // callback
 										animation.afterImage	// callback param
-									);}.bind(this), 1000)
+									);}.bind(this), 1000);
+			}
+			else if (animation.animationType == AnimationTypes.MoveRows)
+			{
+				this._tableView.Animation.moveRows(
+										animation.animationParams.fromRow,
+										animation.animationParams.toRow,
+										animation.animationParams.downThisManyRows,
+										this.afterAnimation.bind(this), // callback
+										animation.afterImage	// callback param
+									);
 			}
 		}
 	}

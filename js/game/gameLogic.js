@@ -9,7 +9,8 @@ const AnimationTypes = Object.freeze({
 	MoveIthCardToRowCol: 3,
 	AskPlayerToChooseARowToTake: 4,
 	NoAnimationJustTheTableImage: 5,
-	TakeRow: 6
+	TakeRow: 6,
+	MoveRows: 7
 });
  
 module.exports = class GameLogic 
@@ -119,8 +120,7 @@ module.exports = class GameLogic
 			// take the row selected by the player
 			tableAtThisPoint = Table.clone(this._gamesTable);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
-			// do logic for taking row ... updating table
-			// replace the card in the upcomingCards with null
+			tableAtThisPoint.emptyRow(rowToTake);
 			animationSequence.push(
 			{
 				animationType: AnimationTypes.TakeRow,
@@ -128,6 +128,31 @@ module.exports = class GameLogic
 				{
 					rowIndex: rowToTake,
 					bDisapearAtTheEnd: true
+				},
+				afterImage:
+				{
+					table: tableAtThisPoint.Table,
+					upcomingCards:
+					{
+						bFaceUp: true,
+						cards: upcomingCardsAtThisPoint.Cards,
+						highlighted: null
+					}
+				}
+			});
+
+			// move rows so 0th row is empty
+			tableAtThisPoint = Table.clone(this._gamesTable);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
+			let moveRowParams = tableAtThisPoint.deleteRow(rowToTake);
+			animationSequence.push(
+			{
+				animationType: AnimationTypes.MoveRows,
+				animationParams:
+				{
+					fromRow: moveRowParams.fromRow,
+					toRow: moveRowParams.toRow,
+					downThisManyRows: moveRowParams.downThisManyRows
 				},
 				afterImage:
 				{

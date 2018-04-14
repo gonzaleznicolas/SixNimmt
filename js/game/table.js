@@ -41,16 +41,7 @@ module.exports = class Table
 		}
 	}
 
-	setInitialFourCards(unsortedArrayOfFourCards)
-	{
-		if (unsortedArrayOfFourCards.length != 4)
-			throw "Need exactly 4 initial cards on the table";
-		let sortedAscending = unsortedArrayOfFourCards.sort((a, b) => a-b);
-		for (let row = 0; row < NUMBER_OF_ROWS; row++)
-		{
-			this._table[row][0] = sortedAscending[row];
-		}
-	}
+	// CHECKS
 
 	lastCardInRow(rowI)
 	{
@@ -71,6 +62,24 @@ module.exports = class Table
 		return this._table[row].findIndex( (e) => e == null);
 	}
 
+	cardSmallerThanLastCardInFirstRow(card)
+	{
+		return card < this.lastCardInRow(0);
+	}
+
+	// ACTIONS
+
+	setInitialFourCards(unsortedArrayOfFourCards)
+	{
+		if (unsortedArrayOfFourCards.length != 4)
+			throw "Need exactly 4 initial cards on the table";
+		let sortedAscending = unsortedArrayOfFourCards.sort((a, b) => a-b);
+		for (let row = 0; row < NUMBER_OF_ROWS; row++)
+		{
+			this._table[row][0] = sortedAscending[row];
+		}
+	}
+
 	// returns the col that the card was put in
 	addCardToRow(card, row)
 	{
@@ -79,11 +88,6 @@ module.exports = class Table
 			throw "Attempting to add a card to a full row";
 		this._table[row][col] = card;
 		return col;
-	}
-
-	cardSmallerThanLastCardInFirstRow(card)
-	{
-		return card < this.lastCardInRow(0);
 	}
 
 	// precondition: the card must not be smaller than the last card on the first row.
@@ -103,6 +107,34 @@ module.exports = class Table
 		}
 		let colThisCardWasPlacedIn = this.addCardToRow(card, rowToPlaceThisCardIn);
 		return {row: rowToPlaceThisCardIn, col: colThisCardWasPlacedIn};
+	}
+
+	// replaces a row with a row full of nulls
+	emptyRow(rowI)
+	{
+		if (rowI < 0 || rowI >=4)
+			throw "Trying to empty row out of bounds";
+		this._table[rowI] = [null, null, null, null, null, null];
+	}
+
+	// deletes a row, shifts down any rows above it, and places a row full of nulls in the 0th row
+	// returns {fromRow: , toRow: , downThisManyRows: } where using the indices from before the remove,
+	// fromRow is the first row that needs to be moved down and toRow is the last that needs to be moved down
+	// by downThisManyRows
+	deleteRow(rowI)
+	{
+		if (rowI < 0 || rowI >=4)
+			throw "Trying to delete row out of bounds";
+
+		let topRowAfter = [null, null, null, null, null, null];
+
+		let fromRow = 0;
+		let toRow = rowI - 1;
+		let downThisManyRows = rowI == 0 ? 0 : 1;
+		this._table.splice(rowI, 1);
+		this._table.unshift(topRowAfter);
+
+		return {fromRow: fromRow, toRow: toRow, downThisManyRows: downThisManyRows};
 	}
 }
 
