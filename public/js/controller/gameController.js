@@ -123,7 +123,6 @@ class GameController {
 		{
 			state = ClientStates.WaitingToGetRestOfRoundAnimation;
 			this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
-			this.emit('clientDoneAnimationWaitingForOtherPlayerToSelectRowToTake');
 		}
 	}
 
