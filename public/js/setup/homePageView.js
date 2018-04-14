@@ -44,9 +44,10 @@ function onVsAIClicked() {
 	$('#vsAI').addClass("selected");
 
 	$('#form').children().hide();
-	$('#inputSection').css("visibility", "hidden");
+	$('#nickNameFormSection').show();
+	$('#submitButton').show();
+	$('#inputSection').css("visibility", "visible");
 	formType = FormType.vsAI;
-	onSubmitFormClicked();
 }
 
 function onJoinGameClicked() {

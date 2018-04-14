@@ -41,7 +41,7 @@ function onSubmitFormClicked() {
 	} 
 	else if (formType == FormType.vsAI) 
 	{ 
-		socket.emit('client1v1vsAI');
+		socket.emit('client1v1vsAI', {nickName: $("#nickNameTextBox").val()});
 	}
 	else if (formType == FormType.SpectateGame)
 	{
@@ -97,16 +97,27 @@ function onJoinGameFormResult(data) {
 	} 
 } 
 
-function onVsAIFormResult() 
+function onVsAIFormResult(data) 
 {
 	if (state != ClientStates.WaitingForFormResult)
 	{
 		console.log("server1v1vsAIFormResult received at unexpected time. Ignored.");
 		return;
 	}
-	$("#homePage").hide(1000); 
-	onStartGameClicked();
-	state = ClientStates.WaitPage;
+
+	hideAllErrorStatus(); 
+	if (data.nameValid) 
+	{ 
+		showNickNameSuccess(); 
+		$("#homePage").hide(1000); 
+		onStartGameClicked();
+		state = ClientStates.WaitPage;
+	}
+	else 
+	{ 
+		showNickNameError();
+		state = ClientStates.NotPastFormYet;
+	}
 }
 
 function onSpectateFormResult(data)

@@ -91,17 +91,23 @@ function onClientJoinGame(data){
 									gameCode: data.gameCode});
 }
 
-function onClient1v1vsAI()
+function onClient1v1vsAI(data)
 {
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
 	{
 		console.log("client1v1vsAI received at unexpected time. Ignored.");
 		return;
 	}
-	let gc = gameManager.addGame("You", this, io);
-	let aiName = gameManager.getGame(gc).addArtificialPlayer();
-	this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents = true;
-	this.emit("server1v1vsAIFormResult");
+	let nickName = StringFunctions.capitalizeNickName(data.nickName);
+	let nameValid = false;
+	if (StringFunctions.isPossibleNickName(nickName))
+	{
+		nameValid = true;
+		let gc = gameManager.addGame(nickName, this, io);
+		let aiName = gameManager.getGame(gc).addArtificialPlayer();
+		this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents = true;
+	}
+	this.emit("server1v1vsAIFormResult", {nameValid: nameValid});
 }
 
 function onClientSpectateGame(data)
