@@ -32,10 +32,6 @@ module.exports = class GameLogic
 		let tableAtThisPoint;
 		let upcomingCardsAtThisPoint;
 
-		// could be non zero. remember as we process each upcoming card, we set it to null.
-		// so if this is not the first turn of the round, the first upcoming card would not be at index 0
-		let indexOfFirstUpcomingCard = this._gamesUpcomingards.Cards.findIndex( (element) => element != null);
-
 		if (bStartOfRound)
 		{
 			// INITIAL TABLE IMAGE
@@ -101,6 +97,10 @@ module.exports = class GameLogic
 		}
 		else
 		{
+			// could be non zero. remember as we process each upcoming card, we set it to null.
+			// so since this is not the first turn of the round, the next upcoming card would not be at index 0
+			let indexOfNextUpcomingCard = this._gamesUpcomingards.Cards.findIndex( (element) => element != null);
+
 			// take the row selected by the player
 			tableAtThisPoint = Table.clone(this._gamesTable);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
@@ -120,14 +120,14 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: indexOfFirstUpcomingCard
+						highlighted: indexOfNextUpcomingCard
 					}
 				}
 			});
 
 			// move rows so 0th row is empty
-			tableAtThisPoint = Table.clone(this._gamesTable);
-			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
+			tableAtThisPoint = Table.clone(tableAtThisPoint);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 			let moveRowParams = tableAtThisPoint.deleteRow(rowToTake);
 			animationSequence.push(
 			{
@@ -145,40 +145,59 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: indexOfFirstUpcomingCard
+						highlighted: indexOfNextUpcomingCard
 					}
 				}
 			});
 
-			this._gamesTable = tableAtThisPoint;
-			this._gamesUpcomingards = upcomingCardsAtThisPoint;
-	
-			return {
-				needToAskThisPlayerForARowToTake: undefined,
-				animationSequence: animationSequence
-			};
+			// move the next upcoming card into the 0th row
+			tableAtThisPoint = Table.clone(tableAtThisPoint);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+			tableAtThisPoint.putCardInEmptyFirstsRow(upcomingCardsAtThisPoint.Cards[indexOfNextUpcomingCard]);
+			upcomingCardsAtThisPoint.Cards[indexOfNextUpcomingCard] = null;
+			animationSequence.push(
+			{
+				animationType: AnimationTypes.MoveIthCardToRowCol,
+				animationParams:
+				{
+					i: indexOfNextUpcomingCard,
+					tableRow: 0,
+					tableCol: 0
+				},
+				afterImage:
+				{
+					table: tableAtThisPoint.Table,
+					upcomingCards:
+					{
+						bFaceUp: true,
+						cards: upcomingCardsAtThisPoint.Cards,
+						highlighted: null
+					}
+				}
+			});
 		}
 
 		// HANDLE UPCOMING CARDS
 		let needToAskThisPlayerForARowToTake = undefined; // undefined if no need to ask. turn complete by this animationSequence
 
-		let numberOfUpcomingCards = this._gamesUpcomingards.Size;
-		for ( let upcomingCardIndex = 0; upcomingCardIndex < numberOfUpcomingCards; upcomingCardIndex++)
+		let numberOfUpcomingCardsForTheRound = this._gamesUpcomingards.Size;
+		for ( let upcomingCardIndex =  upcomingCardsAtThisPoint.Cards.findIndex( (element) => element != null); 
+			upcomingCardIndex < numberOfUpcomingCardsForTheRound; upcomingCardIndex++)
 		{
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
-			let card = upcomingCardsAtThisPoint.Cards[upcomingCardIndex];
-			if (tableAtThisPoint.cardSmallerThanLastCardInFirstRow(card.number))
+			let upcomingCardToPlace = upcomingCardsAtThisPoint.Cards[upcomingCardIndex];
+			if (tableAtThisPoint.cardSmallerThanLastCardInFirstRow(upcomingCardToPlace.number))
 			{
 				console.log("Card smaller than last card in first row...");
-				needToAskThisPlayerForARowToTake = card.name;
+				needToAskThisPlayerForARowToTake = upcomingCardToPlace.name;
 				animationSequence.push(
 				{
 					animationType: AnimationTypes.AskPlayerToChooseARowToTake,
 					animationParams:
 					{
-						nameOfPlayerToChooseRow: card.name,
+						nameOfPlayerToChooseRow: upcomingCardToPlace.name,
 						tableImage:
 						{
 							table: tableAtThisPoint.Table,
@@ -196,7 +215,7 @@ module.exports = class GameLogic
 			}
 			else
 			{
-				let rowCol = tableAtThisPoint.playCard(card.number);
+				let rowCol = tableAtThisPoint.playCard(upcomingCardToPlace.number);
 				upcomingCardsAtThisPoint.Cards[upcomingCardIndex] = null;
 				animationSequence.push(
 				{

@@ -136,5 +136,13 @@ module.exports = class Table
 
 		return {fromRow: fromRow, toRow: toRow, downThisManyRows: downThisManyRows};
 	}
+
+	// precondition: the 0th row must be empty. full of nulls.
+	putCardInEmptyFirstsRow(card)
+	{
+		if ( this._table[0][0] != null)
+			throw "The first row must be empty to perform this operation";
+		this._table[0][0] = card.number;
+	}
 }
 
