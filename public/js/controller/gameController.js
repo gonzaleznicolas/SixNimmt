@@ -71,25 +71,25 @@ class GameController {
 		let step = this._activeRoundStepSequence[0];
 		if (step)
 		{
-			if (step.animationType == RoundStepTypes.NoAnimationJustTheTableImage)
+			if (step.stepType == RoundStepTypes.NoAnimationJustTheTableImage)
 			{
 				this.afterStep(step.afterImage);
 			}
-			else if (step.animationType == RoundStepTypes.FlipAllUpcomingCards)
+			else if (step.stepType == RoundStepTypes.FlipAllUpcomingCards)
 			{
 				this._tableView.Animation.flipAllUpcomingCards(
 										this.afterStep.bind(this),	// callback
 										step.afterImage	// callback param
 									);
 			}
-			else if (step.animationType == RoundStepTypes.SortUpcomingCards)
+			else if (step.stepType == RoundStepTypes.SortUpcomingCards)
 			{
 				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(
 										this.afterStep.bind(this), // callback
 										step.afterImage	// callback param
 									);}.bind(this), 1000);
 			}
-			else if (step.animationType == RoundStepTypes.MoveIthCardToRowCol)
+			else if (step.stepType == RoundStepTypes.MoveIthCardToRowCol)
 			{
 				setTimeout( function() {this._tableView.Animation.moveIthUpcomingCardToRowCol(
 										step.animationParams.i,
@@ -99,14 +99,14 @@ class GameController {
 										step.afterImage	// callback param
 									);}.bind(this), 500);
 			}
-			else if (step.animationType == RoundStepTypes.AskPlayerToChooseARowToTake)
+			else if (step.stepType == RoundStepTypes.AskPlayerToChooseARowToTake)
 			{
 				setTimeout( function() { 
 					this.dealWithAskPlayerToChooseARowToTakeAnimation(step.animationParams.nameOfPlayerToChooseRow,
 																		step.animationParams.tableImage);
 				}.bind(this), 500);
 			}
-			else if (step.animationType == RoundStepTypes.TakeRow)
+			else if (step.stepType == RoundStepTypes.TakeRow)
 			{
 				setTimeout( function() {this._tableView.Animation.takeRow(
 										step.animationParams.rowIndex,
@@ -115,7 +115,7 @@ class GameController {
 										step.afterImage	// callback param
 									);}.bind(this), 500);
 			}
-			else if (step.animationType == RoundStepTypes.MoveRows)
+			else if (step.stepType == RoundStepTypes.MoveRows)
 			{
 				setTimeout( function() {this._tableView.Animation.moveRows(
 										step.animationParams.fromRow,

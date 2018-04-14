@@ -31,7 +31,7 @@ module.exports = class GameLogic
 
 			roundStepSequence.push(
 			{
-				animationType: RoundStepTypes.NoAnimationJustTheTableImage,
+				stepType: RoundStepTypes.NoAnimationJustTheTableImage,
 				afterImage:
 				{
 					table: tableAtThisPoint.Table,
@@ -51,7 +51,7 @@ module.exports = class GameLogic
 
 			roundStepSequence.push(
 			{
-				animationType: RoundStepTypes.FlipAllUpcomingCards,
+				stepType: RoundStepTypes.FlipAllUpcomingCards,
 				afterImage:
 				{
 					table: tableAtThisPoint.Table,
@@ -73,7 +73,7 @@ module.exports = class GameLogic
 
 			roundStepSequence.push(
 			{
-				animationType: RoundStepTypes.SortUpcomingCards,
+				stepType: RoundStepTypes.SortUpcomingCards,
 				afterImage:
 				{
 					table: tableAtThisPoint.Table,
@@ -98,7 +98,7 @@ module.exports = class GameLogic
 			tableAtThisPoint.emptyRow(rowToTake);
 			roundStepSequence.push(
 			{
-				animationType: RoundStepTypes.TakeRow,
+				stepType: RoundStepTypes.TakeRow,
 				animationParams:
 				{
 					rowIndex: rowToTake,
@@ -122,7 +122,7 @@ module.exports = class GameLogic
 			let moveRowParams = tableAtThisPoint.deleteRow(rowToTake);
 			roundStepSequence.push(
 			{
-				animationType: RoundStepTypes.MoveRows,
+				stepType: RoundStepTypes.MoveRows,
 				animationParams:
 				{
 					fromRow: moveRowParams.fromRow,
@@ -148,7 +148,7 @@ module.exports = class GameLogic
 			upcomingCardsAtThisPoint.Cards[indexOfNextUpcomingCard] = null;
 			roundStepSequence.push(
 			{
-				animationType: RoundStepTypes.MoveIthCardToRowCol,
+				stepType: RoundStepTypes.MoveIthCardToRowCol,
 				animationParams:
 				{
 					i: indexOfNextUpcomingCard,
@@ -185,7 +185,7 @@ module.exports = class GameLogic
 				needToAskThisPlayerForARowToTake = upcomingCardToPlace.name;
 				roundStepSequence.push(
 				{
-					animationType: RoundStepTypes.AskPlayerToChooseARowToTake,
+					stepType: RoundStepTypes.AskPlayerToChooseARowToTake,
 					animationParams:
 					{
 						nameOfPlayerToChooseRow: upcomingCardToPlace.name,
@@ -210,7 +210,7 @@ module.exports = class GameLogic
 				upcomingCardsAtThisPoint.Cards[upcomingCardIndex] = null;
 				roundStepSequence.push(
 				{
-					animationType: RoundStepTypes.MoveIthCardToRowCol,
+					stepType: RoundStepTypes.MoveIthCardToRowCol,
 					animationParams:
 					{
 						i: upcomingCardIndex,

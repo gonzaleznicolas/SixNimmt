@@ -54,7 +54,7 @@ module.exports = class ArtificialPlayer extends Player
 	animate(roundStepSequence)
 	{
 		let lastAnimation = roundStepSequence[roundStepSequence.length - 1];
-		if (lastAnimation.animationType == RoundStepTypes.AskPlayerToChooseARowToTake &&
+		if (lastAnimation.stepType == RoundStepTypes.AskPlayerToChooseARowToTake &&
 			lastAnimation.animationParams.nameOfPlayerToChooseRow == this._name &&
 			this._state == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
 		{
