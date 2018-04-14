@@ -189,7 +189,7 @@ class TableAnimation extends Animation
 	}
 	
 
-	takeRow(rowIndex, bDisapearAtTheEnd = false, callback = undefined, callbackParam = undefined)
+	takeRow(rowIndex, bDisapearAtTheEnd, callback, callbackParam)
 	{
 		bAnimationInProgress = true;
 		this._callback = callback;
@@ -219,7 +219,7 @@ class TableAnimation extends Animation
 			{
 				// the fadeAwayCard animation will take care of setting bAnimationInProgress back to false
 				// and calling the callback
-				this.fadeAwayCard(this._endRow, this._endCol, this._callback)
+				this.fadeAwayCard(this._endRow, this._endCol, this._callback, this._callbackParam)
 			}
 			else
 			{
@@ -244,7 +244,7 @@ class TableAnimation extends Animation
 			{
 				// the fadeAwayCard animation will take care of setting bAnimationInProgress back to false
 				// and calling the callback
-				this.fadeAwayCard(this._endRow, this._endCol, this._callback)
+				this.fadeAwayCard(this._endRow, this._endCol, this._callback, this._callbackParam)
 			}
 			else
 			{
