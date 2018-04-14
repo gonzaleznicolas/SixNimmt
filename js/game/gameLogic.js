@@ -19,7 +19,7 @@ module.exports = class GameLogic
 	// rowToTake is only passed in if !bStartOfRound
 	doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake)
 	{
-		let animationSequence = [];
+		let roundStepSequence = [];
 		let tableAtThisPoint;
 		let upcomingCardsAtThisPoint;
 
@@ -29,7 +29,7 @@ module.exports = class GameLogic
 			tableAtThisPoint = Table.clone(this._gamesTable);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
 
-			animationSequence.push(
+			roundStepSequence.push(
 			{
 				animationType: RoundStepTypes.NoAnimationJustTheTableImage,
 				afterImage:
@@ -49,7 +49,7 @@ module.exports = class GameLogic
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
-			animationSequence.push(
+			roundStepSequence.push(
 			{
 				animationType: RoundStepTypes.FlipAllUpcomingCards,
 				afterImage:
@@ -71,7 +71,7 @@ module.exports = class GameLogic
 
 			upcomingCardsAtThisPoint.sort();
 
-			animationSequence.push(
+			roundStepSequence.push(
 			{
 				animationType: RoundStepTypes.SortUpcomingCards,
 				afterImage:
@@ -96,7 +96,7 @@ module.exports = class GameLogic
 			tableAtThisPoint = Table.clone(this._gamesTable);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
 			tableAtThisPoint.emptyRow(rowToTake);
-			animationSequence.push(
+			roundStepSequence.push(
 			{
 				animationType: RoundStepTypes.TakeRow,
 				animationParams:
@@ -120,7 +120,7 @@ module.exports = class GameLogic
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 			let moveRowParams = tableAtThisPoint.deleteRow(rowToTake);
-			animationSequence.push(
+			roundStepSequence.push(
 			{
 				animationType: RoundStepTypes.MoveRows,
 				animationParams:
@@ -146,7 +146,7 @@ module.exports = class GameLogic
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 			tableAtThisPoint.putCardInEmptyFirstsRow(upcomingCardsAtThisPoint.Cards[indexOfNextUpcomingCard]);
 			upcomingCardsAtThisPoint.Cards[indexOfNextUpcomingCard] = null;
-			animationSequence.push(
+			roundStepSequence.push(
 			{
 				animationType: RoundStepTypes.MoveIthCardToRowCol,
 				animationParams:
@@ -169,7 +169,7 @@ module.exports = class GameLogic
 		}
 
 		// HANDLE UPCOMING CARDS
-		let needToAskThisPlayerForARowToTake = undefined; // undefined if no need to ask. turn complete by this animationSequence
+		let needToAskThisPlayerForARowToTake = undefined; // undefined if no need to ask. turn complete by this roundStepSequence
 
 		let numberOfUpcomingCardsForTheRound = this._gamesUpcomingards.Size;
 		for ( let upcomingCardIndex =  upcomingCardsAtThisPoint.Cards.findIndex( (element) => element != null); 
@@ -183,7 +183,7 @@ module.exports = class GameLogic
 			{
 				console.log("Card smaller than last card in first row...");
 				needToAskThisPlayerForARowToTake = upcomingCardToPlace.name;
-				animationSequence.push(
+				roundStepSequence.push(
 				{
 					animationType: RoundStepTypes.AskPlayerToChooseARowToTake,
 					animationParams:
@@ -208,7 +208,7 @@ module.exports = class GameLogic
 			{
 				let rowCol = tableAtThisPoint.playCard(upcomingCardToPlace.number);
 				upcomingCardsAtThisPoint.Cards[upcomingCardIndex] = null;
-				animationSequence.push(
+				roundStepSequence.push(
 				{
 					animationType: RoundStepTypes.MoveIthCardToRowCol,
 					animationParams:
@@ -236,7 +236,7 @@ module.exports = class GameLogic
 
 		return {
 			needToAskThisPlayerForARowToTake: needToAskThisPlayerForARowToTake,
-			animationSequence: animationSequence
+			roundStepSequence: roundStepSequence
 		};
 	}
 }

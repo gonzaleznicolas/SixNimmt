@@ -34,7 +34,7 @@ class GameController {
 				$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
 		}
 
-		this._activeAnimationSequence = [];
+		this._activeRoundStepSequence = [];
 		// SERVER TO CLIENT - GAME EVENTS
 		socket.on("serverUpcomingCards", this.onServerUpcomingCards.bind(this));
 		socket.on("serverUpdatedHand", this.onServerUpdatedHand.bind(this));
@@ -66,9 +66,9 @@ class GameController {
 		this._tableView.draw();
 	}
 
-	dealWithAnimationSequence()
+	dealWithRoundStepSequence()
 	{
-		let animation = this._activeAnimationSequence[0];
+		let animation = this._activeRoundStepSequence[0];
 		if (animation)
 		{
 			if (animation.animationType == RoundStepTypes.NoAnimationJustTheTableImage)
@@ -131,8 +131,8 @@ class GameController {
 	afterAnimation(afterImage)
 	{
 		this.updateModelAndDrawFromTableImage(afterImage);
-		this._activeAnimationSequence.shift();
-		this.dealWithAnimationSequence();
+		this._activeRoundStepSequence.shift();
+		this.dealWithRoundStepSequence();
 	}
 
 	dealWithAskPlayerToChooseARowToTakeAnimation(nameOfPlayerToChooseRow, tableImage)
@@ -147,19 +147,19 @@ class GameController {
 		else
 		{
 			state = ClientStates.RoundAnimationInProgress;
-			this._activeAnimationSequence.shift();
+			this._activeRoundStepSequence.shift();
 	
-			if(this._activeAnimationSequence.length == 0)
+			if(this._activeRoundStepSequence.length == 0)
 			{
 				this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
 			}
 			else
 			{
-				// if the activeAnimationSequence is not empty, it means there are more animations
+				// if the activeRoundStepSequence is not empty, it means there are more animations
 				// i.e. the following animations are for after whoever had to choose a card did so
 				// i.e. the row to be taken has already been selected. So instead of showing the sign
 				// saying "waiting for __ to play a card", just move on to the next animation
-				this.dealWithAnimationSequence();
+				this.dealWithRoundStepSequence();
 			}
 		}
 	}
@@ -189,19 +189,19 @@ class GameController {
 		this._handView.draw();
 	}
 
-	onServerAnimate(animationSequence)
+	onServerAnimate(roundStepSequence)
 	{
 		console.log("onServerAnimate");
 
 		this._headerView.clear();
-		if(this._activeAnimationSequence.length > 0)
+		if(this._activeRoundStepSequence.length > 0)
 		{
-			this._activeAnimationSequence = this._activeAnimationSequence.concat(animationSequence);
+			this._activeRoundStepSequence = this._activeRoundStepSequence.concat(roundStepSequence);
 		}
 		else
 		{
-			this._activeAnimationSequence = animationSequence;
-			this.dealWithAnimationSequence();
+			this._activeRoundStepSequence = roundStepSequence;
+			this.dealWithRoundStepSequence();
 		}
 	}
 
@@ -238,7 +238,7 @@ class GameController {
 			return;
 		state = ClientStates.RoundAnimationInProgress;
 		this._headerView.clear();
-		this._activeAnimationSequence.shift();
+		this._activeRoundStepSequence.shift();
 		socket.emit('clientRowToTake', this._model.SelectedRow);
 	}
 	

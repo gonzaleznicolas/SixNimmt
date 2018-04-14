@@ -34,8 +34,8 @@ module.exports = class Spectator
 		this._socket.emit("serverUpcomingCards", upcomingCards);
 	}
 
-	animate(animationSequence)
+	animate(roundStepSequence)
 	{
-		this._socket.emit("serverAnimate", animationSequence);
+		this._socket.emit("serverAnimate", roundStepSequence);
 	}
 }

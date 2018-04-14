@@ -153,10 +153,10 @@ module.exports = class Game extends EventEmitter
 		this.emit("gameEnded", this._gameCode);
 	}
 
-	// bStartOfRound means the animation is starting at the start of the round
+	// bStartOfRound = true means the round is starting rather than resuming after a player chose a row to take
 	// false means it is starting after a player chose which row to take
 	// rowToTake is only passed in if !bStartOfRound
-	startOrResumeRoundAnimation(bStartOfRound, rowToTake)
+	startOrResumeRound(bStartOfRound, rowToTake)
 	{
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
@@ -169,9 +169,9 @@ module.exports = class Game extends EventEmitter
 				throw "Somehow, a player not in the player map needs to choose a row to take ";
 			playerWhoNeedsToChooseARowToTake.State = PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake;
 		}
-		// wait a few moments to start the animation
+		// wait a few moments before sending out the following round steps
 		let timeToWait = bStartOfRound ? 1000 : 100;
-		setTimeout(function() {this.updateAllPlayersAndSpectatorsWithAnimationSequence(details.animationSequence);}.bind(this), timeToWait);
+		setTimeout(function() {this.updateAllPlayersAndSpectatorsWithRoundStepSequence(details.roundStepSequence);}.bind(this), timeToWait);
 	}
 
 	// GENERAL GAME UPDATES FOR PLAYERS AND SPECTATORS
@@ -227,14 +227,14 @@ module.exports = class Game extends EventEmitter
 		});
 	}
 
-	updateAllPlayersAndSpectatorsWithAnimationSequence(animationSequence)
+	updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence)
 	{
 		this._players.forEach(function (player){
-			player.animate(animationSequence);
+			player.animate(roundStepSequence);
 		});
 
 		this._spectators.forEach(function (spectator){
-			spectator.animate(animationSequence);
+			spectator.animate(roundStepSequence);
 		});
 	}
 
@@ -309,7 +309,7 @@ module.exports = class Game extends EventEmitter
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
-			this.startOrResumeRoundAnimation(true);
+			this.startOrResumeRound(true);
 		}
 	}
 
@@ -317,6 +317,6 @@ module.exports = class Game extends EventEmitter
 	{
 		console.log("A player has chosen which row to take.");
 		data.player.State = PlayerStates.RoundAnimationInProgress;
-		this.startOrResumeRoundAnimation(false, data.rowToTakeIndex);
+		this.startOrResumeRound(false, data.rowToTakeIndex);
 	}
 }

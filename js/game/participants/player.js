@@ -33,8 +33,8 @@ module.exports = class Player extends EventEmitter
 	startGame(playerList, table){}
 	updateUpcomingCards(upcomingCards){}
 
-	// the player must not modify animationSequence. Just read. It belongs to the game.
-	animate(animationSequence){}
+	// the player must not modify roundStepSequence. Just read. It belongs to the game.
+	animate(roundStepSequence){}
 
 	// EVENTS TO BE EMITTED BY ANY CLASS DERIVING OFF OF PLAYER
 	
