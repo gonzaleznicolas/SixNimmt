@@ -21,7 +21,6 @@ class RoundController {
 	{
 		console.log("onRoundInfo");
 
-		this._headerView.clear();
 		if(this._activeRoundStepSequence.length > 0)
 		{
 			this._activeRoundStepSequence = this._activeRoundStepSequence.concat(roundStepSequence);
@@ -45,7 +44,6 @@ class RoundController {
 	afterStep(afterImage)
 	{
 		this.updateModelAndDrawFromTableImage(afterImage);
-		this._headerView.clear();
 		this._activeRoundStepSequence.shift();
 		this.dealWithRoundStepSequence();
 	}
@@ -109,7 +107,21 @@ class RoundController {
 										step.stepParams.downThisManyRows,
 										this.afterStep.bind(this), // callback
 										step.afterImage	// callback param
-									);}.bind(this), 1500);
+									);}.bind(this), 500);
+			}
+			else if (step.stepType == RoundStepTypes.ShowMessageSayingWhichRowWasSelected)
+			{
+				this._headerView.set(`${step.stepParams.nameOfPlayerWhoTookRow} ${selectedRowStr} ${step.stepParams.rowSelected + 1}`);
+				setTimeout( function() {
+					this._activeRoundStepSequence.shift();
+					this.dealWithRoundStepSequence();
+				}.bind(this), 1000);
+			}
+			else if (step.stepType == RoundStepTypes.ClearHeader)
+			{
+				this._headerView.clear();
+				this._activeRoundStepSequence.shift();
+				this.dealWithRoundStepSequence();
 			}
 		}
 	}
@@ -175,7 +187,6 @@ class RoundController {
 		if (this._model.SelectedRow == undefined || this._model.SelectedRow < 0 || this._model.SelectedRow >= 4)
 			return;
 		state = ClientStates.RoundAnimationInProgress;
-		this._headerView.clear();
 		this._activeRoundStepSequence.shift();
 		socket.emit('clientRowToTake', this._model.SelectedRow);
 	}

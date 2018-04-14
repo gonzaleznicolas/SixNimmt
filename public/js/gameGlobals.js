@@ -35,8 +35,10 @@ const RoundStepTypes = Object.freeze(
 	AskPlayerToChooseARowToTake: 5,
 	TakeRow: 6,
 	MoveRows: 7,
-	DisplayWhichRowWasSelected: 8
-});
+	ShowMessageSayingWhichRowWasSelected: 8,
+	ClearHeader: 9
+}
+);
 
 function getCardInfo(cardNumber)
 {

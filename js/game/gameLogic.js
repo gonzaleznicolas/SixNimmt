@@ -16,8 +16,8 @@ module.exports = class GameLogic
 
 	// bStartOfRound = true means the round is starting rather than resuming after a player chose a row to take
 	// false means it is starting after a player chose which row to take
-	// rowToTake is only passed in if !bStartOfRound
-	doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake)
+	// rowToTake and nameOfPlayerWhoTookRow are only passed in if !bStartOfRound
+	doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow)
 	{
 		let roundStepSequence = [];
 		let tableAtThisPoint;
@@ -85,10 +85,23 @@ module.exports = class GameLogic
 					}
 				}
 			});
+			
+			roundStepSequence.push({stepType: RoundStepTypes.ClearHeader});
 		}
 		else
 		{
 			let indexOfTheCardThatCausedTheSelectRowToTake = this._gamesUpcomingards.Cards.findIndex( (element) => element != null);
+
+			roundStepSequence.push(
+			{
+				stepType: RoundStepTypes.ShowMessageSayingWhichRowWasSelected,
+				stepParams:
+				{
+					rowSelected: rowToTake,
+					nameOfPlayerWhoTookRow: nameOfPlayerWhoTookRow 
+				}
+			}
+			);
 
 			// take the row selected by the player
 			tableAtThisPoint = Table.clone(this._gamesTable);
@@ -138,6 +151,8 @@ module.exports = class GameLogic
 					}
 				}
 			});
+
+			roundStepSequence.push({stepType: RoundStepTypes.ClearHeader});
 
 			// move the the card that caused the select row into the 0th row
 			tableAtThisPoint = Table.clone(tableAtThisPoint);

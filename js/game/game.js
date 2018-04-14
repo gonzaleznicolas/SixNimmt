@@ -155,12 +155,12 @@ module.exports = class Game extends EventEmitter
 
 	// bStartOfRound = true means the round is starting rather than resuming after a player chose a row to take
 	// false means it is starting after a player chose which row to take
-	// rowToTake is only passed in if !bStartOfRound
-	startOrResumeRound(bStartOfRound, rowToTake)
+	// rowToTake and nameOfPlayerWhoTookRow are only passed in if !bStartOfRound
+	startOrResumeRound(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow)
 	{
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
-		let details = this._gameLogic.doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake);
+		let details = this._gameLogic.doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow);
 		if (details.needToAskThisPlayerForARowToTake)
 		{
 			// the round did not complete. A certain player needs to choose a card
@@ -317,6 +317,6 @@ module.exports = class Game extends EventEmitter
 	{
 		console.log("A player has chosen which row to take.");
 		data.player.State = PlayerStates.RoundAnimationInProgress;
-		this.startOrResumeRound(false, data.rowToTakeIndex);
+		this.startOrResumeRound(false, data.rowToTakeIndex, data.player.Name);
 	}
 }
