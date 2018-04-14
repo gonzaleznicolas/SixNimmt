@@ -34,6 +34,7 @@ class GameController {
 				$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
 		}
 
+		this._activeAnimationSequence = [];
 		// SERVER TO CLIENT - GAME EVENTS
 		socket.on("serverUpcomingCards", this.onServerUpcomingCards.bind(this));
 		socket.on("serverUpdatedHand", this.onServerUpdatedHand.bind(this));
@@ -67,13 +68,12 @@ class GameController {
 
 	dealWithAnimationSequence()
 	{
-		let animation = this._activeAnimationSequence.shift();
+		let animation = this._activeAnimationSequence[0];
 		if (animation)
 		{
 			if (animation.animationType == AnimationTypes.NoAnimationJustTheTableImage)
 			{
-				this.updateModelAndDrawFromTableImage(animation.afterImage);
-				this.dealWithAnimationSequence();
+				this.afterAnimation(animation.afterImage);
 			}
 			else if (animation.animationType == AnimationTypes.FlipAllUpcomingCards)
 			{
@@ -112,6 +112,7 @@ class GameController {
 	afterAnimation(afterImage)
 	{
 		this.updateModelAndDrawFromTableImage(afterImage);
+		this._activeAnimationSequence.shift();
 		this.dealWithAnimationSequence();
 	}
 
@@ -160,8 +161,15 @@ class GameController {
 	{
 		console.log("onServerAnimate");
 
-		this._activeAnimationSequence = animationSequence;
-		this.dealWithAnimationSequence();
+		if(this._activeAnimationSequence.length > 0)
+		{
+			this._activeAnimationSequence = this._activeAnimationSequence.concat(animationSequence);
+		}
+		else
+		{
+			this._activeAnimationSequence = animationSequence;
+			this.dealWithAnimationSequence();
+		}
 	}
 
 	// UI HANDLERS

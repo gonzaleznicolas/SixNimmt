@@ -167,6 +167,7 @@ module.exports = class Game extends EventEmitter
 		}
 		// wait a few seconds to start the animation
 		setTimeout(function() {this.updateAllPlayersAndSpectatorsWithAnimationSequence(details.animationSequence);}.bind(this), 1000);
+		setTimeout(function() {this.updateAllPlayersAndSpectatorsWithAnimationSequence(details.animationSequence);}.bind(this), 5000);
 	}
 
 	// GENERAL GAME UPDATES FOR PLAYERS AND SPECTATORS
