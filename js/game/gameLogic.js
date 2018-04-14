@@ -2,7 +2,7 @@
 
 const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
-const AnimationTypes = require('./gameGlobals.js').AnimationTypes;
+const RoundStepType = require('./gameGlobals.js').RoundStepType;
  
 module.exports = class GameLogic 
 { 
@@ -31,7 +31,7 @@ module.exports = class GameLogic
 
 			animationSequence.push(
 			{
-				animationType: AnimationTypes.NoAnimationJustTheTableImage,
+				animationType: RoundStepType.NoAnimationJustTheTableImage,
 				afterImage:
 				{
 					table: tableAtThisPoint.Table,
@@ -51,7 +51,7 @@ module.exports = class GameLogic
 
 			animationSequence.push(
 			{
-				animationType: AnimationTypes.FlipAllUpcomingCards,
+				animationType: RoundStepType.FlipAllUpcomingCards,
 				afterImage:
 				{
 					table: tableAtThisPoint.Table,
@@ -73,7 +73,7 @@ module.exports = class GameLogic
 
 			animationSequence.push(
 			{
-				animationType: AnimationTypes.SortUpcomingCards,
+				animationType: RoundStepType.SortUpcomingCards,
 				afterImage:
 				{
 					table: tableAtThisPoint.Table,
@@ -98,7 +98,7 @@ module.exports = class GameLogic
 			tableAtThisPoint.emptyRow(rowToTake);
 			animationSequence.push(
 			{
-				animationType: AnimationTypes.TakeRow,
+				animationType: RoundStepType.TakeRow,
 				animationParams:
 				{
 					rowIndex: rowToTake,
@@ -122,7 +122,7 @@ module.exports = class GameLogic
 			let moveRowParams = tableAtThisPoint.deleteRow(rowToTake);
 			animationSequence.push(
 			{
-				animationType: AnimationTypes.MoveRows,
+				animationType: RoundStepType.MoveRows,
 				animationParams:
 				{
 					fromRow: moveRowParams.fromRow,
@@ -148,7 +148,7 @@ module.exports = class GameLogic
 			upcomingCardsAtThisPoint.Cards[indexOfNextUpcomingCard] = null;
 			animationSequence.push(
 			{
-				animationType: AnimationTypes.MoveIthCardToRowCol,
+				animationType: RoundStepType.MoveIthCardToRowCol,
 				animationParams:
 				{
 					i: indexOfNextUpcomingCard,
@@ -185,7 +185,7 @@ module.exports = class GameLogic
 				needToAskThisPlayerForARowToTake = upcomingCardToPlace.name;
 				animationSequence.push(
 				{
-					animationType: AnimationTypes.AskPlayerToChooseARowToTake,
+					animationType: RoundStepType.AskPlayerToChooseARowToTake,
 					animationParams:
 					{
 						nameOfPlayerToChooseRow: upcomingCardToPlace.name,
@@ -210,7 +210,7 @@ module.exports = class GameLogic
 				upcomingCardsAtThisPoint.Cards[upcomingCardIndex] = null;
 				animationSequence.push(
 				{
-					animationType: AnimationTypes.MoveIthCardToRowCol,
+					animationType: RoundStepType.MoveIthCardToRowCol,
 					animationParams:
 					{
 						i: upcomingCardIndex,

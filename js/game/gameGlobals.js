@@ -18,7 +18,7 @@ module.exports = Object.freeze(
 		RoundAnimationInProgress: 3
 	},
 
-	AnimationTypes:
+	RoundStepType:
 	{
 		FlipAllUpcomingCards:1,
 		SortUpcomingCards: 2,

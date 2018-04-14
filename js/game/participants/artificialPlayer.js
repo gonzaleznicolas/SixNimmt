@@ -2,7 +2,7 @@
 
 const Player = require('./player.js');
 const PlayerStates = require('../gameGlobals.js').PlayerStates;
-const AnimationTypes = require('../gameGlobals.js').AnimationTypes;
+const RoundStepType = require('../gameGlobals.js').RoundStepType;
 
 module.exports = class ArtificialPlayer extends Player
 {
@@ -54,7 +54,7 @@ module.exports = class ArtificialPlayer extends Player
 	animate(animationSequence)
 	{
 		let lastAnimation = animationSequence[animationSequence.length - 1];
-		if (lastAnimation.animationType == AnimationTypes.AskPlayerToChooseARowToTake &&
+		if (lastAnimation.animationType == RoundStepType.AskPlayerToChooseARowToTake &&
 			lastAnimation.animationParams.nameOfPlayerToChooseRow == this._name &&
 			this._state == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
 		{
