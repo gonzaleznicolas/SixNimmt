@@ -13,80 +13,95 @@ const AnimationTypes = Object.freeze({
  
 module.exports = class GameLogic 
 { 
-	constructor() 
+	constructor(gamesTable, gamesUpcomingCards) 
 	{
+		// these are pointers to the game's table and upcoming cards. Modifying these
+		// modifies the game's data. Thus, for any intermediate steps, make clones
+		this._gamesTable = gamesTable;
+		this._gamesUpcomingards = gamesUpcomingCards;
 	}
 
-	static doAsMuchOfRoundAsPossible(originalTable, originalUpcomingCards)
+	// bStartOfRound means the animation is starting at the start of the round
+	// false means it is starting after a player chose which row to take
+	// rowToTake is only passed in if !bStartOfRound
+	doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake)
 	{
-		// objects we will use to create the animationSequence
 		let animationSequence = [];
+		let tableAtThisPoint;
+		let upcomingCardsAtThisPoint;
 
-		// INITIAL TABLE IMAGE
-		let tableAtThisPoint = Table.clone(originalTable);
-		let upcomingCardsAtThisPoint = UpcomingCards.clone(originalUpcomingCards);
-
-		animationSequence.push(
+		if (bStartOfRound)
 		{
-			animationType: AnimationTypes.NoAnimationJustTheTableImage,
-			afterImage:
+			// INITIAL TABLE IMAGE
+			tableAtThisPoint = Table.clone(this._gamesTable);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
+
+			animationSequence.push(
 			{
-				table: tableAtThisPoint.Table,
-				upcomingCards:
+				animationType: AnimationTypes.NoAnimationJustTheTableImage,
+				afterImage:
 				{
-					bFaceUp: false,
-					cards: upcomingCardsAtThisPoint.Cards,
-					highlighted: null
+					table: tableAtThisPoint.Table,
+					upcomingCards:
+					{
+						bFaceUp: false,
+						cards: upcomingCardsAtThisPoint.Cards,
+						highlighted: null
+					}
 				}
-			}
-		});
+			});
 
-		// FLIP
+			// FLIP
 
-		tableAtThisPoint = Table.clone(tableAtThisPoint);
-		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+			tableAtThisPoint = Table.clone(tableAtThisPoint);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
-		animationSequence.push(
+			animationSequence.push(
+			{
+				animationType: AnimationTypes.FlipAllUpcomingCards,
+				afterImage:
+				{
+					table: tableAtThisPoint.Table,
+					upcomingCards:
+					{
+						bFaceUp: true,
+						cards: upcomingCardsAtThisPoint.Cards,
+						highlighted: null
+					}
+				}
+			});
+
+			// SORT
+
+			tableAtThisPoint = Table.clone(tableAtThisPoint);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+
+			upcomingCardsAtThisPoint.sort();
+
+			animationSequence.push(
+			{
+				animationType: AnimationTypes.SortUpcomingCards,
+				afterImage:
+				{
+					table: tableAtThisPoint.Table,
+					upcomingCards:
+					{
+						bFaceUp: true,
+						cards: upcomingCardsAtThisPoint.Cards,
+						highlighted: null
+					}
+				}
+			});
+		}
+		else
 		{
-			animationType: AnimationTypes.FlipAllUpcomingCards,
-			afterImage:
-			{
-				table: tableAtThisPoint.Table,
-				upcomingCards:
-				{
-					bFaceUp: true,
-					cards: upcomingCardsAtThisPoint.Cards,
-					highlighted: null
-				}
-			}
-		});
-
-		// SORT
-
-		tableAtThisPoint = Table.clone(tableAtThisPoint);
-		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
-
-		upcomingCardsAtThisPoint.sort();
-
-		animationSequence.push(
-		{
-			animationType: AnimationTypes.SortUpcomingCards,
-			afterImage:
-			{
-				table: tableAtThisPoint.Table,
-				upcomingCards:
-				{
-					bFaceUp: true,
-					cards: upcomingCardsAtThisPoint.Cards,
-					highlighted: null
-				}
-			}
-		});
+			// bStartOfRound is false which means we are starting off after a player chose a row to take
+		}
 
 		// HANDLE UPCOMING CARDS
 		let needToAskThisPlayerForARowToTake = undefined; // undefined if no need to ask. turn complete by this animationSequence
 
-		let numberOfUpcomingCards = upcomingCardsAtThisPoint.Size;
+		let numberOfUpcomingCards = this._gamesUpcomingards.Size;
 		for ( let upcomingCardIndex = 0; upcomingCardIndex < numberOfUpcomingCards; upcomingCardIndex++)
 		{
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
@@ -145,8 +160,8 @@ module.exports = class GameLogic
 			}
 		}
 
-		originalTable = tableAtThisPoint;
-		originalUpcomingCards = upcomingCardsAtThisPoint;
+		this._gamesTable = tableAtThisPoint;
+		this._gamesUpcomingards = upcomingCardsAtThisPoint;
 
 		return {
 			needToAskThisPlayerForARowToTake: needToAskThisPlayerForARowToTake,

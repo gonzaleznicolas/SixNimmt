@@ -24,6 +24,7 @@ module.exports = class Game extends EventEmitter
 		this._deck = new Deck();
 		this._table = new Table();
 		this._upcomingCards = new UpcomingCards();
+		this._gameLogic = new GameLogic(this._table, this._upcomingCards);
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 		console.log("Game with code " + gameCode + " created.");
 	}
@@ -156,7 +157,7 @@ module.exports = class Game extends EventEmitter
 	{
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
-		let details = GameLogic.doAsMuchOfRoundAsPossible(this._table, this._upcomingCards);
+		let details = this._gameLogic.doAsMuchOfRoundAsPossible(true);
 		if (details.needToAskThisPlayerForARowToTake)
 		{
 			// the round did not complete. A certain player needs to choose a card
