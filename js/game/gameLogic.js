@@ -99,7 +99,7 @@ module.exports = class GameLogic
 			roundStepSequence.push(
 			{
 				stepType: RoundStepTypes.TakeRow,
-				animationParams:
+				stepParams:
 				{
 					rowIndex: rowToTake,
 					bDisapearAtTheEnd: true
@@ -123,7 +123,7 @@ module.exports = class GameLogic
 			roundStepSequence.push(
 			{
 				stepType: RoundStepTypes.MoveRows,
-				animationParams:
+				stepParams:
 				{
 					fromRow: moveRowParams.fromRow,
 					toRow: moveRowParams.toRow,
@@ -149,7 +149,7 @@ module.exports = class GameLogic
 			roundStepSequence.push(
 			{
 				stepType: RoundStepTypes.MoveIthCardToRowCol,
-				animationParams:
+				stepParams:
 				{
 					i: indexOfNextUpcomingCard,
 					tableRow: 0,
@@ -186,7 +186,7 @@ module.exports = class GameLogic
 				roundStepSequence.push(
 				{
 					stepType: RoundStepTypes.AskPlayerToChooseARowToTake,
-					animationParams:
+					stepParams:
 					{
 						nameOfPlayerToChooseRow: upcomingCardToPlace.name,
 						tableImage:
@@ -211,7 +211,7 @@ module.exports = class GameLogic
 				roundStepSequence.push(
 				{
 					stepType: RoundStepTypes.MoveIthCardToRowCol,
-					animationParams:
+					stepParams:
 					{
 						i: upcomingCardIndex,
 						tableRow: rowCol.row,

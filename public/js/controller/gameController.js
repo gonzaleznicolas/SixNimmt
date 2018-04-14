@@ -92,9 +92,9 @@ class GameController {
 			else if (step.stepType == RoundStepTypes.MoveIthCardToRowCol)
 			{
 				setTimeout( function() {this._tableView.Animation.moveIthUpcomingCardToRowCol(
-										step.animationParams.i,
-										step.animationParams.tableRow,
-										step.animationParams.tableCol,
+										step.stepParams.i,
+										step.stepParams.tableRow,
+										step.stepParams.tableCol,
 										this.afterStep.bind(this), // callback
 										step.afterImage	// callback param
 									);}.bind(this), 500);
@@ -102,15 +102,15 @@ class GameController {
 			else if (step.stepType == RoundStepTypes.AskPlayerToChooseARowToTake)
 			{
 				setTimeout( function() { 
-					this.dealWithAskPlayerToChooseARowToTakeAnimation(step.animationParams.nameOfPlayerToChooseRow,
-																		step.animationParams.tableImage);
+					this.dealWithAskPlayerToChooseARowToTakeAnimation(step.stepParams.nameOfPlayerToChooseRow,
+																		step.stepParams.tableImage);
 				}.bind(this), 500);
 			}
 			else if (step.stepType == RoundStepTypes.TakeRow)
 			{
 				setTimeout( function() {this._tableView.Animation.takeRow(
-										step.animationParams.rowIndex,
-										step.animationParams.bDisapearAtTheEnd,
+										step.stepParams.rowIndex,
+										step.stepParams.bDisapearAtTheEnd,
 										this.afterStep.bind(this), // callback
 										step.afterImage	// callback param
 									);}.bind(this), 500);
@@ -118,9 +118,9 @@ class GameController {
 			else if (step.stepType == RoundStepTypes.MoveRows)
 			{
 				setTimeout( function() {this._tableView.Animation.moveRows(
-										step.animationParams.fromRow,
-										step.animationParams.toRow,
-										step.animationParams.downThisManyRows,
+										step.stepParams.fromRow,
+										step.stepParams.toRow,
+										step.stepParams.downThisManyRows,
 										this.afterStep.bind(this), // callback
 										step.afterImage	// callback param
 									);}.bind(this), 1500);
