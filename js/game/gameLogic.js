@@ -8,7 +8,8 @@ const AnimationTypes = Object.freeze({
 	SortUpcomingCards: 2,
 	MoveIthCardToRowCol: 3,
 	AskPlayerToChooseARowToTake: 4,
-	NoAnimationJustTheTableImage: 5
+	NoAnimationJustTheTableImage: 5,
+	TakeRow: 6
 });
  
 module.exports = class GameLogic 
@@ -96,6 +97,57 @@ module.exports = class GameLogic
 		else
 		{
 			// bStartOfRound is false which means we are starting off after a player chose a row to take
+			tableAtThisPoint = Table.clone(this._gamesTable);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
+
+			// draw everything no cards hightlighted
+			animationSequence.push(
+			{
+				animationType: AnimationTypes.NoAnimationJustTheTableImage,
+				afterImage:
+				{
+					table: tableAtThisPoint.Table,
+					upcomingCards:
+					{
+						bFaceUp: true,
+						cards: upcomingCardsAtThisPoint.Cards,
+						highlighted: null
+					}
+				}
+			});
+
+			// take the row selected by the player
+			tableAtThisPoint = Table.clone(this._gamesTable);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
+			// do logic for taking row ... updating table
+			// replace the card in the upcomingCards with null
+			animationSequence.push(
+			{
+				animationType: AnimationTypes.TakeRow,
+				animationParams:
+				{
+					rowIndex: rowToTake,
+					bDisapearAtTheEnd: true
+				},
+				afterImage:
+				{
+					table: tableAtThisPoint.Table,
+					upcomingCards:
+					{
+						bFaceUp: true,
+						cards: upcomingCardsAtThisPoint.Cards,
+						highlighted: null
+					}
+				}
+			});
+
+			this._gamesTable = tableAtThisPoint;
+			this._gamesUpcomingards = upcomingCardsAtThisPoint;
+	
+			return {
+				needToAskThisPlayerForARowToTake: undefined,
+				animationSequence: animationSequence
+			};
 		}
 
 		// HANDLE UPCOMING CARDS

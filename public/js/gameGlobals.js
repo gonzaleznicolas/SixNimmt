@@ -31,7 +31,8 @@ const AnimationTypes = Object.freeze({
 	SortUpcomingCards: 2,
 	MoveIthCardToRowCol: 3,
 	AskPlayerToChooseARowToTake: 4,
-	NoAnimationJustTheTableImage: 5
+	NoAnimationJustTheTableImage: 5,
+	TakeRow: 6
 });
 
 function getCardInfo(cardNumber)

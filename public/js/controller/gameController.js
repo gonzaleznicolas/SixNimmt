@@ -106,6 +106,15 @@ class GameController {
 																		animation.animationParams.tableImage);
 				}.bind(this), 2000);
 			}
+			else if (animation.animationType == AnimationTypes.TakeRow)
+			{
+				setTimeout( function() {this._tableView.Animation.takeRow(
+										animation.animationParams.rowIndex,
+										animation.animationParams.bDisapearAtTheEnd,
+										this.afterAnimation.bind(this), // callback
+										animation.afterImage	// callback param
+									);}.bind(this), 1000)
+			}
 		}
 	}
 
@@ -129,6 +138,7 @@ class GameController {
 		{
 			state = ClientStates.RoundAnimationInProgress;
 			this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
+			this._activeAnimationSequence.shift();
 		}
 	}
 
@@ -205,6 +215,7 @@ class GameController {
 			return;
 		state = ClientStates.RoundAnimationInProgress;
 		this._headerView.clear();
+		this._activeAnimationSequence.shift();
 		socket.emit('clientRowToTake', this._model.SelectedRow);
 	}
 	

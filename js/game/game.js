@@ -153,11 +153,11 @@ module.exports = class Game extends EventEmitter
 		this.emit("gameEnded", this._gameCode);
 	}
 
-	doRound()
+	doRound(bStartOfRound, rowToTake)
 	{
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
-		let details = this._gameLogic.doAsMuchOfRoundAsPossible(true);
+		let details = this._gameLogic.doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake);
 		if (details.needToAskThisPlayerForARowToTake)
 		{
 			// the round did not complete. A certain player needs to choose a card
@@ -305,12 +305,12 @@ module.exports = class Game extends EventEmitter
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
-			this.doRound();
+			this.doRound(true);
 		}
 	}
 
 	onPlayerRowToTake(rowToTakeIndex)
 	{
-
+		this.doRound(false, rowToTakeIndex);
 	}
 }
