@@ -155,10 +155,10 @@ class GameController {
 			}
 			else
 			{
-				// if the activeRoundStepSequence is not empty, it means there are more animations
-				// i.e. the following animations are for after whoever had to choose a card did so
+				// if the activeRoundStepSequence is not empty, it means there are more steps
+				// i.e. the following steps are for after whoever had to choose a card did so
 				// i.e. the row to be taken has already been selected. So instead of showing the sign
-				// saying "waiting for __ to play a card", just move on to the next animation
+				// saying "waiting for __ to play a card", just move on to the next step
 				this.dealWithRoundStepSequence();
 			}
 		}
