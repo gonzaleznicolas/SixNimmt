@@ -50,35 +50,6 @@ class RoundController {
 		this.dealWithRoundStepSequence();
 	}
 
-	dealWithAskPlayerToChooseARowToTakeAnimation(nameOfPlayerToChooseRow, tableImage)
-	{
-		this.updateModelAndDrawFromTableImage(tableImage);
-		if (nameOfPlayerToChooseRow == this._name)
-		{
-			state = ClientStates.SelectRowToTake;
-			this._headerView.setFlashingWithButton(selectARowStr, selectRowStr,
-													this.onSelectRowClicked.bind(this));
-		}
-		else
-		{
-			state = ClientStates.RoundAnimationInProgress;
-			this._activeRoundStepSequence.shift();
-	
-			if(this._activeRoundStepSequence.length == 0)
-			{
-				this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
-			}
-			else
-			{
-				// if the activeRoundStepSequence is not empty, it means there are more steps
-				// i.e. the following steps are for after whoever had to choose a card did so
-				// i.e. the row to be taken has already been selected. So instead of showing the sign
-				// saying "waiting for __ to play a card", just move on to the next step
-				this.dealWithRoundStepSequence();
-			}
-		}
-	}
-
 	dealWithRoundStepSequence()
 	{
 		let step = this._activeRoundStepSequence[0];
@@ -118,7 +89,7 @@ class RoundController {
 			{
 				setTimeout( function() { 
 					this.dealWithAskPlayerToChooseARowToTakeAnimation(step.stepParams.nameOfPlayerToChooseRow,
-																		step.stepParams.tableImage);
+																		step.tableImage);
 				}.bind(this), 500);
 			}
 			else if (step.stepType == RoundStepTypes.TakeRow)
@@ -143,7 +114,36 @@ class RoundController {
 		}
 	}
 
-	// UI HANDLERS
+	// CHOOSE ROW MANAGEMENT
+
+	dealWithAskPlayerToChooseARowToTakeAnimation(nameOfPlayerToChooseRow, tableImage)
+	{
+		this.updateModelAndDrawFromTableImage(tableImage);
+		if (nameOfPlayerToChooseRow == this._name)
+		{
+			state = ClientStates.SelectRowToTake;
+			this._headerView.setFlashingWithButton(selectARowStr, selectRowStr,
+													this.onSelectRowClicked.bind(this));
+		}
+		else
+		{
+			state = ClientStates.RoundAnimationInProgress;
+			this._activeRoundStepSequence.shift();
+	
+			if(this._activeRoundStepSequence.length == 0)
+			{
+				this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
+			}
+			else
+			{
+				// if the activeRoundStepSequence is not empty, it means there are more steps
+				// i.e. the following steps are for after whoever had to choose a card did so
+				// i.e. the row to be taken has already been selected. So instead of showing the sign
+				// saying "waiting for __ to play a card", just move on to the next step
+				this.dealWithRoundStepSequence();
+			}
+		}
+	}
 
 	onTableCanvasClicked(event)
 	{
