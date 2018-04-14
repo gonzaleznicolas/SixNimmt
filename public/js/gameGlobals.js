@@ -23,8 +23,7 @@ const ClientStates = Object.freeze({
 	ChooseCard: 4,
 	WaitForRestToPlayTheirCard: 5,
 	RoundAnimationInProgress: 6,
-	SelectRowToTake: 7,
-	WaitingToGetRestOfRoundAnimation: 8
+	SelectRowToTake: 7
 });
 
 const AnimationTypes = Object.freeze({

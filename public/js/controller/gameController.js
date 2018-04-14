@@ -127,7 +127,7 @@ class GameController {
 		}
 		else
 		{
-			state = ClientStates.WaitingToGetRestOfRoundAnimation;
+			state = ClientStates.RoundAnimationInProgress;
 			this._headerView.setFlashing(`${waitingForStr} ${nameOfPlayerToChooseRow} ${toPickARowStr}`);
 		}
 	}
