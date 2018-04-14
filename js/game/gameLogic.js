@@ -7,7 +7,8 @@ const AnimationTypes = Object.freeze({
 	FlipAllUpcomingCards:1,
 	SortUpcomingCards: 2,
 	MoveIthCardToRowCol: 3,
-	AskPlayerToChooseARowToTake: 4
+	AskPlayerToChooseARowToTake: 4,
+	NoAnimationJustTheTableImage: 5
 });
  
 module.exports = class GameLogic 
@@ -19,34 +20,35 @@ module.exports = class GameLogic
 	static doAsMuchOfRoundAsPossible(originalTable, originalUpcomingCards)
 	{
 		// objects we will use to create the animationSequence
-		let beforeImage = undefined;
-		let animationList = [];
+		let animationSequence = [];
 
-		//
-
+		// INITIAL TABLE IMAGE
+		let animationSequenceIndex = 0;
 		let tableAtThisPoint = Table.clone(originalTable);
 		let upcomingCardsAtThisPoint = UpcomingCards.clone(originalUpcomingCards);
-		let animationListIndex = 0;
 
-		// BEFORE
-
-		beforeImage =
+		animationSequence[animationSequenceIndex] =
 		{
-			table: tableAtThisPoint.Table,
-			upcomingCards:
+			animationType: AnimationTypes.NoAnimationJustTheTableImage,
+			afterImage:
 			{
-				bFaceUp: false,
-				cards: upcomingCardsAtThisPoint.Cards,
-				highlighted: null
+				table: tableAtThisPoint.Table,
+				upcomingCards:
+				{
+					bFaceUp: false,
+					cards: upcomingCardsAtThisPoint.Cards,
+					highlighted: null
+				}
 			}
-		}
+		};
 
 		// FLIP
 
+		animationSequenceIndex++;
 		tableAtThisPoint = Table.clone(tableAtThisPoint);
 		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
-		animationList[animationListIndex] =
+		animationSequence[animationSequenceIndex] =
 		{
 			animationType: AnimationTypes.FlipAllUpcomingCards,
 			afterImage:
@@ -63,13 +65,13 @@ module.exports = class GameLogic
 
 		// SORT
 
-		animationListIndex++;
+		animationSequenceIndex++;
 		tableAtThisPoint = Table.clone(tableAtThisPoint);
 		upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
 		upcomingCardsAtThisPoint.sort();
 
-		animationList[animationListIndex] =
+		animationSequence[animationSequenceIndex] =
 		{
 			animationType: AnimationTypes.SortUpcomingCards,
 			afterImage:
@@ -90,7 +92,7 @@ module.exports = class GameLogic
 		let numberOfUpcomingCards = upcomingCardsAtThisPoint.Size;
 		for ( let upcomingCardIndex = 0; upcomingCardIndex < numberOfUpcomingCards; upcomingCardIndex++)
 		{
-			animationListIndex++;
+			animationSequenceIndex++;
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 
@@ -99,7 +101,7 @@ module.exports = class GameLogic
 			{
 				console.log("Card smaller than last card in first row...");
 				needToAskThisPlayerForARowToTake = card.name;
-				animationList[animationListIndex] =
+				animationSequence[animationSequenceIndex] =
 				{
 					animationType: AnimationTypes.AskPlayerToChooseARowToTake,
 					animationParams:
@@ -124,7 +126,7 @@ module.exports = class GameLogic
 			{
 				let rowCol = tableAtThisPoint.playCard(card.number);
 				upcomingCardsAtThisPoint.Cards[upcomingCardIndex] = null;
-				animationList[animationListIndex] =
+				animationSequence[animationSequenceIndex] =
 				{
 					animationType: AnimationTypes.MoveIthCardToRowCol,
 					animationParams:
@@ -149,8 +151,6 @@ module.exports = class GameLogic
 
 		originalTable = tableAtThisPoint;
 		originalUpcomingCards = upcomingCardsAtThisPoint;
-
-		let animationSequence = {beforeImage: beforeImage, animationList: animationList};
 
 		return {
 			needToAskThisPlayerForARowToTake: needToAskThisPlayerForARowToTake,

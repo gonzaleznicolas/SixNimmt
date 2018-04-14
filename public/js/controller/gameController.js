@@ -65,12 +65,17 @@ class GameController {
 		this._tableView.draw();
 	}
 
-	dealWithAnimationList()
+	dealWithAnimationSequence()
 	{
-		let animation = this._activeAnimationList.shift();
+		let animation = this._activeAnimationSequence.shift();
 		if (animation)
 		{
-			if (animation.animationType == AnimationTypes.FlipAllUpcomingCards)
+			if (animation.animationType == AnimationTypes.NoAnimationJustTheTableImage)
+			{
+				this.updateModelAndDrawFromTableImage(animation.afterImage);
+				this.dealWithAnimationSequence();
+			}
+			else if (animation.animationType == AnimationTypes.FlipAllUpcomingCards)
 			{
 				this._tableView.Animation.flipAllUpcomingCards(
 										this.afterAnimation.bind(this),	// callback
@@ -107,7 +112,7 @@ class GameController {
 	afterAnimation(afterImage)
 	{
 		this.updateModelAndDrawFromTableImage(afterImage);
-		this.dealWithAnimationList();
+		this.dealWithAnimationSequence();
 	}
 
 	dealWithAskPlayerToChooseARowToTakeAnimation(nameOfPlayerToChooseRow, tableImage)
@@ -154,11 +159,9 @@ class GameController {
 	onServerAnimate(animationSequence)
 	{
 		console.log("onServerAnimate");
-		
-		this.updateModelAndDrawFromTableImage(animationSequence.beforeImage); // synchronous
 
-		this._activeAnimationList = animationSequence.animationList;
-		this.dealWithAnimationList();
+		this._activeAnimationSequence = animationSequence;
+		this.dealWithAnimationSequence();
 	}
 
 	// UI HANDLERS
