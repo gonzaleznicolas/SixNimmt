@@ -71,25 +71,25 @@ class GameController {
 		let animation = this._activeAnimationSequence[0];
 		if (animation)
 		{
-			if (animation.animationType == RoundStepType.NoAnimationJustTheTableImage)
+			if (animation.animationType == RoundStepTypes.NoAnimationJustTheTableImage)
 			{
 				this.afterAnimation(animation.afterImage);
 			}
-			else if (animation.animationType == RoundStepType.FlipAllUpcomingCards)
+			else if (animation.animationType == RoundStepTypes.FlipAllUpcomingCards)
 			{
 				this._tableView.Animation.flipAllUpcomingCards(
 										this.afterAnimation.bind(this),	// callback
 										animation.afterImage	// callback param
 									);
 			}
-			else if (animation.animationType == RoundStepType.SortUpcomingCards)
+			else if (animation.animationType == RoundStepTypes.SortUpcomingCards)
 			{
 				setTimeout( function() {this._tableView.Animation.sortUpcomingCards(
 										this.afterAnimation.bind(this), // callback
 										animation.afterImage	// callback param
 									);}.bind(this), 1000);
 			}
-			else if (animation.animationType == RoundStepType.MoveIthCardToRowCol)
+			else if (animation.animationType == RoundStepTypes.MoveIthCardToRowCol)
 			{
 				setTimeout( function() {this._tableView.Animation.moveIthUpcomingCardToRowCol(
 										animation.animationParams.i,
@@ -99,14 +99,14 @@ class GameController {
 										animation.afterImage	// callback param
 									);}.bind(this), 500);
 			}
-			else if (animation.animationType == RoundStepType.AskPlayerToChooseARowToTake)
+			else if (animation.animationType == RoundStepTypes.AskPlayerToChooseARowToTake)
 			{
 				setTimeout( function() { 
 					this.dealWithAskPlayerToChooseARowToTakeAnimation(animation.animationParams.nameOfPlayerToChooseRow,
 																		animation.animationParams.tableImage);
 				}.bind(this), 500);
 			}
-			else if (animation.animationType == RoundStepType.TakeRow)
+			else if (animation.animationType == RoundStepTypes.TakeRow)
 			{
 				setTimeout( function() {this._tableView.Animation.takeRow(
 										animation.animationParams.rowIndex,
@@ -115,7 +115,7 @@ class GameController {
 										animation.afterImage	// callback param
 									);}.bind(this), 500);
 			}
-			else if (animation.animationType == RoundStepType.MoveRows)
+			else if (animation.animationType == RoundStepTypes.MoveRows)
 			{
 				setTimeout( function() {this._tableView.Animation.moveRows(
 										animation.animationParams.fromRow,

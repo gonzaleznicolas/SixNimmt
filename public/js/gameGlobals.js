@@ -26,7 +26,7 @@ const ClientStates = Object.freeze({
 	SelectRowToTake: 7
 });
 
-const RoundStepType = Object.freeze({
+const RoundStepTypes = Object.freeze({
 	FlipAllUpcomingCards:1,
 	SortUpcomingCards: 2,
 	MoveIthCardToRowCol: 3,
