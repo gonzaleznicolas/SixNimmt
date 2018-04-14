@@ -211,7 +211,7 @@ class GameController {
 	{
 		if (state != ClientStates.SelectRowToTake)
 			return;
-		if (!this._model.SelectedRow)
+		if (this._model.SelectedRow == undefined || this._model.SelectedRow < 0 || this._model.SelectedRow >= 4)
 			return;
 		state = ClientStates.RoundAnimationInProgress;
 		this._headerView.clear();

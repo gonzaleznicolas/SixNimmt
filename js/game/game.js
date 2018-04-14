@@ -311,6 +311,7 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerRowToTake(rowToTakeIndex)
 	{
+		console.log("A player has chosen which row to take.");
 		this.doRound(false, rowToTakeIndex);
 	}
 }
