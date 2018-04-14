@@ -26,6 +26,8 @@ module.exports = Object.freeze(
 		MoveIthCardToRowCol: 4,
 		AskPlayerToChooseARowToTake: 5,
 		TakeRow: 6,
-		MoveRows: 7
+		MoveRows: 7,
+		ShowMessageSayingWhichRowWasSelected: 8,
+		ClearHeader: 9
 	}
 });

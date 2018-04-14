@@ -88,9 +88,7 @@ module.exports = class GameLogic
 		}
 		else
 		{
-			// could be non zero. remember as we process each upcoming card, we set it to null.
-			// so since this is not the first turn of the round, the next upcoming card would not be at index 0
-			let indexOfNextUpcomingCard = this._gamesUpcomingards.Cards.findIndex( (element) => element != null);
+			let indexOfTheCardThatCausedTheSelectRowToTake = this._gamesUpcomingards.Cards.findIndex( (element) => element != null);
 
 			// take the row selected by the player
 			tableAtThisPoint = Table.clone(this._gamesTable);
@@ -111,7 +109,7 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: indexOfNextUpcomingCard
+						highlighted: indexOfTheCardThatCausedTheSelectRowToTake
 					}
 				}
 			});
@@ -136,22 +134,22 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: indexOfNextUpcomingCard
+						highlighted: indexOfTheCardThatCausedTheSelectRowToTake
 					}
 				}
 			});
 
-			// move the next upcoming card into the 0th row
+			// move the the card that caused the select row into the 0th row
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
-			tableAtThisPoint.putCardInEmptyFirstsRow(upcomingCardsAtThisPoint.Cards[indexOfNextUpcomingCard]);
-			upcomingCardsAtThisPoint.Cards[indexOfNextUpcomingCard] = null;
+			tableAtThisPoint.putCardInEmptyFirstsRow(upcomingCardsAtThisPoint.Cards[indexOfTheCardThatCausedTheSelectRowToTake]);
+			upcomingCardsAtThisPoint.Cards[indexOfTheCardThatCausedTheSelectRowToTake] = null;
 			roundStepSequence.push(
 			{
 				stepType: RoundStepTypes.MoveIthCardToRowCol,
 				stepParams:
 				{
-					i: indexOfNextUpcomingCard,
+					i: indexOfTheCardThatCausedTheSelectRowToTake,
 					tableRow: 0,
 					tableCol: 0
 				},

@@ -34,7 +34,8 @@ const RoundStepTypes = Object.freeze(
 	MoveIthCardToRowCol: 4,
 	AskPlayerToChooseARowToTake: 5,
 	TakeRow: 6,
-	MoveRows: 7
+	MoveRows: 7,
+	DisplayWhichRowWasSelected: 8
 });
 
 function getCardInfo(cardNumber)
