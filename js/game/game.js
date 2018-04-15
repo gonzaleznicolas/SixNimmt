@@ -27,8 +27,8 @@ module.exports = class Game extends EventEmitter
 		this._table = new Table();
 		this._upcomingCards = new UpcomingCards();
 		this._gameLogic = new GameLogic(this._table, this._upcomingCards);
-		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 		console.log("Game with code " + gameCode + " created.");
+		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
 
 	get Open() {return this._open;}
@@ -331,7 +331,7 @@ module.exports = class Game extends EventEmitter
 		this._upcomingCards.playCard(data.playedCard, data.player.Name);
 		data.player.State = PlayerStates.WaitForRestToPlayTheirCard;
 		console.log(`Player ${data.player.Name} in game ${this._gameCode} has played card ${data.playedCard}`);
-		this.updateAllPlayersAndSpectatorsWithUpcomingCards();
+		//this.updateAllPlayersAndSpectatorsWithUpcomingCards();
 
 		// if every player has played their card
 		if (this._upcomingCards.Size == this._players.size && 
@@ -370,6 +370,8 @@ module.exports = class Game extends EventEmitter
 			this._spectators.every( (s) => s.State == SpectatorStates.DoneDisplayingRoundAnimation))
 		{
 			console.log("Every participant is done displaying the round.");
+
+			this._upcomingCards.reset();
 			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
 			this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationNotInProgress});
 			this._state = GameStates.WaitForAllPlayersToChooseTheirCard;

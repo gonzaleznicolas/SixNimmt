@@ -151,7 +151,6 @@ class TableAnimation extends Animation
 		bAnimationInProgress = true;
 		this._callback = callback;
 		this._callbackParam = callbackParam;
-		this._model.OnlyDrawUpcomingCardsAfterThisIndex = i; // TODO WIP this should be done by whoever calls the animation. not responsibility of animation
 		let upcomingCardStartRow = this._drawer.upcomingCardsIndexToRow(i);
 		let upcomingCardStartCol = this._drawer.upcomingCardsIndexToCol(i);
 		

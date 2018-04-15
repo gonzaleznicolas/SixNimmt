@@ -24,7 +24,6 @@ class GameModel {
 		this._bUpcomingCardsFaceUp = false;
 
 		this._upcomingCards = [];
-		this._onlyDrawUpcomingCardsAfterThisIndex = -1;
 		this._highlightedUpcomingCard = undefined; // every other upcoming card will be dimmed out
 
 		// SET INITIAL VALUES
@@ -50,6 +49,4 @@ class GameModel {
 	set UpcomingCards(array) {this._upcomingCards = array}
 	get HighlightedUpcomingCard() {return this._highlightedUpcomingCard;}
 	set HighlightedUpcomingCard(h) {this._highlightedUpcomingCard = h;}
-	get OnlyDrawUpcomingCardsAfterThisIndex() {return this._onlyDrawUpcomingCardsAfterThisIndex;}
-	set OnlyDrawUpcomingCardsAfterThisIndex(i) {this._onlyDrawUpcomingCardsAfterThisIndex = i;}
 }
