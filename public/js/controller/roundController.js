@@ -59,55 +59,66 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.FlipAllUpcomingCards)
 			{
-				this._tableView.Animation.flipAllUpcomingCards(
-										this.afterStep.bind(this),	// callback
-										step.afterImage	// callback param
-									);
+				setTimeout( function () {
+					this._headerView.set(cardsArePlayedMinToMax);
+					this._tableView.Animation.flipAllUpcomingCards(
+						this.afterStep.bind(this),	// callback
+						step.afterImage	// callback param
+					);
+				}.bind(this), 200);
 			}
 			else if (step.stepType == RoundStepTypes.SortUpcomingCards)
 			{
 				setTimeout( function() {
-					this._headerView.set(sortCardsStr);
 					this._tableView.Animation.sortUpcomingCards(
-												this.afterStep.bind(this), // callback
-												step.afterImage	// callback param
-				);}.bind(this), 1000);
+						this.afterStep.bind(this), // callback
+						step.afterImage	// callback param
+					);
+				}.bind(this), 500);
 			}
 			else if (step.stepType == RoundStepTypes.MoveIthCardToRowCol)
 			{
-				setTimeout( function() {this._tableView.Animation.moveIthUpcomingCardToRowCol(
-										step.stepParams.i,
-										step.stepParams.tableRow,
-										step.stepParams.tableCol,
-										this.afterStep.bind(this), // callback
-										step.afterImage	// callback param
-									);}.bind(this), 500);
+				setTimeout( function() {
+					this._tableView.Animation.moveIthUpcomingCardToRowCol(
+						step.stepParams.i,
+						step.stepParams.tableRow,
+						step.stepParams.tableCol,
+						this.afterStep.bind(this), // callback
+						step.afterImage	// callback param
+					);
+				}.bind(this), 500);
 			}
 			else if (step.stepType == RoundStepTypes.AskPlayerToChooseARowToTake)
 			{
 				setTimeout( function() { 
-					this.dealWithAskPlayerToChooseARowToTakeAnimation(step.stepParams.nameOfPlayerToChooseRow,
-																		step.tableImage);
+					this.dealWithAskPlayerToChooseARowToTakeAnimation(
+						step.stepParams.nameOfPlayerToChooseRow,
+						step.tableImage
+					);
 				}.bind(this), 500);
 			}
 			else if (step.stepType == RoundStepTypes.TakeRow)
 			{
-				setTimeout( function() {this._tableView.Animation.takeRow(
-										step.stepParams.rowIndex,
-										step.stepParams.bDisapearAtTheEnd,
-										this.afterStep.bind(this), // callback
-										step.afterImage	// callback param
-									);}.bind(this), 500);
+				setTimeout( function() {
+					this._tableView.Animation.takeRow(
+						step.stepParams.rowIndex,
+						step.stepParams.bDisapearAtTheEnd,
+						this.afterStep.bind(this), // callback
+						step.afterImage	// callback param
+					);
+				}.bind(this), 500);
 			}
 			else if (step.stepType == RoundStepTypes.MoveRows)
 			{
-				setTimeout( function() {this._tableView.Animation.moveRows(
-										step.stepParams.fromRow,
-										step.stepParams.toRow,
-										step.stepParams.downThisManyRows,
-										this.afterStep.bind(this), // callback
-										step.afterImage	// callback param
-									);}.bind(this), 500);
+				setTimeout( function() {
+					this._tableView.Animation.moveRows(
+						step.stepParams.fromRow,
+						step.stepParams.toRow,
+						step.stepParams.downThisManyRows,
+						this.afterStep.bind(this), // callback
+						step.afterImage	// callback param
+					);
+				}.bind(this), 500);
 			}
 			else if (step.stepType == RoundStepTypes.ShowMessageSayingWhichRowWasSelected)
 			{

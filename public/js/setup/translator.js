@@ -15,7 +15,7 @@ let selectARowStr;
 let selectRowStr;
 let waitingForStr;
 let toPickARowStr;
-let sortCardsStr;
+let cardsArePlayedMinToMax;
 let selectedRowStr;
 
 function translateToEnglish()
@@ -75,7 +75,7 @@ function translateToEnglish()
 	waitingForStr = "Waiting for";
 	toPickARowStr = "to pick a row to take";
 
-	sortCardsStr = "Sort cards...";
+	cardsArePlayedMinToMax = "Cards are played from smallest to largest";
 
 	selectedRowStr = "selected row";
 }
@@ -137,7 +137,7 @@ function translateToSpanish()
 	waitingForStr = "Esperando a que";
 	toPickARowStr = "elija una fila";
 
-	sortCardsStr = "Organizando cartas...";
+	cardsArePlayedMinToMax = "Las cartas se ponen de menor a mayor";
 
 	selectedRowStr = "elijio la fila";
 }
