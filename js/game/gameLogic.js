@@ -244,8 +244,27 @@ module.exports = class GameLogic
 			}
 		}
 
-		this._gamesTable = tableAtThisPoint;
-		this._gamesUpcomingards = upcomingCardsAtThisPoint;
+		this._gamesTable.Table = Table.clone(tableAtThisPoint).Table;
+		this._gamesUpcomingards.Cards = UpcomingCards.clone(upcomingCardsAtThisPoint).Cards;
+
+		let bRoundRanToCompletion = this._gamesUpcomingards.Cards.every( (card) => card == null);
+		if (bRoundRanToCompletion)
+		{
+			roundStepSequence.push(
+			{
+				stepType: RoundStepTypes.RoundDone,
+				tableImage:
+				{
+					table: this._gamesTable.Table,
+					upcomingCards:
+					{
+						bFaceUp: true,
+						cards: this._gamesUpcomingards.Cards,
+						highlighted: null
+					}
+				}
+			});
+		}
 
 		return {
 			needToAskThisPlayerForARowToTake: needToAskThisPlayerForARowToTake,

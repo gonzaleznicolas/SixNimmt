@@ -1,9 +1,10 @@
 "use strict";
 
 class RoundController {
-	constructor(tableView, headerView, scoreboardView, model, name)
+	constructor(tableView, handView, headerView, scoreboardView, model, name)
 	{
 		this._tableView = tableView;
+		this._handView = handView;
 		this._headerView = headerView;
 		this._scoreboardView = scoreboardView;
 		this._model = model;
@@ -133,6 +134,12 @@ class RoundController {
 				this._headerView.clear();
 				this._activeRoundStepSequence.shift();
 				this.dealWithRoundStepSequence();
+			}
+			else if (step.stepType == RoundStepTypes.RoundDone)
+			{
+				this.updateModelAndDrawFromTableImage(step.tableImage);
+				this._activeRoundStepSequence = [];
+				socket.emit("clientDoneDisplayingRound");
 			}
 		}
 	}

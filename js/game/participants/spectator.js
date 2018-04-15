@@ -1,11 +1,26 @@
 'use strict'; 
- 
-module.exports = class Spectator 
+
+const EventEmitter = require('events');
+const SpectatorStates = require('../gameGlobals.js').SpectatorStates;
+
+module.exports = class Spectator extends EventEmitter
 { 
 	constructor(socket) 
 	{
-		this._socket = socket; 
+		super();
+		this._socket = socket;
+		this._state;
+
+		this._socket.on("clientQuitGame", this.onClientQuitGame.bind(this));
+		this._socket.on("disconnect", this.onClientQuitGame.bind(this));
+		this._socket.on("clientDoneDisplayingRound", this.onClientDoneDisplayingRound.bind(this));
 	}
+
+	get Socket() {return this._socket;}
+
+	// spectator state is managed by the game. A spectator never sets its own state
+	get State() {return this._state;}
+	set State(state) {this._state = state;}
 
 	// METHODS CALLED BY THE GAME
 
@@ -37,5 +52,27 @@ module.exports = class Spectator
 	roundInfo(roundStepSequence)
 	{
 		this._socket.emit("serverRoundInfo", roundStepSequence);
+	}
+
+	startRound()
+	{
+		this._socket.emit('serverStartRound');
+	}
+
+	// CLIENT TO SERVER - GAME EVENT HANDLERS
+
+	onClientQuitGame()
+	{
+		this.emit('spectatorQuitGame', this);
+	}
+
+	onClientDoneDisplayingRound()
+	{
+		if (this._state != SpectatorStates.RoundAnimationInProgress)
+		{
+			console.log("clientDoneDisplayingRound was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			return;
+		}
+		this.emit("playerOrSpectatorDoneDisplayingRound", this);
 	}
 }

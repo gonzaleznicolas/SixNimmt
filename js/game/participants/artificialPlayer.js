@@ -49,18 +49,29 @@ module.exports = class ArtificialPlayer extends Player
 
 	// from this roundStepSequence, the artifical player must extract the information that it needs.
 	// The step sequence always ends with either a step of type AskPlayerToChooseARowToTake
-	// or an step sayin the round ended
+	// or a step RoundDone
 	// If the last step is of type AskPlayerToChooseARowToTake, the artificial player must check if its
 	// itself that must choose a row to take, and in that case raise the event necessary to let the game know
 	// which row it wants to take
+	// If the last step is RoundDone, the artificial player must raise an event telling the game that it is
+	// done displaying the round. I.e. the next round can start at any time.
 	roundInfo(roundStepSequence)
 	{
 		let lastAnimation = roundStepSequence[roundStepSequence.length - 1];
+
 		if (lastAnimation.stepType == RoundStepTypes.AskPlayerToChooseARowToTake &&
 			lastAnimation.stepParams.nameOfPlayerToChooseRow == this._name &&
 			this._state == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
 		{
+			console.log(`${this._name} emits playerRowToTake`);
 			this.emit('playerRowToTake', {player: this, rowToTakeIndex: 2});
 		}
+		else if (lastAnimation.stepType == RoundStepTypes.RoundDone)
+		{
+			console.log(`${this._name} emits playerOrSpectatorDoneDisplayingRound`);
+			this.emit("playerOrSpectatorDoneDisplayingRound", this);
+		}
 	}
+
+	startRound(){}
 }

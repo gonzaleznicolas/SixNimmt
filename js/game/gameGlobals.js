@@ -8,7 +8,15 @@ module.exports = Object.freeze(
 		ChooseCard: 2,
 		WaitForRestToPlayTheirCard: 3,
 		RoundAnimationInProgress: 4,
-		RoundAnimationInProgress_ExpectedToSendRowToTake: 5
+		RoundAnimationInProgress_ExpectedToSendRowToTake: 5,
+		DoneDisplayingRoundAnimation: 6
+	},
+
+	SpectatorStates:
+	{
+		RoundAnimationNotInProgress: 1,
+		RoundAnimationInProgress: 2,
+		DoneDisplayingRoundAnimation: 3
 	},
 
 	GameStates:
@@ -28,6 +36,7 @@ module.exports = Object.freeze(
 		TakeRow: 6,
 		MoveRows: 7,
 		ShowMessageSayingWhichRowWasSelected: 8,
-		ClearHeader: 9
+		ClearHeader: 9,
+		RoundDone: 10
 	}
 });

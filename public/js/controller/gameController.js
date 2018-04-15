@@ -26,7 +26,7 @@ class GameController {
 			this._handView = new HandView(this._model);
 		
 		this._gameLayoutController = new GameLayoutController(this._scoreboardView, this._tableView, this._handView, this._menuView);
-		this._roundController = new RoundController(this._tableView, this._headerView, this._scoreboardView, this._model, this._name);
+		this._roundController = new RoundController(this._tableView, this._handView, this._headerView, this._scoreboardView, this._model, this._name);
 
 		if (!bSpectatorMode)
 		{
@@ -37,6 +37,7 @@ class GameController {
 		// SERVER TO CLIENT - GAME EVENTS
 		socket.on("serverUpcomingCards", this.onServerUpcomingCards.bind(this));
 		socket.on("serverUpdatedHand", this.onServerUpdatedHand.bind(this));
+		socket.on("serverStartRound", this.onServerStartRound.bind(this));
 	}
 
 	// FUNCTIONS CALLED WITHING THE GAME CONTROLLER
@@ -80,6 +81,12 @@ class GameController {
 		this._handView.draw();
 	}
 
+	onServerStartRound()
+	{
+		state = ClientStates.ChooseCard;
+		this._handView.draw();
+	}
+
 	// UI HANDLERS
 	
 	onHandCanvasClicked(event)
@@ -113,5 +120,6 @@ class GameController {
 		let playedCard = this._model.Hand[this._model.CurrentlySelectedCardInHand];
 		state = ClientStates.WaitForRestToPlayTheirCard;
 		socket.emit('clientPlayCard', playedCard);
+		this._model.CurrentlySelectedCardInHand = undefined;
 	}
 }

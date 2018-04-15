@@ -36,6 +36,8 @@ module.exports = class Player extends EventEmitter
 	// the player must not modify roundStepSequence. Just read. It belongs to the game.
 	roundInfo(roundStepSequence){}
 
+	startRound(){}
+
 	// EVENTS TO BE EMITTED BY ANY CLASS DERIVING OFF OF PLAYER
 	
 	/*

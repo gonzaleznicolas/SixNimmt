@@ -20,6 +20,7 @@ module.exports = class HumanPlayer extends Player
 		this._socket.on("disconnect", this.onClientQuitGame.bind(this));
 		this._socket.on("clientPlayCard", this.onClientPlayCard.bind(this));
 		this._socket.on("clientRowToTake", this.onClientRowToTake.bind(this));
+		this._socket.on("clientDoneDisplayingRound", this.onClientDoneDisplayingRound.bind(this));
 	}
 
 	get Socket() {return this._socket;}
@@ -62,6 +63,11 @@ module.exports = class HumanPlayer extends Player
 	roundInfo(roundStepSequence)
 	{
 		this._socket.emit("serverRoundInfo", roundStepSequence);
+	}
+
+	startRound()
+	{
+		this._socket.emit('serverStartRound');
 	}
 
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS
@@ -128,5 +134,16 @@ module.exports = class HumanPlayer extends Player
 			return;
 		}
 		this.emit('playerRowToTake', {player: this, rowToTakeIndex: rowToTakeIndex});
+	}
+
+	onClientDoneDisplayingRound()
+	{
+		if (this._state != PlayerStates.RoundAnimationInProgress)
+		{
+			console.log("clientDoneDisplayingRound was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			return;
+		}
+		console.log(`${this._name} emits playerOrSpectatorDoneDisplayingRound`);
+		this.emit("playerOrSpectatorDoneDisplayingRound", this);
 	}
 }

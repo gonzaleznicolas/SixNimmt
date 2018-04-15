@@ -36,7 +36,8 @@ const RoundStepTypes = Object.freeze(
 	TakeRow: 6,
 	MoveRows: 7,
 	ShowMessageSayingWhichRowWasSelected: 8,
-	ClearHeader: 9
+	ClearHeader: 9,
+	RoundDone: 10
 }
 );
 

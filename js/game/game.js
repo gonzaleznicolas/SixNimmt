@@ -1,11 +1,13 @@
 'use strict';
 
+const Player = require('./participants/player.js');
 const ArtificialPlayer = require('./participants/artificialPlayer.js');
 const HumanPlayer = require('./participants/humanPlayer.js');
 const Spectator = require('./participants/spectator.js');
 const EventEmitter = require('events');
 const GameStates = require('./gameGlobals.js').GameStates;
 const PlayerStates = require('./gameGlobals.js').PlayerStates;
+const SpectatorStates = require('./gameGlobals.js').SpectatorStates;
 const Deck = require('./deck.js');
 const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
@@ -47,6 +49,7 @@ module.exports = class Game extends EventEmitter
 		// PLAYER TO GAME - GAME EVENTS - game events that any players will emit
 		player.on("playerPlayCard", this.onPlayerPlayCard.bind(this));
 		player.on("playerRowToTake", this.onPlayerRowToTake.bind(this));
+		player.on('playerOrSpectatorDoneDisplayingRound', this.onPlayerOrSpectatorDoneDisplayingRound.bind(this));
 	}
 
 	updateOpen()
@@ -118,10 +121,23 @@ module.exports = class Game extends EventEmitter
 	addSpectator(socket)
 	{
 		let spectator = new Spectator(socket);
+		spectator.State = SpectatorStates.RoundAnimationNotInProgress;
 		this._spectators.push(spectator);
+
+		spectator.on('spectatorQuitGame', this.removeSpectator.bind(this));
+		spectator.on('playerOrSpectatorDoneDisplayingRound', this.onPlayerOrSpectatorDoneDisplayingRound.bind(this));
 
 		spectator.updatePlayerList(Array.from(this._players.keys()));
 		console.log(`Spectator has been added to game ${this._gameCode}`);
+	}
+
+	removeSpectator(spectator)
+	{
+		let index = this._spectators.findIndex( (s) => {return s.Socket.id = spectator.Socket.id});
+		if (index >= 0)
+		{
+			this._spectators.splice(index, 1);
+		}
 	}
 
 	removePlayer(name)
@@ -156,10 +172,11 @@ module.exports = class Game extends EventEmitter
 	// bStartOfRound = true means the round is starting rather than resuming after a player chose a row to take
 	// false means it is starting after a player chose which row to take
 	// rowToTake and nameOfPlayerWhoTookRow are only passed in if !bStartOfRound
-	startOrResumeRound(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow)
+	startOrResumeDisplay(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow)
 	{
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
+		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationInProgress});
 		let details = this._gameLogic.doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow);
 		if (details.needToAskThisPlayerForARowToTake)
 		{
@@ -212,6 +229,17 @@ module.exports = class Game extends EventEmitter
 
 		this._spectators.forEach(function (player){
 			player.startGame(listOfPlayers, table);
+		});
+	}
+
+	tellAllPlayersAndSpectatorsTheNextRoundIsStarting()
+	{
+		this._players.forEach(function (player){
+			player.startRound();
+		});
+
+		this._spectators.forEach(function (player){
+			player.startRound();
 		});
 	}
 
@@ -270,7 +298,8 @@ module.exports = class Game extends EventEmitter
 			this.initializePlayerHands();
 			this.initializeTableCards();
 			this.tellAllPlayersAndSpectatorsGameStarted();
-			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
+			this._players.forEach((p) => {p.State = PlayerStates.ChooseCard});
+			this._spectators.forEach( (s) => {s.State = SpectatorStates.RoundAnimationNotInProgress});
 		}
 		else
 		{
@@ -296,7 +325,7 @@ module.exports = class Game extends EventEmitter
 	{
 		if (this._state != GameStates.WaitForAllPlayersToChooseTheirCard)
 		{
-			console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			console.log("playerPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
 			return;
 		}
 		this._upcomingCards.playCard(data.playedCard, data.player.Name);
@@ -309,14 +338,42 @@ module.exports = class Game extends EventEmitter
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
-			this.startOrResumeRound(true);
+			this.startOrResumeDisplay(true);
 		}
 	}
 
 	onPlayerRowToTake(data)
 	{
-		console.log("A player has chosen which row to take.");
+		console.log( data.player.Name + " has chosen which row to take.");
 		data.player.State = PlayerStates.RoundAnimationInProgress;
-		this.startOrResumeRound(false, data.rowToTakeIndex, data.player.Name);
+		this.startOrResumeDisplay(false, data.rowToTakeIndex, data.player.Name);
+	}
+
+	// PLAYER OR SPECTATOR TO GAME - GAME EVENT HANDLERS
+
+	onPlayerOrSpectatorDoneDisplayingRound(participant)
+	{
+		if (this._state != GameStates.RoundAnimationInProgress)
+		{
+			console.log("playerOrSpectatorDoneDisplayingRound was received at an unexpected time. Ignored.");
+			return;
+		}
+
+		if (participant instanceof Player)
+			participant.State = PlayerStates.DoneDisplayingRoundAnimation;
+		else if (participant instanceof Spectator)
+			participant.State = SpectatorStates.DoneDisplayingRoundAnimation;
+		
+		console.log("Game aware that a participant is done displaying round");
+
+		if (this.everyPlayerInState(PlayerStates.DoneDisplayingRoundAnimation) && 
+			this._spectators.every( (s) => s.State == SpectatorStates.DoneDisplayingRoundAnimation))
+		{
+			console.log("Every participant is done displaying the round.");
+			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
+			this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationNotInProgress});
+			this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
+			this.tellAllPlayersAndSpectatorsTheNextRoundIsStarting();
+		}
 	}
 }
