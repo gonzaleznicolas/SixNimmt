@@ -83,6 +83,7 @@ class GameController {
 
 	onServerStartRound()
 	{
+		this._model.BUpcomingCardsFaceUp = false;
 		state = ClientStates.ChooseCard;
 		this._handView.draw();
 	}

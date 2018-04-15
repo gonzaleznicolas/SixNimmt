@@ -331,7 +331,7 @@ module.exports = class Game extends EventEmitter
 		this._upcomingCards.playCard(data.playedCard, data.player.Name);
 		data.player.State = PlayerStates.WaitForRestToPlayTheirCard;
 		console.log(`Player ${data.player.Name} in game ${this._gameCode} has played card ${data.playedCard}`);
-		//this.updateAllPlayersAndSpectatorsWithUpcomingCards();
+		this.updateAllPlayersAndSpectatorsWithUpcomingCards();
 
 		// if every player has played their card
 		if (this._upcomingCards.Size == this._players.size && 
