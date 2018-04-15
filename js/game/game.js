@@ -11,7 +11,7 @@ const SpectatorStates = require('./gameGlobals.js').SpectatorStates;
 const Deck = require('./deck.js');
 const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
-const GameLogic = require('./gameLogic.js');
+const RoundProcessor = require('./roundProcessor.js');
 
 module.exports = class Game extends EventEmitter
 {
@@ -26,7 +26,7 @@ module.exports = class Game extends EventEmitter
 		this._deck = new Deck();
 		this._table = new Table();
 		this._upcomingCards = new UpcomingCards();
-		this._gameLogic = new GameLogic(this._table, this._upcomingCards);
+		this._roundProcessor = new RoundProcessor(this._table, this._upcomingCards);
 		console.log("Game with code " + gameCode + " created.");
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
@@ -186,7 +186,7 @@ module.exports = class Game extends EventEmitter
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationInProgress});
-		let details = this._gameLogic.doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow);
+		let details = this._roundProcessor.doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow);
 		if (details.needToAskThisPlayerForARowToTake)
 		{
 			// the round did not complete. A certain player needs to choose a card

@@ -4,7 +4,7 @@ const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
 const RoundStepTypes = require('./gameGlobals.js').RoundStepTypes;
  
-module.exports = class GameLogic 
+module.exports = class RoundProcessor 
 { 
 	constructor(gamesTable, gamesUpcomingCards) 
 	{
