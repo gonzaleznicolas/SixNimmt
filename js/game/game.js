@@ -169,10 +169,19 @@ module.exports = class Game extends EventEmitter
 		this.emit("gameEnded", this._gameCode);
 	}
 
+	startANewRound()
+	{
+		this._upcomingCards.reset();
+		this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
+		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationNotInProgress});
+		this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
+		this.tellAllPlayersAndSpectatorsTheNextRoundIsStarting();
+	}
+
 	// bStartOfRound = true means the round is starting rather than resuming after a player chose a row to take
 	// false means it is starting after a player chose which row to take
 	// rowToTake and nameOfPlayerWhoTookRow are only passed in if !bStartOfRound
-	startOrResumeDisplay(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow)
+	startOrResumeDisplayingRound(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow)
 	{
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
@@ -338,7 +347,7 @@ module.exports = class Game extends EventEmitter
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
 			console.log(`Every player in game ${this._gameCode} has played their card`);
-			this.startOrResumeDisplay(true);
+			this.startOrResumeDisplayingRound(true);
 		}
 	}
 
@@ -346,7 +355,7 @@ module.exports = class Game extends EventEmitter
 	{
 		console.log( data.player.Name + " has chosen which row to take.");
 		data.player.State = PlayerStates.RoundAnimationInProgress;
-		this.startOrResumeDisplay(false, data.rowToTakeIndex, data.player.Name);
+		this.startOrResumeDisplayingRound(false, data.rowToTakeIndex, data.player.Name);
 	}
 
 	// PLAYER OR SPECTATOR TO GAME - GAME EVENT HANDLERS
@@ -370,12 +379,7 @@ module.exports = class Game extends EventEmitter
 			this._spectators.every( (s) => s.State == SpectatorStates.DoneDisplayingRoundAnimation))
 		{
 			console.log("Every participant is done displaying the round.");
-
-			this._upcomingCards.reset();
-			this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
-			this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationNotInProgress});
-			this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
-			this.tellAllPlayersAndSpectatorsTheNextRoundIsStarting();
+			startANewRound();
 		}
 	}
 }
