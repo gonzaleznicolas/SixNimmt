@@ -56,7 +56,7 @@ module.exports = class Table
 		return row[indexOfFirstNull-1]
 	}
 
-	// -1 if the next open position is the 7th (index 6) row
+	// -1 if the row is full (all six rows are full)
 	nextOpenPositionInRow(row)
 	{
 		return this._table[row].findIndex( (e) => e == null);
@@ -143,6 +143,17 @@ module.exports = class Table
 		if ( this._table[0][0] != null)
 			throw "The first row must be empty to perform this operation";
 		this._table[0][0] = card.number;
+	}
+
+	// given a full row, this method leaves the 6th card in the first position with the rest of the positions with null
+	takeFullRow(rowI)
+	{
+		if (rowI < 0 || rowI >=4)
+			throw "Row index out of bounds";
+		if (this.nextOpenPositionInRow(rowI) != -1)
+			throw "This row is not full";
+		let offendingCard = this._table[rowI][5];
+		this._table[rowI] = [offendingCard, null, null, null, null, null];
 	}
 }
 

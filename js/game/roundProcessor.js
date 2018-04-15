@@ -249,6 +249,34 @@ module.exports = class RoundProcessor
 						}
 					}
 				});
+
+				if (rowCol.col == 5) // if the card was the 6th (index 5) of the row
+				{
+					tableAtThisPoint = Table.clone(tableAtThisPoint);
+					upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+					tableAtThisPoint.takeFullRow(rowCol.row);
+
+					roundStepSequence.push(
+					{
+						stepType: RoundStepTypes.TakeRow,
+						stepParams:
+						{
+							rowIndex: rowCol.row,
+							bDisapearAtTheEnd: false
+						},
+						afterImage:
+						{
+							table: tableAtThisPoint.Table,
+							upcomingCards:
+							{
+								bFaceUp: true,
+								cards: upcomingCardsAtThisPoint.Cards,
+								highlighted: null,
+								onlyDrawCardsAfterThisIndex: -1
+							}
+						}
+					});
+				}
 			}
 		}
 
