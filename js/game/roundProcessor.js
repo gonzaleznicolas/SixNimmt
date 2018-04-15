@@ -138,7 +138,7 @@ module.exports = class RoundProcessor
 				}
 			});
 
-			// increment the players score
+			// increment the player's score
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 			scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
@@ -278,10 +278,11 @@ module.exports = class RoundProcessor
 
 				if (rowCol.col == 5) // if the card was the 6th (index 5) of the row
 				{
+					// take the full row
 					tableAtThisPoint = Table.clone(tableAtThisPoint);
 					upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
 					scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
-					tableAtThisPoint.takeFullRow(rowCol.row);
+					let numberOfCowsTaken = tableAtThisPoint.takeFullRow(rowCol.row);
 
 					roundStepSequence.push(
 					{
@@ -302,6 +303,22 @@ module.exports = class RoundProcessor
 								onlyDrawCardsAfterThisIndex: -1
 							}
 						}
+					});
+
+					// increment player's score
+					tableAtThisPoint = Table.clone(tableAtThisPoint);
+					upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+					scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
+					scoreboardAtThisPoint.incrementPlayerScore(upcomingCardToPlace.name, numberOfCowsTaken);
+					roundStepSequence.push(
+					{
+						stepType: RoundStepTypes.IncrementPlayerScore,
+						stepParams:
+						{
+							playerName: upcomingCardToPlace.name,
+							pointsToAdd: numberOfCowsTaken
+						},
+						scoreboardAfter: scoreboardAtThisPoint.Scores
 					});
 				}
 			}
