@@ -17,6 +17,7 @@ let waitingForStr;
 let toPickARowStr;
 let cardsArePlayedMinToMax;
 let selectedRowStr;
+let selectACardToPlayStr;
 
 function translateToEnglish()
 {
@@ -78,6 +79,8 @@ function translateToEnglish()
 	cardsArePlayedMinToMax = "Cards are played from smallest to largest";
 
 	selectedRowStr = "selected row";
+
+	selectACardToPlayStr = "Please select a card to play";
 }
 
 function translateToSpanish()
@@ -140,4 +143,6 @@ function translateToSpanish()
 	cardsArePlayedMinToMax = "Las cartas se ponen de menor a mayor";
 
 	selectedRowStr = "elijio la fila";
+
+	selectACardToPlayStr = "Por favor elige una carta";
 }

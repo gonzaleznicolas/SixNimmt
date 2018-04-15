@@ -54,9 +54,9 @@ module.exports = class Spectator extends EventEmitter
 		this._socket.emit("serverRoundInfo", roundStepSequence);
 	}
 
-	startRound()
+	startRound(table)
 	{
-		this._socket.emit('serverStartRound');
+		his._socket.emit('serverStartRound', {table: table});
 	}
 
 	// CLIENT TO SERVER - GAME EVENT HANDLERS

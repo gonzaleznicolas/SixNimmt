@@ -175,7 +175,7 @@ module.exports = class Game extends EventEmitter
 		this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationNotInProgress});
 		this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
-		this.tellAllPlayersAndSpectatorsTheNextRoundIsStarting();
+		this.tellAllPlayersAndSpectatorsTheNextRoundIsStartingAndSendDetails();
 	}
 
 	// bStartOfRound = true means the round is starting rather than resuming after a player chose a row to take
@@ -241,14 +241,16 @@ module.exports = class Game extends EventEmitter
 		});
 	}
 
-	tellAllPlayersAndSpectatorsTheNextRoundIsStarting()
+	tellAllPlayersAndSpectatorsTheNextRoundIsStartingAndSendDetails()
 	{
+		let table = this._table.Table;
+
 		this._players.forEach(function (player){
-			player.startRound();
+			player.startRound(table);
 		});
 
 		this._spectators.forEach(function (player){
-			player.startRound();
+			player.startRound(table);
 		});
 	}
 

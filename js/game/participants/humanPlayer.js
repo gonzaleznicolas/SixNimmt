@@ -65,9 +65,9 @@ module.exports = class HumanPlayer extends Player
 		this._socket.emit("serverRoundInfo", roundStepSequence);
 	}
 
-	startRound()
+	startRound(table)
 	{
-		this._socket.emit('serverStartRound');
+		this._socket.emit('serverStartRound', {table: table, hand: Array.from(this._hand)});
 	}
 
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS

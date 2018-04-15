@@ -81,11 +81,27 @@ class GameController {
 		this._handView.draw();
 	}
 
-	onServerStartRound()
+	onServerStartRound(data)
 	{
-		this._model.BUpcomingCardsFaceUp = false;
 		state = ClientStates.ChooseCard;
-		this._handView.draw();
+
+		this._model.Table = data.table;
+		this._model.SelectedRow = undefined;
+
+		this._model.BUpcomingCardsFaceUp = false;
+		this._model.UpcomingCards = [];
+		this._model.HighlightedUpcomingCard = undefined;
+
+		this._tableView.draw();
+
+		if (!bSpectatorMode && data.hand)
+		{
+			this._model.Hand = data.hand;
+			this._model.CurrentlySelectedCardInHand = undefined;
+			this._handView.draw();
+		}
+
+		this._headerView.set(selectACardToPlayStr);
 	}
 
 	// UI HANDLERS
@@ -120,7 +136,7 @@ class GameController {
 		// tell server which card was played
 		let playedCard = this._model.Hand[this._model.CurrentlySelectedCardInHand];
 		state = ClientStates.WaitForRestToPlayTheirCard;
+		this._headerView.clear();
 		socket.emit('clientPlayCard', playedCard);
-		this._model.CurrentlySelectedCardInHand = undefined;
 	}
 }
