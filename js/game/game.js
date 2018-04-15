@@ -306,9 +306,9 @@ module.exports = class Game extends EventEmitter
 			this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
 			this.initializePlayerHands();
 			this.initializeTableCards();
-			this.tellAllPlayersAndSpectatorsGameStarted();
 			this._players.forEach((p) => {p.State = PlayerStates.ChooseCard});
 			this._spectators.forEach( (s) => {s.State = SpectatorStates.RoundAnimationNotInProgress});
+			this.tellAllPlayersAndSpectatorsGameStarted();
 		}
 		else
 		{
@@ -379,7 +379,7 @@ module.exports = class Game extends EventEmitter
 			this._spectators.every( (s) => s.State == SpectatorStates.DoneDisplayingRoundAnimation))
 		{
 			console.log("Every participant is done displaying the round.");
-			startANewRound();
+			this.startANewRound();
 		}
 	}
 }

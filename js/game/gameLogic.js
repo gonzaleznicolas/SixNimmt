@@ -152,8 +152,6 @@ module.exports = class GameLogic
 				}
 			});
 
-			roundStepSequence.push({stepType: RoundStepTypes.ClearHeader});
-
 			// move the the card that caused the select row into the 0th row
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
@@ -179,6 +177,8 @@ module.exports = class GameLogic
 					}
 				}
 			});
+
+			roundStepSequence.push({stepType: RoundStepTypes.ClearHeader});
 		}
 
 		// HANDLE UPCOMING CARDS
