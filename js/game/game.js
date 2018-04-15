@@ -124,7 +124,7 @@ module.exports = class Game extends EventEmitter
 		spectator.State = SpectatorStates.RoundAnimationNotInProgress;
 		this._spectators.push(spectator);
 
-		spectator.on('spectatorQuitGame', this.removeSpectator.bind(this));
+		spectator.on('spectatorQuitGame', this.onSpectatorQuitGame.bind(this));
 		spectator.on('playerOrSpectatorDoneDisplayingRound', this.onPlayerOrSpectatorDoneDisplayingRound.bind(this));
 
 		spectator.updatePlayerList(Array.from(this._players.keys()));
@@ -330,6 +330,22 @@ module.exports = class Game extends EventEmitter
 				this.endGame(player);
 		}
 		// WIP TODO if in the middle of game, replace with an AI. if there are no human players left, end game.
+	}
+
+	onSpectatorQuitGame(spectator)
+	{
+		this.removeSpectator(spectator);
+		if (this._state == GameStates.RoundAnimationInProgress)
+		{
+			// this is important because what if everyone is done displaying the round, only one spectator is still
+			// displaying. Within this window, the spectator quits. Then the next round would never start because we 
+			// would be left waiting for every player and spectator to finish displaying the round.
+			// So, if a spectator quits, and the game is in state RoundAnimationInProgress, call onPlayerOrSpectatorDoneDisplayingRound().
+			// No need to pass in the parameter. We just want that funciton to check if all the remaining players and spectators
+			// have finished.
+			this.onPlayerOrSpectatorDoneDisplayingRound();
+			console.log("A spectator has quit while game in state RoundAnimationInProgress");
+		}
 	}
 
 	onPlayerPlayCard(data)
