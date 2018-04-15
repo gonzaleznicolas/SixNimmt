@@ -29,4 +29,12 @@ module.exports = class Scoreboard
 	{
 		this._scores = playerNameList.map( (playerName) => { return {name: playerName, score: 0}});
 	}
+
+	incrementPlayerScore(name, pointsToAdd)
+	{
+		let i = this._scores.findIndex( (score) => score.name == name);
+		if (i == -1)
+			throw "Tried to increment score of player which doesnt exist";
+		this._scores[i].score = this._scores[i].score + pointsToAdd;
+	}
 }

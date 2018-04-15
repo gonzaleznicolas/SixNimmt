@@ -43,6 +43,32 @@ module.exports = class Table
 
 	// CHECKS
 
+	getCardCows(cardNumber)
+	{
+		if (cardNumber === 55)
+			return 7;
+		else if ( cardNumber % 11 === 0)
+			return 5;
+		else if (cardNumber % 10 === 0)
+			return 3;
+		else if (cardNumber % 5 === 0)
+			return 2;
+		else
+			return 1;
+	}
+
+	cowsInRow(rowI)
+	{
+		if (rowI < 0 || rowI >=4)
+			throw "Row index out of bounds";
+		let totalCows = 0;
+		this._table[rowI].forEach( function(cardNumber) {
+			if (cardNumber != null)
+				totalCows = totalCows + this.getCardCows(cardNumber);
+		}.bind(this));
+		return totalCows;
+	}
+
 	lastCardInRow(rowI)
 	{
 		if (rowI >= NUMBER_OF_ROWS)
@@ -110,11 +136,14 @@ module.exports = class Table
 	}
 
 	// replaces a row with a row full of nulls
+	// returns the number of cows that were in that row
 	emptyRow(rowI)
 	{
 		if (rowI < 0 || rowI >=4)
 			throw "Trying to empty row out of bounds";
+		let numCows = this.cowsInRow(rowI);
 		this._table[rowI] = [null, null, null, null, null, null];
+		return numCows;
 	}
 
 	// deletes a row, shifts down any rows above it, and places a row full of nulls in the 0th row
@@ -146,14 +175,21 @@ module.exports = class Table
 	}
 
 	// given a full row, this method leaves the 6th card in the first position with the rest of the positions with null
+	// returns the number of cows that were in the first 5 cards of the row before taking the row
 	takeFullRow(rowI)
 	{
 		if (rowI < 0 || rowI >=4)
 			throw "Row index out of bounds";
 		if (this.nextOpenPositionInRow(rowI) != -1)
 			throw "This row is not full";
-		let offendingCard = this._table[rowI][5];
-		this._table[rowI] = [offendingCard, null, null, null, null, null];
+		
+		let sixthCard = this._table[rowI][5];
+		this._table[rowI][5] = null; // temporarily to get number of cows before
+		let numCows = this.cowsInRow(rowI);
+		
+		this._table[rowI] = [sixthCard, null, null, null, null, null];
+
+		return numCows;
 	}
 }
 

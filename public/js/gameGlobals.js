@@ -61,37 +61,4 @@ function getCardInfo(cardNumber)
 		return {cowColor: lc.nimmtPurple, cardColor: "rgba(255, 255,	255, 1)"}
 }
 
-// TEMPORARY:
 let controller = undefined;
-
-function add(player, num)
-{
-	controller._gameLayoutController._scoreboard.incrementScore(player, num);
-}
-
-function flip()
-{
-	controller._tableView.Animation.flipAllUpcomingCards();
-	controller._model.BUpcomingCardsFaceUp = true;
-}
-
-function takeRow(i, b)
-{
-	controller._tableView.Animation.takeRow(i, b);
-}
-
-function moveIthUpcomingCardToRowCol(i, r, c)
-{
-	controller._tableView.Animation.moveIthUpcomingCardToRowCol(i, r, c);
-}
-
-function sortUpcomingCards()
-{
-	controller._tableView.Animation.sortUpcomingCards();
-}
-
-function moveRows(fromRow, toRow, downThisManyRows)
-{
-	controller._tableView.Animation.moveRows(fromRow, toRow, downThisManyRows);
-}
-

@@ -116,7 +116,7 @@ module.exports = class RoundProcessor
 			tableAtThisPoint = Table.clone(this._gamesTable);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
 			scoreboardAtThisPoint = Scoreboard.clone(this._gamesScoreboard);
-			tableAtThisPoint.emptyRow(rowToTake);
+			let numberOfCowsTaken = tableAtThisPoint.emptyRow(rowToTake);
 			roundStepSequence.push(
 			{
 				stepType: RoundStepTypes.TakeRow,
@@ -136,6 +136,22 @@ module.exports = class RoundProcessor
 						onlyDrawCardsAfterThisIndex: -1
 					}
 				}
+			});
+
+			// increment the players score
+			tableAtThisPoint = Table.clone(tableAtThisPoint);
+			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+			scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
+			scoreboardAtThisPoint.incrementPlayerScore(nameOfPlayerWhoTookRow, numberOfCowsTaken);
+			roundStepSequence.push(
+			{
+				stepType: RoundStepTypes.IncrementPlayerScore,
+				stepParams:
+				{
+					playerName: nameOfPlayerWhoTookRow,
+					pointsToAdd: numberOfCowsTaken
+				},
+				scoreboardAfter: scoreboardAtThisPoint.Scores
 			});
 
 			// move rows so 0th row is empty

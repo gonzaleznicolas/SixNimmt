@@ -143,6 +143,21 @@ class RoundController {
 				this._activeRoundStepSequence = [];
 				socket.emit("clientDoneDisplayingRound");
 			}
+			else if (step.stepType == RoundStepTypes.IncrementPlayerScore)
+			{
+				// for this one, tell the scoreboard to increment, pass it as a callback a function
+				// to set the scoreboard to step.scoreboardAfter, and immediately call dealWithRoundStepSequence.
+				// no need to wait for the scoreboard update to finish in order to move on to the next step
+				this._scoreboardView.incrementScore(
+					step.stepParams.playerName,
+					step.stepParams.pointsToAdd,
+					function() {
+						this._scoreboardView.setScoreboard(step.scoreboardAfter);
+					}.bind(this)
+				);
+				this._activeRoundStepSequence.shift();
+				this.dealWithRoundStepSequence();
+			}
 		}
 	}
 
