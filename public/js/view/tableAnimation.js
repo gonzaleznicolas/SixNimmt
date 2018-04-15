@@ -151,6 +151,7 @@ class TableAnimation extends Animation
 		bAnimationInProgress = true;
 		this._callback = callback;
 		this._callbackParam = callbackParam;
+		this._model.OnlyDrawUpcomingCardsAfterThisIndex = i;
 		let upcomingCardStartRow = this._drawer.upcomingCardsIndexToRow(i);
 		let upcomingCardStartCol = this._drawer.upcomingCardsIndexToCol(i);
 		
@@ -168,7 +169,10 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
+			{
+				this._model.OnlyDrawUpcomingCardsAfterThisIndex = -1;
 				this._callback(this._callbackParam);
+			}
 		}
 	}
 	
@@ -183,7 +187,10 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
+			{
+				this._model.OnlyDrawUpcomingCardsAfterThisIndex = -1;
 				this._callback(this._callbackParam);
+			}
 		}
 	}
 	

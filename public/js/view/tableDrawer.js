@@ -51,16 +51,19 @@ class TableDrawer extends Drawer
 		{
 			for (let col = 0; col < lc.additionalColsOnTableCanvasForCardsPlayedThisTurn && numberOfCardsDrawn < numberOfPlayers; col++)
 			{
-				card = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
-				if (card)
+				if(this.upcomingCardsRowColToIndex(row, col) > this._model.OnlyDrawUpcomingCardsAfterThisIndex)
 				{
-					if (this._model.BUpcomingCardsFaceUp)
-						this.drawCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, card.number, card.name);
-					else
-						this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, card.name);
+					card = this._model.UpcomingCards[this.upcomingCardsRowColToIndex(row, col)];
+					if (card)
+					{
+						if (this._model.BUpcomingCardsFaceUp)
+							this.drawCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, card.number, card.name);
+						else
+							this.drawFaceDownCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, this._cardWidth, card.name);
+					}
+					if(this._model.HighlightedUpcomingCard != undefined && this._model.HighlightedUpcomingCard != this.upcomingCardsRowColToIndex(row, col))
+						this.dimCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, 0.85);
 				}
-				if(this._model.HighlightedUpcomingCard != undefined && this._model.HighlightedUpcomingCard != this.upcomingCardsRowColToIndex(row, col))
-					this.dimCard(this._upcomingCardCoordinates[row][col].x, this._upcomingCardCoordinates[row][col].y, 0.85);
 				numberOfCardsDrawn++;
 			}
 		}

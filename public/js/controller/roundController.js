@@ -138,7 +138,7 @@ class RoundController {
 			else if (step.stepType == RoundStepTypes.RoundDone)
 			{
 				this.updateModelAndDrawFromTableImage(step.tableImage);
-				this._activeRoundStepSequence.shift();
+				this._activeRoundStepSequence = [];
 				socket.emit("clientDoneDisplayingRound");
 			}
 		}
