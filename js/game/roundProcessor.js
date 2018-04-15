@@ -2,16 +2,18 @@
 
 const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
+const Scoreboard = require('./scoreboard.js');
 const RoundStepTypes = require('./gameGlobals.js').RoundStepTypes;
  
 module.exports = class RoundProcessor 
 { 
-	constructor(gamesTable, gamesUpcomingCards) 
+	constructor(gamesTable, gamesUpcomingCards, gamesScoreboard) 
 	{
 		// these are pointers to the game's table and upcoming cards. Modifying these
 		// modifies the game's data. Thus, for any intermediate steps, make clones
 		this._gamesTable = gamesTable;
 		this._gamesUpcomingards = gamesUpcomingCards;
+		this._gamesScoreboard = gamesScoreboard;
 	}
 
 	// bStartOfRound = true means the round is starting rather than resuming after a player chose a row to take
@@ -22,12 +24,14 @@ module.exports = class RoundProcessor
 		let roundStepSequence = [];
 		let tableAtThisPoint;
 		let upcomingCardsAtThisPoint;
+		let scoreboardAtThisPoint;
 
 		if (bStartOfRound)
 		{
 			// initial table image
 			tableAtThisPoint = Table.clone(this._gamesTable);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
+			scoreboardAtThisPoint = Scoreboard.clone(this._gamesScoreboard);
 
 			roundStepSequence.push(
 			{
@@ -48,6 +52,7 @@ module.exports = class RoundProcessor
 			// flip upcoming cards
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+			scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
 
 			roundStepSequence.push(
 			{
@@ -68,6 +73,7 @@ module.exports = class RoundProcessor
 			// sort upcoming cards
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+			scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
 
 			// sort the cards on the object so that when we draw, the cards are in the place that the
 			// animation moved them to
@@ -109,6 +115,7 @@ module.exports = class RoundProcessor
 			// take the row selected by the player
 			tableAtThisPoint = Table.clone(this._gamesTable);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(this._gamesUpcomingards);
+			scoreboardAtThisPoint = Scoreboard.clone(this._gamesScoreboard);
 			tableAtThisPoint.emptyRow(rowToTake);
 			roundStepSequence.push(
 			{
@@ -134,6 +141,7 @@ module.exports = class RoundProcessor
 			// move rows so 0th row is empty
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+			scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
 			let moveRowParams = tableAtThisPoint.deleteRow(rowToTake);
 			roundStepSequence.push(
 			{
@@ -160,6 +168,7 @@ module.exports = class RoundProcessor
 			// move the the card that caused the select row into the 0th row
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+			scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
 			tableAtThisPoint.putCardInEmptyFirstsRow(upcomingCardsAtThisPoint.Cards[indexOfTheCardThatCausedTheSelectRowToTake]);
 			upcomingCardsAtThisPoint.Cards[indexOfTheCardThatCausedTheSelectRowToTake] = null;
 			roundStepSequence.push(
@@ -196,6 +205,7 @@ module.exports = class RoundProcessor
 		{
 			tableAtThisPoint = Table.clone(tableAtThisPoint);
 			upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+			scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
 
 			let upcomingCardToPlace = upcomingCardsAtThisPoint.Cards[upcomingCardIndex];
 			if (tableAtThisPoint.cardSmallerThanLastCardInFirstRow(upcomingCardToPlace.number))
@@ -254,6 +264,7 @@ module.exports = class RoundProcessor
 				{
 					tableAtThisPoint = Table.clone(tableAtThisPoint);
 					upcomingCardsAtThisPoint = UpcomingCards.clone(upcomingCardsAtThisPoint);
+					scoreboardAtThisPoint = Scoreboard.clone(scoreboardAtThisPoint);
 					tableAtThisPoint.takeFullRow(rowCol.row);
 
 					roundStepSequence.push(
@@ -282,6 +293,7 @@ module.exports = class RoundProcessor
 
 		this._gamesTable.Table = Table.clone(tableAtThisPoint).Table;
 		this._gamesUpcomingards.Cards = UpcomingCards.clone(upcomingCardsAtThisPoint).Cards;
+		this._gamesScoreboard.Scores = Scoreboard.clone(scoreboardAtThisPoint).Scores;
 
 		let bRoundRanToCompletion = this._gamesUpcomingards.Cards.every( (card) => card == null);
 		if (bRoundRanToCompletion)

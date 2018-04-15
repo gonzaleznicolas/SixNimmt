@@ -12,6 +12,7 @@ const Deck = require('./deck.js');
 const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
 const RoundProcessor = require('./roundProcessor.js');
+const Scoreboard = require('./scoreboard.js');
 
 module.exports = class Game extends EventEmitter
 {
@@ -26,7 +27,8 @@ module.exports = class Game extends EventEmitter
 		this._deck = new Deck();
 		this._table = new Table();
 		this._upcomingCards = new UpcomingCards();
-		this._roundProcessor = new RoundProcessor(this._table, this._upcomingCards);
+		this._scoreboard = new Scoreboard();
+		this._roundProcessor = new RoundProcessor(this._table, this._upcomingCards, this._scoreboard);
 		console.log("Game with code " + gameCode + " created.");
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
@@ -306,6 +308,7 @@ module.exports = class Game extends EventEmitter
 		{
 			this._open = false;
 			this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
+			this._scoreboard.initScoreboardWithThesePlayers(Array.from(this._players.keys()));
 			this.initializePlayerHands();
 			this.initializeTableCards();
 			this._players.forEach((p) => {p.State = PlayerStates.ChooseCard});

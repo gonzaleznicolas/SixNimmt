@@ -37,6 +37,7 @@ module.exports = Object.freeze(
 		MoveRows: 7,
 		ShowMessageSayingWhichRowWasSelected: 8,
 		ClearHeader: 9,
-		RoundDone: 10
+		RoundDone: 10,
+		IncrementPlayerScore: 11
 	}
 });
