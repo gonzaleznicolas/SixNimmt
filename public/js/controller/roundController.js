@@ -39,6 +39,7 @@ class RoundController {
 		this._model.BUpcomingCardsFaceUp = tableImage.upcomingCards.bFaceUp;
 		this._model.UpcomingCards = tableImage.upcomingCards.cards;
 		this._model.HighlightedUpcomingCard = tableImage.upcomingCards.highlighted;
+		this._model.OnlyDrawUpcomingCardsAfterThisIndex = tableImage.upcomingCards.onlyDrawCardsAfterThisIndex;
 		this._tableView.draw();
 	}
 
@@ -80,6 +81,7 @@ class RoundController {
 			else if (step.stepType == RoundStepTypes.MoveIthCardToRowCol)
 			{
 				setTimeout( function() {
+					this._model.OnlyDrawUpcomingCardsAfterThisIndex = step.stepParams.i;
 					this._tableView.Animation.moveIthUpcomingCardToRowCol(
 						step.stepParams.i,
 						step.stepParams.tableRow,

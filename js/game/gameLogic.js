@@ -39,7 +39,8 @@ module.exports = class GameLogic
 					{
 						bFaceUp: false,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: null
+						highlighted: null,
+						onlyDrawCardsAfterThisIndex: -1
 					}
 				}
 			});
@@ -58,7 +59,8 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: null
+						highlighted: null,
+						onlyDrawCardsAfterThisIndex: -1
 					}
 				}
 			});
@@ -81,7 +83,8 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: null
+						highlighted: null,
+						onlyDrawCardsAfterThisIndex: -1
 					}
 				}
 			});
@@ -122,7 +125,8 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: indexOfTheCardThatCausedTheSelectRowToTake
+						highlighted: indexOfTheCardThatCausedTheSelectRowToTake,
+						onlyDrawCardsAfterThisIndex: -1
 					}
 				}
 			});
@@ -147,7 +151,8 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: indexOfTheCardThatCausedTheSelectRowToTake
+						highlighted: indexOfTheCardThatCausedTheSelectRowToTake,
+						onlyDrawCardsAfterThisIndex: -1
 					}
 				}
 			});
@@ -173,7 +178,8 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: upcomingCardsAtThisPoint.Cards,
-						highlighted: null
+						highlighted: null,
+						onlyDrawCardsAfterThisIndex: -1
 					}
 				}
 			});
@@ -210,7 +216,8 @@ module.exports = class GameLogic
 						{
 							bFaceUp: true,
 							cards: upcomingCardsAtThisPoint.Cards,
-							highlighted: upcomingCardIndex
+							highlighted: upcomingCardIndex,
+							onlyDrawCardsAfterThisIndex: -1
 						}
 					}
 				});
@@ -237,7 +244,8 @@ module.exports = class GameLogic
 						{
 							bFaceUp: true,
 							cards: upcomingCardsAtThisPoint.Cards,
-							highlighted: null
+							highlighted: null,
+							onlyDrawCardsAfterThisIndex: -1
 						}
 					}
 				});
@@ -260,7 +268,8 @@ module.exports = class GameLogic
 					{
 						bFaceUp: true,
 						cards: this._gamesUpcomingards.Cards,
-						highlighted: null
+						highlighted: null,
+						onlyDrawCardsAfterThisIndex: -1
 					}
 				}
 			});
