@@ -1,16 +1,15 @@
 "use strict";
 
-const pixelJumpPerFrame = 3;
-const closeEnough = pixelJumpPerFrame*2;
-
 class CardMovementLine
 {
 
-	constructor(x1, y1, x2, y2)
+	constructor(canvasWidth, x1, y1, x2, y2)
 	{
+		this._pixelJumpPerFrame = canvasWidth / 200;
+		this._closeEnough = this._pixelJumpPerFrame * 2;
 		this.done = false;
 		
-		if (Math.abs(x1 - x2) <= closeEnough && Math.abs(y1 - y2) <= closeEnough)
+		if (Math.abs(x1 - x2) <= this._closeEnough && Math.abs(y1 - y2) <= this._closeEnough)
 		{
 			// if the card is already in its final position, still, set these variables, and return them
 			// those coordinates on nextPoint(). This is important for the upcoming card sorting. If a card begins
@@ -56,7 +55,7 @@ class CardMovementLine
 		this.currentX = this.x1;
 		
 		// determine if we have to add or subtract from x each iteration.
-		this.xIncrement = this.x2 - this.x1 > 0 ? pixelJumpPerFrame : (-1)*pixelJumpPerFrame;
+		this.xIncrement = this.x2 - this.x1 > 0 ? this._pixelJumpPerFrame : (-1)*this._pixelJumpPerFrame;
 	}
 	
 	// get y from x
@@ -69,7 +68,7 @@ class CardMovementLine
 	{
 		if (this.done)
 			return this.xySwapped ? {x: this.y2, y: this.x2} : {x: this.x2, y: this.y2};
-		if ( Math.abs(this.currentX - this.x2) < closeEnough && Math.abs(this.f(this.currentX) - this.y2) < closeEnough)
+		if ( Math.abs(this.currentX - this.x2) < this._closeEnough && Math.abs(this.f(this.currentX) - this.y2) < this._closeEnough)
 		{
 			this.done = true;
 			// return the exact final points to make sure we are not off even by a little bit
