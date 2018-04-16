@@ -14,6 +14,13 @@ const UpcomingCards = require('./upcomingCards.js');
 const RoundProcessor = require('./roundProcessor.js');
 const Scoreboard = require('./scoreboard.js');
 
+/*************************************************************
+ * A turn is one card being moved to its spot on the table
+ * A round is from the time players are asked to choose a card, to when all the played cards
+ * are arranged on the table.
+ * An iteration is from the time we give a player 10 cards until every player has played their 10 cards
+ *************************************************************/
+
 module.exports = class Game extends EventEmitter
 {
 	constructor(gameCode, firstPlayerName, firstPlayerSocket)
@@ -29,7 +36,6 @@ module.exports = class Game extends EventEmitter
 		this._upcomingCards = new UpcomingCards();
 		this._scoreboard = new Scoreboard();
 		this._roundProcessor = new RoundProcessor(this._table, this._upcomingCards, this._scoreboard);
-		this._roundNumber = 1;
 		console.log("Game with code " + gameCode + " created.");
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
@@ -175,17 +181,28 @@ module.exports = class Game extends EventEmitter
 	startGame()
 	{
 		this._open = false;
-		this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
 		this._scoreboard.initScoreboardWithThesePlayers(Array.from(this._players.keys()));
+		this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
 		this.initializePlayerHands();
 		this.initializeTableCards();
 		this._players.forEach((p) => {p.State = PlayerStates.ChooseCard});
 		this._spectators.forEach( (s) => {s.State = SpectatorStates.RoundAnimationNotInProgress});
+		this._roundNumberOfCurrentIteration = 1;
 		this.tellAllPlayersAndSpectatorsGameStarted();
+	}
+
+	startANewIteration()
+	{
+		console.log("new iteration started");
 	}
 
 	startANewRound()
 	{
+		if (this._roundNumberOfCurrentIteration == 10)
+		{
+			this.startANewIteration();
+		}
+		this._roundNumberOfCurrentIteration++;
 		this._upcomingCards.reset();
 		this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationNotInProgress});
