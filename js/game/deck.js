@@ -4,6 +4,11 @@ module.exports = class Deck
 { 
 	constructor() 
 	{
+		this.reset();
+	}
+
+	reset()
+	{
 		this._cards = [];
 		for (let card = 1; card <= 104; card++)
 		{

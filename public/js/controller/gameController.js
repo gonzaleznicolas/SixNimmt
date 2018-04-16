@@ -94,6 +94,8 @@ class GameController {
 
 		this._tableView.draw();
 
+		this._scoreboardView.setScoreboard(data.scoreboard);
+
 		if (!bSpectatorMode && data.hand)
 		{
 			this._model.Hand = data.hand;

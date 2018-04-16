@@ -81,5 +81,5 @@ module.exports = class ArtificialPlayer extends Player
 		}.bind(this), secondsToWaitBeforeReacting * 1000);
 	}
 
-	startRound(table){}
+	startRound(table, scoreboard){}
 }

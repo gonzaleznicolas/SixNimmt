@@ -28,6 +28,11 @@ module.exports = class Table
 	get Table() {return this._table;}
 	set Table(table) {this._table = table}
 
+	reset()
+	{
+		this.initEmptyTable();
+	}
+
 	initEmptyTable()
 	{
 		this._table = [];

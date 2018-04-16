@@ -194,6 +194,11 @@ module.exports = class Game extends EventEmitter
 	startANewIteration()
 	{
 		console.log("new iteration started");
+		this._table.reset();
+		this._deck.reset();
+		this.initializePlayerHands();
+		this.initializeTableCards();
+		this._roundNumberOfCurrentIteration = 1;
 	}
 
 	startANewRound()
@@ -276,13 +281,14 @@ module.exports = class Game extends EventEmitter
 	tellAllPlayersAndSpectatorsTheNextRoundIsStartingAndSendDetails()
 	{
 		let table = this._table.Table;
+		let scoreboard = this._scoreboard.Scores;
 
 		this._players.forEach(function (player){
-			player.startRound(table);
+			player.startRound(table, scoreboard);
 		});
 
 		this._spectators.forEach(function (player){
-			player.startRound(table);
+			player.startRound(table, scoreboard);
 		});
 	}
 
