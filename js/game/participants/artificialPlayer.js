@@ -29,6 +29,7 @@ module.exports = class ArtificialPlayer extends Player
 			if (this._hand.size == 0)
 			{
 				console.log(`Artificial player ${this._name}: Cannot play a card. I have 0 cards left in my hand.`);
+				return;
 			}
 			let cardToPlay = Math.min.apply(null , Array.from(this._hand));
 			//let cardToPlay = Array.from(this._hand)[0];

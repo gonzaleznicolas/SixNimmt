@@ -29,6 +29,7 @@ module.exports = class Game extends EventEmitter
 		this._upcomingCards = new UpcomingCards();
 		this._scoreboard = new Scoreboard();
 		this._roundProcessor = new RoundProcessor(this._table, this._upcomingCards, this._scoreboard);
+		this._roundNumber = 1;
 		console.log("Game with code " + gameCode + " created.");
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
@@ -171,6 +172,18 @@ module.exports = class Game extends EventEmitter
 		this.emit("gameEnded", this._gameCode);
 	}
 
+	startGame()
+	{
+		this._open = false;
+		this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
+		this._scoreboard.initScoreboardWithThesePlayers(Array.from(this._players.keys()));
+		this.initializePlayerHands();
+		this.initializeTableCards();
+		this._players.forEach((p) => {p.State = PlayerStates.ChooseCard});
+		this._spectators.forEach( (s) => {s.State = SpectatorStates.RoundAnimationNotInProgress});
+		this.tellAllPlayersAndSpectatorsGameStarted();
+	}
+
 	startANewRound()
 	{
 		this._upcomingCards.reset();
@@ -306,14 +319,7 @@ module.exports = class Game extends EventEmitter
 		if (this._state == GameStates.WaitForPlayers &&
 			this._players.size >= 2 && this._players.size <= 10)
 		{
-			this._open = false;
-			this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
-			this._scoreboard.initScoreboardWithThesePlayers(Array.from(this._players.keys()));
-			this.initializePlayerHands();
-			this.initializeTableCards();
-			this._players.forEach((p) => {p.State = PlayerStates.ChooseCard});
-			this._spectators.forEach( (s) => {s.State = SpectatorStates.RoundAnimationNotInProgress});
-			this.tellAllPlayersAndSpectatorsGameStarted();
+			this.startGame();
 		}
 		else
 		{
