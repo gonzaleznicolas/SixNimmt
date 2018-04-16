@@ -296,8 +296,8 @@ class TableAnimation extends Animation
 				numberOfCardsProcessed++;
 			}
 		}
-		
-		this._fcBackW = this._fcBackW - 3;
+		let amountToChangeWidthByEachFrame = this._drawer.Canvas.width/200;
+		this._fcBackW = this._fcBackW - amountToChangeWidthByEachFrame;
 
 		if ((-1) * this._fcBackW < this._drawer.CardWidth)
 				requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
