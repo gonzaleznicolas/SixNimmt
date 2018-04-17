@@ -3,10 +3,9 @@
 class CardMovementLine
 {
 
-	constructor(canvasWidth, x1, y1, x2, y2)
+	constructor(canvasWidth, x1, y1, x2, y2, millisecondsToTake)
 	{
-		this._pixelJumpPerFrame = canvasWidth / 200;
-		this._closeEnough = this._pixelJumpPerFrame * 2;
+
 		this.done = false;
 		
 		if (Math.abs(x1 - x2) <= this._closeEnough && Math.abs(y1 - y2) <= this._closeEnough)
@@ -51,11 +50,12 @@ class CardMovementLine
 		this.m = (this.y2 - this.y1)/(this.x2 - this.x1); // slope
 		
 		this.b = this.y1 - this.x1*this.m; // y intercept
-		
-		this.currentX = this.x1;
-		
-		// determine if we have to add or subtract from x each iteration.
-		this.xIncrement = this.x2 - this.x1 > 0 ? this._pixelJumpPerFrame : (-1)*this._pixelJumpPerFrame;
+
+		this._timeToTake = millisecondsToTake;
+		this._startTime = Date.now();
+		this._endTime = this._startTime + this._timeToTake;
+		// determine if we have to add or subtract from x1
+		this.xIncrementDirection = this.x2 - this.x1 > 0 ? 1 : -1;
 	}
 	
 	// get y from x
@@ -68,7 +68,7 @@ class CardMovementLine
 	{
 		if (this.done)
 			return this.xySwapped ? {x: this.y2, y: this.x2} : {x: this.x2, y: this.y2};
-		if ( Math.abs(this.currentX - this.x2) < this._closeEnough && Math.abs(this.f(this.currentX) - this.y2) < this._closeEnough)
+		if (Date.now() >= this._endTime)
 		{
 			this.done = true;
 			// return the exact final points to make sure we are not off even by a little bit
@@ -76,8 +76,9 @@ class CardMovementLine
 		}
 		else
 		{
-			this.currentX += this.xIncrement;
-			return this.xySwapped ? {x: this.f(this.currentX), y: this.currentX} : {x: this.currentX, y: this.f(this.currentX)};
+			let fractionOfTimeEllapsed = (Date.now() - this._startTime) / this._timeToTake;
+			let correspondingX = this.x1 + this.xIncrementDirection*fractionOfTimeEllapsed*Math.abs(this.x1 - this.x2);
+			return this.xySwapped ? {x: this.f(this.correspondingX), y: this.correspondingX} : {x: this.correspondingX, y: this.f(this.correspondingX)};
 		}
 	}
 }
