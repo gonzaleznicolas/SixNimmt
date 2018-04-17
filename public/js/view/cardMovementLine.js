@@ -8,7 +8,6 @@ class CardMovementLine
 	constructor(x1, y1, x2, y2, millisecondsToTake)
 	{
 		this.done = false;
-		closeEnough
 		
 		if (Math.abs(x1 - x2) <= closeEnough && Math.abs(y1 - y2) <= closeEnough)
 		{
