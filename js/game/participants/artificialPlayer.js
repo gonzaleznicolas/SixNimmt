@@ -19,7 +19,7 @@ module.exports = class ArtificialPlayer extends Player
 	}
 	get State() {return this._state;} // if you override the setter you have to override the getter as well
 
-	// METHODS CALLED FROM WITHIN THE HumanPlayer
+	// METHODS CALLED FROM WITHIN THE ArtificialPlayer
 
 	playACard()
 	{
@@ -38,6 +38,28 @@ module.exports = class ArtificialPlayer extends Player
 			this.emit('playerPlayCard', {player: this, playedCard: cardToPlay});
 
 		}.bind(this), secondsToWaitBeforeSelectingCard * 1000);
+	}
+
+	chooseARowToTake()
+	{
+		let secondsToWaitBeforeChoosingRow = Math.floor(Math.random() * (4-6)) + 4;
+		setTimeout( function() {
+
+			console.log(`${this._name} emits playerRowToTake`);
+			this.emit('playerRowToTake', {player: this, rowToTakeIndex: 2});
+
+		}.bind(this), secondsToWaitBeforeChoosingRow);
+	}
+
+	sayDoneDisplayingRound()
+	{
+		let secondsToWait = Math.floor(Math.random() * (4-6)) + 4;
+		setTimeout( function() {
+
+			console.log(`${this._name} emits playerOrSpectatorDoneDisplayingRound`);
+			this.emit("playerOrSpectatorDoneDisplayingRound", this);
+
+		}.bind(this), secondsToWait);
 	}
 
 	// METHODS CALLED BY THE GAME. METHODS ANY PLAYER MUST IMPLEMENT
@@ -60,25 +82,18 @@ module.exports = class ArtificialPlayer extends Player
 	// done displaying the round. I.e. the next round can start at any time.
 	roundInfo(roundStepSequence)
 	{
-		let secondsToWaitBeforeReacting = Math.floor(Math.random() * (5-8)) + 8;
-		setTimeout(function () {
+		let lastAnimation = roundStepSequence[roundStepSequence.length - 1];
 
-			let lastAnimation = roundStepSequence[roundStepSequence.length - 1];
-
-			if (lastAnimation.stepType == RoundStepTypes.AskPlayerToChooseARowToTake &&
-				lastAnimation.stepParams.nameOfPlayerToChooseRow == this._name &&
-				this._state == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
-			{
-				console.log(`${this._name} emits playerRowToTake`);
-				this.emit('playerRowToTake', {player: this, rowToTakeIndex: 2});
-			}
-			else if (lastAnimation.stepType == RoundStepTypes.RoundDone)
-			{
-				console.log(`${this._name} emits playerOrSpectatorDoneDisplayingRound`);
-				this.emit("playerOrSpectatorDoneDisplayingRound", this);
-			}
-
-		}.bind(this), secondsToWaitBeforeReacting * 1000);
+		if (lastAnimation.stepType == RoundStepTypes.AskPlayerToChooseARowToTake &&
+			lastAnimation.stepParams.nameOfPlayerToChooseRow == this._name &&
+			this._state == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
+		{
+			this.chooseARowToTake();
+		}
+		else if (lastAnimation.stepType == RoundStepTypes.RoundDone)
+		{
+			this.sayDoneDisplayingRound();
+		}
 	}
 
 	startRound(table, scoreboard){}

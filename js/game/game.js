@@ -417,13 +417,20 @@ module.exports = class Game extends EventEmitter
 				}
 				else //upcoming cards doesnt have a card for player
 				{
+					// changing the state will make the artificial player choose a card within a few seconds
 					artificialPlayerReplacement.State = PlayerStates.ChooseCard;
 				}
 			}
 			else if (this._state == GameStates.RoundAnimationInProgress)
 			{
-				artificialPlayerReplacement.State = PlayerStates.RoundAnimationInProgress;
-				// what if the player state was RoundAnimationInProgress_ExpectedToSendRowToTake
+				if (player.State == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
+				{
+					artificialPlayerReplacement.chooseARowToTake();
+				}
+				else
+				{
+					artificialPlayerReplacement.sayDoneDisplayingRound();
+				}
 			}
 		}
 		// WIP TODO if in the middle of game, replace with an AI. if there are no human players left, end game.
