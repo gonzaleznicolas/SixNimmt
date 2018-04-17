@@ -106,6 +106,7 @@ module.exports = class HumanPlayer extends Player
 
 	onClientQuitGame()
 	{
+		console.log(this._name + " has disconnected/quit the game");
 		this.emit('playerQuitGame', this);
 	}
 

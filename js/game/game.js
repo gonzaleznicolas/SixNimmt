@@ -203,11 +203,11 @@ module.exports = class Game extends EventEmitter
 
 	startANewRound()
 	{
-		if (this._roundNumberOfCurrentIteration == 10)
+		this._roundNumberOfCurrentIteration++;
+		if (this._roundNumberOfCurrentIteration > 10)
 		{
 			this.startANewIteration();
 		}
-		this._roundNumberOfCurrentIteration++;
 		this._upcomingCards.reset();
 		this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationNotInProgress});

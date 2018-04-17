@@ -63,6 +63,7 @@ module.exports = class Spectator extends EventEmitter
 
 	onClientQuitGame()
 	{
+		console.log("Spectator with ID " + this._socket.id + " has disconnected/quit the game");
 		this.emit('spectatorQuitGame', this);
 	}
 
