@@ -96,6 +96,26 @@ module.exports = class Game extends EventEmitter
 		return bEveryPlayerInState;
 	}
 
+	listOfPlayerNamesNotInState(state)
+	{
+		let list = [];
+		this._players.forEach( (player) => {
+			if (player.State != state)
+				list.push(player.Name);
+		});
+		return list;
+	}
+
+	listOfSpectatorSocketIDsNotInState(state)
+	{
+		let list = [];
+		this._spectators.forEach( (spectator) => {
+			if (spectator.State != state)
+				list.push(spectator.Socket.id);
+		});
+		return list;
+	}
+
 	addHumanPlayer(name, bStartedGame, socket)
 	{
 		let player = new HumanPlayer(name, bStartedGame, socket);
@@ -418,18 +438,30 @@ module.exports = class Game extends EventEmitter
 			return;
 		}
 
+		console.log("Game notified that a participant is done displaying round");
+
 		if (participant instanceof Player)
+		{
 			participant.State = PlayerStates.DoneDisplayingRoundAnimation;
+		}
 		else if (participant instanceof Spectator)
+		{
 			participant.State = SpectatorStates.DoneDisplayingRoundAnimation;
-		
-		console.log("Game aware that a participant is done displaying round");
+		}
 
 		if (this.everyPlayerInState(PlayerStates.DoneDisplayingRoundAnimation) && 
 			this._spectators.every( (s) => s.State == SpectatorStates.DoneDisplayingRoundAnimation))
 		{
 			console.log("Every participant is done displaying the round.");
 			this.startANewRound();
+		}
+		else
+		{
+			console.log("The players not done displaying the animation are:");
+			console.log(this.listOfPlayerNamesNotInState(PlayerStates.DoneDisplayingRoundAnimation));
+
+			console.log("The spectators not done displaying the animation are:");
+			console.log(this.listOfSpectatorSocketIDsNotInState(SpectatorStates.DoneDisplayingRoundAnimation));
 		}
 	}
 }
