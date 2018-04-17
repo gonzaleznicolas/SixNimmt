@@ -58,4 +58,20 @@ module.exports = class UpcomingCards
         }
         return card;
     }
+
+    // returns a bool whether the specified player has a card in the upcoming cards
+    playerHasPlayedACard(name)
+    {
+        return this._cards.some( (card) => card.name == name );
+    }
+
+    // if there is an upcoming card with the given oldName, this method changes it to newName
+	renamePlayer(oldName, newName)
+	{
+		let card = this._cards.find( (card) => card.name == oldName);
+		if (card)
+		{
+			card.name = newName;
+		}
+	}
 }

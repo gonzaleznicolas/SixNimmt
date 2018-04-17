@@ -37,4 +37,13 @@ module.exports = class Scoreboard
 			throw "Tried to increment score of player which doesnt exist";
 		this._scores[i].score = this._scores[i].score + pointsToAdd;
 	}
+
+	renamePlayer(oldName, newName)
+	{
+		let record = this._scores.find( (score) => score.name == oldName);
+		if (record)
+		{
+			record.name = newName;
+		}
+	}
 }

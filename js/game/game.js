@@ -381,7 +381,71 @@ module.exports = class Game extends EventEmitter
 			if (player.StartedGame)
 				this.endGame(player);
 		}
+		else if (this._state == GameStates.WaitForAllPlayersToChooseTheirCard ||
+				this._state == GameStates.RoundAnimationInProgress)
+		{
+			if (!this._players.delete(player.Name))
+			{
+				console.log('Player ' + player.Name +' who \'quit\' was not in the game. Ignored.')
+				return;
+			}
+
+			let nameForArtificialReplacement = "Ai"+player.Name;
+			nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
+			
+			// make sure the name is not taken
+			let n = 1;
+			while (this._players.has(nameForArtificialReplacement))
+			{
+				nameForArtificialReplacement = "Ai"+n+player.Name;
+				nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
+			}
+
+			let artificialPlayerReplacement = new ArtificialPlayer(nameForArtificialReplacement);
+			this._players.set(nameForArtificialReplacement, artificialPlayerReplacement);
+			this.subscribeToPlayerEvents(artificialPlayerReplacement);
+			this._scoreboard.renamePlayer(player.Name, artificialPlayerReplacement.Name);
+
+			console.log(`Human player ${player.Name} has left and has been replaced by artificial player ${artificialPlayerReplacement.Name}`);
+
+			if (this._state == GameStates.WaitForAllPlayersToChooseTheirCard)
+			{
+				if (this._upcomingCards.playerHasPlayedACard(player.Name)) // the human player picked a card for this round already
+				{
+					this._upcomingCards.renamePlayer(player.Name, artificialPlayerReplacement.Name);
+					artificialPlayerReplacement.State = PlayerStates.WaitForRestToPlayTheirCard;
+				}
+				else //upcoming cards doesnt have a card for player
+				{
+					artificialPlayerReplacement.State = PlayerStates.ChooseCard;
+				}
+			}
+			else if (this._state == GameStates.RoundAnimationInProgress)
+			{
+				artificialPlayerReplacement.State = PlayerStates.RoundAnimationInProgress;
+				// what if the player state was RoundAnimationInProgress_ExpectedToSendRowToTake
+			}
+		}
 		// WIP TODO if in the middle of game, replace with an AI. if there are no human players left, end game.
+	}
+
+	addArtificialPlayer()
+	{
+		let n = 1;
+		let name;
+		do{
+			name = "AI"+n;
+			n++;
+		} while (this._players.has(name));
+
+		let player = new ArtificialPlayer(name);
+		player.State = PlayerStates.WaitPage;
+		this._players.set(name, player);
+		this.subscribeToPlayerEvents(player);
+		this.updateOpen();
+		this.updateAllPlayersAndSpectatorsWithPlayerList();
+		console.log(`Artificial player ${name} has been added to game ${this._gameCode}`);
+		return name;
 	}
 
 	onSpectatorQuitGame(spectator)
