@@ -1,14 +1,16 @@
 "use strict";
 
+const closeEnough = 5; //px
+
 class CardMovementLine
 {
 
-	constructor(canvasWidth, x1, y1, x2, y2, millisecondsToTake)
+	constructor(x1, y1, x2, y2, millisecondsToTake)
 	{
-
 		this.done = false;
+		closeEnough
 		
-		if (Math.abs(x1 - x2) <= this._closeEnough && Math.abs(y1 - y2) <= this._closeEnough)
+		if (Math.abs(x1 - x2) <= closeEnough && Math.abs(y1 - y2) <= closeEnough)
 		{
 			// if the card is already in its final position, still, set these variables, and return them
 			// those coordinates on nextPoint(). This is important for the upcoming card sorting. If a card begins
@@ -78,7 +80,7 @@ class CardMovementLine
 		{
 			let fractionOfTimeEllapsed = (Date.now() - this._startTime) / this._timeToTake;
 			let correspondingX = this.x1 + this.xIncrementDirection*fractionOfTimeEllapsed*Math.abs(this.x1 - this.x2);
-			return this.xySwapped ? {x: this.f(this.correspondingX), y: this.correspondingX} : {x: this.correspondingX, y: this.f(this.correspondingX)};
+			return this.xySwapped ? {x: this.f(correspondingX), y: correspondingX} : {x: correspondingX, y: this.f(correspondingX)};
 		}
 	}
 }

@@ -22,7 +22,7 @@ class TableAnimation extends Animation
 		
 		// we are just gonna use the CardMovementLine for its y values. and we will use the y values as offsets from the
 		// original value
-		this._line = new CardMovementLine(this._drawer.Canvas.width, 0, 0, 0, downThisManyRows*(this._drawer.CardHeight + lc.margin), 2000);
+		this._line = new CardMovementLine(0, 0, 0, downThisManyRows*(this._drawer.CardHeight + lc.margin), 2000);
 		if (!this._line.done)
 		{
 			for (let row = this._fromRow; row <= this._toRow; row++)
@@ -106,7 +106,7 @@ class TableAnimation extends Animation
 			this._resourcesForCardOriginallyAtPositionI[i] = {
 				movingCardNumber : this._model.UpcomingCards[i].number,
 				movingCardName : this._model.UpcomingCards[i].name,
-				line : new CardMovementLine(this._drawer.Canvas.width, start.x, start.y, end.x, end.y, 2000),
+				line : new CardMovementLine(start.x, start.y, end.x, end.y, 2000),
 				nextPt : null
 			};
 			
@@ -160,7 +160,7 @@ class TableAnimation extends Animation
 		this._movingCardNumber = this._model.UpcomingCards[i].number;
 		this._movingCardName = this._model.UpcomingCards[i].name;
 		
-		this._line = new CardMovementLine(this._drawer.Canvas.width, startXY.x, startXY.y, endXY.x, endXY.y), 2000;
+		this._line = new CardMovementLine(startXY.x, startXY.y, endXY.x, endXY.y, 2000);
 		this._nextPt = null;
 		if (!this._line.done)
 			requestAnimationFrame(this.moveIthUpcomingCardToRowColHelper.bind(this));
@@ -206,7 +206,7 @@ class TableAnimation extends Animation
 		const end = this._drawer.CardCoordinates[this._endRow][this._endCol];
 		
 		this._movingCardNumber = this._model.Table[rowIndex][indexOfLastCardInTheRow];
-		this._line = new CardMovementLine(this._drawer.Canvas.width, start.x, start.y, end.x, end.y, 2000);
+		this._line = new CardMovementLine(start.x, start.y, end.x, end.y, 2000);
 		if (!this._line.done)
 			this._drawer.clearExactCardSpace(start.x, start.y);
 		this._nextPt = null;
