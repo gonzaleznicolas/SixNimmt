@@ -467,6 +467,11 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerQuitGame(player)
 	{
+		if (!this._spectators)
+		{
+			console.log('A player tried to quit the game, but the game was already deleted. Ignore.');
+			return;
+		}
 		if (this._state == GameStates.WaitForPlayers)
 		{
 			this.removePlayer(player.Name);
@@ -482,29 +487,6 @@ module.exports = class Game extends EventEmitter
 		{
 			console.log('there are no human players or spectators left');
 			this.endGame(player);
-		}
-		else
-			console.log('there are human players or spectators left');
-	}
-
-	onSpectatorQuitGame(spectator)
-	{
-		this.removeSpectator(spectator);
-		if (this._state == GameStates.RoundAnimationInProgress)
-		{
-			// this is important because what if everyone is done displaying the round, only one spectator is still
-			// displaying. Within this window, the spectator quits. Then the next round would never start because we 
-			// would be left waiting for every player and spectator to finish displaying the round.
-			// So, if a spectator quits, and the game is in state RoundAnimationInProgress, call onPlayerOrSpectatorDoneDisplayingRound().
-			// No need to pass in the parameter. We just want that funciton to check if all the remaining players and spectators
-			// have finished.
-			this.onPlayerOrSpectatorDoneDisplayingRound();
-			console.log("A spectator has quit while game in state RoundAnimationInProgress");
-		}
-		if (!this.gameHasHumanPlayersLeft() && this._spectators.length == 0)
-		{
-			console.log('there are no human players or spectators left');
-			this.endGame(spectator);
 		}
 		else
 			console.log('there are human players or spectators left');
@@ -588,5 +570,33 @@ module.exports = class Game extends EventEmitter
 			console.log("The spectators not done displaying the animation are:");
 			console.log(this.listOfSpectatorSocketIDsNotInState(SpectatorStates.DoneDisplayingRoundAnimation));
 		}
+	}
+
+	onSpectatorQuitGame(spectator)
+	{
+		if (!this._spectators)
+		{
+			console.log('A spectator tried to quit the game, but the game was already deleted. Ignore.');
+			return;
+		}
+		this.removeSpectator(spectator);
+		if (this._state == GameStates.RoundAnimationInProgress)
+		{
+			// this is important because what if everyone is done displaying the round, only one spectator is still
+			// displaying. Within this window, the spectator quits. Then the next round would never start because we 
+			// would be left waiting for every player and spectator to finish displaying the round.
+			// So, if a spectator quits, and the game is in state RoundAnimationInProgress, call onPlayerOrSpectatorDoneDisplayingRound().
+			// No need to pass in the parameter. We just want that funciton to check if all the remaining players and spectators
+			// have finished.
+			this.onPlayerOrSpectatorDoneDisplayingRound();
+			console.log("A spectator has quit while game in state RoundAnimationInProgress");
+		}
+		if (!this.gameHasHumanPlayersLeft() && this._spectators.length == 0)
+		{
+			console.log('there are no human players or spectators left');
+			this.endGame(spectator);
+		}
+		else
+			console.log('there are human players or spectators left');
 	}
 }
