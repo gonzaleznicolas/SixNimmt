@@ -178,6 +178,63 @@ module.exports = class Game extends EventEmitter
 		console.log(name + " removed from game " + this._gameCode);
 	}
 
+	replaceHumanPlayerWithArtificialPlayer(humanPlayerToReplace)
+	{
+		if (!this._players.delete(humanPlayerToReplace.Name))
+		{
+			console.log('Player ' + humanPlayerToReplace.Name +' who \'quit\' was not in the game. Ignored.')
+			return;
+		}
+
+		let nameForArtificialReplacement = "AI "+humanPlayerToReplace.Name;
+		nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
+		
+		// make sure the name is not taken
+		let n = 1;
+		while (this._players.has(nameForArtificialReplacement))
+		{
+			nameForArtificialReplacement = "AI "+n+humanPlayerToReplace.Name;
+			nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
+		}
+
+		let artificialPlayerReplacement = new ArtificialPlayer(nameForArtificialReplacement);
+		artificialPlayerReplacement.Hand = humanPlayerToReplace.Hand;
+		this._players.set(nameForArtificialReplacement, artificialPlayerReplacement);
+		this.subscribeToPlayerEvents(artificialPlayerReplacement);
+		this._scoreboard.renamePlayer(humanPlayerToReplace.Name, artificialPlayerReplacement.Name);
+
+		console.log(`Human player ${humanPlayerToReplace.Name} has left and has been replaced by artificial player ${artificialPlayerReplacement.Name}`);
+
+		if (this._state == GameStates.WaitForAllPlayersToChooseTheirCard)
+		{
+			if (this._upcomingCards.playerHasPlayedACard(humanPlayerToReplace.Name)) // the human player picked a card for this round already
+			{
+				console.log(`${humanPlayerToReplace.Name} had played a card before disconnecting so ${artificialPlayerReplacement.Name} did not play a card`);
+				this._upcomingCards.renamePlayer(humanPlayerToReplace.Name, artificialPlayerReplacement.Name);
+				artificialPlayerReplacement.State = PlayerStates.WaitForRestToPlayTheirCard;
+			}
+			else //upcoming cards doesnt have a card for player
+			{
+				// changing the state will make the artificial player choose a card within a few seconds
+				console.log(`${humanPlayerToReplace.Name} had not played a card before disconnecting so ${artificialPlayerReplacement.Name} was instructed to pick a card`);
+				artificialPlayerReplacement.State = PlayerStates.ChooseCard;
+			}
+		}
+		else if (this._state == GameStates.RoundAnimationInProgress)
+		{
+			if (humanPlayerToReplace.State == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
+			{
+				console.log(`${humanPlayerToReplace.Name} was supposed to pick a row to take but quit, so ${artificialPlayerReplacement.Name} will pick a row`);
+				artificialPlayerReplacement.chooseARowToTake();
+			}
+			else
+			{
+				console.log(`${humanPlayerToReplace.Name} was in the middle of displaying an animation when they quit, so ${artificialPlayerReplacement.Name} will just emit playerOrSpectatorDoneDisplayingRound`);
+				artificialPlayerReplacement.sayDoneDisplayingRound();
+			}
+		}
+	}
+
 	initializePlayerHands()
 	{
 		this._players.forEach(function (player) {
@@ -384,57 +441,13 @@ module.exports = class Game extends EventEmitter
 		else if (this._state == GameStates.WaitForAllPlayersToChooseTheirCard ||
 				this._state == GameStates.RoundAnimationInProgress)
 		{
-			if (!this._players.delete(player.Name))
+			this.replaceHumanPlayerWithArtificialPlayer(player);
+			if (!this.gameHasHumanPlayersLeft())
 			{
-				console.log('Player ' + player.Name +' who \'quit\' was not in the game. Ignored.')
-				return;
+				this.endGame(player);
 			}
 
-			let nameForArtificialReplacement = "Ai"+player.Name;
-			nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
-			
-			// make sure the name is not taken
-			let n = 1;
-			while (this._players.has(nameForArtificialReplacement))
-			{
-				nameForArtificialReplacement = "Ai"+n+player.Name;
-				nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
-			}
-
-			let artificialPlayerReplacement = new ArtificialPlayer(nameForArtificialReplacement);
-			artificialPlayerReplacement.Hand = player.Hand;
-			this._players.set(nameForArtificialReplacement, artificialPlayerReplacement);
-			this.subscribeToPlayerEvents(artificialPlayerReplacement);
-			this._scoreboard.renamePlayer(player.Name, artificialPlayerReplacement.Name);
-
-			console.log(`Human player ${player.Name} has left and has been replaced by artificial player ${artificialPlayerReplacement.Name}`);
-
-			if (this._state == GameStates.WaitForAllPlayersToChooseTheirCard)
-			{
-				if (this._upcomingCards.playerHasPlayedACard(player.Name)) // the human player picked a card for this round already
-				{
-					this._upcomingCards.renamePlayer(player.Name, artificialPlayerReplacement.Name);
-					artificialPlayerReplacement.State = PlayerStates.WaitForRestToPlayTheirCard;
-				}
-				else //upcoming cards doesnt have a card for player
-				{
-					// changing the state will make the artificial player choose a card within a few seconds
-					artificialPlayerReplacement.State = PlayerStates.ChooseCard;
-				}
-			}
-			else if (this._state == GameStates.RoundAnimationInProgress)
-			{
-				if (player.State == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
-				{
-					artificialPlayerReplacement.chooseARowToTake();
-				}
-				else
-				{
-					artificialPlayerReplacement.sayDoneDisplayingRound();
-				}
-			}
 		}
-		// WIP TODO if in the middle of game, replace with an AI. if there are no human players left, end game.
 	}
 
 	addArtificialPlayer()
@@ -442,7 +455,7 @@ module.exports = class Game extends EventEmitter
 		let n = 1;
 		let name;
 		do{
-			name = "AI"+n;
+			name = "AI "+n;
 			n++;
 		} while (this._players.has(name));
 

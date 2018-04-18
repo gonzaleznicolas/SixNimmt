@@ -137,12 +137,6 @@ class RoundController {
 				this._activeRoundStepSequence.shift();
 				this.dealWithRoundStepSequence();
 			}
-			else if (step.stepType == RoundStepTypes.RoundDone)
-			{
-				this.updateModelAndDrawFromTableImage(step.tableImage);
-				this._activeRoundStepSequence = [];
-				socket.emit("clientDoneDisplayingRound");
-			}
 			else if (step.stepType == RoundStepTypes.IncrementPlayerScore)
 			{
 				// for this one, tell the scoreboard to increment, pass it as a callback a function
@@ -157,6 +151,18 @@ class RoundController {
 				);
 				this._activeRoundStepSequence.shift();
 				this.dealWithRoundStepSequence();
+			}
+			else if (step.stepType == RoundStepTypes.ResetScoreboard)
+			{
+				this._scoreboardView.setScoreboard(step.scoreboard);
+				this._activeRoundStepSequence.shift();
+				this.dealWithRoundStepSequence();
+			}
+			else if (step.stepType == RoundStepTypes.RoundDone)
+			{
+				this.updateModelAndDrawFromTableImage(step.tableImage);
+				this._activeRoundStepSequence = [];
+				socket.emit("clientDoneDisplayingRound");
 			}
 		}
 	}
