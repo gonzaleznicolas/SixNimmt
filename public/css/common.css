@@ -13,6 +13,7 @@
 	user-select: none;
 }
 
+/* without this, the form doesnt work on iphone */
 input, input:before, input:after {
 	-webkit-user-select: initial;
 	-khtml-user-select: initial;
