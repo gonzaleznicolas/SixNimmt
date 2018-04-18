@@ -82,9 +82,10 @@ module.exports = class Game extends EventEmitter
 
 	gameHasHumanPlayersLeft()
 	{
+		console.log('Testing if there are human players left in game '+this._gameCode);
 		return Array.from(this._players).some( (name_player) => {
 			return name_player[1] instanceof HumanPlayer
-		 });
+		});
 	}
 
 	everyPlayerInState(state)
@@ -442,12 +443,14 @@ module.exports = class Game extends EventEmitter
 				this._state == GameStates.RoundAnimationInProgress)
 		{
 			this.replaceHumanPlayerWithArtificialPlayer(player);
-			if (!this.gameHasHumanPlayersLeft())
-			{
-				this.endGame(player);
-			}
-
 		}
+		if (!this.gameHasHumanPlayersLeft())
+		{
+			console.log('there are no human players left');
+			this.endGame(player);
+		}
+		else
+			console.log('there are human players left');
 	}
 
 	onSpectatorQuitGame(spectator)
