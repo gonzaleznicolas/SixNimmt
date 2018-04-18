@@ -14,6 +14,22 @@ module.exports = class RoundProcessor
 		this._gamesTable = gamesTable;
 		this._gamesUpcomingards = gamesUpcomingCards;
 		this._gamesScoreboard = gamesScoreboard;
+
+		// these partial round step sequences will be filled out by the first and potential second calls
+		// to doAsMuchOfRoundAsPossible.
+		// before returning, each execution of doAsMuchOfRoundAsPossible will set the roundStepSequence its about to return into
+		// this._firstRoundStepSequence or this._potentialSecondRoundStepSequence
+		// These will later be used by getFullRoundStepSequence().
+		this._firstRoundStepSequence = [];
+		this._potentialSecondRoundStepSequence = [];
+	}
+
+	// returns a roundStepSequence array which represents the full round. No interruption for
+	// asking a player to select a row to take
+	getFullRoundStepSequence()
+	{
+		let roundStepSequence = this._firstRoundStepSequence.concat(this._potentialSecondRoundStepSequence);
+		return roundStepSequence.filter((step) => step.stepType != RoundStepTypes.AskPlayerToChooseARowToTake);
 	}
 
 	// bStartOfRound = true means the round is starting rather than resuming after a player chose a row to take
@@ -21,6 +37,11 @@ module.exports = class RoundProcessor
 	// rowToTake and nameOfPlayerWhoTookRow are only passed in if !bStartOfRound
 	doAsMuchOfRoundAsPossible(bStartOfRound, rowToTake, nameOfPlayerWhoTookRow)
 	{
+		if (bStartOfRound)
+		{
+			this._firstRoundStepSequence = [];
+			this._potentialSecondRoundStepSequence = [];
+		}
 		let roundStepSequence = [];
 		let tableAtThisPoint;
 		let upcomingCardsAtThisPoint;
@@ -356,6 +377,12 @@ module.exports = class RoundProcessor
 				}
 			});
 		}
+
+		// set these members. They will be used by getFullRoundStepSequence()
+		if (bStartOfRound)
+			this._firstRoundStepSequence = roundStepSequence;
+		else
+			this._potentialSecondRoundStepSequence = roundStepSequence;
 
 		return {
 			needToAskThisPlayerForARowToTake: needToAskThisPlayerForARowToTake,
