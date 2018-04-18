@@ -28,6 +28,8 @@ module.exports = class Player extends EventEmitter
 	// but it does need to implement it even if it does nothing.
 	// It has to be implemented because at one time or another, the game will call these methods
 	// on each of its players regardless of if they are human or artificial.
+
+	removeDisconnectListener(){}
 	updatePlayerList(playerList){}
 	terminateGame(nameOfPlayerWhoEndedTheGame){}
 	startGame(playerList, table){}

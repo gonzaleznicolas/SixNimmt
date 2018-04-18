@@ -269,7 +269,6 @@ module.exports = class Game extends EventEmitter
 		this._spectators.forEach( function (s) {
 			s.removeDisconnectListener();
 		});
-		this._spectators.clear();
 		
 		delete this._deck;
 		delete this._upcomingCards;
