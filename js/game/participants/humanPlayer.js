@@ -34,6 +34,11 @@ module.exports = class HumanPlayer extends Player
 	
 	// METHODS CALLED BY THE GAME. METHODS ANY PLAYER MUST IMPLEMENT
 
+	removeDisconnectListener()
+	{
+		this._socket.removeListener('disconnect', this.onClientQuitGame.bind(this));
+	}
+	
 	updatePlayerList(playerList)
 	{
 		this._socket.emit('serverPlayerList', playerList);

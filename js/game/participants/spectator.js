@@ -23,6 +23,11 @@ module.exports = class Spectator extends EventEmitter
 	set State(state) {this._state = state;}
 
 	// METHODS CALLED BY THE GAME
+	
+	removeDisconnectListener()
+	{
+		this._socket.removeListener('disconnect', this.onClientQuitGame.bind(this));
+	}
 
 	updatePlayerList(playerList)
 	{
