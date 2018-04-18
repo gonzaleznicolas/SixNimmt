@@ -18,6 +18,7 @@ let toPickARowStr;
 let cardsArePlayedMinToMax;
 let selectedRowStr;
 let selectACardToPlayStr;
+let waitingForOthersToFinishDisplayingRoundStr;
 
 function translateToEnglish()
 {
@@ -81,6 +82,8 @@ function translateToEnglish()
 	selectedRowStr = "selected row";
 
 	selectACardToPlayStr = "Please select a card to play";
+
+	waitingForOthersToFinishDisplayingRoundStr = "Waiting for others to finish displaying round";
 }
 
 function translateToSpanish()
@@ -145,4 +148,6 @@ function translateToSpanish()
 	selectedRowStr = "elijio la fila";
 
 	selectACardToPlayStr = "Por favor elige una carta";
+
+	waitingForOthersToFinishDisplayingRoundStr = "Esperando a que todos terminen de mostrar la ronda";
 }

@@ -162,6 +162,7 @@ class RoundController {
 			{
 				this.updateModelAndDrawFromTableImage(step.tableImage);
 				this._activeRoundStepSequence = [];
+				this._headerView.set(waitingForOthersToFinishDisplayingRoundStr);
 				console.log("emitting clientDoneDisplayingRound");
 				socket.emit("clientDoneDisplayingRound");
 			}
