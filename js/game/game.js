@@ -450,25 +450,6 @@ module.exports = class Game extends EventEmitter
 		}
 	}
 
-	addArtificialPlayer()
-	{
-		let n = 1;
-		let name;
-		do{
-			name = "AI "+n;
-			n++;
-		} while (this._players.has(name));
-
-		let player = new ArtificialPlayer(name);
-		player.State = PlayerStates.WaitPage;
-		this._players.set(name, player);
-		this.subscribeToPlayerEvents(player);
-		this.updateOpen();
-		this.updateAllPlayersAndSpectatorsWithPlayerList();
-		console.log(`Artificial player ${name} has been added to game ${this._gameCode}`);
-		return name;
-	}
-
 	onSpectatorQuitGame(spectator)
 	{
 		this.removeSpectator(spectator);
