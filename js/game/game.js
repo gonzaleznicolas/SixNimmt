@@ -253,6 +253,15 @@ module.exports = class Game extends EventEmitter
 		this.tellAllPlayersAndSpectatorsThatTheGameGotTerminated(playerWhoEndedTheGame.Name);
 
 		// tell the gameManager to remove this game
+		delete this._deck;
+		delete this._upcomingCards;
+		delete this._scoreboard;
+		delete this._players;
+		delete this._spectators;
+		delete this._table;
+		delete this._roundProcessor;
+		delete this._state;
+		delete this._roundNumberOfCurrentIteration;
 		this.emit("gameEnded", this._gameCode);
 	}
 
