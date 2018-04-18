@@ -31,9 +31,9 @@ module.exports = class Scoreboard
 	}
 
 	// returns bool
-	anyPlayerHasReached66Pts()
+	anyPlayerHasReachedPts(pts)
 	{
-		return this._scores.some( (s) => {s.score >= 66} );
+		return this._scores.some( (s) => s.score >= pts );
 	}
 
 	// returns an array of {name: , score:}

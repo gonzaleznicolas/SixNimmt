@@ -309,7 +309,7 @@ module.exports = class Game extends EventEmitter
 
 	startANewRound()
 	{
-		if (this._scoreboard.anyPlayerHasReached66Pts())
+		if (this._scoreboard.anyPlayerHasReachedPts(3))
 		{
 			console.log("someone won");
 			console.log(this._scoreboard.lowestScores());
