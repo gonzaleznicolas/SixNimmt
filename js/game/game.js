@@ -164,7 +164,10 @@ module.exports = class Game extends EventEmitter
 	removeSpectator(spectator)
 	{
 		if (!this._spectators)
+		{
+			console.log('Was going to delete a spectator but the _spectator array has already been deleted.');
 			return;
+		}
 		let index = this._spectators.findIndex( (s) => {return s.Socket.id = spectator.Socket.id});
 		if (index >= 0)
 		{
@@ -252,7 +255,11 @@ module.exports = class Game extends EventEmitter
 
 	endGame(playerWhoEndedTheGame)
 	{
-		this.tellAllPlayersAndSpectatorsThatTheGameGotTerminated(playerWhoEndedTheGame.Name);
+		// if playerWhoEndedTheGame is not passed in, dont notify everyone that the game was ended.
+		// no parameter wil be passed in when there is no need to notify anyone. e.g. when there are no
+		// human players or spectators left
+		if (playerWhoEndedTheGame)
+			this.tellAllPlayersAndSpectatorsThatTheGameGotTerminated(playerWhoEndedTheGame.Name);
 
 		// tell the gameManager to remove this game
 		delete this._deck;
@@ -460,13 +467,13 @@ module.exports = class Game extends EventEmitter
 		{
 			this.replaceHumanPlayerWithArtificialPlayer(player);
 		}
-		if (!this.gameHasHumanPlayersLeft())
+		if (!this.gameHasHumanPlayersLeft() && this._spectators.length == 0)
 		{
-			console.log('there are no human players left');
+			console.log('there are no human players or spectators left');
 			this.endGame(player);
 		}
 		else
-			console.log('there are human players left');
+			console.log('there are human players or spectators left');
 	}
 
 	onSpectatorQuitGame(spectator)
@@ -483,6 +490,13 @@ module.exports = class Game extends EventEmitter
 			this.onPlayerOrSpectatorDoneDisplayingRound();
 			console.log("A spectator has quit while game in state RoundAnimationInProgress");
 		}
+		if (!this.gameHasHumanPlayersLeft() && this._spectators.length == 0)
+		{
+			console.log('there are no human players or spectators left');
+			this.endGame(spectator);
+		}
+		else
+			console.log('there are human players or spectators left');
 	}
 
 	onPlayerPlayCard(data)
