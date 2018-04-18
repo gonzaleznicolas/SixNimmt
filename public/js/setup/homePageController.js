@@ -172,6 +172,7 @@ function onServerPlayerList(listOfPlayers){
 
 function onServerGameTerminated(terminatorPlayerName)
 {
+	socket.close();
 	new Dialog(thisGameHasBeenTerminatedStr+terminatorPlayerName,
 		okStr, 
 		function(){

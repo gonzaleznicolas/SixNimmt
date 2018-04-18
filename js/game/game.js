@@ -261,14 +261,8 @@ module.exports = class Game extends EventEmitter
 		if (playerWhoEndedTheGame)
 			this.tellAllPlayersAndSpectatorsThatTheGameGotTerminated(playerWhoEndedTheGame.Name);
 
-		this._players.forEach( function(p) {
-			if (p instanceof HumanPlayer)
-				p.Socket.close();
-		});
-
-		this._spectators.forEach( function(s) {
-			s.Socket.close();
-		});
+		this._players.clear();
+		this._spectators.clear();
 		
 		delete this._deck;
 		delete this._upcomingCards;
