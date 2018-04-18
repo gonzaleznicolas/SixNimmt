@@ -163,6 +163,8 @@ module.exports = class Game extends EventEmitter
 
 	removeSpectator(spectator)
 	{
+		if (!this._spectators)
+			return;
 		let index = this._spectators.findIndex( (s) => {return s.Socket.id = spectator.Socket.id});
 		if (index >= 0)
 		{
@@ -290,6 +292,11 @@ module.exports = class Game extends EventEmitter
 
 	startANewRound()
 	{
+		if (this._scoreboard.anyPlayerHasReached66Pts())
+		{
+			console.log("someone won");
+			console.log(this._scoreboard.lowestScores());
+		}
 		this._roundNumberOfCurrentIteration++;
 		if (this._roundNumberOfCurrentIteration > 10)
 		{

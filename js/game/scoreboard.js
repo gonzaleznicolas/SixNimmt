@@ -30,6 +30,20 @@ module.exports = class Scoreboard
 		this._scores = playerNameList.map( (playerName) => { return {name: playerName, score: 0}});
 	}
 
+	// returns bool
+	anyPlayerHasReached66Pts()
+	{
+		return this._scores.some( (s) => {s.score >= 66} );
+	}
+
+	// returns an array of {name: , score:}
+	// the array contains all the players tied for lowest score
+	lowestScores()
+	{
+		let minScore = Math.min(...this._scores.map( (s) => s.score));
+		return this._scores.filter( (s) => s.score == minScore);
+	}
+
 	incrementPlayerScore(name, pointsToAdd)
 	{
 		let i = this._scores.findIndex( (score) => score.name == name);
