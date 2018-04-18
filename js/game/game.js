@@ -402,6 +402,7 @@ module.exports = class Game extends EventEmitter
 			}
 
 			let artificialPlayerReplacement = new ArtificialPlayer(nameForArtificialReplacement);
+			artificialPlayerReplacement.Hand = player.Hand;
 			this._players.set(nameForArtificialReplacement, artificialPlayerReplacement);
 			this.subscribeToPlayerEvents(artificialPlayerReplacement);
 			this._scoreboard.renamePlayer(player.Name, artificialPlayerReplacement.Name);
