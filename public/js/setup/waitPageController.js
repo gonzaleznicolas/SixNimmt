@@ -16,7 +16,7 @@ function onAddAIFromWaitPageClicked()
 
 function onQuitGameClicked()
 {
-	new Dialog(areYouSureYouWantToLeaveStr,
+	dialog.set(areYouSureYouWantToLeaveStr,
 			leaveStr, 
 			function(){
 				socket.emit("clientQuitGame");
@@ -27,7 +27,7 @@ function onQuitGameClicked()
 
 function onEndGameClicked()
 {
-	new Dialog(areYouSureYouWantToEndGameStr,
+	dialog.set(areYouSureYouWantToEndGameStr,
 		endGameStr, 
 		function(){
 			socket.emit("clientEndGameFromWaitPage");

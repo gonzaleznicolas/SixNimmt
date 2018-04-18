@@ -50,14 +50,3 @@ body{
 	background: rgba(188, 144, 204, 1);
 	color: white;
 }
-
-.dimBackground{
-	position: fixed;
-	z-index: 2;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	display: none;
-	background: rgba(0,0,0,0.6);
-}

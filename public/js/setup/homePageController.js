@@ -9,10 +9,11 @@ let loadingScreenType = undefined;
 let gameCode = undefined;
 let waitPagePlayerList = [];
 let state = undefined;
-
+let dialog = undefined;
 
 $(function () {
 	state = ClientStates.NotPastFormYet;
+	dialog = new Dialog();
 	startHomePageUI();
 	socket = io();
 
@@ -173,7 +174,7 @@ function onServerPlayerList(listOfPlayers){
 function onServerGameTerminated(terminatorPlayerName)
 {
 	socket.close();
-	new Dialog(thisGameHasBeenTerminatedStr+terminatorPlayerName,
+	dialog.set(thisGameHasBeenTerminatedStr+terminatorPlayerName,
 		okStr, 
 		function(){
 			location.reload();
