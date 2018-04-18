@@ -491,20 +491,24 @@ module.exports = class Game extends EventEmitter
 		{
 			this.removePlayer(player.Name);
 			if (player.StartedGame)
+			{
 				this.endGame(player);
+				return;
+			}
 		}
 		else if (this._state == GameStates.WaitForAllPlayersToChooseTheirCard ||
 				this._state == GameStates.RoundAnimationInProgress)
 		{
 			this.replaceHumanPlayerWithArtificialPlayer(player);
+
+			if (!this.gameHasHumanPlayersLeft() && !this.gameHasSpectatorsLeft())
+			{
+				console.log('there are no human players or spectators left');
+				this.endGame(player);
+			}
+			else
+				console.log('there are human players or spectators left');
 		}
-		if (!this.gameHasHumanPlayersLeft() && !this.gameHasSpectatorsLeft())
-		{
-			console.log('there are no human players or spectators left');
-			this.endGame(player);
-		}
-		else
-			console.log('there are human players or spectators left');
 	}
 
 	onPlayerPlayCard(data)
