@@ -36,6 +36,7 @@ module.exports = class HumanPlayer extends Player
 
 	removeDisconnectListener()
 	{
+		console.log('removing disconnect handler from player '+this._name);
 		this._socket.removeListener('disconnect', this.onClientQuitGame.bind(this));
 	}
 	
