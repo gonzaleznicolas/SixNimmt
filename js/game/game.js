@@ -84,13 +84,24 @@ module.exports = class Game extends EventEmitter
 	{
 		if (!this._players)
 		{
-			console.log("Was gong to check if there are human players left, but the game has been deleted.");
+			console.log("Was going to check if there are human players left, but the game has been deleted.");
 			return false;
 		}
 		console.log('Testing if there are human players left in game '+this._gameCode);
 		return Array.from(this._players).some( (name_player) => {
 			return name_player[1] instanceof HumanPlayer
 		});
+	}
+
+	gameHasSpectatorsLeft()
+	{
+		if (!this._spectators)
+		{
+			console.log("Was going to check if there are spectators left, but the game has been deleted.");
+			return false;
+		}
+		else
+			return this._spectators.length > 0;
 	}
 
 	everyPlayerInState(state)
@@ -487,7 +498,7 @@ module.exports = class Game extends EventEmitter
 		{
 			this.replaceHumanPlayerWithArtificialPlayer(player);
 		}
-		if (!this.gameHasHumanPlayersLeft() && this._spectators.length == 0)
+		if (!this.gameHasHumanPlayersLeft() && !this.gameHasSpectatorsLeft())
 		{
 			console.log('there are no human players or spectators left');
 			this.endGame(player);
@@ -595,7 +606,7 @@ module.exports = class Game extends EventEmitter
 			this.onPlayerOrSpectatorDoneDisplayingRound();
 			console.log("A spectator has quit while game in state RoundAnimationInProgress");
 		}
-		if (!this.gameHasHumanPlayersLeft() && this._spectators.length == 0)
+		if (!this.gameHasHumanPlayersLeft() && !this.gameHasSpectatorsLeft())
 		{
 			console.log('there are no human players or spectators left');
 			this.endGame(spectator);
