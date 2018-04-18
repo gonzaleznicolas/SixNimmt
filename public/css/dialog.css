@@ -12,7 +12,6 @@
 	font-size: 3em;
 	background: white;
 	color: var(--nimmtPurple);
-	visibility: hidden;
 }
 
 .dialogPrompt {

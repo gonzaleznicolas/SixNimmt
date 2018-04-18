@@ -40,6 +40,11 @@ class Dialog
 			this._option2Element.on('click', function(){
 				this.close();
 			}.bind(this));
+			this._option2Element.show();
+		}
+		else
+		{
+			this._option2Element.hide();
 		}
 
 		$("body").append(this._dialogBackground);

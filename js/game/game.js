@@ -82,6 +82,11 @@ module.exports = class Game extends EventEmitter
 
 	gameHasHumanPlayersLeft()
 	{
+		if (!this._players)
+		{
+			console.log("Was gong to check if there are human players left, but the game has been deleted.");
+			return false;
+		}
 		console.log('Testing if there are human players left in game '+this._gameCode);
 		return Array.from(this._players).some( (name_player) => {
 			return name_player[1] instanceof HumanPlayer
