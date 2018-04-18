@@ -38,6 +38,7 @@ module.exports = Object.freeze(
 		ShowMessageSayingWhichRowWasSelected: 8,
 		ClearHeader: 9,
 		RoundDone: 10,
-		IncrementPlayerScore: 11
+		IncrementPlayerScore: 11,
+		ResetScoreboard: 12
 	}
 });

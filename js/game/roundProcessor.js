@@ -26,6 +26,15 @@ module.exports = class RoundProcessor
 		let upcomingCardsAtThisPoint;
 		let scoreboardAtThisPoint;
 
+		// before sending any animation out, reset the scoreboard. This is important in case any player's names
+		// have changed. i.e. a human player left and was replaced by an AI with a different name
+		scoreboardAtThisPoint = Scoreboard.clone(this._gamesScoreboard);
+		roundStepSequence.push(
+		{
+			stepType: RoundStepTypes.ResetScoreboard,
+			scoreboard: scoreboardAtThisPoint.Scores
+		});
+
 		if (bStartOfRound)
 		{
 			// initial table image
