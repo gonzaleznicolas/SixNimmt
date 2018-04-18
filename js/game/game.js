@@ -261,7 +261,15 @@ module.exports = class Game extends EventEmitter
 		if (playerWhoEndedTheGame)
 			this.tellAllPlayersAndSpectatorsThatTheGameGotTerminated(playerWhoEndedTheGame.Name);
 
-		// tell the gameManager to remove this game
+		this._players.forEach( function(p) {
+			if (p instanceof HumanPlayer)
+				p.Socket.close();
+		});
+
+		this._spectators.forEach( function(s) {
+			s.Socket.close();
+		});
+		
 		delete this._deck;
 		delete this._upcomingCards;
 		delete this._scoreboard;
@@ -271,6 +279,8 @@ module.exports = class Game extends EventEmitter
 		delete this._roundProcessor;
 		delete this._state;
 		delete this._roundNumberOfCurrentIteration;
+
+		// tell the gameManager to remove this game
 		this.emit("gameEnded", this._gameCode);
 	}
 
@@ -501,6 +511,11 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerPlayCard(data)
 	{
+		if (!this._players)
+		{
+			console.log('A player tried to play a card but this game was already deleted. Ignore.');
+			return;
+		}
 		if (this._state != GameStates.WaitForAllPlayersToChooseTheirCard)
 		{
 			console.log("playerPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
@@ -522,6 +537,11 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerRowToTake(data)
 	{
+		if (!this._players)
+		{
+			console.log('A player tried to choose a row to take but this game was already deleted. Ignore.');
+			return;
+		}
 		console.log( data.player.Name + " has chosen which row to take.");
 		data.player.State = PlayerStates.RoundAnimationInProgress;
 		this.startOrResumeDisplayingRound(false, data.rowToTakeIndex, data.player.Name);
@@ -531,6 +551,11 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerOrSpectatorDoneDisplayingRound(participant)
 	{
+		if (!this._players)
+		{
+			console.log('A participant tried to say they are done displaying round, but the game was already deleted. Ignore.');
+			return;
+		}
 		if (this._state != GameStates.RoundAnimationInProgress)
 		{
 			console.log("playerOrSpectatorDoneDisplayingRound was received at an unexpected time. Ignored.");
