@@ -52,7 +52,7 @@ class RoundController {
 		else
 		{
 			console.log('Done displaying round, but this is a player, so ask the user if they want to watch again before emitting clientDoneDisplayingRound');
-			dialog.set(doYouWantToRewatchRoundStr, continueStr, this.tellServerDontWantToRewatch.bind(this), rewatchStr, this.tellServerWantToRewatch.bind(this));
+			dialog.set(doYouWantToRewatchRoundStr, rewatchStr, this.tellServerWantToRewatch.bind(this), continueStr, this.tellServerDontWantToRewatch.bind(this));
 		}
 	}
 
