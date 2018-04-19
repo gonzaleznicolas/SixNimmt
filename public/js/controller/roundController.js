@@ -27,9 +27,9 @@ class RoundController {
 		dialog.close();
 		this._headerView.clear();
 
-		if (data.nameOfPlayerWhoAskedToRewatch)
+		if (data.bItsAReplay)
 		{
-			this._headerView.set(`${data.nameOfPlayerWhoAskedToRewatch} ${wantedToRewatchStr}`);
+			this._headerView.set(someoneWantedToRewatchStr);
 		}
 
 		if(this._activeRoundStepSequence.length > 0)
@@ -60,7 +60,7 @@ class RoundController {
 					this.tellServerDoneDisplayingRoundAndWantToRewatch.bind(this),
 					continueStr,
 					this.tellServerDoneDisplayingRoundAndDontWantToRewatch.bind(this),
-					"dont show dialog",
+					dontShowDialogStr,
 					this.setDontShowRoundReplayDialog.bind(this)
 				);
 			}

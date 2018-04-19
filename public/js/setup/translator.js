@@ -21,7 +21,8 @@ let waitingForOthersToFinishDisplayingRoundStr;
 let doYouWantToRewatchRoundStr;
 let rewatchStr;
 let continueStr;
-let wantedToRewatchStr;
+let someoneWantedToRewatchStr;
+let dontShowDialogStr;
 
 function translateToEnglish()
 {
@@ -90,7 +91,9 @@ function translateToEnglish()
 	rewatchStr = 'Rewatch';
 	continueStr = 'Continue';
 
-	wantedToRewatchStr = 'wants to rewatch the turn';
+	someoneWantedToRewatchStr = "Someone asked to watch round replay";
+
+	dontShowDialogStr = "Do not continue to show this dialog";
 }
 
 function translateToSpanish()
@@ -160,5 +163,7 @@ function translateToSpanish()
 	rewatchStr = 'Repetir';
 	continueStr = 'Continuar';
 
-	wantedToRewatchStr = 'quizo repetir el turno';
+	someoneWantedToRewatchStr = 'Alguien quizo repetir el turno';
+
+	dontShowDialogStr = "No me vuelvas a preguntar";
 }

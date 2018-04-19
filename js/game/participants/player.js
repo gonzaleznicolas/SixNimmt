@@ -36,7 +36,7 @@ module.exports = class Player extends EventEmitter
 	updateUpcomingCards(upcomingCards){}
 
 	// the player must not modify roundStepSequence. Just read. It belongs to the game.
-	roundInfo(roundStepSequence, nameOfPlayerWhoAskedToRewatch){}
+	roundInfo(roundStepSequence, bItsAReplay){}
 
 	startRound(table, scoreboard){}
 

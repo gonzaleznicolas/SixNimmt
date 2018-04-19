@@ -36,6 +36,7 @@ module.exports = class Game extends EventEmitter
 		this._upcomingCards = new UpcomingCards();
 		this._scoreboard = new Scoreboard();
 		this._roundProcessor = new RoundProcessor(this._table, this._upcomingCards, this._scoreboard);
+		this._repeatRoundFlag = false;
 		console.log("Game with code " + gameCode + " created.");
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
@@ -330,11 +331,13 @@ module.exports = class Game extends EventEmitter
 			console.log("someone won");
 			console.log(this._scoreboard.lowestScores());
 		}
+
 		this._roundNumberOfCurrentIteration++;
 		if (this._roundNumberOfCurrentIteration > 10)
 		{
 			this.startANewIteration();
 		}
+		this._repeatRoundFlag = false;
 		this._upcomingCards.reset();
 		this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationNotInProgress});
@@ -364,14 +367,14 @@ module.exports = class Game extends EventEmitter
 		setTimeout(function() {this.updateAllPlayersAndSpectatorsWithRoundStepSequence(details.roundStepSequence);}.bind(this), timeToWait);
 	}
 
-	makeEveryPlayerAndSpectatorRewatchRound(nameOfPlayerWhoAskedToRewatch)
+	makeEveryPlayerAndSpectatorRewatchRound()
 	{
-		console.log(`${nameOfPlayerWhoAskedToRewatch} has made everyone rewatch the round`);
+		console.log(`Starting round replay`);
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationInProgress});
 		let roundStepSequence = this._roundProcessor.getFullRoundStepSequence();
-		this.updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence, nameOfPlayerWhoAskedToRewatch);
+		this.updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence, true);
 	}
 
 	// GENERAL GAME UPDATES FOR PLAYERS AND SPECTATORS
@@ -441,14 +444,14 @@ module.exports = class Game extends EventEmitter
 		});
 	}
 
-	updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence, nameOfPlayerWhoAskedToRewatch = undefined)
+	updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence, bItsAReplay = false)
 	{
 		this._players.forEach(function (player){
-			player.roundInfo(roundStepSequence, nameOfPlayerWhoAskedToRewatch);
+			player.roundInfo(roundStepSequence, bItsAReplay);
 		});
 
 		this._spectators.forEach(function (spectator){
-			spectator.roundInfo(roundStepSequence, nameOfPlayerWhoAskedToRewatch);
+			spectator.roundInfo(roundStepSequence, bItsAReplay);
 		});
 	}
 
@@ -578,10 +581,7 @@ module.exports = class Game extends EventEmitter
 		console.log("Game notified that a participant is done displaying round");
 
 		if (participant instanceof Player && data.bWatchAgain)
-		{
-			this.makeEveryPlayerAndSpectatorRewatchRound(participant.Name);
-			return;
-		}
+			this._repeatRoundFlag = true;
 
 		if (participant instanceof Player)
 		{
@@ -596,7 +596,10 @@ module.exports = class Game extends EventEmitter
 			this._spectators.every( (s) => s.State == SpectatorStates.DoneDisplayingRoundAnimation))
 		{
 			console.log("Every participant is done displaying the round.");
-			this.startANewRound();
+			if (this._repeatRoundFlag)
+				this.makeEveryPlayerAndSpectatorRewatchRound();
+			else
+				this.startANewRound();
 		}
 		else
 		{
