@@ -364,6 +364,15 @@ module.exports = class Game extends EventEmitter
 		setTimeout(function() {this.updateAllPlayersAndSpectatorsWithRoundStepSequence(details.roundStepSequence);}.bind(this), timeToWait);
 	}
 
+	makeEveryPlayerAndSpectatorRewatchRound(nameOfPlayerWhoAskedToRewatch)
+	{
+		this._state = GameStates.RoundAnimationInProgress;
+		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
+		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationInProgress});
+		let roundStepSequence = this._roundProcessor.getFullRoundStepSequence();
+		this.updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence);
+	}
+
 	// GENERAL GAME UPDATES FOR PLAYERS AND SPECTATORS
 
 	updateAllPlayersAndSpectatorsWithPlayerList()
@@ -551,8 +560,9 @@ module.exports = class Game extends EventEmitter
 
 	// PLAYER OR SPECTATOR TO GAME - GAME EVENT HANDLERS
 
-	onPlayerOrSpectatorDoneDisplayingRound(participant)
+	onPlayerOrSpectatorDoneDisplayingRound(data)
 	{
+		let participant = data.participant;
 		if (!this._players)
 		{
 			console.log('A participant tried to say they are done displaying round, but the game was already deleted. Ignore.');
@@ -565,6 +575,12 @@ module.exports = class Game extends EventEmitter
 		}
 
 		console.log("Game notified that a participant is done displaying round");
+
+		if (participant instanceof Player && data.bWatchAgain)
+		{
+			this.makeEveryPlayerAndSpectatorRewatchRound(participant.Name);
+			return;
+		}
 
 		if (participant instanceof Player)
 		{

@@ -143,7 +143,7 @@ module.exports = class HumanPlayer extends Player
 		this.emit('playerRowToTake', {player: this, rowToTakeIndex: rowToTakeIndex});
 	}
 
-	onClientDoneDisplayingRound()
+	onClientDoneDisplayingRound(bWatchAgain)
 	{
 		if (this._state != PlayerStates.RoundAnimationInProgress)
 		{
@@ -151,6 +151,6 @@ module.exports = class HumanPlayer extends Player
 			return;
 		}
 		console.log(`${this._name} emits playerOrSpectatorDoneDisplayingRound`);
-		this.emit("playerOrSpectatorDoneDisplayingRound", this);
+		this.emit("playerOrSpectatorDoneDisplayingRound", {participant: this, bWatchAgain: bWatchAgain});
 	}
 }

@@ -57,7 +57,7 @@ module.exports = class ArtificialPlayer extends Player
 		setTimeout( function() {
 
 			console.log(`${this._name} emits playerOrSpectatorDoneDisplayingRound`);
-			this.emit("playerOrSpectatorDoneDisplayingRound", this);
+			this.emit("playerOrSpectatorDoneDisplayingRound", {participant: this, bWatchAgain: false});
 
 		}.bind(this), secondsToWait);
 	}

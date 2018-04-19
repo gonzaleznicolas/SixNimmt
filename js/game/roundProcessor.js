@@ -124,8 +124,6 @@ module.exports = class RoundProcessor
 					}
 				}
 			});
-			
-			roundStepSequence.push({stepType: RoundStepTypes.ClearHeader});
 		}
 		else
 		{

@@ -33,6 +33,32 @@ class RoundController {
 		}
 	}
 
+	doneDisplayingRound()
+	{
+		console.log('This participant is done displaying the round.');
+		if (bSpectatorMode)
+		{
+			this.tellServerDontWantToRewatch();
+		}
+		else
+		{
+			console.log('Done displaying round, but this is a player, so ask the user if they want to watch again before emitting clientDoneDisplayingRound');
+			dialog.set(doYouWantToRewatchRoundStr, continueStr, this.tellServerDontWantToRewatch.bind(this), rewatchStr, this.tellServerWantToRewatch.bind(this));
+		}
+	}
+
+	tellServerDontWantToRewatch()
+	{
+		console.log('client has chosen not to rewatch round');
+		socket.emit("clientDoneDisplayingRound", false);
+	}
+
+	tellServerWantToRewatch()
+	{
+		console.log('client has chosen to rewatch round');
+		socket.emit("clientDoneDisplayingRound", true);
+	}
+
 	updateModelAndDrawFromTableImage(tableImage)
 	{
 		this._model.Table = tableImage.table;
@@ -62,7 +88,6 @@ class RoundController {
 			else if (step.stepType == RoundStepTypes.FlipAllUpcomingCards)
 			{
 				setTimeout( function () {
-					this._headerView.set(cardsArePlayedMinToMax);
 					this._tableView.Animation.flipAllUpcomingCards(
 						this.afterStep.bind(this),	// callback
 						step.afterImage	// callback param
@@ -163,8 +188,7 @@ class RoundController {
 				this.updateModelAndDrawFromTableImage(step.tableImage);
 				this._activeRoundStepSequence = [];
 				this._headerView.set(waitingForOthersToFinishDisplayingRoundStr);
-				console.log("emitting clientDoneDisplayingRound");
-				socket.emit("clientDoneDisplayingRound");
+				this.doneDisplayingRound();
 			}
 		}
 	}

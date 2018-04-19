@@ -15,10 +15,12 @@ let selectARowStr;
 let selectRowStr;
 let waitingForStr;
 let toPickARowStr;
-let cardsArePlayedMinToMax;
 let selectedRowStr;
 let selectACardToPlayStr;
 let waitingForOthersToFinishDisplayingRoundStr;
+let doYouWantToRewatchRoundStr;
+let rewatchStr;
+let continueStr;
 
 function translateToEnglish()
 {
@@ -77,13 +79,15 @@ function translateToEnglish()
 	waitingForStr = "Waiting for";
 	toPickARowStr = "to pick a row to take";
 
-	cardsArePlayedMinToMax = "Cards are played from smallest to largest";
-
 	selectedRowStr = "selected row";
 
 	selectACardToPlayStr = "Please select a card to play";
 
 	waitingForOthersToFinishDisplayingRoundStr = "Waiting for others to finish displaying round";
+
+	doYouWantToRewatchRoundStr = 'Do you want to rewatch this round?';
+	rewatchStr = 'Rewatch';
+	continueStr = 'Continue';
 }
 
 function translateToSpanish()
@@ -143,11 +147,13 @@ function translateToSpanish()
 	waitingForStr = "Esperando a que";
 	toPickARowStr = "elija una fila";
 
-	cardsArePlayedMinToMax = "Las cartas se ponen de menor a mayor";
-
 	selectedRowStr = "elijio la fila";
 
 	selectACardToPlayStr = "Por favor elige una carta";
 
 	waitingForOthersToFinishDisplayingRoundStr = "Esperando a que todos terminen de mostrar la ronda";
+
+	doYouWantToRewatchRoundStr = 'Quieres repetir esta ronda?';
+	rewatchStr = 'Repetir';
+	continueStr = 'Continuar';
 }

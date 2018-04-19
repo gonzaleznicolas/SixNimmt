@@ -68,4 +68,14 @@ module.exports = class Player extends EventEmitter
 		Upon receiving this event, the game will change the player's state from RoundAnimationInProgress_ExpectedToSendRowToTake 
 		to RoundAnimationInProgress.
 	*/
+
+		/*
+	Event Name:
+		"playerOrSpectatorDoneDisplayingRound"
+	Payload:
+		{player: Player (the player playing card) , bWatchAgain: bool (whether or not the player wants to rewatch the round) }
+	When it must be sent:
+		The player must be in the state RoundAnimationInProgress.
+		The player must have received a call to its roundInfo() with the roundStepSequence last element being of AnimationType RoundDone
+	*/
 }
