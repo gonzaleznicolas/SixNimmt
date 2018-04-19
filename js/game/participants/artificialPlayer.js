@@ -80,7 +80,7 @@ module.exports = class ArtificialPlayer extends Player
 	// which row it wants to take
 	// If the last step is RoundDone, the artificial player must raise an event telling the game that it is
 	// done displaying the round. I.e. the next round can start at any time.
-	roundInfo(roundStepSequence)
+	roundInfo(roundStepSequence, nameOfPlayerWhoAskedToRewatch)
 	{
 		let lastAnimation = roundStepSequence[roundStepSequence.length - 1];
 

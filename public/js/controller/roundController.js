@@ -18,9 +18,18 @@ class RoundController {
 		socket.on("serverRoundInfo", this.onRoundInfo.bind(this));
 	}
 
-	onRoundInfo(roundStepSequence)
+	onRoundInfo(data)
 	{
 		console.log("onRoundInfo");
+		let roundStepSequence = data.roundStepSequence;
+
+		dialog.close();
+		this._headerView.clear();
+
+		if (data.nameOfPlayerWhoAskedToRewatch)
+		{
+			this._headerView.set(`${data.nameOfPlayerWhoAskedToRewatch} ${wantedToRewatchStr}`);
+		}
 
 		if(this._activeRoundStepSequence.length > 0)
 		{

@@ -66,9 +66,9 @@ module.exports = class HumanPlayer extends Player
 		this._socket.emit("serverUpcomingCards", upcomingCards);
 	}
 
-	roundInfo(roundStepSequence)
+	roundInfo(roundStepSequence, nameOfPlayerWhoAskedToRewatch)
 	{
-		this._socket.emit("serverRoundInfo", roundStepSequence);
+		this._socket.emit("serverRoundInfo", {roundStepSequence: roundStepSequence, nameOfPlayerWhoAskedToRewatch: nameOfPlayerWhoAskedToRewatch});
 	}
 
 	startRound(table, scoreboard)

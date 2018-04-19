@@ -370,7 +370,7 @@ module.exports = class Game extends EventEmitter
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationInProgress});
 		let roundStepSequence = this._roundProcessor.getFullRoundStepSequence();
-		this.updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence);
+		this.updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence, nameOfPlayerWhoAskedToRewatch);
 	}
 
 	// GENERAL GAME UPDATES FOR PLAYERS AND SPECTATORS
@@ -440,14 +440,14 @@ module.exports = class Game extends EventEmitter
 		});
 	}
 
-	updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence)
+	updateAllPlayersAndSpectatorsWithRoundStepSequence(roundStepSequence, nameOfPlayerWhoAskedToRewatch = undefined)
 	{
 		this._players.forEach(function (player){
-			player.roundInfo(roundStepSequence);
+			player.roundInfo(roundStepSequence, nameOfPlayerWhoAskedToRewatch);
 		});
 
 		this._spectators.forEach(function (spectator){
-			spectator.roundInfo(roundStepSequence);
+			spectator.roundInfo(roundStepSequence, nameOfPlayerWhoAskedToRewatch);
 		});
 	}
 

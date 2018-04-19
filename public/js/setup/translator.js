@@ -21,6 +21,7 @@ let waitingForOthersToFinishDisplayingRoundStr;
 let doYouWantToRewatchRoundStr;
 let rewatchStr;
 let continueStr;
+let wantedToRewatchStr;
 
 function translateToEnglish()
 {
@@ -88,6 +89,8 @@ function translateToEnglish()
 	doYouWantToRewatchRoundStr = 'Do you want to rewatch this round?';
 	rewatchStr = 'Rewatch';
 	continueStr = 'Continue';
+
+	wantedToRewatchStr = 'wants to rewatch the turn';
 }
 
 function translateToSpanish()
@@ -156,4 +159,6 @@ function translateToSpanish()
 	doYouWantToRewatchRoundStr = 'Quieres repetir esta ronda?';
 	rewatchStr = 'Repetir';
 	continueStr = 'Continuar';
+
+	wantedToRewatchStr = 'quizo repetir el turno';
 }
