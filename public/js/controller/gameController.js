@@ -30,8 +30,8 @@ class GameController {
 
 		if (!bSpectatorMode)
 		{
-				this._handView.Animation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
-				$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
+			this._handView.Animation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
+			$("#playCardButton")[0].addEventListener("click", this.onPlayCardClicked.bind(this), false);
 		}
 
 		// SERVER TO CLIENT - GAME EVENTS

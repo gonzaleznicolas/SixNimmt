@@ -18,6 +18,31 @@
 	margin: 10px;
 }
 
+.dialogCheckboxContainer{
+	margin-left: 10px;
+	font-size: 0.7em;
+}
+
+/* Hide the browser's default checkbox */
+.dialogCheckboxContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1em;
+    width: 1em;
+    background-color: #eee;
+}
+
+#dialogCheckbox{
+}
+
 .dialogButtonContainer {
 	color: var(--nimmtPurple);
 	display: flex;
