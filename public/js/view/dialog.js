@@ -8,7 +8,7 @@ class Dialog
 		this._promptElement = $(document.createElement("p")).addClass("dialogPrompt");
 		this._dialogButtonContainer = $(document.createElement("div")).addClass("dialogButtonContainer");
 		this._checkboxElement = $(document.createElement("label")).addClass("dialogCheckboxContainer");
-		this._checkboxElement[0].innerHTML = "<input id=\"dialogCheckbox\" type=\"checkbox\"><span id=\"dialogCheckboxReplacement\"></span>Don't show this again";
+		this._checkboxElement[0].innerHTML = "<input id=\"dialogCheckbox\" type=\"checkbox\"><span class=\"dialogCheckboxReplacement\"></span>Don't show this again";
 
 		this._dialogElement.append(this._promptElement);
 		this._dialogElement.append(this._checkboxElement);
