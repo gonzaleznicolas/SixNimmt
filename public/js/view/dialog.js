@@ -8,7 +8,9 @@ class Dialog
 		this._promptElement = $(document.createElement("p")).addClass("dialogPrompt");
 		this._dialogButtonContainer = $(document.createElement("div")).addClass("dialogButtonContainer");
 		this._checkboxElement = $(document.createElement("label")).addClass("dialogCheckboxContainer");
-		this._checkboxElement[0].innerHTML = "<input id=\"dialogCheckbox\" type=\"checkbox\"><span class=\"dialogCheckboxReplacement\"></span>Don't show this again";
+		this._checkboxElement[0].innerHTML = "<input id=\"dialogCheckbox\" type=\"checkbox\"><span class=\"dialogCheckboxReplacement\"></span>";
+		this._checkboxLabelText = $(document.createElement("p")).addClass("checkboxLabelText");
+		this._checkboxElement.append(this._checkboxLabelText);
 
 		this._dialogElement.append(this._promptElement);
 		this._dialogElement.append(this._checkboxElement);
@@ -23,13 +25,18 @@ class Dialog
 		this._dialogBackground = $(document.createElement("div")).addClass("dialogBackground");
 	}
 
-	set(prompt, option1Text, option1handler, option2Text, option2handler)
+	// if a checkboxLabel (string), and checkboxHandler function are passed in, when either button is clicked,
+	// the dialog will call the checkboxHandler with an argument true or false based on whether the checkbox was checked
+	set(prompt, option1Text, option1handler, option2Text, option2handler, checkboxLabelText, checkboxHandler)
 	{
 		this._promptElement[0].innerHTML = prompt;
 		if (option1Text)
 		{
 			this._option1Element[0].innerHTML = option1Text;
 			this._option1Element.on('click', option1handler);
+			this._option1Element.on('click', function(){
+				checkboxHandler($('#dialogCheckbox').prop('checked'));
+			});
 			this._option1Element.on('click', function(){
 				this.close();
 			}.bind(this));
@@ -40,6 +47,9 @@ class Dialog
 			this._option2Element[0].innerHTML = option2Text;
 			this._option2Element.on('click', option2handler);
 			this._option2Element.on('click', function(){
+				checkboxHandler($('#dialogCheckbox').prop('checked'));
+			});
+			this._option2Element.on('click', function(){
 				this.close();
 			}.bind(this));
 			this._option2Element.show();
@@ -47,6 +57,16 @@ class Dialog
 		else
 		{
 			this._option2Element.hide();
+		}
+
+		if (checkboxLabelText)
+		{
+			this._checkboxLabelText[0].innerHTML = checkboxLabelText;
+			this._checkboxElement.show();
+		}
+		else
+		{
+			this._checkboxElement.hide();
 		}
 
 		$("body").append(this._dialogBackground);

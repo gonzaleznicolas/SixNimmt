@@ -9,6 +9,7 @@ class RoundController {
 		this._scoreboardView = scoreboardView;
 		this._model = model;
 		this._name = name;
+		this._dontShowRoundReplayDialog = false;
 
 		this._activeRoundStepSequence = [];
 
@@ -47,22 +48,42 @@ class RoundController {
 		console.log('This participant is done displaying the round.');
 		if (bSpectatorMode)
 		{
-			this.tellServerDontWantToRewatch();
+			this.tellServerDoneDisplayingRoundAndDontWantToRewatch();
 		}
 		else
 		{
-			console.log('Done displaying round, but this is a player, so ask the user if they want to watch again before emitting clientDoneDisplayingRound');
-			dialog.set(doYouWantToRewatchRoundStr, rewatchStr, this.tellServerWantToRewatch.bind(this), continueStr, this.tellServerDontWantToRewatch.bind(this));
+			if (!this._dontShowRoundReplayDialog)
+			{
+				console.log('Done displaying round, but this is a player, so ask the user if they want to watch again before emitting clientDoneDisplayingRound');
+				dialog.set(doYouWantToRewatchRoundStr,
+					rewatchStr,
+					this.tellServerDoneDisplayingRoundAndWantToRewatch.bind(this),
+					continueStr,
+					this.tellServerDoneDisplayingRoundAndDontWantToRewatch.bind(this),
+					"dont show dialog",
+					this.setDontShowRoundReplayDialog.bind(this)
+				);
+			}
+			else
+			{
+				tellServerDontWantToRewatch();
+			}
 		}
 	}
 
-	tellServerDontWantToRewatch()
+	setDontShowRoundReplayDialog(bool)
+	{
+		console.log(`The value of _dontShowRoundReplayDialog has been set to ${bool}`);
+		this._dontShowRoundReplayDialog = bool;
+	}
+
+	tellServerDoneDisplayingRoundAndDontWantToRewatch()
 	{
 		console.log('client has chosen not to rewatch round');
 		socket.emit("clientDoneDisplayingRound", false);
 	}
 
-	tellServerWantToRewatch()
+	tellServerDoneDisplayingRoundAndWantToRewatch()
 	{
 		console.log('client has chosen to rewatch round');
 		socket.emit("clientDoneDisplayingRound", true);
