@@ -366,6 +366,7 @@ module.exports = class Game extends EventEmitter
 
 	makeEveryPlayerAndSpectatorRewatchRound(nameOfPlayerWhoAskedToRewatch)
 	{
+		console.log(`${nameOfPlayerWhoAskedToRewatch} has made everyone rewatch the round`);
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationInProgress});
