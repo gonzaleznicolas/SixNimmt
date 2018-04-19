@@ -597,9 +597,15 @@ module.exports = class Game extends EventEmitter
 		{
 			console.log("Every participant is done displaying the round.");
 			if (this._repeatRoundFlag)
-				this.makeEveryPlayerAndSpectatorRewatchRound();
+			{
+				this._repeatRoundFlag = false;
+				this.makeEveryPlayerAndSpectatorRewatchRound();	
+			}
 			else
+			{
+				this._repeatRoundFlag = false;
 				this.startANewRound();
+			}
 		}
 		else
 		{

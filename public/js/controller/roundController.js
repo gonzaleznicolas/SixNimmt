@@ -66,7 +66,7 @@ class RoundController {
 			}
 			else
 			{
-				tellServerDontWantToRewatch();
+				this.tellServerDoneDisplayingRoundAndDontWantToRewatch();
 			}
 		}
 	}
