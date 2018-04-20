@@ -72,6 +72,11 @@ input[type=text]{
 	padding: 0.1em;
 	width: 10em;
 	color: var(--nimmtPurple);
+	border: 0px;
+}
+
+input[type=text]:focus{
+	background: rgb(143, 211, 153);
 }
 
 .error{
