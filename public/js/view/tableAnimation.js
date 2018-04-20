@@ -300,7 +300,7 @@ class TableAnimation extends Animation
 		this._fcBackW = this._fcBackW - amountToChangeWidthByEachFrame;
 
 		if ((-1) * this._fcBackW < this._drawer.CardWidth)
-				requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
+			requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 		else
 		{
 			bAnimationInProgress = false;
