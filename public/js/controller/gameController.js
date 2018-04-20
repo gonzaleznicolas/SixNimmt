@@ -103,7 +103,8 @@ class GameController {
 			this._handView.draw();
 		}
 
-		this._headerView.set(selectACardToPlayStr);
+		if (!bSpectatorMode)
+			this._headerView.set(selectACardToPlayStr);
 	}
 
 	// UI HANDLERS
