@@ -22,7 +22,8 @@ function onQuitGameClicked()
 				socket.emit("clientQuitGame");
 				location.reload();
 			},
-			stayStr, undefined);
+			stayStr, undefined
+		);
 }
 
 function onEndGameClicked()

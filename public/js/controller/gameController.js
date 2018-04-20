@@ -27,7 +27,8 @@ class GameController {
 		
 		this._gameLayoutController = new GameLayoutController(this._scoreboardView, this._tableView, this._handView, this._menuView);
 		this._roundController = new RoundController(this._tableView, this._handView, this._headerView, this._scoreboardView, this._model, this._name);
-
+		
+		$('#quitMenuOption').click(this.onMenuQuit.bind(this));
 		if (!bSpectatorMode)
 		{
 			this._handView.Animation.Drawer.Canvas.addEventListener("click", this.onHandCanvasClicked.bind(this), false);
@@ -154,5 +155,17 @@ class GameController {
 		state = ClientStates.WaitForRestToPlayTheirCard;
 		this._headerView.clear();
 		socket.emit('clientPlayCard', playedCard);
+	}
+
+	onMenuQuit()
+	{
+		dialog.set(areYouSureYouWantToLeaveStr,
+			leaveStr, 
+			function(){
+				socket.emit("clientQuitGame");
+				location.reload();
+			},
+			stayStr,undefined
+		);
 	}
 }
