@@ -41,8 +41,9 @@
 	display: block;
 	position: relative;
 	cursor: pointer;
-	padding-left: 35px;
-	font-size: 22px;
+	padding-left: 1.5em;
+	font-size: 0.8em;
+	margin-left: 10px;
   }
 
 /* Hide the browser's default checkbox */
@@ -57,8 +58,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
+    height: 1em;
+    width: 1em;
     background-color: #eee;
 }
 
@@ -86,8 +87,8 @@
 
 /* Style the checkmark/indicator */
 .dialogCheckboxContainer .dialogCheckboxReplacement:after {
-    left: 9px;
-    top: 5px;
+    left: 35%;
+    top: 30%;
     width: 5px;
     height: 10px;
     border: solid white;
