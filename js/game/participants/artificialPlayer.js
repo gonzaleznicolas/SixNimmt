@@ -97,4 +97,5 @@ module.exports = class ArtificialPlayer extends Player
 	}
 
 	startRound(table, scoreboard){}
+	winners(winners){}
 }

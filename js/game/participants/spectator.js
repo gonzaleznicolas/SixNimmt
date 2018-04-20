@@ -65,6 +65,11 @@ module.exports = class Spectator extends EventEmitter
 		this._socket.emit('serverStartRound', {table: table, scoreboard: scoreboard});
 	}
 
+	winners(winners)
+	{
+		this._socket.emit('serverGameOverTheseAreTheWinners', winners);
+	}
+
 	// CLIENT TO SERVER - GAME EVENT HANDLERS
 
 	onClientQuitGame()

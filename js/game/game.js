@@ -276,8 +276,12 @@ module.exports = class Game extends EventEmitter
 		// no parameter wil be passed in when there is no need to notify anyone. e.g. when there are no
 		// human players or spectators left
 		if (playerWhoEndedTheGame)
+		{
+			console.log('Notify every player and spectator that the game is being ended.');
 			this.tellAllPlayersAndSpectatorsThatTheGameGotTerminated(playerWhoEndedTheGame.Name);
+		}
 
+		console.log('Deleting all the resources of game '+this._gameCode);
 		this._players.forEach( function (p) {
 			p.removeDisconnectListener();
 		});
@@ -326,10 +330,15 @@ module.exports = class Game extends EventEmitter
 
 	startANewRound()
 	{
-		if (this._scoreboard.anyPlayerHasReachedPts(3))
+		if (this._scoreboard.anyPlayerHasReachedPts(20))
 		{
-			console.log("someone won");
-			console.log(this._scoreboard.lowestScores());
+			console.log("The winners are:");
+			let winners = this._scoreboard.lowestScores();
+			console.log(winners);
+			// just send out the winner list. The game will be deleted once all
+			// the players and spectators disconnect
+			this.tellAllPlayersAndSpectatorsTheWinners(winners);
+			return;
 		}
 
 		this._roundNumberOfCurrentIteration++;
@@ -452,6 +461,17 @@ module.exports = class Game extends EventEmitter
 
 		this._spectators.forEach(function (spectator){
 			spectator.roundInfo(roundStepSequence, bItsAReplay);
+		});
+	}
+
+	tellAllPlayersAndSpectatorsTheWinners(winners)
+	{
+		this._players.forEach(function (player){
+			player.winners(winners);
+		});
+
+		this._spectators.forEach(function (spectator){
+			spectator.winners(winners);
 		});
 	}
 

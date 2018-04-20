@@ -76,6 +76,11 @@ module.exports = class HumanPlayer extends Player
 		this._socket.emit('serverStartRound', {table: table, scoreboard: scoreboard, hand: Array.from(this._hand)});
 	}
 
+	winners(winners)
+	{
+		this._socket.emit('serverGameOverTheseAreTheWinners', winners);
+	}
+
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS
 
 	onClientEndGameFromWaitPage()

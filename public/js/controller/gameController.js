@@ -38,6 +38,7 @@ class GameController {
 		socket.on("serverUpcomingCards", this.onServerUpcomingCards.bind(this));
 		socket.on("serverUpdatedHand", this.onServerUpdatedHand.bind(this));
 		socket.on("serverStartRound", this.onServerStartRound.bind(this));
+		socket.on("serverGameOverTheseAreTheWinners", this.onServerGameOverTheseAreTheWinners.bind(this));
 	}
 
 	// FUNCTIONS CALLED WITHING THE GAME CONTROLLER
@@ -107,6 +108,11 @@ class GameController {
 			this._headerView.clear();
 		else
 			this._headerView.set(selectACardToPlayStr);
+	}
+
+	onServerGameOverTheseAreTheWinners(winners)
+	{
+		console.log(winners);
 	}
 
 	// UI HANDLERS

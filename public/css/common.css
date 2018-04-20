@@ -23,7 +23,7 @@ input, input:before, input:after {
 } 
 
 body{
-	--nimmtPurple: rgba(223, 223, 223, 0.815);
+	--nimmtPurple: rgba(127, 80, 147, 1);
 	--margin: 10px;
 	--radius: 10px;
 	--menuButtonSideLength: 75px;

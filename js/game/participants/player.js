@@ -40,6 +40,8 @@ module.exports = class Player extends EventEmitter
 
 	startRound(table, scoreboard){}
 
+	winners(winners){}
+
 	// EVENTS TO BE EMITTED BY ANY CLASS DERIVING OFF OF PLAYER
 	
 	/*
