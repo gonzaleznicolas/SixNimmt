@@ -45,16 +45,17 @@ class RoundController {
 
 	doneDisplayingRound()
 	{
-		console.log('This participant is done displaying the round.');
 		if (bSpectatorMode)
 		{
+			console.log('This spectator is done displaying the round.');
 			this.tellServerDoneDisplayingRoundAndDontWantToRewatch();
 		}
 		else
 		{
+			console.log('This player is done displaying the round.');
 			if (!this._dontShowRoundReplayDialog)
 			{
-				console.log('Done displaying round, but this is a player, so ask the user if they want to watch again before emitting clientDoneDisplayingRound');
+				console.log('Ask the user if they want to watch again before emitting clientDoneDisplayingRound');
 				dialog.set(doYouWantToRewatchRoundStr,
 					rewatchStr,
 					this.tellServerDoneDisplayingRoundAndWantToRewatch.bind(this),
@@ -66,6 +67,7 @@ class RoundController {
 			}
 			else
 			{
+				console.log("no need to ask the user if they want to rewatch");
 				this.tellServerDoneDisplayingRoundAndDontWantToRewatch();
 			}
 		}
@@ -79,13 +81,13 @@ class RoundController {
 
 	tellServerDoneDisplayingRoundAndDontWantToRewatch()
 	{
-		console.log('client has chosen not to rewatch round');
+		console.log('emmitting clientDoneDisplayingRound no need to rewatch');
 		socket.emit("clientDoneDisplayingRound", false);
 	}
 
 	tellServerDoneDisplayingRoundAndWantToRewatch()
 	{
-		console.log('client has chosen to rewatch round');
+		console.log('emmitting clientDoneDisplayingRound requesting to rewatch');
 		socket.emit("clientDoneDisplayingRound", true);
 	}
 
