@@ -115,10 +115,12 @@ class RoundController {
 		{
 			if (step.stepType == RoundStepTypes.NoAnimationJustTheTableImage)
 			{
+				console.log('Step NoAnimationJustTheTableImage started');
 				this.afterStep(step.tableImage);
 			}
 			else if (step.stepType == RoundStepTypes.FlipAllUpcomingCards)
 			{
+				console.log('Step FlipAllUpcomingCards started');
 				setTimeout( function () {
 					this._tableView.Animation.flipAllUpcomingCards(
 						this.afterStep.bind(this),	// callback
@@ -128,6 +130,7 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.SortUpcomingCards)
 			{
+				console.log('Step SortUpcomingCards started');
 				setTimeout( function() {
 					this._tableView.Animation.sortUpcomingCards(
 						this.afterStep.bind(this), // callback
@@ -137,6 +140,7 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.MoveIthCardToRowCol)
 			{
+				console.log('Step MoveIthCardToRowCol started');
 				setTimeout( function() {
 					this._model.OnlyDrawUpcomingCardsAfterThisIndex = step.stepParams.i;
 					this._tableView.Animation.moveIthUpcomingCardToRowCol(
@@ -150,6 +154,7 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.AskPlayerToChooseARowToTake)
 			{
+				console.log('Step AskPlayerToChooseARowToTake started');
 				setTimeout( function() { 
 					this.dealWithAskPlayerToChooseARowToTakeAnimation(
 						step.stepParams.nameOfPlayerToChooseRow,
@@ -159,6 +164,7 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.TakeRow)
 			{
+				console.log('Step TakeRow started');
 				setTimeout( function() {
 					this._tableView.Animation.takeRow(
 						step.stepParams.rowIndex,
@@ -170,6 +176,7 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.MoveRows)
 			{
+				console.log('Step MoveRows started');
 				setTimeout( function() {
 					this._tableView.Animation.moveRows(
 						step.stepParams.fromRow,
@@ -182,6 +189,7 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.ShowMessageSayingWhichRowWasSelected)
 			{
+				console.log('Step ShowMessageSayingWhichRowWasSelected started');
 				this._headerView.set(`${step.stepParams.nameOfPlayerWhoTookRow} ${selectedRowStr} ${step.stepParams.rowSelected + 1}`);
 				setTimeout( function() {
 					this._activeRoundStepSequence.shift();
@@ -190,12 +198,14 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.ClearHeader)
 			{
+				console.log('Step NoAnimationJustTheTableImage started');
 				this._headerView.clear();
 				this._activeRoundStepSequence.shift();
 				this.dealWithRoundStepSequence();
 			}
 			else if (step.stepType == RoundStepTypes.IncrementPlayerScore)
 			{
+				console.log('Step IncrementPlayerScore started');
 				// for this one, tell the scoreboard to increment, pass it as a callback a function
 				// to set the scoreboard to step.scoreboardAfter, and immediately call dealWithRoundStepSequence.
 				// no need to wait for the scoreboard update to finish in order to move on to the next step
@@ -211,6 +221,7 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.ResetScoreboard)
 			{
+				console.log('Step ResetScoreboard started');
 				this._scoreboardView.setScoreboard(step.scoreboard);
 				this._activeRoundStepSequence.shift();
 				this.dealWithRoundStepSequence();
