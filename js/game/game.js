@@ -330,7 +330,7 @@ module.exports = class Game extends EventEmitter
 
 	startANewRound()
 	{
-		if (this._scoreboard.anyPlayerHasReachedPts(20))
+		if (this._scoreboard.anyPlayerHasReachedPts(10))
 		{
 			console.log("The winners are:");
 			let winners = this._scoreboard.lowestScores();

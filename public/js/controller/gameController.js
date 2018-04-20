@@ -112,7 +112,12 @@ class GameController {
 
 	onServerGameOverTheseAreTheWinners(winners)
 	{
+		this._headerView.set(gameOverHeaderStr);
+		console.log("The winners are:");
 		console.log(winners);
+		let commaSeparatedListOfWinnerNames = winners.map((name_score_obj) => name_score_obj.name).join(', ');
+		let winnersAre = winners.length > 1 ? theWinnersAreStr : theWinnerIsStr;
+		dialog.set(gameOverStr + winnersAre +commaSeparatedListOfWinnerNames, "OK", function(){});
 	}
 
 	// UI HANDLERS

@@ -12,7 +12,7 @@ class MenuView
 		this._menuButton[0].addEventListener("click", this.menuButtonClicked.bind(this), false);
 		this._menuBackground[0].addEventListener("click", this.menuBackgroundClicked.bind(this), false);
 		
-		$('#quitMenuOption')[0].addEventListener("click", this.quit.bind(this), false);
+		$('.menuOption')[0].addEventListener("click", this.menuButtonClicked.bind(this), false); // to close menu
 	}
 	
 	showMenuButton()
@@ -37,11 +37,5 @@ class MenuView
 	{
 		this._menuBackground.toggle();
 		this._menuElement.hide(300);
-	}
-	
-	quit()
-	{
-		console.log("quit"); // temporary
-		this.menuButtonClicked(); // to close menu
 	}
 }

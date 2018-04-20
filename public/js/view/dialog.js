@@ -34,9 +34,12 @@ class Dialog
 		{
 			this._option1Element[0].innerHTML = option1Text;
 			this._option1Element.on('click', option1handler);
-			this._option1Element.on('click', function(){
-				checkboxHandler($('#dialogCheckbox').prop('checked'));
-			});
+			if (checkboxHandler)
+			{
+				this._option1Element.on('click', function(){
+					checkboxHandler($('#dialogCheckbox').prop('checked'));
+				});
+			}
 			this._option1Element.on('click', function(){
 				this.close();
 			}.bind(this));
@@ -46,9 +49,12 @@ class Dialog
 		{
 			this._option2Element[0].innerHTML = option2Text;
 			this._option2Element.on('click', option2handler);
-			this._option2Element.on('click', function(){
-				checkboxHandler($('#dialogCheckbox').prop('checked'));
-			});
+			if (checkboxHandler)
+			{
+				this._option2Element.on('click', function(){
+					checkboxHandler($('#dialogCheckbox').prop('checked'));
+				});
+			}
 			this._option2Element.on('click', function(){
 				this.close();
 			}.bind(this));

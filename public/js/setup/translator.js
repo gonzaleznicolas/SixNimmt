@@ -23,6 +23,10 @@ let rewatchStr;
 let continueStr;
 let someoneWantedToRewatchStr;
 let dontShowDialogStr;
+let gameOverStr;
+let theWinnerIsStr;
+let theWinnersAreStr;
+let gameOverHeaderStr;
 
 function translateToEnglish()
 {
@@ -63,8 +67,6 @@ function translateToEnglish()
 
 	// menu
 	$('#quitMenuOption')[0].innerHTML = "Quit Game";
-	$('#textRulesMenuOption')[0].innerHTML = "Text Rules";
-	$('#videoRulesMenuOption')[0].innerHTML = "Video Rules";
 
 	areYouSureYouWantToLeaveStr = "Are you sure you want to leave this game?";
 	leaveStr = "Leave";
@@ -94,6 +96,11 @@ function translateToEnglish()
 	someoneWantedToRewatchStr = "Someone asked to watch round replay";
 
 	dontShowDialogStr = "Do not continue to show this dialog";
+
+	gameOverStr = "Game Over (someone reached 66 points)! ";
+	theWinnerIsStr = "The winner is ";
+	theWinnersAreStr = "The winners are ";
+	gameOverHeaderStr = "Game over!";
 }
 
 function translateToSpanish()
@@ -135,8 +142,6 @@ function translateToSpanish()
 
 	// menu
 	$('#quitMenuOption')[0].innerHTML = "Terminar Juego";
-	$('#textRulesMenuOption')[0].innerHTML = "Reglas escritas";
-	$('#videoRulesMenuOption')[0].innerHTML = "Reglas en video";
 
 	areYouSureYouWantToLeaveStr = "Seguro que quires salir?";
 	leaveStr = "Salirme";
@@ -166,4 +171,9 @@ function translateToSpanish()
 	someoneWantedToRewatchStr = 'Alguien quizo repetir el turno';
 
 	dontShowDialogStr = "No me vuelvas a preguntar";
+
+	gameOverStr = "El juego ha terminado (alguien alcanzo 66 puntos)! ";
+	theWinnerIsStr = "El ganador es ";
+	theWinnersAreStr = "Los ganadores son ";
+	gameOverHeaderStr = "El juego ha terminado!";
 }
