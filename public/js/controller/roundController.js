@@ -217,6 +217,7 @@ class RoundController {
 			}
 			else if (step.stepType == RoundStepTypes.RoundDone)
 			{
+				console.log('got the last step of the round step sequence. step RoundDone');
 				this.updateModelAndDrawFromTableImage(step.tableImage);
 				this._activeRoundStepSequence = [];
 				this._headerView.set(waitingForOthersToFinishDisplayingRoundStr);
