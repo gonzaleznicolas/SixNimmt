@@ -73,13 +73,13 @@ module.exports = class Spectator extends EventEmitter
 		this.emit('spectatorQuitGame', this);
 	}
 
-	onClientDoneDisplayingRound()
+	onClientDoneDisplayingRound(bWatchAgain)
 	{
 		if (this._state != SpectatorStates.RoundAnimationInProgress)
 		{
 			console.log("clientDoneDisplayingRound was received at an unexpected time or sent a card that the player does not have. Ignored.");
 			return;
 		}
-		this.emit("playerOrSpectatorDoneDisplayingRound", this);
+		this.emit("playerOrSpectatorDoneDisplayingRound", {participant: this, bWatchAgain: bWatchAgain});
 	}
 }
