@@ -633,7 +633,7 @@ module.exports = class Game extends EventEmitter
 			// So, if a spectator quits, and the game is in state RoundAnimationInProgress, call onPlayerOrSpectatorDoneDisplayingRound().
 			// No need to pass in the parameter. We just want that funciton to check if all the remaining players and spectators
 			// have finished.
-			this.onPlayerOrSpectatorDoneDisplayingRound();
+			this.onPlayerOrSpectatorDoneDisplayingRound({participant: spectator, bWatchAgain: false});
 			console.log("A spectator has quit while game in state RoundAnimationInProgress");
 		}
 		if (!this.gameHasHumanPlayersLeft() && !this.gameHasSpectatorsLeft())
