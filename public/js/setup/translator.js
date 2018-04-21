@@ -90,7 +90,7 @@ function translateToEnglish()
 
 	waitingForOthersToFinishDisplayingRoundStr = "Waiting for others to finish displaying round";
 
-	doYouWantToRewatchRoundStr = 'Do you want to rewatch this round?';
+	doYouWantToRewatchRoundStr = 'Do you want to rewatch this round? (you have 10 seconds to respond)';
 	rewatchStr = 'Rewatch';
 	continueStr = 'Continue';
 
@@ -103,7 +103,7 @@ function translateToEnglish()
 	theWinnersAreStr = "The winners are ";
 	gameOverHeaderStr = "Game over!";
 
-	youGotKickedOutStr = "You took too long to finish the round and have been kicked out of the game.";
+	youGotKickedOutStr = "You took too long to respond and have been kicked out of the game.";
 }
 
 function translateToSpanish()
@@ -167,7 +167,7 @@ function translateToSpanish()
 
 	waitingForOthersToFinishDisplayingRoundStr = "Esperando a que todos terminen de mostrar la ronda";
 
-	doYouWantToRewatchRoundStr = 'Quieres repetir esta ronda?';
+	doYouWantToRewatchRoundStr = 'Quieres repetir esta ronda? (tienes 10 segundos para responder)';
 	rewatchStr = 'Repetir';
 	continueStr = 'Continuar';
 
@@ -180,5 +180,5 @@ function translateToSpanish()
 	theWinnersAreStr = "Los ganadores son ";
 	gameOverHeaderStr = "El juego ha terminado!";
 
-	youGotKickedOutStr = "Te demoraste demasiado en mostrar la ronda y te han sacado del juego.";
+	youGotKickedOutStr = "Te demoraste demasiado en responder y te han sacado del juego.";
 }
