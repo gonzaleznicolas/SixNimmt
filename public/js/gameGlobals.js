@@ -59,7 +59,7 @@ function getCardInfo(cardNumber)
 			return {negativePts: 1, cowColor: lc.nimmtPurple, numColor: "rgba(255, 255,	255, 1)", cardColor: "rgba(255, 255,	255, 1)"};
 	}
 	else // undefined passed in therefore info for back of card
-		return {cowColor: lc.nimmtPurple, cardColor: "rgba(255, 255,	255, 1)"}
+		return {cowColor: lc.nimmtPurple, cardColor: "rgba(255, 255, 255, 1)"}
 }
 
 let controller = undefined;
