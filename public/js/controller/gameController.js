@@ -126,7 +126,7 @@ class GameController {
 
 	onServerKickClientOut()
 	{
-		dialog.set(youGotKickedOutStr, okStr, function(){});
+		dialog.set(youGotKickedOutStr, okStr, function(){location.reload();});
 	}
 
 	// UI HANDLERS
