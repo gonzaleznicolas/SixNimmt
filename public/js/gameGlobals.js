@@ -63,3 +63,13 @@ function getCardInfo(cardNumber)
 }
 
 let controller = undefined;
+
+function playCardPlacedSound()
+{
+	$.playSound("sounds/cardPlaced.wav");
+}
+
+function playTakeCardsSound()
+{
+	$.playSound("sounds/takeCards.wav");
+}
