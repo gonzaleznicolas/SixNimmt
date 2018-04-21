@@ -27,6 +27,7 @@ let gameOverStr;
 let theWinnerIsStr;
 let theWinnersAreStr;
 let gameOverHeaderStr;
+let youGotKickedOutStr;
 
 function translateToEnglish()
 {
@@ -101,6 +102,8 @@ function translateToEnglish()
 	theWinnerIsStr = "The winner is ";
 	theWinnersAreStr = "The winners are ";
 	gameOverHeaderStr = "Game over!";
+
+	youGotKickedOutStr = "You took too long to finish the round and have been kicked out of the game.";
 }
 
 function translateToSpanish()
@@ -176,4 +179,6 @@ function translateToSpanish()
 	theWinnerIsStr = "El ganador es ";
 	theWinnersAreStr = "Los ganadores son ";
 	gameOverHeaderStr = "El juego ha terminado!";
+
+	youGotKickedOutStr = "Te demoraste demasiado en mostrar la ronda y te han sacado del juego.";
 }

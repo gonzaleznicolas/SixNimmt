@@ -76,7 +76,7 @@ input[type=text]{
 }
 
 input[type=text]:focus{
-	background: rgb(143, 211, 153);
+	background: var(--lightPurple);
 }
 
 .error{

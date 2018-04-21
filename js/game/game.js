@@ -259,6 +259,48 @@ module.exports = class Game extends EventEmitter
 		}
 	}
 
+	kickOutParticipantsWhoHaventFinishedDisplayingRound()
+	{
+		console.log('kicking out participants who havent finished displaying round');
+
+		Array.from(this._players.keys()).forEach( function (playerName) {
+			let player = this._players.get(playerName);
+			if (player.State != PlayerStates.DoneDisplayingRoundAnimation)
+				this.kickHumanPlayerOut(player);
+		}.bind(this));
+
+		let socketsOfSpectatorsThatNeedToBeRemoved = this._spectators.filter( (s) =>  s.State != SpectatorStates.DoneDisplayingRoundAnimation)
+															.map( (s) => s.Socket.id);
+		socketsOfSpectatorsThatNeedToBeRemoved.forEach( function (socketId) {
+			let spec = this._spectators.find( (s) => s.Socket.id == socketId);
+			if (spec)
+				this.kickSpectatorOut(spec);
+		}.bind(this));
+	}
+
+	kickHumanPlayerOut(player)
+	{
+		console.log('Kicking out '+player.Name);
+		player.removeListener("playerAddAIFromWaitPage", this.onPlayerAddAIFromWaitPage.bind(this));
+		player.removeListener("playerEndGameFromWaitPage", this.onPlayerEndGameFromWaitPage.bind(this));
+		player.removeListener("playerStartGameWithCurrentPlayers", this.onPlayerStartGameWithCurrentPlayers.bind(this));
+		player.removeListener("playerQuitGame", this.onPlayerQuitGame.bind(this));
+		player.removeListener("playerPlayCard", this.onPlayerPlayCard.bind(this));
+		player.removeListener("playerRowToTake", this.onPlayerRowToTake.bind(this));
+		player.removeListener('playerOrSpectatorDoneDisplayingRound', this.onPlayerOrSpectatorDoneDisplayingRound.bind(this));
+		player.kickOut();
+		this.onPlayerQuitGame(player);
+	}
+
+	kickSpectatorOut(spectator)
+	{
+		console.log('Kicking out spectator with socket id '+spectator.Socket.id);
+		spectator.removeListener('spectatorQuitGame', this.onSpectatorQuitGame.bind(this));
+		spectator.removeListener('playerOrSpectatorDoneDisplayingRound', this.onPlayerOrSpectatorDoneDisplayingRound.bind(this));
+		spectator.kickOut();
+		this.onSpectatorQuitGame(spectator);
+	}
+
 	initializePlayerHands()
 	{
 		this._players.forEach(function (player) {
@@ -284,12 +326,12 @@ module.exports = class Game extends EventEmitter
 
 		console.log('Deleting all the resources of game '+this._gameCode);
 		this._players.forEach( function (p) {
-			p.removeDisconnectListener();
+			p.removeAllListeners();
 		});
 		this._players.clear();
 
 		this._spectators.forEach( function (s) {
-			s.removeDisconnectListener();
+			s.removeAllListeners();
 		});
 		
 		delete this._deck;
@@ -347,6 +389,9 @@ module.exports = class Game extends EventEmitter
 		{
 			this.startANewIteration();
 		}
+
+		clearTimeout(this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout);
+		this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout = undefined;
 		this._repeatRoundFlag = false;
 		this._upcomingCards.reset();
 		this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
@@ -516,7 +561,7 @@ module.exports = class Game extends EventEmitter
 
 	onPlayerQuitGame(player)
 	{
-		if (!this._spectators)
+		if (!this._players)
 		{
 			console.log('A player tried to quit the game, but the game was already deleted. Ignore.');
 			return;
@@ -613,10 +658,22 @@ module.exports = class Game extends EventEmitter
 			participant.State = SpectatorStates.DoneDisplayingRoundAnimation;
 		}
 
+		if ( (participant instanceof Spectator || participant instanceof HumanPlayer) &&
+			this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout == undefined)
+		{
+			this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout = setTimeout( function(){
+				this.kickOutParticipantsWhoHaventFinishedDisplayingRound();
+				this.onPlayerOrSpectatorDoneDisplayingRound(data);
+				this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout = undefined;
+			}.bind(this), 10* 1000);
+		}
+
 		if (this.everyPlayerInState(PlayerStates.DoneDisplayingRoundAnimation) && 
 			this._spectators.every( (s) => s.State == SpectatorStates.DoneDisplayingRoundAnimation))
 		{
 			console.log("Every participant is done displaying the round.");
+			clearTimeout(this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout);
+			this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout = undefined;
 			if (this._repeatRoundFlag)
 			{
 				this._repeatRoundFlag = false;

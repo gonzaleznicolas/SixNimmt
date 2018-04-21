@@ -70,7 +70,7 @@ module.exports = class ArtificialPlayer extends Player
 	}
 
 	// METHODS CALLED BY THE GAME. METHODS ANY PLAYER MUST IMPLEMENT
-	removeDisconnectListener(){}
+	removeAllListeners(){}
 	updatePlayerList(playerList){}
 	terminateGame(nameOfPlayerWhoEndedTheGame){}
 
@@ -111,4 +111,6 @@ module.exports = class ArtificialPlayer extends Player
 
 	startRound(table, scoreboard){}
 	winners(winners){}
+
+	kickOut(){}
 }

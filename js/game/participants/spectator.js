@@ -24,10 +24,12 @@ module.exports = class Spectator extends EventEmitter
 
 	// METHODS CALLED BY THE GAME
 
-	removeDisconnectListener()
+	removeAllListeners()
 	{
-		console.log('removing disconnect handler from spectator with id '+this._socket.id);
-		this._socket.removeListener('disconnect', this.onClientQuitGame.bind(this));
+		console.log('removing all event handlers from spectator with id '+this._socket.id);
+		this._socket.removeListener("clientQuitGame", this.onClientQuitGame.bind(this));
+		this._socket.removeListener("disconnect", this.onClientQuitGame.bind(this));
+		this._socket.removeListener("clientDoneDisplayingRound", this.onClientDoneDisplayingRound.bind(this));
 	}
 
 	updatePlayerList(playerList)
@@ -68,6 +70,13 @@ module.exports = class Spectator extends EventEmitter
 	winners(winners)
 	{
 		this._socket.emit('serverGameOverTheseAreTheWinners', winners);
+	}
+
+	kickOut()
+	{
+		console.log(`Kicking out spectator with socket id ${this._socket.id}. Removing all handlers for its events.`);
+		this.removeAllListeners();
+		this._socket.emit('serverKickClientOut');
 	}
 
 	// CLIENT TO SERVER - GAME EVENT HANDLERS

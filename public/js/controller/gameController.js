@@ -40,6 +40,7 @@ class GameController {
 		socket.on("serverUpdatedHand", this.onServerUpdatedHand.bind(this));
 		socket.on("serverStartRound", this.onServerStartRound.bind(this));
 		socket.on("serverGameOverTheseAreTheWinners", this.onServerGameOverTheseAreTheWinners.bind(this));
+		socket.on("serverKickClientOut", this.onServerKickClientOut.bind(this));
 	}
 
 	// FUNCTIONS CALLED WITHING THE GAME CONTROLLER
@@ -120,7 +121,12 @@ class GameController {
 		console.log(winners);
 		let commaSeparatedListOfWinnerNames = winners.map((name_score_obj) => name_score_obj.name).join(', ');
 		let winnersAre = winners.length > 1 ? theWinnersAreStr : theWinnerIsStr;
-		dialog.set(gameOverStr + winnersAre +commaSeparatedListOfWinnerNames, "OK", function(){});
+		dialog.set(gameOverStr + winnersAre +commaSeparatedListOfWinnerNames, okStr, function(){});
+	}
+
+	onServerKickClientOut()
+	{
+		dialog.set(youGotKickedOutStr, okStr, function(){});
 	}
 
 	// UI HANDLERS

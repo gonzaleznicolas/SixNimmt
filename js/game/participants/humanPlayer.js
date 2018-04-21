@@ -34,10 +34,17 @@ module.exports = class HumanPlayer extends Player
 	
 	// METHODS CALLED BY THE GAME. METHODS ANY PLAYER MUST IMPLEMENT
 
-	removeDisconnectListener()
+	removeAllListeners()
 	{
-		console.log('removing disconnect handler from player '+this._name);
+		console.log('removing all event handlers from player '+this._name);
+		this._socket.removeListener("clientAddAIFromWaitPage", this.onClientAddAIFromWaitPage.bind(this));
+		this._socket.removeListener("clientEndGameFromWaitPage", this.onClientEndGameFromWaitPage.bind(this));
+		this._socket.removeListener("clientStartGameWithCurrentPlayers", this.onClientStartGameWithCurrentPlayers.bind(this));
+		this._socket.removeListener("clientQuitGame", this.onClientQuitGame.bind(this));
 		this._socket.removeListener('disconnect', this.onClientQuitGame.bind(this));
+		this._socket.removeListener("clientPlayCard", this.onClientPlayCard.bind(this));
+		this._socket.removeListener("clientRowToTake", this.onClientRowToTake.bind(this));
+		this._socket.removeListener("clientDoneDisplayingRound", this.onClientDoneDisplayingRound.bind(this));
 	}
 	
 	updatePlayerList(playerList)
@@ -83,6 +90,13 @@ module.exports = class HumanPlayer extends Player
 	winners(winners)
 	{
 		this._socket.emit('serverGameOverTheseAreTheWinners', winners);
+	}
+
+	kickOut()
+	{
+		console.log(`Kicking out human player ${this._name}. Removing all handlers for its events.`);
+		this.removeAllListeners();
+		this._socket.emit('serverKickClientOut');
 	}
 
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS
