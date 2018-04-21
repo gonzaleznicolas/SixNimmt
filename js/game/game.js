@@ -664,7 +664,7 @@ module.exports = class Game extends EventEmitter
 			this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout = setTimeout( function(){
 				this.kickOutParticipantsWhoHaventFinishedDisplayingRound();
 				this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout = undefined;
-			}.bind(this), 15* 1000);
+			}.bind(this), 35* 1000);
 		}
 
 		if (this.everyPlayerInState(PlayerStates.DoneDisplayingRoundAnimation) && 

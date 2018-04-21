@@ -28,6 +28,7 @@ let theWinnerIsStr;
 let theWinnersAreStr;
 let gameOverHeaderStr;
 let youGotKickedOutStr;
+let initialInstructionsStr;
 
 function translateToEnglish()
 {
@@ -104,6 +105,8 @@ function translateToEnglish()
 	gameOverHeaderStr = "Game over!";
 
 	youGotKickedOutStr = "You took too long to respond and have been kicked out of the game.";
+
+	initialInstructionsStr = "For the duration of this game, please do not minimize this tab or switch to other tabs. You may lose connection to the server and be kicked out of the game.";
 }
 
 function translateToSpanish()
@@ -181,4 +184,6 @@ function translateToSpanish()
 	gameOverHeaderStr = "El juego ha terminado!";
 
 	youGotKickedOutStr = "Te demoraste demasiado en responder y te han sacado del juego.";
+
+	initialInstructionsStr = "Durante el juego, por favor no minimizes esta ventana o abras otras ventanas. Puedes perder coneccion al servidor";
 }
