@@ -222,6 +222,7 @@ module.exports = class Game extends EventEmitter
 
 		let artificialPlayerReplacement = new ArtificialPlayer(nameForArtificialReplacement);
 		artificialPlayerReplacement.Hand = humanPlayerToReplace.Hand;
+		artificialPlayerReplacement.SetOfCardsIveSeenAlready = humanPlayerToReplace.SetOfCardsIveSeenAlready;
 		this._players.set(nameForArtificialReplacement, artificialPlayerReplacement);
 		this.subscribeToPlayerEvents(artificialPlayerReplacement);
 		this._scoreboard.renamePlayer(humanPlayerToReplace.Name, artificialPlayerReplacement.Name);

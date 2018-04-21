@@ -24,6 +24,7 @@ input, input:before, input:after {
 
 body{
 	--nimmtPurple: rgba(127, 80, 147, 1);
+	--lightPurple: rgba(188, 144, 204, 1);
 	--margin: 10px;
 	--radius: 10px;
 	--menuButtonSideLength: 75px;
@@ -47,6 +48,6 @@ body{
 }
 
 .button:hover {
-	background: rgba(188, 144, 204, 1);
+	background: var(--lightPurple);
 	color: white;
 }

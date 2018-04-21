@@ -68,9 +68,15 @@ module.exports = class ArtificialPlayer extends Player
 	terminateGame(nameOfPlayerWhoEndedTheGame){}
 
 	// from the game board, see which cards are there and start to keep track of which cards have already come up
-	startGame(playerList, gameBoard){}
+	startGame(playerList, table)
+	{
+		this.addCardsOnTableToSetOfCardsIveSeenAlready(table);
+	}
 
-	updateUpcomingCards(upcomingCards){}
+	updateUpcomingCards(upcomingCards)
+	{
+		this.addCardsFromUpcomingCardsToSetOfCardsIveSeenAlready(upcomingCards);
+	}
 
 	// from this roundStepSequence, the artifical player must extract the information that it needs.
 	// The step sequence always ends with either a step of type AskPlayerToChooseARowToTake

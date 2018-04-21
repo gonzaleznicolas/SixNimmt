@@ -97,7 +97,7 @@ input[type=text]:focus{
 }
 
 #submitButton:hover {
-    background: rgba(188, 144, 204, 1);
+    background: var(--lightPurple);
     color: white;
 }
 

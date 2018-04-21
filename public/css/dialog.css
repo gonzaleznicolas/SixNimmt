@@ -60,17 +60,17 @@
     left: 0;
     height: 1em;
     width: 1em;
-    background-color: #eee;
+    background-color: rgb(160, 157, 157);
 }
 
 /* On mouse-over, add a grey background color */
 .dialogCheckboxContainer:hover input ~ .dialogCheckboxReplacement {
-    background-color: #ccc;
+    background-color: var(--lightPurple);
 }
 
 /* When the checkbox is checked, add a purple background */
 .dialogCheckboxContainer input:checked ~ .dialogCheckboxReplacement {
-    background-color: rgba(188, 144, 204, 1);
+    background-color: var(--lightPurple);
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */

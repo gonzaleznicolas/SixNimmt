@@ -52,6 +52,8 @@ module.exports = class HumanPlayer extends Player
 
 	startGame(playerList, table)
 	{
+		this.addCardsOnTableToSetOfCardsIveSeenAlready(table);
+
 		this._socket.emit("serverStartGame", {
 			playerList: playerList,
 			table: table,
@@ -63,6 +65,8 @@ module.exports = class HumanPlayer extends Player
 
 	updateUpcomingCards(upcomingCards)
 	{
+		this.addCardsFromUpcomingCardsToSetOfCardsIveSeenAlready(upcomingCards);
+
 		this._socket.emit("serverUpcomingCards", upcomingCards);
 	}
 

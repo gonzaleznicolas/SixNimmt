@@ -12,16 +12,43 @@ module.exports = class Player extends EventEmitter
 		this._bStartedGame = bStartedGame;
 		this._hand = undefined;
 		this._state;
+
+		// the following set is used by the artificial player to make its decisions.
+		// however, maintain it even for human players. This is so that when a human player
+		// quits, the artificial player can take over and know which cards have already been played.
+		// it is a set of cards that no player can have in their cand because they have already been on the table.
+		this._setOfCardsIveSeenAlready = new Set();
 	}
 
 	get Name() {return this._name;}
 	get StartedGame() {return this._bStartedGame};
 	get Hand() {return this._hand;}
 	set Hand(hand) {this._hand = hand}
+	get SetOfCardsIveSeenAlready() {return this._setOfCardsIveSeenAlready;}
+	set SetOfCardsIveSeenAlready(set) {this._setOfCardsIveSeenAlready = set}
 
 	// player state is managed by the game. A player never sets its own state
 	get State() {return this._state;}
 	set State(state) {this._state = state;}
+
+	addCardsOnTableToSetOfCardsIveSeenAlready(table)
+	{
+		if (table.length != 4)
+			throw "This is not a proper table. It doesnt have 4 rows.";
+
+		table.forEach( function (row) {
+			if (row[0])
+				this._setOfCardsIveSeenAlready.add(row[0]);
+		}.bind(this));
+	}
+
+	addCardsFromUpcomingCardsToSetOfCardsIveSeenAlready(upcomingCards)
+	{
+		upcomingCards.forEach( function (card) {
+			if (card.number)
+				this._setOfCardsIveSeenAlready.add(card.number);
+		}.bind(this));
+	}
 
 	// METHODS TO BE IMPLEMENTED BY ANY CLASS DERIVING OFF OF PLAYER
 	// eg. the artificial player doesnt need some of these methods like updatePlayerList()
