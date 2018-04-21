@@ -73,3 +73,8 @@ function playTakeCardsSound()
 {
 	$.playSound("sounds/takeCards.wav");
 }
+
+function playSwooshSound()
+{
+	$.playSound("sounds/swoosh.wav");
+}

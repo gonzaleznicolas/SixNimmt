@@ -70,7 +70,10 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
+			{
+				playCardPlacedSound();
 				this._callback(this._callbackParam);
+			}
 		}
 	}
 	
@@ -141,7 +144,10 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
+			{
+				playCardPlacedSound();
 				this._callback(this._callbackParam);
+			}
 		}
 	}
 	
@@ -183,7 +189,10 @@ class TableAnimation extends Animation
 		{
 			bAnimationInProgress = false;
 			if (this._callback)
+			{
+				playCardPlacedSound();
 				this._callback(this._callbackParam);
+			}
 		}
 	}
 	
@@ -194,6 +203,8 @@ class TableAnimation extends Animation
 		this._callback = callback;
 		this._callbackParam = callbackParam;
 		this._bDisapearAtTheEnd = bDisapearAtTheEnd;
+
+		playTakeCardsSound();
 		// first, find the col of the last card in the row
 		let indexOfFirstUndefinedInTheRow = this._model.Table[rowIndex].findIndex(cardNum => {return cardNum == undefined});
 		let indexOfLastCardInTheRow = indexOfFirstUndefinedInTheRow == -1 ? this._drawer._numberOfCols - 1 : indexOfFirstUndefinedInTheRow - 1;
@@ -259,6 +270,7 @@ class TableAnimation extends Animation
 		bAnimationInProgress = true;
 		this._callback = callback;
 		this._callbackParam = callbackParam;
+		playSwooshSound();
 		this._fcBackW = this._drawer.CardWidth; // back of the card starts full width
 		requestAnimationFrame(this.flipAllUpcomingCardsHelper.bind(this));
 	}
@@ -296,7 +308,7 @@ class TableAnimation extends Animation
 				numberOfCardsProcessed++;
 			}
 		}
-		let amountToChangeWidthByEachFrame = this._drawer.Canvas.width/200;
+		let amountToChangeWidthByEachFrame = this._drawer.Canvas.width/100;
 		this._fcBackW = this._fcBackW - amountToChangeWidthByEachFrame;
 
 		if ((-1) * this._fcBackW < this._drawer.CardWidth)

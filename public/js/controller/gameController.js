@@ -68,6 +68,8 @@ class GameController {
 			console.log("serverUpcomingCards message received at unexpected time. Ignored.");
 			return;
 		}
+		if (this._model.UpcomingCards && this._model.UpcomingCards.length < upcomingCards.length)
+			playCardPlacedSound();
 		this._model.UpcomingCards = upcomingCards;
 		this._tableView.draw();
 	}
