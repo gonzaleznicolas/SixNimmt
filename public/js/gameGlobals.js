@@ -26,22 +26,20 @@ const ClientStates = Object.freeze({
 	SelectRowToTake: 7
 });
 
-const RoundStepTypes = Object.freeze(
-	{
-		NoAnimationJustTheTableImage: 1,
-		FlipAllUpcomingCards: 2,
-		SortUpcomingCards: 3,
-		MoveIthCardToRowCol: 4,
-		AskPlayerToChooseARowToTake: 5,
-		TakeRow: 6,
-		MoveRows: 7,
-		ShowMessageSayingWhichRowWasSelected: 8,
-		ClearHeader: 9,
-		RoundDone: 10,
-		IncrementPlayerScore: 11,
-		ResetScoreboard: 12
-	}
-);
+const RoundStepTypes = Object.freeze({
+	NoAnimationJustTheTableImage: 1,
+	FlipAllUpcomingCards: 2,
+	SortUpcomingCards: 3,
+	MoveIthCardToRowCol: 4,
+	AskPlayerToChooseARowToTake: 5,
+	TakeRow: 6,
+	MoveRows: 7,
+	ShowMessageSayingWhichRowWasSelected: 8,
+	ClearHeader: 9,
+	RoundDone: 10,
+	IncrementPlayerScore: 11,
+	ResetScoreboard: 12
+});
 
 function getCardInfo(cardNumber)
 {
