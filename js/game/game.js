@@ -620,12 +620,14 @@ module.exports = class Game extends EventEmitter
 			if (this._repeatRoundFlag)
 			{
 				this._repeatRoundFlag = false;
-				this.makeEveryPlayerAndSpectatorRewatchRound();	
+				this.makeEveryPlayerAndSpectatorRewatchRound();
+				return;
 			}
 			else
 			{
 				this._repeatRoundFlag = false;
 				this.startANewRound();
+				return;
 			}
 		}
 		else

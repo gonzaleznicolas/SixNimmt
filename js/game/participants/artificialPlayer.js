@@ -31,9 +31,13 @@ module.exports = class ArtificialPlayer extends Player
 				console.log(`Artificial player ${this._name}: Cannot play a card. I have 0 cards left in my hand.`);
 				return;
 			}
+
+
 			let cardToPlay = Math.min.apply(null , Array.from(this._hand));
 			//let cardToPlay = Array.from(this._hand)[0];
 			//let cardToPlay = Math.max.apply(null , Array.from(this._hand));
+
+
 			this._hand.delete(cardToPlay);
 			this.emit('playerPlayCard', {player: this, playedCard: cardToPlay});
 
@@ -46,7 +50,10 @@ module.exports = class ArtificialPlayer extends Player
 		setTimeout( function() {
 
 			console.log(`${this._name} emits playerRowToTake`);
-			this.emit('playerRowToTake', {player: this, rowToTakeIndex: 2});
+
+			let rowToTakeIndex = 2;
+
+			this.emit('playerRowToTake', {player: this, rowToTakeIndex: rowToTakeIndex});
 
 		}.bind(this), secondsToWaitBeforeChoosingRow);
 	}
