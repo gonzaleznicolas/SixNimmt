@@ -3,6 +3,7 @@
 const Player = require('./player.js');
 const PlayerStates = require('../gameGlobals.js').PlayerStates;
 const RoundStepTypes = require('../gameGlobals.js').RoundStepTypes;
+const Table = require('../table.js');
 
 module.exports = class ArtificialPlayer extends Player
 {
@@ -44,15 +45,23 @@ module.exports = class ArtificialPlayer extends Player
 		}.bind(this), secondsToWaitBeforeSelectingCard * 1000);
 	}
 
-	chooseARowToTake()
+	chooseARowToTake(table2dArray)
 	{
 		let secondsToWaitBeforeChoosingRow = Math.floor(Math.random() * (4-6)) + 4;
 		setTimeout( function() {
 
+			let rowToTakeIndex = 0;
+			let tableObj = new Table();
+			tableObj.Table = table2dArray;
+			let rowsWithFewestCows = tableObj.listOfRowsWithFewestCows();
+
+			console.log(rowsWithFewestCows);
+
+			rowToTakeIndex = rowsWithFewestCows[0];
+
+			console.log(rowToTakeIndex);
+
 			console.log(`${this._name} emits playerRowToTake`);
-
-			let rowToTakeIndex = 2;
-
 			this.emit('playerRowToTake', {player: this, rowToTakeIndex: rowToTakeIndex});
 
 		}.bind(this), secondsToWaitBeforeChoosingRow);
@@ -101,7 +110,7 @@ module.exports = class ArtificialPlayer extends Player
 			lastAnimation.stepParams.nameOfPlayerToChooseRow == this._name &&
 			this._state == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
 		{
-			this.chooseARowToTake();
+			this.chooseARowToTake(lastAnimation.tableImage.table);
 		}
 		else if (lastAnimation.stepType == RoundStepTypes.RoundDone)
 		{

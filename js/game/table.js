@@ -74,6 +74,21 @@ module.exports = class Table
 		return totalCows;
 	}
 
+	// returns an array of row indices. Any index in this array, that row is tied for having least cows
+	listOfRowsWithFewestCows()
+	{
+		let cowsInEachRow = [0, 1, 2, 3].map( function(rowI) {
+			return this.cowsInRow(rowI);
+		}.bind(this));
+		let minNumberOfCowsInARow = Math.min.apply(null, cowsInEachRow);
+
+		let listOfRowIndicesTiedForFewestCows = [0, 1, 2, 3].filter( function(rowI){
+			return this.cowsInRow(rowI) == minNumberOfCowsInARow;
+		}.bind(this));
+
+		return listOfRowIndicesTiedForFewestCows;
+	}
+
 	lastCardInRow(rowI)
 	{
 		if (rowI >= NUMBER_OF_ROWS)
