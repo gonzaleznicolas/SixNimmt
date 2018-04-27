@@ -96,6 +96,12 @@ module.exports = class ArtificialPlayer extends Player
 	// will only read the table2dArray. Not modify.
 	playACard(table2dArray)
 	{
+		if (this._state != PlayerStates.ChooseCard)
+		{
+			console.log('playACard was called on player '+this._name+" when not in state ChooseCard. Ignored.");
+			return;
+		}
+
 		let secondsToWaitBeforeSelectingCard = Math.floor(Math.random() * (8-15)) + 8;
 		setTimeout(function ()
 		{
