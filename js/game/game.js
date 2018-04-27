@@ -242,6 +242,7 @@ module.exports = class Game extends EventEmitter
 				// changing the state will make the artificial player choose a card within a few seconds
 				console.log(`${humanPlayerToReplace.Name} had not played a card before disconnecting so ${artificialPlayerReplacement.Name} was instructed to pick a card`);
 				artificialPlayerReplacement.State = PlayerStates.ChooseCard;
+				artificialPlayerReplacement.playACard(this._table.Table);
 			}
 		}
 		else if (this._state == GameStates.RoundAnimationInProgress)
@@ -356,6 +357,9 @@ module.exports = class Game extends EventEmitter
 		this.initializePlayerHands();
 		this.initializeTableCards();
 		this._players.forEach((p) => {p.State = PlayerStates.ChooseCard});
+		this._players.forEach( function(p) {
+			p.playACard(this._table.Table);
+		}.bind(this));
 		this._spectators.forEach( (s) => {s.State = SpectatorStates.RoundAnimationNotInProgress});
 		this._roundNumberOfCurrentIteration = 1;
 		this.tellAllPlayersAndSpectatorsGameStarted();
@@ -395,6 +399,9 @@ module.exports = class Game extends EventEmitter
 		this._repeatRoundFlag = false;
 		this._upcomingCards.reset();
 		this._players.forEach((player) => {player.State = PlayerStates.ChooseCard});
+		this._players.forEach( function(p) {
+			p.playACard(this._table.Table);
+		}.bind(this));
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationNotInProgress});
 		this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
 		this.tellAllPlayersAndSpectatorsTheNextRoundIsStartingAndSendDetails();

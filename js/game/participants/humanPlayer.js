@@ -99,6 +99,8 @@ module.exports = class HumanPlayer extends Player
 		this._socket.emit('serverKickClientOut');
 	}
 
+	playACard(table2dArray){}
+
 	// CLIENT TO SERVER - WAIT PAGE EVENT HANDLERS
 
 	onClientEndGameFromWaitPage()

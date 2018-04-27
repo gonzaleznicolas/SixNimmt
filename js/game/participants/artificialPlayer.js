@@ -12,39 +12,9 @@ module.exports = class ArtificialPlayer extends Player
 		super(name, false);
 	}
 
-	// override the Player State setter
-	set State(state) {
-		this._state = state;
-		if (this._state == PlayerStates.ChooseCard)
-			this.playACard();
-	}
-	get State() {return this._state;} // if you override the setter you have to override the getter as well
-
 	// METHODS CALLED FROM WITHIN THE ArtificialPlayer
 
-	playACard()
-	{
-		let secondsToWaitBeforeSelectingCard = Math.floor(Math.random() * (8-15)) + 8;
-		setTimeout(function () {
-
-			if (this._hand.size == 0)
-			{
-				console.log(`Artificial player ${this._name}: Cannot play a card. I have 0 cards left in my hand.`);
-				return;
-			}
-
-
-			let cardToPlay = Math.min.apply(null , Array.from(this._hand));
-			//let cardToPlay = Array.from(this._hand)[0];
-			//let cardToPlay = Math.max.apply(null , Array.from(this._hand));
-
-
-			this._hand.delete(cardToPlay);
-			this.emit('playerPlayCard', {player: this, playedCard: cardToPlay});
-
-		}.bind(this), secondsToWaitBeforeSelectingCard * 1000);
-	}
-
+	// will only read the table2dArray. Not modify.
 	chooseARowToTake(table2dArray)
 	{
 		let secondsToWaitBeforeChoosingRow = Math.floor(Math.random() * (4-6)) + 4;
@@ -122,4 +92,29 @@ module.exports = class ArtificialPlayer extends Player
 	winners(winners){}
 
 	kickOut(){}
+
+	// will only read the table2dArray. Not modify.
+	playACard(table2dArray)
+	{
+		let secondsToWaitBeforeSelectingCard = Math.floor(Math.random() * (8-15)) + 8;
+		setTimeout(function ()
+		{
+
+			if (this._hand.size == 0)
+			{
+				console.log(`Artificial player ${this._name}: Cannot play a card. I have 0 cards left in my hand.`);
+				return;
+			}
+
+
+			let cardToPlay = Math.min.apply(null , Array.from(this._hand));
+			//let cardToPlay = Array.from(this._hand)[0];
+			//let cardToPlay = Math.max.apply(null , Array.from(this._hand));
+
+
+			this._hand.delete(cardToPlay);
+			this.emit('playerPlayCard', {player: this, playedCard: cardToPlay});
+
+		}.bind(this), secondsToWaitBeforeSelectingCard * 1000);
+	}
 }

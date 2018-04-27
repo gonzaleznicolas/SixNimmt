@@ -71,6 +71,11 @@ module.exports = class Player extends EventEmitter
 
 	kickOut(){}
 
+	// the game will call this method on a player to notify them that they have to choose a card
+	// the game will always do this right after setting the player state to ChooseCard
+	// the player must not modify table2dArray. Just read it.
+	playACard(table2dArray){}
+
 	// EVENTS TO BE EMITTED BY ANY CLASS DERIVING OFF OF PLAYER
 	
 	/*
