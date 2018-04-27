@@ -149,11 +149,12 @@ module.exports = class Game extends EventEmitter
 	addArtificialPlayer()
 	{
 		let n = 1;
-		let name;
-		do{
-			name = "AI"+n;
+		let name = "Bot";
+		while (this._players.has(name))
+		{
+			name = "Bot "+n;
 			n++;
-		} while (this._players.has(name));
+		}
 
 		let player = new ArtificialPlayer(name);
 		player.State = PlayerStates.WaitPage;
