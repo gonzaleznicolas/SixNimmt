@@ -24,4 +24,17 @@ module.exports = class Hand
 	{
 		return this._set.has(card);
 	}
+
+	// range is an object {min: , max: } where min and max are non inclusive.
+	// this function does not modify the hand. It just returns a card in the hand
+	// which is the smallest in the given range.
+	// returns undefined if the hand contains no card for the given range
+	smallestCardInRange(range)
+	{
+		let handArray = Array.from(this._set);
+		let cardsInRange = handArray.filter( function(card) {return card > range.min && card < range.max;});
+		if (cardsInRange.length == 0)
+			return undefined;
+		return Math.min.apply(null, cardsInRange);			
+	}
 }

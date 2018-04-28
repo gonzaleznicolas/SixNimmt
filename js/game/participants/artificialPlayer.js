@@ -48,16 +48,22 @@ module.exports = class ArtificialPlayer extends Player
 		}.bind(this), secondsToWait);
 	}
 
-	// will only read the table2dArray. Not modify.
-	playACardNow(table2dArray)
+	playACardNow(table)
 	{
 		let cardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
 
-		//let cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken = 
+		let cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken =
+			this.getSetOfCardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken(table);
 
 
 		this.playCard(cardToPlay);
 		return;
+	}
+
+	// does not remove the cards from the hand. just gives you an array with the card numbers
+	getSetOfCardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken(table)
+	{
+
 	}
 
 	playCard(cardToPlay)
@@ -128,7 +134,9 @@ module.exports = class ArtificialPlayer extends Player
 		let secondsToWaitBeforeSelectingCard = Math.floor(Math.random() * (8-15)) + 8;
 		setTimeout(function ()
 		{
-			this.playACardNow(table2dArray);
+			let tableObj = new Table();
+			tableObj.Table = table2dArray;
+			this.playACardNow(Table.clone(tableObj));
 		}.bind(this), secondsToWaitBeforeSelectingCard * 1000);
 	}
 }

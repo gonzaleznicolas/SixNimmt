@@ -113,6 +113,24 @@ module.exports = class Table
 		return card < this.lastCardInRow(0);
 	}
 
+	// returns an object {min: , max: } where numbers between min and max (non inclusive) would go
+	// in rowI with the current table configuration
+	rowRange(rowI)
+	{
+		if (rowI < 0 || rowI >=4)
+			throw "Trying to get row range for row out of bounds";
+
+		let min = this.lastCardInRow(rowI);
+		let max = rowI == 3 ? 105 : this.lastCardInRow(rowI + 1);
+		return {min: min, max: max};
+	}
+
+	// non inclusive min and max
+	smallerThanLastCardOnFirstRowRange()
+	{
+		return {min: 0, max: this.lastCardInRow(0)};
+	}
+
 	// ACTIONS
 
 	setInitialFourCards(unsortedArrayOfFourCards)
