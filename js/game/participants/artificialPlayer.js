@@ -95,10 +95,13 @@ module.exports = class ArtificialPlayer extends Player
 				// if here, and assuming no one plays a card smaller than the last on the first row and chooses to take
 				// rowI, if I play myCardForRowI, then i am guaranteed not to have to take cards.
 				// There arent enough cards  in the necessary range that could be placed on rowI before mine making my card the 6th
-				console.log(`I am ${this._name} and if I play card ${myCardForRowI}, i definitely wont take cattle`);
+				console.log(`I am ${this._name} and if I play card ${myCardForRowI}, and no one takes row with index ${rowI} before my card is placed, i definitely wont take cattle`);
 				list.push(myCardForRowI);
 			}
 		}
+
+		if (list.length == 0)
+			console.log(`I am ${this._name} there is no card i can play so that i DEFINITELY wont take cattle`);
 
 		return list;
 	}
