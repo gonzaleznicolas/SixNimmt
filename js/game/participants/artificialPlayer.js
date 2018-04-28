@@ -48,6 +48,12 @@ module.exports = class ArtificialPlayer extends Player
 		}.bind(this), secondsToWait);
 	}
 
+	playCard(cardToPlay)
+	{
+		this._hand.delete(cardToPlay);
+		this.emit('playerPlayCard', {player: this, playedCard: cardToPlay});
+	}
+
 	// METHODS CALLED BY THE GAME. METHODS ANY PLAYER MUST IMPLEMENT
 	removeAllListeners(){}
 	updatePlayerList(playerList){}
@@ -106,20 +112,18 @@ module.exports = class ArtificialPlayer extends Player
 		setTimeout(function ()
 		{
 
-			if (this._hand.size == 0)
+			if (this._hand.Size == 0)
 			{
 				console.log(`Artificial player ${this._name}: Cannot play a card. I have 0 cards left in my hand.`);
 				return;
 			}
 
 
-			let cardToPlay = Math.min.apply(null , Array.from(this._hand));
-			//let cardToPlay = Array.from(this._hand)[0];
-			//let cardToPlay = Math.max.apply(null , Array.from(this._hand));
+			let cardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
 
 
-			this._hand.delete(cardToPlay);
-			this.emit('playerPlayCard', {player: this, playedCard: cardToPlay});
+			this.playCard(cardToPlay);
+			return;
 
 		}.bind(this), secondsToWaitBeforeSelectingCard * 1000);
 	}

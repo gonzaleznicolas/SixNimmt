@@ -29,7 +29,7 @@ module.exports = class HumanPlayer extends Player
 
 	updateHand()
 	{
-		this._socket.emit("serverUpdatedHand", Array.from(this._hand));
+		this._socket.emit("serverUpdatedHand", Array.from(this._hand.Set));
 	}
 	
 	// METHODS CALLED BY THE GAME. METHODS ANY PLAYER MUST IMPLEMENT
@@ -65,7 +65,7 @@ module.exports = class HumanPlayer extends Player
 			playerList: playerList,
 			table: table,
 			isSpectator: false,
-			hand: Array.from(this._hand),
+			hand: Array.from(this._hand.Set),
 			name: this._name
 		});
 	}
@@ -84,7 +84,7 @@ module.exports = class HumanPlayer extends Player
 
 	startRound(table, scoreboard)
 	{
-		this._socket.emit('serverStartRound', {table: table, scoreboard: scoreboard, hand: Array.from(this._hand)});
+		this._socket.emit('serverStartRound', {table: table, scoreboard: scoreboard, hand: Array.from(this._hand.Set)});
 	}
 
 	winners(winners)

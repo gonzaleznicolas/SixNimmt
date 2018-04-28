@@ -306,7 +306,7 @@ module.exports = class Game extends EventEmitter
 	initializePlayerHands()
 	{
 		this._players.forEach(function (player) {
-			player.Hand = this._deck.takeCards(10);
+			player.Hand.Set = this._deck.takeCards(10);
 		}.bind(this));
 	}
 

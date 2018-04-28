@@ -2,6 +2,7 @@
 
 const EventEmitter = require('events');
 const PlayerStates = require('../gameGlobals.js').PlayerStates;
+const Hand = require('./hand.js');
 
 module.exports = class Player extends EventEmitter
 {
@@ -10,7 +11,7 @@ module.exports = class Player extends EventEmitter
 		super();
 		this._name = name;
 		this._bStartedGame = bStartedGame;
-		this._hand = undefined;
+		this._hand = new Hand();
 		this._state;
 
 		// the following set is used by the artificial player to make its decisions.
