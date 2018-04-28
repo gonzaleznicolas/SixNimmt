@@ -57,6 +57,11 @@ module.exports = class Player extends EventEmitter
 	// It has to be implemented because at one time or another, the game will call these methods
 	// on each of its players regardless of if they are human or artificial.
 
+	clearSetOfCardsIveSeenAlready()
+	{
+		this._setOfCardsIveSeenAlready.clear();
+	}
+
 	removeAllListeners(){}
 	updatePlayerList(playerList){}
 	terminateGame(nameOfPlayerWhoEndedTheGame){}

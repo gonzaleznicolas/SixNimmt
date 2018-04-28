@@ -108,6 +108,15 @@ module.exports = class Table
 		return this._table[row].findIndex( (e) => e == null);
 	}
 
+	numberOfCardsInRow(rowI)
+	{
+		let nextOpenPosition = this.nextOpenPositionInRow(rowI);
+		if (nextOpenPosition == -1)
+			return 6;
+		else
+			return nextOpenPosition;
+	}
+
 	cardSmallerThanLastCardInFirstRow(card)
 	{
 		return card < this.lastCardInRow(0);

@@ -5,6 +5,8 @@ const PlayerStates = require('../gameGlobals.js').PlayerStates;
 const RoundStepTypes = require('../gameGlobals.js').RoundStepTypes;
 const Table = require('../table.js');
 
+const NUMBER_OF_ROWS = 4;
+
 module.exports = class ArtificialPlayer extends Player
 {
 	constructor(name)
@@ -53,7 +55,10 @@ module.exports = class ArtificialPlayer extends Player
 		let cardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
 
 		let cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken =
-			this.getSetOfCardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken(table);
+			this.getListOfCardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken(table);
+		
+		if (cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken.length > 0)
+			cardToPlay = cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken[0];
 
 
 		this.playCard(cardToPlay);
@@ -61,9 +66,41 @@ module.exports = class ArtificialPlayer extends Player
 	}
 
 	// does not remove the cards from the hand. just gives you an array with the card numbers
-	getSetOfCardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken(table)
+	getListOfCardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken(table)
 	{
+		let list = [];
+		for (let rowI = 0; rowI < NUMBER_OF_ROWS; rowI++)
+		{
+			let myCardForRowI = this._hand.smallestCardInRange(table.rowRange(rowI));
+			if (myCardForRowI == undefined)
+				continue;
+			let lastCardOnRowI = table.lastCardInRow(rowI);
 
+			let listOfCardsThatWouldGoBeforeMine = [];
+			for (let c = lastCardOnRowI + 1; c < myCardForRowI; c++)
+				listOfCardsThatWouldGoBeforeMine.push(c);
+			
+			// remove from listOfCardsThatWouldGoBeforeMine any card that has already been played.
+			// i.e. any cards that i know no other player can play
+			let listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard =
+				listOfCardsThatWouldGoBeforeMine.filter( function(card) {
+					 return !this._setOfCardsIveSeenAlready.has(card);
+				}.bind(this));
+			
+			let numberOfCardsICanAffordToBePlacedBeforeMineOnRowIAndStillNotHaveMineBeThe6th = 4 - table.numberOfCardsInRow(rowI);
+			
+			if (listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length <=
+				numberOfCardsICanAffordToBePlacedBeforeMineOnRowIAndStillNotHaveMineBeThe6th)
+			{
+				// if here, and assuming no one plays a card smaller than the last on the first row and chooses to take
+				// rowI, if I play myCardForRowI, then i am guaranteed not to have to take cards.
+				// There arent enough cards  in the necessary range that could be placed on rowI before mine making my card the 6th
+				console.log(`I am ${this._name} and if I play card ${myCardForRowI}, i definitely wont take cattle`);
+				list.push(myCardForRowI);
+			}
+		}
+
+		return list;
 	}
 
 	playCard(cardToPlay)
