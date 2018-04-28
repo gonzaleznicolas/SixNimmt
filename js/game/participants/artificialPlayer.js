@@ -48,6 +48,18 @@ module.exports = class ArtificialPlayer extends Player
 		}.bind(this), secondsToWait);
 	}
 
+	// will only read the table2dArray. Not modify.
+	playACardNow(table2dArray)
+	{
+		let cardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
+
+		//let cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken = 
+
+
+		this.playCard(cardToPlay);
+		return;
+	}
+
 	playCard(cardToPlay)
 	{
 		this._hand.delete(cardToPlay);
@@ -107,24 +119,16 @@ module.exports = class ArtificialPlayer extends Player
 			console.log('playACard was called on player '+this._name+" when not in state ChooseCard. Ignored.");
 			return;
 		}
+		if (this._hand.Size == 0)
+		{
+			console.log(`Artificial player ${this._name}: Cannot play a card. I have 0 cards left in my hand.`);
+			return;
+		}
 
 		let secondsToWaitBeforeSelectingCard = Math.floor(Math.random() * (8-15)) + 8;
 		setTimeout(function ()
 		{
-
-			if (this._hand.Size == 0)
-			{
-				console.log(`Artificial player ${this._name}: Cannot play a card. I have 0 cards left in my hand.`);
-				return;
-			}
-
-
-			let cardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
-
-
-			this.playCard(cardToPlay);
-			return;
-
+			this.playACardNow(table2dArray);
 		}.bind(this), secondsToWaitBeforeSelectingCard * 1000);
 	}
 }
