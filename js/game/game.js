@@ -211,14 +211,14 @@ module.exports = class Game extends EventEmitter
 		}
 
 		let nameForArtificialReplacement = "Bot "+humanPlayerToReplace.Name;
-		nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
+		nameForArtificialReplacement = nameForArtificialReplacement.substring(0, 6); // names can be max 6 chars long
 		
 		// make sure the name is not taken
 		let n = 1;
 		while (this._players.has(nameForArtificialReplacement))
 		{
 			nameForArtificialReplacement = "Bot "+n+humanPlayerToReplace.Name;
-			nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
+			nameForArtificialReplacement = nameForArtificialReplacement.substring(0, 6); // names can be max 6 chars long
 		}
 
 		let artificialPlayerReplacement = new ArtificialPlayer(nameForArtificialReplacement);
