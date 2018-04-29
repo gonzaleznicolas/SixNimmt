@@ -35,6 +35,13 @@ module.exports = class Player extends EventEmitter
 	get State() {return this._state;}
 	set State(state) {this._state = state;}
 
+	resetSetOfCardsIveSeenAlreadyForNewIteration(table)
+	{
+		this.clearSetOfCardsIveSeenAlready();
+		this.addCardsOnTableToSetOfCardsIveSeenAlready(table);
+		this.addCardsInMyHandToSetOfCardsIveSeenAlready();
+	}
+
 	addCardsOnTableToSetOfCardsIveSeenAlready(table)
 	{
 		if (table.length != 4)
@@ -43,6 +50,13 @@ module.exports = class Player extends EventEmitter
 		table.forEach( function (row) {
 			if (row[0])
 				this._setOfCardsIveSeenAlready.add(row[0]);
+		}.bind(this));
+	}
+
+	addCardsInMyHandToSetOfCardsIveSeenAlready()
+	{
+		this._hand.Set.forEach(function(card){
+			this._setOfCardsIveSeenAlready.add(card);
 		}.bind(this));
 	}
 

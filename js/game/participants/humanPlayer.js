@@ -59,7 +59,7 @@ module.exports = class HumanPlayer extends Player
 
 	startGame(playerList, table)
 	{
-		this.addCardsOnTableToSetOfCardsIveSeenAlready(table);
+		this.resetSetOfCardsIveSeenAlreadyForNewIteration(table);
 
 		this._socket.emit("serverStartGame", {
 			playerList: playerList,

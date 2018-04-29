@@ -374,9 +374,9 @@ module.exports = class Game extends EventEmitter
 		console.log("new iteration started");
 		this._table.reset();
 		this._deck.reset();
-		this._players.forEach( (p) => p.clearSetOfCardsIveSeenAlready());
 		this.initializePlayerHands();
 		this.initializeTableCards();
+		this._players.forEach( (p) => p.clearSetOfCardsIveSeenAlready(this._table.Table));
 		this._roundNumberOfCurrentIteration = 1;
 	}
 

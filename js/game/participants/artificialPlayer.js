@@ -86,22 +86,29 @@ module.exports = class ArtificialPlayer extends Player
 			
 			let numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th = 5 - this.tableAtStartOfThisRound.numberOfCardsInRow(rowI);
 
-			if ( Math.min(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
-				this._totalNumberOfPlayersInGameImInIncludingMyself - 1)
+			// we need to calculate these two variables
+			let probabilityThatMyCardWillBeThe6th;
+			let numberOfCowsIdTakeIfMineIsThe6th;
+
+			// calculate probabilityThatMyCardWillBeThe6th:
+
+			// in order for my card to be the 6th, there needs to be at least numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th different players
+			// in the game, all of whom have a card in their hand in listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
+			// and exacly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th need to play that card this turn
+
+			if (Math.min(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length, this._totalNumberOfPlayersInGameImInIncludingMyself)
 				< numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
 			{
-				// if here, and assuming no one plays a card smaller than the last on the first row and chooses to take
-				// rowI, if I play myCardForRowI, then i am guaranteed not to have to take cards.
-				// There arent enough cards in the necessary range that could be placed on rowI before mine making my card the 6th
-				console.log(`I am ${this._name} and if I play card ${myCardForRowI}, and no one takes row with index ${rowI} before my card is placed, i definitely wont take cattle`);
-				scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: 0});
+				probabilityThatMyCardWillBeThe6th = 0;
 			}
 			else
 			{
-				let probabilityThatMyCardWillBeThe6th;
-				let numberOfCowsIdTakeIfMineIsThe6th;
-				scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: 0});
+				// there are enough CardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard and enough players 
+				// so that they could all play cards making mine the 6th
+
 			}
+
+			scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: probabilityThatMyCardWillBeThe6th*numberOfCowsIdTakeIfMineIsThe6th});
 		}
 	}
 
@@ -119,7 +126,7 @@ module.exports = class ArtificialPlayer extends Player
 	// from the game board, see which cards are there and start to keep track of which cards have already come up
 	startGame(playerList, table)
 	{
-		this.addCardsOnTableToSetOfCardsIveSeenAlready(table);
+		this.resetSetOfCardsIveSeenAlreadyForNewIteration(table);
 	}
 
 	updateUpcomingCards(upcomingCards)
