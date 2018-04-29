@@ -13,6 +13,7 @@ module.exports = class Player extends EventEmitter
 		this._bStartedGame = bStartedGame;
 		this._hand = new Hand();
 		this._state;
+		this._totalNumberOfPlayersInGameImInIncludingMyself;
 
 		// the following set is used by the artificial player to make its decisions.
 		// however, maintain it even for human players. This is so that when a human player
@@ -27,6 +28,7 @@ module.exports = class Player extends EventEmitter
 	set Hand(hand) {this._hand = hand}
 	get SetOfCardsIveSeenAlready() {return this._setOfCardsIveSeenAlready;}
 	set SetOfCardsIveSeenAlready(set) {this._setOfCardsIveSeenAlready = set}
+	set TotalNumberOfPlayersInGameImInIncludingMyself(n) {this._totalNumberOfPlayersInGameImInIncludingMyself = n;}
 
 	// player state is managed by the game. A player never sets its own state
 	get State() {return this._state;}

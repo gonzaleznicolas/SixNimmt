@@ -357,6 +357,8 @@ module.exports = class Game extends EventEmitter
 		this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
 		this.initializePlayerHands();
 		this.initializeTableCards();
+		let numberOfPlayersInGame = this._players.size;
+		this._players.forEach((p) => {p.TotalNumberOfPlayersInGameImInIncludingMyself = numberOfPlayersInGame});
 		this._players.forEach((p) => {p.State = PlayerStates.ChooseCard});
 		this._players.forEach( function(p) {
 			p.playACard(this._table.Table);

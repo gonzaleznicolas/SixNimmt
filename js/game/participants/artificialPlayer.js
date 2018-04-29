@@ -52,6 +52,7 @@ module.exports = class ArtificialPlayer extends Player
 
 	playACardNow(table)
 	{
+		console.log(`I am bot ${this._name} and I have to pick a card to play. My hand is ${Array.from(this._hand.Set)}`);
 		let cardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
 
 		let cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken =
@@ -90,6 +91,9 @@ module.exports = class ArtificialPlayer extends Player
 			let numberOfCardsICanAffordToBePlacedBeforeMineOnRowIAndStillNotHaveMineBeThe6th = 4 - table.numberOfCardsInRow(rowI);
 			
 			if (listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length <=
+				numberOfCardsICanAffordToBePlacedBeforeMineOnRowIAndStillNotHaveMineBeThe6th
+				||
+				this._totalNumberOfPlayersInGameImInIncludingMyself - 1 <=
 				numberOfCardsICanAffordToBePlacedBeforeMineOnRowIAndStillNotHaveMineBeThe6th)
 			{
 				// if here, and assuming no one plays a card smaller than the last on the first row and chooses to take
