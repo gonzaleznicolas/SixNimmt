@@ -210,20 +210,21 @@ module.exports = class Game extends EventEmitter
 			return;
 		}
 
-		let nameForArtificialReplacement = "AI "+humanPlayerToReplace.Name;
+		let nameForArtificialReplacement = "Bot "+humanPlayerToReplace.Name;
 		nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
 		
 		// make sure the name is not taken
 		let n = 1;
 		while (this._players.has(nameForArtificialReplacement))
 		{
-			nameForArtificialReplacement = "AI "+n+humanPlayerToReplace.Name;
+			nameForArtificialReplacement = "Bot "+n+humanPlayerToReplace.Name;
 			nameForArtificialReplacement = nameForArtificialReplacement.trim(0, 6); // names can be max 6 chars long
 		}
 
 		let artificialPlayerReplacement = new ArtificialPlayer(nameForArtificialReplacement);
 		artificialPlayerReplacement.Hand = humanPlayerToReplace.Hand;
 		artificialPlayerReplacement.SetOfCardsIveSeenAlready = humanPlayerToReplace.SetOfCardsIveSeenAlready;
+		artificialPlayerReplacement.TotalNumberOfPlayersInGameImInIncludingMyself = humanPlayerToReplace.TotalNumberOfPlayersInGameImInIncludingMyself;
 		this._players.set(nameForArtificialReplacement, artificialPlayerReplacement);
 		this.subscribeToPlayerEvents(artificialPlayerReplacement);
 		this._scoreboard.renamePlayer(humanPlayerToReplace.Name, artificialPlayerReplacement.Name);

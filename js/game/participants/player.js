@@ -28,6 +28,7 @@ module.exports = class Player extends EventEmitter
 	set Hand(hand) {this._hand = hand}
 	get SetOfCardsIveSeenAlready() {return this._setOfCardsIveSeenAlready;}
 	set SetOfCardsIveSeenAlready(set) {this._setOfCardsIveSeenAlready = set}
+	get TotalNumberOfPlayersInGameImInIncludingMyself() {return this._totalNumberOfPlayersInGameImInIncludingMyself;}
 	set TotalNumberOfPlayersInGameImInIncludingMyself(n) {this._totalNumberOfPlayersInGameImInIncludingMyself = n;}
 
 	// player state is managed by the game. A player never sets its own state
