@@ -144,7 +144,7 @@ function translateToSpanish()
 	// game
 	$('#playCardButton')[0].innerHTML = "Poner Carta";
 	$('#selectCardMessage')[0].innerHTML = "Por favor elige una carta";
-	$('#notTimeToPlayCardMessage')[0].innerHTML = "No es hora de elejir una carta";
+	$('#notTimeToPlayCardMessage')[0].innerHTML = "No es hora de elegir una carta";
 
 	// menu
 	$('#quitMenuOption')[0].innerHTML = "Terminar Juego";
@@ -160,7 +160,7 @@ function translateToSpanish()
 	thisGameHasBeenTerminatedStr = "Este juego ha sido terminado por ";
 
 	selectARowStr = "Elija una fila para llevarse";
-	selectRowStr = "Elejir fila";
+	selectRowStr = "elegir fila";
 	waitingForStr = "Esperando a que";
 	toPickARowStr = "elija una fila";
 
