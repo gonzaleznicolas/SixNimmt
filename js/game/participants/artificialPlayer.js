@@ -91,12 +91,12 @@ module.exports = class ArtificialPlayer extends Player
 			let numberOfCowsIdTakeIfMineIsThe6th;
 
 			// calculate probabilityThatMyCardWillBeThe6th:
-
-			// in order for my card to be the 6th, there needs to be at least numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th different players
-			// in the game, all of whom have a card in their hand in listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
-			// and exacly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th need to play that card this turn
-
-			if (Math.min(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length, this._totalNumberOfPlayersInGameImInIncludingMyself)
+			let numberOfPlayersOtherThanMe = this._totalNumberOfPlayersInGameImInIncludingMyself - 1;
+			probabilityThatMyCardWillBeThe6th = 0;
+			let maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine = 
+				Math.min(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
+					numberOfPlayersOtherThanMe );
+			if (maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine
 				< numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
 			{
 				probabilityThatMyCardWillBeThe6th = 0;
@@ -106,6 +106,17 @@ module.exports = class ArtificialPlayer extends Player
 				// there are enough CardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard and enough players 
 				// so that they could all play cards making mine the 6th
 
+				// in order for my card to be the 6th, there needs to be at least numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th different players
+				// in the game, all of whom have a card in their hand in listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
+				// and exacly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th need to play that card this turn
+
+				for (let numberOfPlayersWhoHaveAcardThatWouldGoBeforeMine = numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
+					numberOfPlayersWhoHaveAcardThatWouldGoBeforeMine < maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine;
+					numberOfPlayersWhoHaveAcardThatWouldGoBeforeMine++)
+				{
+
+
+				}
 			}
 
 			scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: probabilityThatMyCardWillBeThe6th*numberOfCowsIdTakeIfMineIsThe6th});
