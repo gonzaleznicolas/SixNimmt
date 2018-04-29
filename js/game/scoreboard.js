@@ -48,7 +48,10 @@ module.exports = class Scoreboard
 	{
 		let i = this._scores.findIndex( (score) => score.name == name);
 		if (i == -1)
-			throw "Tried to increment score of player which doesnt exist";
+		{
+			console.log(`Tried to increment score of player which doesnt exist. The name which doesnt exist which you tried to increment was ${name}`);
+			return;
+		}
 		this._scores[i].score = this._scores[i].score + pointsToAdd;
 	}
 
