@@ -55,27 +55,23 @@ module.exports = class ArtificialPlayer extends Player
 		console.log(`I am bot ${this._name} and I have to pick a card to play. My hand is ${Array.from(this._hand.Set)}`);
 		let cardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
 
-		let cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken =
-			this.getListOfCardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken(table);
-		
-		if (cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken.length > 0)
-			cardToPlay = cardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken[0];
+		this.scenariosForThisRound = [];
+		this.tableAtStartOfThisRound = table;
+		this.calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th();
 
 
 		this.playCard(cardToPlay);
 		return;
 	}
 
-	// does not remove the cards from the hand. just gives you an array with the card numbers
-	getListOfCardsWhichIfPlayedAndTheRowIsntTakenFirstGuaranteeNoCattleTaken(table)
+	calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th()
 	{
-		let list = [];
 		for (let rowI = 0; rowI < NUMBER_OF_ROWS; rowI++)
 		{
-			let myCardForRowI = this._hand.smallestCardInRange(table.rowRange(rowI));
+			let myCardForRowI = this._hand.smallestCardInRange(this.tableAtStartOfThisRound.rowRange(rowI));
 			if (myCardForRowI == undefined)
 				continue;
-			let lastCardOnRowI = table.lastCardInRow(rowI);
+			let lastCardOnRowI = this.tableAtStartOfThisRound.lastCardInRow(rowI);
 
 			let listOfCardsThatWouldGoBeforeMine = [];
 			for (let c = lastCardOnRowI + 1; c < myCardForRowI; c++)
@@ -88,26 +84,25 @@ module.exports = class ArtificialPlayer extends Player
 					 return !this._setOfCardsIveSeenAlready.has(card);
 				}.bind(this));
 			
-			let numberOfCardsICanAffordToBePlacedBeforeMineOnRowIAndStillNotHaveMineBeThe6th = 4 - table.numberOfCardsInRow(rowI);
-			
-			if (listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length <=
-				numberOfCardsICanAffordToBePlacedBeforeMineOnRowIAndStillNotHaveMineBeThe6th
-				||
-				this._totalNumberOfPlayersInGameImInIncludingMyself - 1 <=
-				numberOfCardsICanAffordToBePlacedBeforeMineOnRowIAndStillNotHaveMineBeThe6th)
+			let numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th = 5 - this.tableAtStartOfThisRound.numberOfCardsInRow(rowI);
+
+			if ( Math.min(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
+				this._totalNumberOfPlayersInGameImInIncludingMyself - 1)
+				< numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
 			{
 				// if here, and assuming no one plays a card smaller than the last on the first row and chooses to take
 				// rowI, if I play myCardForRowI, then i am guaranteed not to have to take cards.
-				// There arent enough cards  in the necessary range that could be placed on rowI before mine making my card the 6th
+				// There arent enough cards in the necessary range that could be placed on rowI before mine making my card the 6th
 				console.log(`I am ${this._name} and if I play card ${myCardForRowI}, and no one takes row with index ${rowI} before my card is placed, i definitely wont take cattle`);
-				list.push(myCardForRowI);
+				scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: 0});
+			}
+			else
+			{
+				let probabilityThatMyCardWillBeThe6th;
+				let numberOfCowsIdTakeIfMineIsThe6th;
+				scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: 0});
 			}
 		}
-
-		if (list.length == 0)
-			console.log(`I am ${this._name} there is no card i can play so that i DEFINITELY wont take cattle`);
-
-		return list;
 	}
 
 	playCard(cardToPlay)
