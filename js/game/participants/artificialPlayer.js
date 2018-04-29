@@ -92,7 +92,6 @@ module.exports = class ArtificialPlayer extends Player
 
 			// calculate probabilityThatMyCardWillBeThe6th:
 			let numberOfPlayersOtherThanMe = this._totalNumberOfPlayersInGameImInIncludingMyself - 1;
-			probabilityThatMyCardWillBeThe6th = 0;
 			let maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine = 
 				Math.min(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
 					numberOfPlayersOtherThanMe );
@@ -110,11 +109,29 @@ module.exports = class ArtificialPlayer extends Player
 				// in the game, all of whom have a card in their hand in listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
 				// and exacly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th need to play that card this turn
 
-				for (let numberOfPlayersWhoHaveAcardThatWouldGoBeforeMine = numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
-					numberOfPlayersWhoHaveAcardThatWouldGoBeforeMine < maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine;
-					numberOfPlayersWhoHaveAcardThatWouldGoBeforeMine++)
-				{
+				probabilityThatMyCardWillBeThe6th = 0;
 
+				// i is is the number of players who have a card that would go before mine
+				for (let i = numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
+					i < maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine;
+					i++)
+				{
+					// calculate the probability that exactly i players have a card that would go before mine.
+					let p_exactly_i_playersHaveCardThatWouldGoBeforeMine;
+
+					// this includes all the cards that were not used for this iteration
+					// (eg if there are only 2 players, each is delt 10, 4 are placed on the table, so only 24/104 cards are used)
+					let numberOfCardsIHaventSeen = 104 - this._setOfCardsIveSeenAlready.size;
+					let numberOfCardsIHaventSeenYetThatWouldGoBeforeMine = listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length;
+					let numberOfPlayersThatCouldHaveThoseCards = numberOfPlayersOtherThanMe;
+					let numberOfCardsEachPlayerHas = this._hand.Size;
+
+					// probability that exactly i players have a card that would go before mine is the same as
+					// the probability that 
+
+					// calculate the probability that exactly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
+					// play the card they have which would go before mine
+					let p_exactly_necessaryPlayersToMakeMine6thPlayRightCard;
 
 				}
 			}
