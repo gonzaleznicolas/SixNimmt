@@ -214,3 +214,15 @@ module.exports = class ArtificialPlayer extends Player
 		}.bind(this), secondsToWaitBeforeSelectingCard * 1000);
 	}
 }
+
+function factorial(n){
+    var i= n;
+    while(--i) n*= i;
+    return n;
+}
+
+// combination
+function C(n, r)
+{
+	return Math.round(factorial(n)/(factorial(r)*factorial(n-r)));
+}
