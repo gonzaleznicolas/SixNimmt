@@ -117,22 +117,29 @@ module.exports = class ArtificialPlayer extends Player
 					i++)
 				{
 					// calculate the probability that exactly i players have a card that would go before mine.
-					let p_exactly_i_playersHaveCardThatWouldGoBeforeMine;
-
-					// this includes all the cards that were not used for this iteration
-					// (eg if there are only 2 players, each is delt 10, 4 are placed on the table, so only 24/104 cards are used)
-					let numberOfCardsIHaventSeen = 104 - this._setOfCardsIveSeenAlready.size;
-					let numberOfCardsIHaventSeenYetThatWouldGoBeforeMine = listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length;
-					let numberOfPlayersThatCouldHaveThoseCards = numberOfPlayersOtherThanMe;
-					let numberOfCardsEachPlayerHas = this._hand.Size;
-
-					// probability that exactly i players have a card that would go before mine is the same as
-					// the probability that 
+					let p_exactly_i_playersHaveCardThatWouldGoBeforeMine = probabilityThatCardsWillBeInPlayersHandsThisWay(
+						104 - this._setOfCardsIveSeenAlready.size,
+						listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
+						this._hand.Size,
+						numberOfPlayersOtherThanMe,
+						i
+					);
 
 					// calculate the probability that exactly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
 					// play the card they have which would go before mine
 					let p_exactly_necessaryPlayersToMakeMine6thPlayRightCard;
 
+					// numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th <= i
+					// i players have a card that would go before mine
+					// what is the probability that numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th play it
+					let probabilityThatAGivenPlayerPlaysTheCard = 0.8;
+					p_exactly_necessaryPlayersToMakeMine6thPlayRightCard = probabilityThat_K_outOf_N_PlayersChooseCard(
+						i,
+						numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th,
+						probabilityThatAGivenPlayerPlaysTheCard
+					);
+
+					probabilityThatMyCardWillBeThe6th += (p_exactly_i_playersHaveCardThatWouldGoBeforeMine*p_exactly_necessaryPlayersToMakeMine6thPlayRightCard);
 				}
 			}
 
@@ -225,4 +232,70 @@ function factorial(n){
 function C(n, r)
 {
 	return Math.round(factorial(n)/(factorial(r)*factorial(n-r)));
+}
+
+function probabilityThat_K_outOf_N_PlayersChooseCard(N, K, probabilityThatAPlayerWillChooseCard)
+{
+	let p = probabilityThatAPlayerWillChooseCard;
+	return C(N, K) * Math.pow(p, K) * Math.pow(1-p, N-K);
+}
+
+function probabilityThatCardsWillBeInPlayersHandsThisWay(
+	numberOfCardsWhichIHaveNotSeen, // this includes all the cards that were not used for this iteration. (eg if there are only 2 players, each is delt 10, 4 are placed on the table, so only 24/104 cards are used)
+	numberOfCardsWhichWouldGoOnThisRowBeforeMine,
+	numberOfCardsLeftInEachPlayersHand,
+	numberOfPlayersOtherThanMe,
+	numberOfPlayersWhoHaveCardWhichWouldGoOnThisRowBeforeMine
+)
+{
+	let nBallsInTheBagOriginally = numberOfCardsWhichIHaveNotSeen;
+	let nRedBallsOriginally = numberOfCardsWhichWouldGoOnThisRowBeforeMine;
+	let nBlueBallsOriginally = nBallsInTheBagOriginally - nRedBallsOriginally;
+	let nBallsInEachBin = numberOfCardsLeftInEachPlayersHand;
+	let nTotalBins = numberOfPlayersOtherThanMe;
+	let nBinsWithAtLeastOneRed = numberOfPlayersWhoHaveCardWhichWouldGoOnThisRowBeforeMine;
+	let nBinsWithAllBlue = nTotalBins - nBinsWithAtLeastOneRed;
+
+	let nBallsLeftInBag = nBallsInTheBagOriginally;
+	let nRedBallsLeftInBag = nRedBallsOriginally;
+	let nBlueBallsLeftInBag = nBlueBallsOriginally;
+
+	numberOfWaysToFillBinsFollowingRestriction = 1;
+
+	// put a red ball in each of the bins which require at least one red
+	for (let binWithRedBall = 0; binWithRedBall < nBinsWithAtLeastOneRed; binWithRedBall++)
+	{
+		let nBallsToPutInTheBin = 1;
+		numberOfWaysToFillBinsFollowingRestriction *= C(nRedBallsLeftInBag, nBallsToPutInTheBin);
+		nBallsLeftInBag -= nBallsToPutInTheBin;
+		nRedBallsLeftInBag -= nBallsToPutInTheBin;
+	}
+
+	// fill the other bins with blue balls
+	for (let binWithAllBlue = 0; binWithAllBlue < nBinsWithAllBlue; binWithAllBlue++)
+	{
+		let nBallsToPutInTheBin = nBallsInEachBin;
+		numberOfWaysToFillBinsFollowingRestriction *= C(nBlueBallsLeftInBag, nBallsToPutInTheBin);
+		nBallsLeftInBag -= nBallsToPutInTheBin;
+		nBlueBallsLeftInBag -= nBallsToPutInTheBin;
+	}
+
+	// finish filling the bins where you put a red with whatever is left in the bag. color doesnt matter anymore
+	for (let binWithRedBall = 0; binWithRedBall < nBinsWithAtLeastOneRed; binWithRedBall++)
+	{
+		let nBallsToPutInTheBin = nBallsInEachBin - 1;
+		numberOfWaysToFillBinsFollowingRestriction *= C(nBallsLeftInBag, nBallsToPutInTheBin);
+		nBallsLeftInBag -= nBallsToPutInTheBin;
+	}
+
+	nBallsLeftInBag = nBallsInTheBagOriginally;
+	let totalNumberOfWaysToFillTheBinsDisregardingColor = 1;
+	for (let bin = 0; bin < nTotalBins; bin ++)
+	{
+		let nBallsToPutInTheBin = nBallsInEachBin;
+		totalNumberOfWaysToFillTheBinsDisregardingColor *= C(nBallsLeftInBag, nBallsToPutInTheBin);
+		nBallsLeftInBag -= nBallsToPutInTheBin;
+	}
+
+	return numberOfWaysToFillBinsFollowingRestriction/totalNumberOfWaysToFillTheBinsDisregardingColor;
 }
