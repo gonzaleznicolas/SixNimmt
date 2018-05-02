@@ -84,19 +84,19 @@ module.exports = class ArtificialPlayer extends Player
 					 return !this._setOfCardsIveSeenAlready.has(card);
 				}.bind(this));
 			
-			let numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th = 5 - this.tableAtStartOfThisRound.numberOfCardsInRow(rowI);
+			let nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th = 5 - this.tableAtStartOfThisRound.numberOfCardsInRow(rowI);
 
 			// we need to calculate these two variables
 			let pMyCardWillBeThe6th;
-			let numberOfCowsIdTakeIfMineIsThe6th = 10;
+			let nCowsIdTakeIfMineIsThe6th = 10;
 
 			// calculate probabilityThatMyCardWillBeThe6th:
-			let numberOfPlayersOtherThanMe = this._totalNumberOfPlayersInGameImInIncludingMyself - 1;
-			let maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine = 
+			let nPlayersOtherThanMe = this._totalNumberOfPlayersInGameImInIncludingMyself - 1;
+			let max_n_PlayersWhoCanHaveACardThatWouldGoBeforeMine = 
 				Math.min(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
-					numberOfPlayersOtherThanMe );
-			if (maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine
-				< numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
+					nPlayersOtherThanMe );
+			if (max_n_PlayersWhoCanHaveACardThatWouldGoBeforeMine
+				< nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
 			{
 				pMyCardWillBeThe6th = 0;
 			}
@@ -105,15 +105,15 @@ module.exports = class ArtificialPlayer extends Player
 				// there are enough CardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard and enough players 
 				// so that they could all play cards making mine the 6th
 
-				// in order for my card to be the 6th, there needs to be at least numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th different players
+				// in order for my card to be the 6th, there needs to be at least nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th different players
 				// in the game, all of whom have a card in their hand in listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
-				// and exacly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th need to play that card this turn
+				// and exacly nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th need to play that card this turn
 
 				pMyCardWillBeThe6th = 0;
 
 				// i is is the number of players who have a card that would go before mine
-				for (let i = numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
-					i <= maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine;
+				for (let i = nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
+					i <= max_n_PlayersWhoCanHaveACardThatWouldGoBeforeMine;
 					i++)
 				{
 					// calculate the probability that exactly i players have a card that would go before mine.
@@ -121,7 +121,7 @@ module.exports = class ArtificialPlayer extends Player
 						104 - this._setOfCardsIveSeenAlready.size,
 						listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
 						this._hand.Size,
-						numberOfPlayersOtherThanMe,
+						nPlayersOtherThanMe,
 						i
 					);
 
@@ -131,21 +131,21 @@ module.exports = class ArtificialPlayer extends Player
 						console.log(this._setOfCardsIveSeenAlready.size);
 						console.log(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length);
 						console.log(this._hand.Size);
-						console.log(numberOfPlayersOtherThanMe);
+						console.log(nPlayersOtherThanMe);
 						console.log(i);
 						//throw "error"
 					}
 
-					// calculate the probability that exactly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
+					// calculate the probability that exactly nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
 					// play the card they have which would go before mine
 
-					// numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th <= i
+					// nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th <= i
 					// i players have a card that would go before mine
-					// what is the probability that numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th play it
+					// what is the probability that nuCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th play it
 					let pAGivenPlayerPlaysTheCard = 0.8;
 					let p_exactly_necessaryPlayersToMakeMine6thPlayRightCard = p_K_outOf_N_PlayersChooseCard(
 						i,
-						numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th,
+						nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th,
 						pAGivenPlayerPlaysTheCard
 					);
 
@@ -153,7 +153,7 @@ module.exports = class ArtificialPlayer extends Player
 				}
 			}
 
-			this._scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: pMyCardWillBeThe6th*numberOfCowsIdTakeIfMineIsThe6th});
+			this._scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: pMyCardWillBeThe6th*nCowsIdTakeIfMineIsThe6th});
 		}
 	}
 
@@ -252,32 +252,32 @@ function p_K_outOf_N_PlayersChooseCard(N, K, pAPlayerWillChooseCard)
 }
 
 function pExactlyHPlayersHaveCardThatGoesBeforeMine(
-	numberOfCardsWhichIHaveNotSeen, // this includes all the cards that were not used for this iteration. (eg if there are only 2 players, each is delt 10, 4 are placed on the table, so only 24/104 cards are used)
-	numberOfCardsWhichWouldGoOnThisRowBeforeMine,
-	numberOfCardsLeftInEachPlayersHand,
-	numberOfPlayersOtherThanMe,
-	numberOfPlayersWhoHaveCardWhichWouldGoOnThisRowBeforeMine
+	nCardsWhichIHaveNotSeen, // this includes all the cards that were not used for this iteration. (eg if there are only 2 players, each is delt 10, 4 are placed on the table, so only 24/104 cards are used)
+	nCardsWhichWouldGoOnThisRowBeforeMine,
+	nCardsLeftInEachPlayersHand,
+	nPlayersOtherThanMe,
+	h
 )
 {
-	let nBallsInTheBagOriginally = numberOfCardsWhichIHaveNotSeen;
-	let nRedBallsOriginally = numberOfCardsWhichWouldGoOnThisRowBeforeMine;
+	let nBallsInTheBagOriginally = nCardsWhichIHaveNotSeen;
+	let nRedBallsOriginally = nCardsWhichWouldGoOnThisRowBeforeMine;
 	let nBlueBallsOriginally = nBallsInTheBagOriginally - nRedBallsOriginally;
-	let nBallsInEachBin = numberOfCardsLeftInEachPlayersHand;
-	let nTotalBins = numberOfPlayersOtherThanMe;
-	let nBinsWithAtLeastOneRed = numberOfPlayersWhoHaveCardWhichWouldGoOnThisRowBeforeMine;
+	let nBallsInEachBin = nCardsLeftInEachPlayersHand;
+	let nTotalBins = nPlayersOtherThanMe;
+	let nBinsWithAtLeastOneRed = h;
 	let nBinsWithAllBlue = nTotalBins - nBinsWithAtLeastOneRed;
 
 	let nBallsLeftInBag = nBallsInTheBagOriginally;
 	let nRedBallsLeftInBag = nRedBallsOriginally;
 	let nBlueBallsLeftInBag = nBlueBallsOriginally;
 
-	let numberOfWaysToFillBinsFollowingRestriction = 1;
+	let nWaysToFillBinsFollowingRestriction = 1;
 
 	// put a red ball in each of the bins which require at least one red
 	for (let binWithRedBall = 0; binWithRedBall < nBinsWithAtLeastOneRed; binWithRedBall++)
 	{
 		let nBallsToPutInTheBin = 1;
-		numberOfWaysToFillBinsFollowingRestriction *= C(nRedBallsLeftInBag, nBallsToPutInTheBin);
+		nWaysToFillBinsFollowingRestriction *= C(nRedBallsLeftInBag, nBallsToPutInTheBin);
 		nBallsLeftInBag -= nBallsToPutInTheBin;
 		nRedBallsLeftInBag -= nBallsToPutInTheBin;
 	}
@@ -286,7 +286,7 @@ function pExactlyHPlayersHaveCardThatGoesBeforeMine(
 	for (let binWithAllBlue = 0; binWithAllBlue < nBinsWithAllBlue; binWithAllBlue++)
 	{
 		let nBallsToPutInTheBin = nBallsInEachBin;
-		numberOfWaysToFillBinsFollowingRestriction *= C(nBlueBallsLeftInBag, nBallsToPutInTheBin);
+		nWaysToFillBinsFollowingRestriction *= C(nBlueBallsLeftInBag, nBallsToPutInTheBin);
 		nBallsLeftInBag -= nBallsToPutInTheBin;
 		nBlueBallsLeftInBag -= nBallsToPutInTheBin;
 	}
@@ -295,18 +295,18 @@ function pExactlyHPlayersHaveCardThatGoesBeforeMine(
 	for (let binWithRedBall = 0; binWithRedBall < nBinsWithAtLeastOneRed; binWithRedBall++)
 	{
 		let nBallsToPutInTheBin = nBallsInEachBin - 1;
-		numberOfWaysToFillBinsFollowingRestriction *= C(nBallsLeftInBag, nBallsToPutInTheBin);
+		nWaysToFillBinsFollowingRestriction *= C(nBallsLeftInBag, nBallsToPutInTheBin);
 		nBallsLeftInBag -= nBallsToPutInTheBin;
 	}
 
 	nBallsLeftInBag = nBallsInTheBagOriginally;
-	let totalNumberOfWaysToFillTheBinsDisregardingColor = 1;
+	let totalnWaysToFillTheBinsDisregardingColor = 1;
 	for (let bin = 0; bin < nTotalBins; bin ++)
 	{
 		let nBallsToPutInTheBin = nBallsInEachBin;
-		totalNumberOfWaysToFillTheBinsDisregardingColor *= C(nBallsLeftInBag, nBallsToPutInTheBin);
+		totalnWaysToFillTheBinsDisregardingColor *= C(nBallsLeftInBag, nBallsToPutInTheBin);
 		nBallsLeftInBag -= nBallsToPutInTheBin;
 	}
 
-	return numberOfWaysToFillBinsFollowingRestriction/totalNumberOfWaysToFillTheBinsDisregardingColor;
+	return nWaysToFillBinsFollowingRestriction/totalnWaysToFillTheBinsDisregardingColor;
 }
