@@ -125,6 +125,17 @@ module.exports = class ArtificialPlayer extends Player
 						i
 					);
 
+					if (p_exactly_i_playersHaveCardThatWouldGoBeforeMine > 1)
+					{
+						console.log("error: this probability cant be > 1");
+						console.log(this._setOfCardsIveSeenAlready.size);
+						console.log(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length);
+						console.log(this._hand.Size);
+						console.log(numberOfPlayersOtherThanMe);
+						console.log(i);
+						throw "error"
+					}
+
 					// calculate the probability that exactly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
 					// play the card they have which would go before mine
 
