@@ -87,7 +87,7 @@ module.exports = class ArtificialPlayer extends Player
 			let numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th = 5 - this.tableAtStartOfThisRound.numberOfCardsInRow(rowI);
 
 			// we need to calculate these two variables
-			let probabilityThatMyCardWillBeThe6th;
+			let pMyCardWillBeThe6th;
 			let numberOfCowsIdTakeIfMineIsThe6th = 10;
 
 			// calculate probabilityThatMyCardWillBeThe6th:
@@ -98,7 +98,7 @@ module.exports = class ArtificialPlayer extends Player
 			if (maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine
 				< numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
 			{
-				probabilityThatMyCardWillBeThe6th = 0;
+				pMyCardWillBeThe6th = 0;
 			}
 			else
 			{
@@ -109,7 +109,7 @@ module.exports = class ArtificialPlayer extends Player
 				// in the game, all of whom have a card in their hand in listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
 				// and exacly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th need to play that card this turn
 
-				probabilityThatMyCardWillBeThe6th = 0;
+				pMyCardWillBeThe6th = 0;
 
 				// i is is the number of players who have a card that would go before mine
 				for (let i = numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
@@ -117,7 +117,7 @@ module.exports = class ArtificialPlayer extends Player
 					i++)
 				{
 					// calculate the probability that exactly i players have a card that would go before mine.
-					let p_exactly_i_playersHaveCardThatWouldGoBeforeMine = probabilityThatCardsWillBeInPlayersHandsThisWay(
+					let p_exactly_i_playersHaveCardThatWouldGoBeforeMine = pExactlyHPlayersHaveCardThatGoesBeforeMine(
 						104 - this._setOfCardsIveSeenAlready.size,
 						listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
 						this._hand.Size,
@@ -142,18 +142,18 @@ module.exports = class ArtificialPlayer extends Player
 					// numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th <= i
 					// i players have a card that would go before mine
 					// what is the probability that numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th play it
-					let probabilityThatAGivenPlayerPlaysTheCard = 0.8;
-					let p_exactly_necessaryPlayersToMakeMine6thPlayRightCard = probabilityThat_K_outOf_N_PlayersChooseCard(
+					let pAGivenPlayerPlaysTheCard = 0.8;
+					let p_exactly_necessaryPlayersToMakeMine6thPlayRightCard = p_K_outOf_N_PlayersChooseCard(
 						i,
 						numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th,
-						probabilityThatAGivenPlayerPlaysTheCard
+						pAGivenPlayerPlaysTheCard
 					);
 
-					probabilityThatMyCardWillBeThe6th += (p_exactly_i_playersHaveCardThatWouldGoBeforeMine*p_exactly_necessaryPlayersToMakeMine6thPlayRightCard);
+					pMyCardWillBeThe6th += (p_exactly_i_playersHaveCardThatWouldGoBeforeMine*p_exactly_necessaryPlayersToMakeMine6thPlayRightCard);
 				}
 			}
 
-			this._scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: probabilityThatMyCardWillBeThe6th*numberOfCowsIdTakeIfMineIsThe6th});
+			this._scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: pMyCardWillBeThe6th*numberOfCowsIdTakeIfMineIsThe6th});
 		}
 	}
 
@@ -245,13 +245,13 @@ function C(n, r)
 	return Math.round(factorial(n)/(factorial(r)*factorial(n-r)));
 }
 
-function probabilityThat_K_outOf_N_PlayersChooseCard(N, K, probabilityThatAPlayerWillChooseCard)
+function p_K_outOf_N_PlayersChooseCard(N, K, pAPlayerWillChooseCard)
 {
-	let p = probabilityThatAPlayerWillChooseCard;
+	let p = pAPlayerWillChooseCard;
 	return C(N, K) * Math.pow(p, K) * Math.pow(1-p, N-K);
 }
 
-function probabilityThatCardsWillBeInPlayersHandsThisWay(
+function pExactlyHPlayersHaveCardThatGoesBeforeMine(
 	numberOfCardsWhichIHaveNotSeen, // this includes all the cards that were not used for this iteration. (eg if there are only 2 players, each is delt 10, 4 are placed on the table, so only 24/104 cards are used)
 	numberOfCardsWhichWouldGoOnThisRowBeforeMine,
 	numberOfCardsLeftInEachPlayersHand,
