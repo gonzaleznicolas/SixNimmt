@@ -13,6 +13,7 @@ const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
 const RoundProcessor = require('./roundProcessor.js');
 const Scoreboard = require('./scoreboard.js');
+const fs = require('fs');
 
 /*************************************************************
  * A turn is one card being moved to its spot on the table
@@ -351,8 +352,25 @@ module.exports = class Game extends EventEmitter
 		this.emit("gameEnded", this._gameCode);
 	}
 
+	logGame()
+	{
+		let currentdate = new Date();
+		let strToLog = currentdate.getDate() + "/" +
+			(currentdate.getMonth()+1)  + "/" +
+			currentdate.getFullYear() + " @ " +
+			currentdate.getHours() + ":" +
+			currentdate.getMinutes() + ":" +
+			currentdate.getSeconds() +
+			"    " +
+			"game code: " + this._gameCode +
+			"  player list: " + Array.from(this._players.keys()).toString() +
+			"\n";
+		fs.appendFile('gameLog.txt', strToLog , 'utf8', function(err) {});
+	}
+
 	startGame()
 	{
+		this.logGame();
 		this._open = false;
 		this._scoreboard.initScoreboardWithThesePlayers(Array.from(this._players.keys()));
 		this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
