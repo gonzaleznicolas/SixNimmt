@@ -133,7 +133,7 @@ module.exports = class ArtificialPlayer extends Player
 						console.log(this._hand.Size);
 						console.log(numberOfPlayersOtherThanMe);
 						console.log(i);
-						throw "error"
+						//throw "error"
 					}
 
 					// calculate the probability that exactly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
