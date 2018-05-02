@@ -55,7 +55,7 @@ module.exports = class ArtificialPlayer extends Player
 		console.log(`I am bot ${this._name} and I have to pick a card to play. My hand is ${Array.from(this._hand.Set)}`);
 		let cardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
 
-		this.scenariosForThisRound = [];
+		this._scenariosForThisRound = [];
 		this.tableAtStartOfThisRound = table;
 		this.calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th();
 
@@ -88,7 +88,7 @@ module.exports = class ArtificialPlayer extends Player
 
 			// we need to calculate these two variables
 			let probabilityThatMyCardWillBeThe6th;
-			let numberOfCowsIdTakeIfMineIsThe6th;
+			let numberOfCowsIdTakeIfMineIsThe6th = 10;
 
 			// calculate probabilityThatMyCardWillBeThe6th:
 			let numberOfPlayersOtherThanMe = this._totalNumberOfPlayersInGameImInIncludingMyself - 1;
@@ -113,7 +113,7 @@ module.exports = class ArtificialPlayer extends Player
 
 				// i is is the number of players who have a card that would go before mine
 				for (let i = numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
-					i < maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine;
+					i <= maxNumberOfPlayersWhoCanHaveACardThatWouldGoBeforeMine;
 					i++)
 				{
 					// calculate the probability that exactly i players have a card that would go before mine.
@@ -127,13 +127,12 @@ module.exports = class ArtificialPlayer extends Player
 
 					// calculate the probability that exactly numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
 					// play the card they have which would go before mine
-					let p_exactly_necessaryPlayersToMakeMine6thPlayRightCard;
 
 					// numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th <= i
 					// i players have a card that would go before mine
 					// what is the probability that numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th play it
 					let probabilityThatAGivenPlayerPlaysTheCard = 0.8;
-					p_exactly_necessaryPlayersToMakeMine6thPlayRightCard = probabilityThat_K_outOf_N_PlayersChooseCard(
+					let p_exactly_necessaryPlayersToMakeMine6thPlayRightCard = probabilityThat_K_outOf_N_PlayersChooseCard(
 						i,
 						numberOfCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th,
 						probabilityThatAGivenPlayerPlaysTheCard
@@ -143,7 +142,7 @@ module.exports = class ArtificialPlayer extends Player
 				}
 			}
 
-			scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: probabilityThatMyCardWillBeThe6th*numberOfCowsIdTakeIfMineIsThe6th});
+			this._scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: probabilityThatMyCardWillBeThe6th*numberOfCowsIdTakeIfMineIsThe6th});
 		}
 	}
 
@@ -223,6 +222,7 @@ module.exports = class ArtificialPlayer extends Player
 }
 
 function factorial(n){
+	if (n == 0) return 1;
     var i= n;
     while(--i) n*= i;
     return n;
@@ -260,7 +260,7 @@ function probabilityThatCardsWillBeInPlayersHandsThisWay(
 	let nRedBallsLeftInBag = nRedBallsOriginally;
 	let nBlueBallsLeftInBag = nBlueBallsOriginally;
 
-	numberOfWaysToFillBinsFollowingRestriction = 1;
+	let numberOfWaysToFillBinsFollowingRestriction = 1;
 
 	// put a red ball in each of the bins which require at least one red
 	for (let binWithRedBall = 0; binWithRedBall < nBinsWithAtLeastOneRed; binWithRedBall++)
