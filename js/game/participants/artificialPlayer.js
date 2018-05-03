@@ -90,68 +90,10 @@ module.exports = class ArtificialPlayer extends Player
 			let pMyCardWillBeThe6th;
 			let nCowsIdTakeIfMineIsThe6th = 10;
 
-			// calculate probabilityThatMyCardWillBeThe6th:
-			let nPlayersOtherThanMe = this._totalNumberOfPlayersInGameImInIncludingMyself - 1;
-			let max_n_PlayersWhoCanHaveACardThatWouldGoBeforeMine = 
-				Math.min(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
-					nPlayersOtherThanMe );
-			if (max_n_PlayersWhoCanHaveACardThatWouldGoBeforeMine
-				< nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
-			{
-				pMyCardWillBeThe6th = 0;
-			}
-			else
-			{
-				// there are enough CardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard and enough players 
-				// so that they could all play cards making mine the 6th
-
-				// in order for my card to be the 6th, there needs to be at least nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th different players
-				// in the game, all of whom have a card in their hand in listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
-				// and exacly nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th need to play that card this turn
-
-				pMyCardWillBeThe6th = 0;
-
-				// i is is the number of players who have a card that would go before mine
-				for (let i = nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
-					i <= max_n_PlayersWhoCanHaveACardThatWouldGoBeforeMine;
-					i++)
-				{
-					// calculate the probability that exactly i players have a card that would go before mine.
-					let p_exactly_i_playersHaveCardThatWouldGoBeforeMine = pExactlyHPlayersHaveCardThatGoesBeforeMine(
-						104 - this._setOfCardsIveSeenAlready.size,
-						listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
-						this._hand.Size,
-						nPlayersOtherThanMe,
-						i
-					);
-
-					if (p_exactly_i_playersHaveCardThatWouldGoBeforeMine > 1)
-					{
-						console.log("error: this probability cant be > 1");
-						console.log(this._setOfCardsIveSeenAlready.size);
-						console.log(listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length);
-						console.log(this._hand.Size);
-						console.log(nPlayersOtherThanMe);
-						console.log(i);
-						//throw "error"
-					}
-
-					// calculate the probability that exactly nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
-					// play the card they have which would go before mine
-
-					// nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th <= i
-					// i players have a card that would go before mine
-					// what is the probability that nuCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th play it
-					let pAGivenPlayerPlaysTheCard = 0.8;
-					let p_exactly_necessaryPlayersToMakeMine6thPlayRightCard = p_K_outOf_N_PlayersChooseCard(
-						i,
-						nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th,
-						pAGivenPlayerPlaysTheCard
-					);
-
-					pMyCardWillBeThe6th += (p_exactly_i_playersHaveCardThatWouldGoBeforeMine*p_exactly_necessaryPlayersToMakeMine6thPlayRightCard);
-				}
-			}
+			pMyCardWillBeThe6th = this.calculatePMyCardWillBe6th(
+				listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard.length,
+				nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th
+			);
 
 			this._scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: pMyCardWillBeThe6th*nCowsIdTakeIfMineIsThe6th});
 		}
@@ -161,6 +103,74 @@ module.exports = class ArtificialPlayer extends Player
 	{
 		this._hand.delete(cardToPlay);
 		this.emit('playerPlayCard', {player: this, playedCard: cardToPlay});
+	}
+
+	calculatePMyCardWillBe6th(nCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard, nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
+	{
+		let pMyCardWillBeThe6th;
+		let nPlayersOtherThanMe = this._totalNumberOfPlayersInGameImInIncludingMyself - 1;
+		let max_n_PlayersWhoCanHaveACardThatWouldGoBeforeMine = 
+			Math.min(nCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
+				nPlayersOtherThanMe );
+		if (max_n_PlayersWhoCanHaveACardThatWouldGoBeforeMine
+			< nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
+		{
+			pMyCardWillBeThe6th = 0;
+		}
+		else
+		{
+			// there are enough CardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard and enough players 
+			// so that they could all play cards making mine the 6th
+
+			// in order for my card to be the 6th, there needs to be at least nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th different players
+			// in the game, all of whom have a card in their hand in listOfCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
+			// and exacly nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th need to play that card this turn
+
+			pMyCardWillBeThe6th = 0;
+
+			// i is is the number of players who have a card that would go before mine
+			for (let i = nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
+				i <= max_n_PlayersWhoCanHaveACardThatWouldGoBeforeMine;
+				i++)
+			{
+				// calculate the probability that exactly i players have a card that would go before mine.
+				let p_exactly_i_playersHaveCardThatWouldGoBeforeMine = pExactlyHPlayersHaveCardThatGoesBeforeMine(
+					104 - this._setOfCardsIveSeenAlready.size,
+					nCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard,
+					this._hand.Size,
+					nPlayersOtherThanMe,
+					i
+				);
+
+				if (p_exactly_i_playersHaveCardThatWouldGoBeforeMine > 1)
+				{
+					console.log("error: this probability cant be > 1");
+					console.log(this._setOfCardsIveSeenAlready.size);
+					console.log(nCardsThatCouldBePlayedThisTurnThatWouldGoOnRowIBeforeMyCard);
+					console.log(this._hand.Size);
+					console.log(nPlayersOtherThanMe);
+					console.log(i);
+					//throw "error"
+				}
+
+				// calculate the probability that exactly nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
+				// play the card they have which would go before mine
+
+				// nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th <= i
+				// i players have a card that would go before mine
+				// what is the probability that nuCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th play it
+				let pAGivenPlayerPlaysTheCard = 0.8;
+				let p_exactly_necessaryPlayersToMakeMine6thPlayRightCard = p_K_outOf_N_PlayersChooseCard(
+					i,
+					nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th,
+					pAGivenPlayerPlaysTheCard
+				);
+
+				pMyCardWillBeThe6th += (p_exactly_i_playersHaveCardThatWouldGoBeforeMine*p_exactly_necessaryPlayersToMakeMine6thPlayRightCard);
+			}
+		}
+
+		return pMyCardWillBeThe6th;
 	}
 
 	// METHODS CALLED BY THE GAME. METHODS ANY PLAYER MUST IMPLEMENT
