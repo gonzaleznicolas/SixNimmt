@@ -149,6 +149,12 @@ module.exports = class ProbabilityCalculator
 		return sequence.length == 0 ? 0 : sequence.reduce(function(acc, val) { return acc + val; });
 	}
 
+	p_outOf_N_Players_K_ChooseCard(N, K, pAPlayerWillChooseCard)
+	{
+		let p = pAPlayerWillChooseCard;
+		return C(N, K) * Math.pow(p, K) * Math.pow(1-p, N-K);
+	}
+
 }
 
 function factorial(n){

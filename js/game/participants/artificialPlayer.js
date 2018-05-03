@@ -144,7 +144,7 @@ module.exports = class ArtificialPlayer extends Player
 			// out of the nPWHKK who have a killer card play the killer card that they have
 
 			let pAGivenPlayerPlaysTheCard = 0.8;
-			let p_exactly_necessaryPlayersToMakeMine6thPlayTheirKillerCard = this.p_outOf_N_Players_K_ChooseCard(
+			let p_exactly_necessaryPlayersToMakeMine6thPlayTheirKillerCard = this._probabilityCalculator.p_outOf_N_Players_K_ChooseCard(
 				nPWHKK,
 				nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th,
 				pAGivenPlayerPlaysTheCard
@@ -160,29 +160,6 @@ module.exports = class ArtificialPlayer extends Player
 		return pMyCardWillBeThe6th;
 	}
 
-	calc_p_H_playersHaveKillerCard(
-		nCardsWhichIHaveNotSeen, // this includes all the cards that were not used for this iteration. (eg if there are only 2 players, each is delt 10, 4 are placed on the table, so only 24/104 cards are used)
-		nCardsWhichWouldGoOnThisRowBeforeMine,
-		nCardsLeftInEachPlayersHand,
-		nPlayersOtherThanMe,
-		h
-	)
-	{
-		nBallsInBag = nCardsWhichIHaveNotSeen;
-		nRedBallsInBag = nCardsWhichWouldGoOnThisRowBeforeMine;
-		nBlueBallsInBag = nBallsInBag - nRedBallsInBag;
-		nBallsPerBin = nCardsLeftInEachPlayersHand;
-		nBins = nPlayersOtherThanMe;
-		nBinsWithAtLeastOneRed = h;
-		nBinsWithAllBlue = nBins - nBinsWithAtLeastOneRed;
-		return 0.5;
-	}
-
-	p_outOf_N_Players_K_ChooseCard(N, K, pAPlayerWillChooseCard)
-	{
-		let p = pAPlayerWillChooseCard;
-		return C(N, K) * Math.pow(p, K) * Math.pow(1-p, N-K);
-	}
 
 	// METHODS CALLED BY THE GAME. METHODS ANY PLAYER MUST IMPLEMENT
 	removeAllListeners(){}
