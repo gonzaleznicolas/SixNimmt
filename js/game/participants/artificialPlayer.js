@@ -4,6 +4,7 @@ const Player = require('./player.js');
 const PlayerStates = require('../gameGlobals.js').PlayerStates;
 const RoundStepTypes = require('../gameGlobals.js').RoundStepTypes;
 const Table = require('../table.js');
+const ProbabilityCalculator = require('./probabilityCalculator.js');
 
 const NUMBER_OF_ROWS = 4;
 
@@ -12,6 +13,7 @@ module.exports = class ArtificialPlayer extends Player
 	constructor(name)
 	{
 		super(name, false);
+		this._probabilityCalculator = new ProbabilityCalculator();
 	}
 
 	// METHODS CALLED FROM WITHIN THE ArtificialPlayer
@@ -130,7 +132,7 @@ module.exports = class ArtificialPlayer extends Player
 			nPWHKK++)
 		{
 			// calculate the probability that exactly nPWHKK players have a card that would go before mine.
-			let p_nPWHLL_playersHaveKillerCard = this.calc_p_H_playersHaveKillerCard(
+			let p_nPWHLL_playersHaveKillerCard = this._probabilityCalculator.calc_p_H_playersHaveKillerCard(
 				104 - this._setOfCardsIveSeenAlready.size,
 				nKillerCardsThtCouldBePlayedThisRound,
 				this._hand.Size,
@@ -166,6 +168,13 @@ module.exports = class ArtificialPlayer extends Player
 		h
 	)
 	{
+		nBallsInBag = nCardsWhichIHaveNotSeen;
+		nRedBallsInBag = nCardsWhichWouldGoOnThisRowBeforeMine;
+		nBlueBallsInBag = nBallsInBag - nRedBallsInBag;
+		nBallsPerBin = nCardsLeftInEachPlayersHand;
+		nBins = nPlayersOtherThanMe;
+		nBinsWithAtLeastOneRed = h;
+		nBinsWithAllBlue = nBins - nBinsWithAtLeastOneRed;
 		return 0.5;
 	}
 
