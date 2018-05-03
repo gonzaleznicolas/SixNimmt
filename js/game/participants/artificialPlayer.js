@@ -8,6 +8,10 @@ const ProbabilityCalculator = require('./probabilityCalculator.js');
 
 const NUMBER_OF_ROWS = 4;
 
+const Techniques = Object.freeze({
+	PutACardBefore6th: 1
+});
+
 module.exports = class ArtificialPlayer extends Player
 {
 	constructor(name)
@@ -55,15 +59,40 @@ module.exports = class ArtificialPlayer extends Player
 	playACardNow(table)
 	{
 		console.log(`I am bot ${this._name} and I have to pick a card to play. My hand is ${Array.from(this._hand.Set)}`);
-		let cardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
+		let cardToPlay;
 
 		this._scenariosForThisRound = [];
 		this.tableAtStartOfThisRound = table;
 		this.calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th();
 
+		cardToPlay = this.getBestCardToPlay();
 
 		this.playCard(cardToPlay);
 		return;
+	}
+
+	getBestCardToPlay()
+	{
+		let bestCardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
+		if (!this._scenariosForThisRound || this._scenariosForThisRound.length < 1)
+			return bestCardToPlay;
+		
+		let minExpectedCows = this._scenariosForThisRound[0].expectedNumCows;
+		bestCardToPlay = this._scenariosForThisRound[0].cardToPlay;
+		for (let i = 0; i < this._scenariosForThisRound.length; i++)
+		{
+			if (this._scenariosForThisRound[i].expectedNumCows < minExpectedCows)
+			{
+				minExpectedCows = this._scenariosForThisRound[i].expectedNumCows;
+				bestCardToPlay = this._scenariosForThisRound[i].cardToPlay;
+			}
+		}
+		return bestCardToPlay;
+	}
+
+	getFallbackCardToPlay()
+	{
+		return Math.min.apply(null , Array.from(this._hand.Set));
 	}
 
 	calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th()
@@ -100,7 +129,13 @@ module.exports = class ArtificialPlayer extends Player
 				nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th
 			);
 
-			this._scenariosForThisRound.push({cardToPlay: myCardForRowI, expectedNumCows: pMyCardWillBeThe6th*nCowsIdTakeIfMineIsThe6th});
+			this._scenariosForThisRound.push({
+				cardToPlay: myCardForRowI,
+				technique: Techniques.PutACardBefore6th,
+				pMyCardWillBeThe6th: pMyCardWillBeThe6th,
+				nCowsIdTakeIfMineIsThe6th: nCowsIdTakeIfMineIsThe6th,
+				expectedNumCows: pMyCardWillBeThe6th*nCowsIdTakeIfMineIsThe6th
+			});
 		}
 	}
 
