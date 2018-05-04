@@ -78,25 +78,16 @@ module.exports = class ArtificialPlayer extends Player
 		if (!this._scenariosForThisRound || this._scenariosForThisRound.length < 1)
 			return bestCardToPlay;
 		
-		let minExpectedCows = this._scenariosForThisRound[0].expectedNumCows;
+		this._scenariosForThisRound.sort( function(a,b){
+			if (a.expectedNumCows != b.expectedNumCows)
+				return a.expectedNumCows - b.expectedNumCows;
+			else if (a.nKillerCardsThatCouldBePlayed != b.nKillerCardsThatCouldBePlayed)
+				return a.nKillerCardsThatCouldBePlayed - b.nKillerCardsThatCouldBePlayed;
+			else
+				return a.cardToPlay - b.cardToPlay;
+		});
+
 		bestCardToPlay = this._scenariosForThisRound[0].cardToPlay;
-		for (let i = 0; i < this._scenariosForThisRound.length; i++)
-		{
-			if (this._scenariosForThisRound[i].expectedNumCows < minExpectedCows)
-			{
-				minExpectedCows = this._scenariosForThisRound[i].expectedNumCows;
-				bestCardToPlay = this._scenariosForThisRound[i].cardToPlay; 
-			}
-		}
-
-		let minExpectedCowsOptions = this._scenariosForThisRound.filter( s => s.expectedNumCows == minExpectedCows);
-		if (minExpectedCowsOptions.length > 1)
-		{
-			let killerCardsOptions = minExpectedCowsOptions.map( s => s.nKillerCardsThatCouldBePlayed);
-			let leastKillerCards = Math.min.apply(null, killerCardsOptions);
-			bestCardToPlay = minExpectedCowsOptions.find( s => s.nKillerCardsThatCouldBePlayed == leastKillerCards).cardToPlay;
-		}
-
 
 		console.log(`${this._name}: Best card to play is ${bestCardToPlay}`);
 		return bestCardToPlay;
