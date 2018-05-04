@@ -263,7 +263,11 @@ module.exports = class ArtificialPlayer extends Player
 
 	updateUpcomingCards(upcomingCards)
 	{
-		this.addCardsFromUpcomingCardsToSetOfCardsIveSeenAlready(upcomingCards);
+		// only add upcoming cards to cards ive seen once everyone has played their card. i.e.
+		// at the moment when the cards are flipped, when in reality a player would see
+		// what cards were played
+		if (upcomingCards.length == this._totalNumberOfPlayersInGameImInIncludingMyself)
+			this.addCardsFromUpcomingCardsToSetOfCardsIveSeenAlready(upcomingCards);
 	}
 
 	// from this roundStepSequence, the artifical player must extract the information that it needs.

@@ -72,7 +72,11 @@ module.exports = class HumanPlayer extends Player
 
 	updateUpcomingCards(upcomingCards)
 	{
-		this.addCardsFromUpcomingCardsToSetOfCardsIveSeenAlready(upcomingCards);
+		// only add upcoming cards to cards ive seen once everyone has played their card. i.e.
+		// at the moment when the cards are flipped, when in reality a player would see
+		// what cards were played
+		if (upcomingCards.length == this._totalNumberOfPlayersInGameImInIncludingMyself)
+			this.addCardsFromUpcomingCardsToSetOfCardsIveSeenAlready(upcomingCards);
 
 		this._socket.emit("serverUpcomingCards", upcomingCards);
 	}
