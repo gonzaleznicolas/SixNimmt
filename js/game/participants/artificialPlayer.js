@@ -54,7 +54,10 @@ module.exports = class ArtificialPlayer extends Player
 
 	playACardNow(table)
 	{
-		console.log(`I am bot ${this._name} and I have to pick a card to play. My hand is ${Array.from(this._hand.Set)}`);
+		console.log(`I am bot ${this._name} and I have to pick a card to play. My hand is ${Array.from(this._hand.Set).sort((a, b) => a-b)}`);
+		console.log('The table at the start of this round looks like this:')
+		console.log(table.Table);
+		
 		let cardToPlay;
 
 		this._scenariosForThisRound = [];
