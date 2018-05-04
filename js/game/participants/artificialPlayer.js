@@ -82,9 +82,18 @@ module.exports = class ArtificialPlayer extends Player
 			if (this._scenariosForThisRound[i].expectedNumCows < minExpectedCows)
 			{
 				minExpectedCows = this._scenariosForThisRound[i].expectedNumCows;
-				bestCardToPlay = this._scenariosForThisRound[i].cardToPlay;
+				bestCardToPlay = this._scenariosForThisRound[i].cardToPlay; 
 			}
 		}
+
+		let minExpectedCowsOptions = this._scenariosForThisRound.filter( s => s.expectedNumCows == minExpectedCows);
+		if (minExpectedCowsOptions.length > 1)
+		{
+			let cardOptions = minExpectedCowsOptions.map( s => s.cardToPlay);
+			bestCardToPlay = Math.min.apply(null, cardOptions);
+		}
+
+
 		console.log(`${this._name}: Best card to play is ${bestCardToPlay}`);
 		return bestCardToPlay;
 	}
