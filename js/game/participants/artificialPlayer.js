@@ -129,6 +129,11 @@ module.exports = class ArtificialPlayer extends Player
 				nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th
 			);
 
+			nCowsIdTakeIfMineIsThe6th = this.calc_nCowsIdTakeIfMineIsThe6th(
+				rowI,
+				listOfKillerCardsThtCouldBePlayedThisRound
+			);
+
 			this._scenariosForThisRound.push({
 				cardToPlay: myCardForRowI,
 				technique: Techniques.PutACardBefore6th,
@@ -193,6 +198,13 @@ module.exports = class ArtificialPlayer extends Player
 		}
 
 		return pMyCardWillBeThe6th;
+	}
+
+	calc_nCowsIdTakeIfMineIsThe6th(rowI, listOfKillerCardsThtCouldBePlayedThisRound)
+	{
+		let cowsAlreadyInRowI = this.tableAtStartOfThisRound.cowsInRow(rowI);
+		let avg_nCowsOnKillerCards = averageNumberOfCowsInCardList(listOfKillerCardsThtCouldBePlayedThisRound);
+
 	}
 
 
@@ -265,15 +277,26 @@ module.exports = class ArtificialPlayer extends Player
 	}
 }
 
-function factorial(n){
-	if (n == 0) return 1;
-    var i= n;
-    while(--i) n*= i;
-    return n;
+function averageNumberOfCowsInCardList(cardList)
+{
+	let totalCows = 0;
+	cardList.forEach( function(cardNumber) {
+		if (cardNumber != null)
+			totalCows = totalCows + getCardCows(cardNumber);
+	});
+	return totalCows/cardList.length;
 }
 
-// combination
-function C(n, r)
+function getCardCows(cardNumber)
 {
-	return Math.round(factorial(n)/(factorial(r)*factorial(n-r)));
+	if (cardNumber === 55)
+		return 7;
+	else if ( cardNumber % 11 === 0)
+		return 5;
+	else if (cardNumber % 10 === 0)
+		return 3;
+	else if (cardNumber % 5 === 0)
+		return 2;
+	else
+		return 1;
 }
