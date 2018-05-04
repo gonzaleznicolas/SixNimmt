@@ -93,11 +93,6 @@ module.exports = class ArtificialPlayer extends Player
 		return bestCardToPlay;
 	}
 
-	getFallbackCardToPlay()
-	{
-		return Math.min.apply(null , Array.from(this._hand.Set));
-	}
-
 	calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th()
 	{
 		this.calculateScenariosForEachRowWhereIPlayMyMaxOrMin(true);
