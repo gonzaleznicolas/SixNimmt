@@ -35,9 +35,6 @@ module.exports = class ProbabilityCalculator
 		
 		this.recursiveHelper( 1, []);
 		
-		console.log(this._p_H_playersHaveKillerCard);
-		
-		
 		return this._p_H_playersHaveKillerCard;
 	}
 

@@ -74,6 +74,21 @@ module.exports = class Table
 		return totalCows;
 	}
 
+	rowCardWouldGoOn(card)
+	{
+		let rowToPlaceThisCardIn;
+		for ( let row = 0; row < NUMBER_OF_ROWS; row++)
+		{
+			rowToPlaceThisCardIn = row;
+			if ( card < this.lastCardInRow(row))
+			{
+				rowToPlaceThisCardIn = row - 1;
+				break;
+			}
+		}
+		return rowToPlaceThisCardIn;
+	}
+
 	// returns an array of row indices. Any index in this array, that row is tied for having least cows
 	listOfRowsWithFewestCows()
 	{

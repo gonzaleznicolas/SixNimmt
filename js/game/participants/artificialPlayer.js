@@ -8,10 +8,6 @@ const ProbabilityCalculator = require('./probabilityCalculator.js');
 
 const NUMBER_OF_ROWS = 4;
 
-const Techniques = Object.freeze({
-	PutACardBefore6th: 1
-});
-
 module.exports = class ArtificialPlayer extends Player
 {
 	constructor(name)
@@ -64,7 +60,9 @@ module.exports = class ArtificialPlayer extends Player
 		this._scenariosForThisRound = [];
 		this.tableAtStartOfThisRound = table;
 		this.calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th();
-
+		this.calculateScenariosWhereITryToPlaceACardOnARowAfterSomeoneTakesTheRow();
+		console.log(`${this._name}: my scenarios for this round: `);
+		console.log(this._scenariosForThisRound);
 		cardToPlay = this.getBestCardToPlay();
 
 		this.playCard(cardToPlay);
@@ -87,6 +85,7 @@ module.exports = class ArtificialPlayer extends Player
 				bestCardToPlay = this._scenariosForThisRound[i].cardToPlay;
 			}
 		}
+		console.log(`${this._name}: Best card to play is ${bestCardToPlay}`);
 		return bestCardToPlay;
 	}
 
@@ -97,11 +96,37 @@ module.exports = class ArtificialPlayer extends Player
 
 	calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th()
 	{
+		this.calculateScenariosForEachRowWhereIPlayMyMaxOrMin(true);
+	}
+
+	calculateScenariosWhereITryToPlaceACardOnARowAfterSomeoneTakesTheRow()
+	{
+		this.calculateScenariosForEachRowWhereIPlayMyMaxOrMin(false);
+	}
+
+	// for a given row, it usually strategic to play the smallest card you have for that row.
+	// sometimes though, for example when the row is almost full, you want to play your largest card
+	// that would go on that row in the hope that someone else will take the row and you can just put your card
+	// after theirs. So the bool parameter says: do I pick my smallest or my largest card for each row
+	// true is smallest, false is largest
+	calculateScenariosForEachRowWhereIPlayMyMaxOrMin(bPlayMySmallestCardForEachRow)
+	{
 		for (let rowI = 0; rowI < NUMBER_OF_ROWS; rowI++)
 		{
-			let myCardForRowI = this._hand.smallestCardInRange(this.tableAtStartOfThisRound.rowRange(rowI));
+			let myCardForRowI;
+			if (bPlayMySmallestCardForEachRow)
+				myCardForRowI = this._hand.smallestCardInRange(this.tableAtStartOfThisRound.rowRange(rowI));
+			else
+				myCardForRowI = this._hand.largestCardInRange(this.tableAtStartOfThisRound.rowRange(rowI));
+
+			// if we dont have a card for this row, continue
 			if (myCardForRowI == undefined)
 				continue;
+			
+			// if we have already calculated the scenario for this card, continue
+			if (this._scenariosForThisRound.findIndex( s => s.cardToPlay == myCardForRowI) != -1)
+				continue;
+			
 			let lastCardOnRowI = this.tableAtStartOfThisRound.lastCardInRow(rowI);
 
 			// "killer" cards are cards that would go on the same row that myCard would go on,
@@ -135,9 +160,10 @@ module.exports = class ArtificialPlayer extends Player
 				nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th
 			);
 
+			
+
 			this._scenariosForThisRound.push({
 				cardToPlay: myCardForRowI,
-				technique: Techniques.PutACardBefore6th,
 				pMyCardWillBeThe6th: pMyCardWillBeThe6th,
 				nCowsIdTakeIfMineIsThe6th: nCowsIdTakeIfMineIsThe6th,
 				expectedNumCows: pMyCardWillBeThe6th*nCowsIdTakeIfMineIsThe6th

@@ -36,7 +36,7 @@ module.exports = class HumanPlayer extends Player
 
 	removeAllListeners()
 	{
-		console.log('removing all event handlers from player '+this._name);
+		//console.log('removing all event handlers from player '+this._name);
 		this._socket.removeListener("clientAddAIFromWaitPage", this.onClientAddAIFromWaitPage.bind(this));
 		this._socket.removeListener("clientEndGameFromWaitPage", this.onClientEndGameFromWaitPage.bind(this));
 		this._socket.removeListener("clientStartGameWithCurrentPlayers", this.onClientStartGameWithCurrentPlayers.bind(this));
@@ -94,7 +94,7 @@ module.exports = class HumanPlayer extends Player
 
 	kickOut()
 	{
-		console.log(`Kicking out human player ${this._name}. Removing all handlers for its events.`);
+		//console.log(`Kicking out human player ${this._name}. Removing all handlers for its events.`);
 		this.removeAllListeners();
 		this._socket.emit('serverKickClientOut');
 	}
@@ -107,7 +107,7 @@ module.exports = class HumanPlayer extends Player
 	{
 		if (!this._bStartedGame || this._state != PlayerStates.WaitPage)
 		{
-			console.log("clientEndGameFromWaitPage received at unexpected time. Ignored.");
+			//console.log("clientEndGameFromWaitPage received at unexpected time. Ignored.");
 			return;
 		}
 		this.emit('playerEndGameFromWaitPage', this);
@@ -117,7 +117,7 @@ module.exports = class HumanPlayer extends Player
 	{
 		if (!this._bStartedGame || this._state != PlayerStates.WaitPage)
 		{
-			console.log("clientAddAIFromWaitPage received at unexpected time. Ignored.");
+			//console.log("clientAddAIFromWaitPage received at unexpected time. Ignored.");
 			return;
 		}
 		this.emit('playerAddAIFromWaitPage', this);
@@ -127,7 +127,7 @@ module.exports = class HumanPlayer extends Player
 	{
 		if (!this._bStartedGame || this._state != PlayerStates.WaitPage)
 		{
-			console.log("clientStartGameWithCurrentPlayers received at unexpected time. Ignored.");
+			//console.log("clientStartGameWithCurrentPlayers received at unexpected time. Ignored.");
 			return;
 		}
 		this.emit("playerStartGameWithCurrentPlayers", this);
@@ -137,7 +137,7 @@ module.exports = class HumanPlayer extends Player
 
 	onClientQuitGame()
 	{
-		console.log(this._name + " has disconnected/quit the game");
+		//console.log(this._name + " has disconnected/quit the game");
 		this.emit('playerQuitGame', this);
 	}
 
@@ -145,7 +145,7 @@ module.exports = class HumanPlayer extends Player
 	{
 		if (this._state != PlayerStates.ChooseCard || !this._hand.has(playedCard))
 		{
-			console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			//console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
 			return;
 		}
 		this._hand.delete(playedCard);
@@ -157,12 +157,12 @@ module.exports = class HumanPlayer extends Player
 	{
 		if (this._state != PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
 		{
-			console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			//console.log("clientPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
 			return;
 		}
 		if (rowToTakeIndex < 0 || rowToTakeIndex > 3)
 		{
-			console.log("Client has tried to take row out of bounds.");
+			//console.log("Client has tried to take row out of bounds.");
 			return;
 		}
 		this.emit('playerRowToTake', {player: this, rowToTakeIndex: rowToTakeIndex});
@@ -172,10 +172,10 @@ module.exports = class HumanPlayer extends Player
 	{
 		if (this._state != PlayerStates.RoundAnimationInProgress)
 		{
-			console.log("clientDoneDisplayingRound was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			//console.log("clientDoneDisplayingRound was received at an unexpected time or sent a card that the player does not have. Ignored.");
 			return;
 		}
-		console.log(`${this._name} emits playerOrSpectatorDoneDisplayingRound`);
+		//console.log(`${this._name} emits playerOrSpectatorDoneDisplayingRound`);
 		this.emit("playerOrSpectatorDoneDisplayingRound", {participant: this, bWatchAgain: bWatchAgain});
 	}
 }
