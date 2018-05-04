@@ -37,4 +37,13 @@ module.exports = class Hand
 			return undefined;
 		return Math.min.apply(null, cardsInRange);			
 	}
+
+	largestCardInRange(range)
+	{
+		let handArray = Array.from(this._set);
+		let cardsInRange = handArray.filter( function(card) {return card > range.min && card < range.max;});
+		if (cardsInRange.length == 0)
+			return undefined;
+		return Math.max.apply(null, cardsInRange);			
+	}
 }
