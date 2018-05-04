@@ -46,6 +46,14 @@ module.exports = class Table
 		}
 	}
 
+	printTable()
+	{
+		for (let row = 0; row < NUMBER_OF_ROWS; row++)
+		{
+			console.log(this._table[row].toString());
+		}
+	}
+
 	// CHECKS
 
 	getCardCows(cardNumber)

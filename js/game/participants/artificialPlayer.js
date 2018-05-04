@@ -56,7 +56,7 @@ module.exports = class ArtificialPlayer extends Player
 	{
 		console.log(`I am bot ${this._name} and I have to pick a card to play. My hand is ${Array.from(this._hand.Set).sort((a, b) => a-b)}`);
 		console.log('The table at the start of this round looks like this:')
-		console.log(table.Table);
+		table.printTable();
 		
 		let cardToPlay;
 
@@ -121,7 +121,14 @@ module.exports = class ArtificialPlayer extends Player
 			if (bPlayMySmallestCardForEachRow)
 				myCardForRowI = this._hand.smallestCardInRange(this.tableAtStartOfThisRound.rowRange(rowI));
 			else
+			{
 				myCardForRowI = this._hand.largestCardInRange(this.tableAtStartOfThisRound.rowRange(rowI));
+				// if i also have the card immediately before this one, then i might as well play that smaller one. It
+				// has the same chance of everything, but it sets me up better for the next turn
+				while (this._hand.has(myCardForRowI - 1))
+					myCardForRowI--;
+
+			}
 
 			// if we dont have a card for this row, continue
 			if (myCardForRowI == undefined)
@@ -215,7 +222,9 @@ module.exports = class ArtificialPlayer extends Player
 			// calculate the probability that exactly nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th players
 			// out of the nPWHKK who have a killer card play the killer card that they have
 
-			let pAGivenPlayerPlaysTheCard = 0.8;
+			let numberOfCardsAlreadyOnRow = 5 - nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
+
+			let pAGivenPlayerPlaysTheCard = this.pOthersWillPlayCard(numberOfCardsAlreadyOnRow);
 			let p_exactly_necessaryPlayersToMakeMine6thPlayTheirKillerCard = this._probabilityCalculator.p_outOf_N_Players_K_ChooseCard(
 				nPWHKK,
 				nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th,
@@ -230,6 +239,17 @@ module.exports = class ArtificialPlayer extends Player
 		}
 
 		return pMyCardWillBeThe6th;
+	}
+
+	// assumning a player has a card that would go on that row, what is the probability that they will play it?
+	pOthersWillPlayCard(nCardsOnRow)
+	{
+		if (nCardsOnRow < 4)
+			return 0.8;
+		if (nCardsOnRow == 4)
+			return 0.6;
+		else
+			return 0.07;
 	}
 
 	calc_nCowsIdTakeIfMineIsThe6th(rowI, listOfKillerCardsThtCouldBePlayedThisRound, nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th)
