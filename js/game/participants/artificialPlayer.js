@@ -92,8 +92,9 @@ module.exports = class ArtificialPlayer extends Player
 		let minExpectedCowsOptions = this._scenariosForThisRound.filter( s => s.expectedNumCows == minExpectedCows);
 		if (minExpectedCowsOptions.length > 1)
 		{
-			let cardOptions = minExpectedCowsOptions.map( s => s.cardToPlay);
-			bestCardToPlay = Math.min.apply(null, cardOptions);
+			let killerCardsOptions = minExpectedCowsOptions.map( s => s.nKillerCardsThatCouldBePlayed);
+			let leastKillerCards = Math.min.apply(null, killerCardsOptions);
+			bestCardToPlay = minExpectedCowsOptions.find( s => s.nKillerCardsThatCouldBePlayed == leastKillerCards).cardToPlay;
 		}
 
 
@@ -177,6 +178,7 @@ module.exports = class ArtificialPlayer extends Player
 			this._scenariosForThisRound.push({
 				cardToPlay: myCardForRowI,
 				pMyCardWillBeThe6th: pMyCardWillBeThe6th,
+				nKillerCardsThatCouldBePlayed: listOfKillerCardsThtCouldBePlayedThisRound.length,
 				nCowsIdTakeIfMineIsThe6th: nCowsIdTakeIfMineIsThe6th,
 				expectedNumCows: pMyCardWillBeThe6th*nCowsIdTakeIfMineIsThe6th
 			});
