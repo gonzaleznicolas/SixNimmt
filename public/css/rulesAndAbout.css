@@ -7,6 +7,8 @@ body{
 
 #contentWrapper{
 	padding: 1em;
+	max-width: 800px;
+	overflow-wrap: break-word;
 	background: rgba(0,0,0,0.1);
 }
 
