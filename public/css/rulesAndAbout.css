@@ -28,6 +28,18 @@ h3{
 	font-family: 'Do Hyeon';
 }
 
+p{
+	font-size: 2em;
+	margin: 10px 20px;
+	font-family: 'Do Hyeon';
+}
+
+img{
+	display: block;
+	margin: auto;
+}
+
 iframe{
-	margin: 20px;
+	display: block;
+	margin: auto;
 }
