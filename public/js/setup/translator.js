@@ -35,8 +35,7 @@ function translateToEnglish()
 	bSpanish = false;
 	
 	// home
-	$('#videoRules')[0].innerHTML = "Video Rules";
-	$('#textRules')[0].innerHTML = "Text Rules";
+	$('#rules')[0].innerHTML = "Rules";
 
 	$('#newGame')[0].innerHTML = "New Game";
 	$('#vsAI')[0].innerHTML = "1v1 vs Computer";
@@ -114,8 +113,7 @@ function translateToSpanish()
 	bSpanish = true;
 	
 	// home
-	$('#videoRules')[0].innerHTML = "Reglas en video";
-	$('#textRules')[0].innerHTML = "Reglas escritas";
+	$('#rules')[0].innerHTML = "Reglas";
 
 	$('#newGame')[0].innerHTML = "Iniciar nuevo juego";
 	$('#vsAI')[0].innerHTML = "Jugar contra computador";
