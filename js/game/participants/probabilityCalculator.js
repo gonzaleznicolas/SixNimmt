@@ -154,14 +154,24 @@ module.exports = class ProbabilityCalculator
 
 }
 
-function factorial(n){
-	if (n < 0) 
-		throw "Error: cant take factorial of a negative number";
-	if (n == 0) 
-		return 1;
-	let i= n;
-	while(--i) n*= i;
-	return n;
+function factorial(n)
+{
+	if (factorialCache[n] == undefined)
+		prepareFactorialCacheUpTo(Math.max(n, 104));
+	return factorialCache[n];
+}
+
+let factorialCache = [];
+
+function prepareFactorialCacheUpTo(n)
+{
+	factorialCache = [1]; // 0! is 1
+	let f = 1;
+	for (let i = 1; i <= n; i++)
+	{
+		f = f*i;
+		factorialCache[i] = f;
+	}
 }
 
 // combination
