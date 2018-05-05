@@ -36,6 +36,7 @@ function translateToEnglish()
 	
 	// home
 	$('#rules')[0].innerHTML = "Rules";
+	$('#rules').attr("href", "aboutEnglish.html");
 
 	$('#newGame')[0].innerHTML = "New Game";
 	$('#vsAI')[0].innerHTML = "1v1 vs Computer";
@@ -114,6 +115,7 @@ function translateToSpanish()
 	
 	// home
 	$('#rules')[0].innerHTML = "Reglas";
+	$('#rules').attr("href", "aboutSpanish.html");
 
 	$('#newGame')[0].innerHTML = "Iniciar nuevo juego";
 	$('#vsAI')[0].innerHTML = "Jugar contra computador";
