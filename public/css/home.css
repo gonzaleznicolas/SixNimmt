@@ -21,7 +21,7 @@ h1 {
 	border-radius: 10px;
 }
 
-.instructions {
+.linkButton {
 	text-decoration: none;
 	color: white;
 }
@@ -109,7 +109,7 @@ input[type=text]:focus{
 	display: none;
 }
 
-#instructionsSection {
+#rulesAndAboutSection {
 	visibility: hidden;
 }
 
