@@ -116,18 +116,18 @@ function translateToSpanish()
 	bSpanish = true;
 	
 	// home
-	$('#howToPlay')[0].innerHTML = "C&#243mo Jugar";
+	$('#howToPlay')[0].innerHTML = "Cómo Jugar";
 	$('#howToPlay').attr("href", "howToPlayEs.html");
 	$('#about')[0].innerHTML = "Acerca De...";
 	$('#about').attr("href", "aboutEs.html");
 
-	$('#newGame')[0].innerHTML = "Iniciar nuevo juego";
+	$('#newGame')[0].innerHTML = "Iniciar juego nuevo";
 	$('#vsAI')[0].innerHTML = "Jugar contra computador";
 	$('#joinGame')[0].innerHTML = "Unirse a juego";
 	$('#spectateGame')[0].innerHTML = "Ver juego";
 
 	$('#nickNamePrompt')[0].innerHTML = "Tu apodo:";
-	$('#codePrompt')[0].innerHTML = "C&#243digo del juego:";
+	$('#codePrompt')[0].innerHTML = "Código del juego:";
 
 	$('#nickNameError')[0].innerHTML = "Ese apodo no esta disponible o es invalido.<br>Elige un apodo alfanumerico con 1-6 caracteres.";
 	$('#codeError')[0].innerHTML = "Ese codigo no corresponde a un juego activo.";
@@ -137,12 +137,12 @@ function translateToSpanish()
 	$('#submitButton')[0].innerHTML = "Enviar";
 	
 	// wait
-	$('#theCodeIs')[0].innerHTML = "El c&#243digo del juego es";
+	$('#theCodeIs')[0].innerHTML = "El código del juego es";
 	$('#playerAllowance')[0].innerHTML = "2-10 jugadores permitidos";
 	$('#endGameBtn')[0].innerHTML = "Terminar juego";
 	$('#quitGameBtn')[0].innerHTML = "Salir";
 	$('#startGameBtn')[0].innerHTML = "Comenzar con estos jugadores";
-	$("#needMorePlayers")[0].innerHTML = "Se necesitan m&#225s jugadores";
+	$("#needMorePlayers")[0].innerHTML = "Se necesitan más jugadores";
 	$('#addAIBtn')[0].innerHTML = "Agregar jugador artificial";
 	
 	// game
@@ -189,5 +189,5 @@ function translateToSpanish()
 
 	youGotKickedOutStr = "Te demoraste demasiado en responder y te han sacado del juego.";
 
-	initialInstructionsStr = "Durante el juego, por favor no minimizes esta ventana o abras otras ventanas. Puedes perder conecci&#243n al servidor";
+	initialInstructionsStr = "Durante el juego, por favor no minimizes esta ventana o abras otras ventanas. Puedes perder conección al servidor";
 }
