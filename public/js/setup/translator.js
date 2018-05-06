@@ -36,9 +36,9 @@ function translateToEnglish()
 	
 	// home
 	$('#howToPlay')[0].innerHTML = "How to Play";
-	$('#howToPlay').attr("href", "howToPlayEnglish.html");
+	$('#howToPlay').attr("href", "howToPlayEn.html");
 	$('#about')[0].innerHTML = "About";
-	$('#about').attr("href", "aboutEnglish.html");
+	$('#about').attr("href", "aboutEn.html");
 
 	$('#newGame')[0].innerHTML = "New Game";
 	$('#vsAI')[0].innerHTML = "1v1 vs Computer";
@@ -117,9 +117,9 @@ function translateToSpanish()
 	
 	// home
 	$('#howToPlay')[0].innerHTML = "Como Jugar";
-	$('#howToPlay').attr("href", "howToPlaySpanish.html");
+	$('#howToPlay').attr("href", "howToPlayEs.html");
 	$('#about')[0].innerHTML = "Acerca De...";
-	$('#about').attr("href", "aboutSpanish.html");
+	$('#about').attr("href", "aboutEs.html");
 
 	$('#newGame')[0].innerHTML = "Iniciar nuevo juego";
 	$('#vsAI')[0].innerHTML = "Jugar contra computador";
