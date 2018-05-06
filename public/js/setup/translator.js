@@ -35,8 +35,8 @@ function translateToEnglish()
 	bSpanish = false;
 	
 	// home
-	$('#rules')[0].innerHTML = "Rules";
-	$('#rules').attr("href", "rulesEnglish.html");
+	$('#howToPlay')[0].innerHTML = "How to Play";
+	$('#howToPlay').attr("href", "howToPlayEnglish.html");
 	$('#about')[0].innerHTML = "About";
 	$('#about').attr("href", "aboutEnglish.html");
 
@@ -116,8 +116,8 @@ function translateToSpanish()
 	bSpanish = true;
 	
 	// home
-	$('#rules')[0].innerHTML = "Reglas";
-	$('#rules').attr("href", "rulesSpanish.html");
+	$('#howToPlay')[0].innerHTML = "Como Jugar";
+	$('#howToPlay').attr("href", "howToPlaySpanish.html");
 	$('#about')[0].innerHTML = "Acerca De...";
 	$('#about').attr("href", "aboutSpanish.html");
 

@@ -182,7 +182,7 @@ class Drawer
 		const ctx = this._ctx;
 
 		const fontPixels = 0.2*this._cardHeight;
-		ctx.font = "bold "+fontPixels+"px Yanone Kaffeesatz";
+		ctx.font = "bold "+fontPixels+"px Boogaloo";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		const centreXofName= x + (cardWidth/2);

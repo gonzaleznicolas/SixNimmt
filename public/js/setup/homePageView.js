@@ -22,7 +22,7 @@ function onSpainClicked() {
 }
 
 function languageClicked() {
-	$('#rulesAndAboutSection').css("visibility", "visible");
+	$('#howToPlayAndAboutSection').css("visibility", "visible");
 	$('#gameOptionsSection').css("visibility", "visible");
 }
 
