@@ -26,7 +26,7 @@ module.exports = class Spectator extends EventEmitter
 
 	removeAllListeners()
 	{
-		//console.log('removing all event handlers from spectator with id '+this._socket.id);
+		console.log('removing all event handlers from spectator with id '+this._socket.id);
 		this._socket.removeListener("clientQuitGame", this.onClientQuitGame.bind(this));
 		this._socket.removeListener("disconnect", this.onClientQuitGame.bind(this));
 		this._socket.removeListener("clientDoneDisplayingRound", this.onClientDoneDisplayingRound.bind(this));
@@ -74,7 +74,7 @@ module.exports = class Spectator extends EventEmitter
 
 	kickOut()
 	{
-		//console.log(`Kicking out spectator with socket id ${this._socket.id}. Removing all handlers for its events.`);
+		console.log(`Kicking out spectator with socket id ${this._socket.id}. Removing all handlers for its events.`);
 		this.removeAllListeners();
 		this._socket.emit('serverKickClientOut');
 	}
@@ -83,7 +83,7 @@ module.exports = class Spectator extends EventEmitter
 
 	onClientQuitGame()
 	{
-		//console.log("Spectator with ID " + this._socket.id + " has disconnected/quit the game");
+		console.log("Spectator with ID " + this._socket.id + " has disconnected/quit the game");
 		this.emit('spectatorQuitGame', this);
 	}
 
@@ -91,7 +91,7 @@ module.exports = class Spectator extends EventEmitter
 	{
 		if (this._state != SpectatorStates.RoundAnimationInProgress)
 		{
-			//console.log("clientDoneDisplayingRound was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			console.log("clientDoneDisplayingRound was received at an unexpected time or sent a card that the player does not have. Ignored.");
 			return;
 		}
 		this.emit("playerOrSpectatorDoneDisplayingRound", {participant: this, bWatchAgain: bWatchAgain});

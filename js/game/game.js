@@ -38,7 +38,7 @@ module.exports = class Game extends EventEmitter
 		this._scoreboard = new Scoreboard();
 		this._roundProcessor = new RoundProcessor(this._table, this._upcomingCards, this._scoreboard);
 		this._repeatRoundFlag = false;
-		//console.log("Game with code " + gameCode + " created.");
+		console.log("Game with code " + gameCode + " created.");
 		this.addHumanPlayer(firstPlayerName, true, firstPlayerSocket);
 	}
 
@@ -86,10 +86,10 @@ module.exports = class Game extends EventEmitter
 	{
 		if (!this._players)
 		{
-			//console.log("Was going to check if there are human players left, but the game has been deleted.");
+			console.log("Was going to check if there are human players left, but the game has been deleted.");
 			return false;
 		}
-		//console.log('Testing if there are human players left in game '+this._gameCode);
+		console.log('Testing if there are human players left in game '+this._gameCode);
 		return Array.from(this._players).some( (name_player) => {
 			return name_player[1] instanceof HumanPlayer
 		});
@@ -99,7 +99,7 @@ module.exports = class Game extends EventEmitter
 	{
 		if (!this._spectators)
 		{
-			//console.log("Was going to check if there are spectators left, but the game has been deleted.");
+			console.log("Was going to check if there are spectators left, but the game has been deleted.");
 			return false;
 		}
 		else
@@ -143,7 +143,7 @@ module.exports = class Game extends EventEmitter
 		this.subscribeToPlayerEvents(player);
 		this.updateOpen();
 		this.updateAllPlayersAndSpectatorsWithPlayerList();
-		//console.log(`Human player ${name} has been added to game ${this._gameCode}`);
+		console.log(`Human player ${name} has been added to game ${this._gameCode}`);
 	}
 
 	// returns AI name
@@ -163,7 +163,7 @@ module.exports = class Game extends EventEmitter
 		this.subscribeToPlayerEvents(player);
 		this.updateOpen();
 		this.updateAllPlayersAndSpectatorsWithPlayerList();
-		//console.log(`Artificial player ${name} has been added to game ${this._gameCode}`);
+		console.log(`Artificial player ${name} has been added to game ${this._gameCode}`);
 		return name;
 	}
 
@@ -177,14 +177,14 @@ module.exports = class Game extends EventEmitter
 		spectator.on('playerOrSpectatorDoneDisplayingRound', this.onPlayerOrSpectatorDoneDisplayingRound.bind(this));
 
 		spectator.updatePlayerList(Array.from(this._players.keys()));
-		//console.log(`Spectator has been added to game ${this._gameCode}`);
+		console.log(`Spectator has been added to game ${this._gameCode}`);
 	}
 
 	removeSpectator(spectator)
 	{
 		if (!this._spectators)
 		{
-			//console.log('Was going to delete a spectator but the _spectator array has already been deleted.');
+			console.log('Was going to delete a spectator but the _spectator array has already been deleted.');
 			return;
 		}
 		let index = this._spectators.findIndex( (s) => {return s.Socket.id = spectator.Socket.id});
@@ -200,14 +200,14 @@ module.exports = class Game extends EventEmitter
 			return;
 		this.updateAllPlayersAndSpectatorsWithPlayerList();
 		this.updateOpen();
-		//console.log(name + " removed from game " + this._gameCode);
+		console.log(name + " removed from game " + this._gameCode);
 	}
 
 	replaceHumanPlayerWithArtificialPlayer(humanPlayerToReplace)
 	{
 		if (!this._players.delete(humanPlayerToReplace.Name))
 		{
-			//console.log('Player ' + humanPlayerToReplace.Name +' who \'quit\' was not in the game. Ignored.')
+			console.log('Player ' + humanPlayerToReplace.Name +' who \'quit\' was not in the game. Ignored.')
 			return;
 		}
 
@@ -230,20 +230,20 @@ module.exports = class Game extends EventEmitter
 		this.subscribeToPlayerEvents(artificialPlayerReplacement);
 		this._scoreboard.renamePlayer(humanPlayerToReplace.Name, artificialPlayerReplacement.Name);
 
-		//console.log(`Human player ${humanPlayerToReplace.Name} has left and has been replaced by artificial player ${artificialPlayerReplacement.Name}`);
+		console.log(`Human player ${humanPlayerToReplace.Name} has left and has been replaced by artificial player ${artificialPlayerReplacement.Name}`);
 
 		if (this._state == GameStates.WaitForAllPlayersToChooseTheirCard)
 		{
 			if (this._upcomingCards.playerHasPlayedACard(humanPlayerToReplace.Name)) // the human player picked a card for this round already
 			{
-				//console.log(`${humanPlayerToReplace.Name} had played a card before disconnecting so ${artificialPlayerReplacement.Name} did not play a card`);
+				console.log(`${humanPlayerToReplace.Name} had played a card before disconnecting so ${artificialPlayerReplacement.Name} did not play a card`);
 				this._upcomingCards.renamePlayer(humanPlayerToReplace.Name, artificialPlayerReplacement.Name);
 				artificialPlayerReplacement.State = PlayerStates.WaitForRestToPlayTheirCard;
 			}
 			else //upcoming cards doesnt have a card for player
 			{
 				// changing the state will make the artificial player choose a card within a few seconds
-				//console.log(`${humanPlayerToReplace.Name} had not played a card before disconnecting so ${artificialPlayerReplacement.Name} was instructed to pick a card`);
+				console.log(`${humanPlayerToReplace.Name} had not played a card before disconnecting so ${artificialPlayerReplacement.Name} was instructed to pick a card`);
 				artificialPlayerReplacement.State = PlayerStates.ChooseCard;
 				artificialPlayerReplacement.playACard(this._table.Table);
 			}
@@ -252,12 +252,12 @@ module.exports = class Game extends EventEmitter
 		{
 			if (humanPlayerToReplace.State == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
 			{
-				//console.log(`${humanPlayerToReplace.Name} was supposed to pick a row to take but quit, so ${artificialPlayerReplacement.Name} will pick a row`);
+				console.log(`${humanPlayerToReplace.Name} was supposed to pick a row to take but quit, so ${artificialPlayerReplacement.Name} will pick a row`);
 				artificialPlayerReplacement.chooseARowToTake(this._table.Table);
 			}
 			else
 			{
-				//console.log(`${humanPlayerToReplace.Name} was in the middle of displaying an animation when they quit, so ${artificialPlayerReplacement.Name} will just emit playerOrSpectatorDoneDisplayingRound`);
+				console.log(`${humanPlayerToReplace.Name} was in the middle of displaying an animation when they quit, so ${artificialPlayerReplacement.Name} will just emit playerOrSpectatorDoneDisplayingRound`);
 				artificialPlayerReplacement.sayDoneDisplayingRound();
 			}
 		}
@@ -265,7 +265,7 @@ module.exports = class Game extends EventEmitter
 
 	kickOutParticipantsWhoHaventFinishedDisplayingRound()
 	{
-		//console.log('kicking out participants who havent finished displaying round');
+		console.log('kicking out participants who havent finished displaying round');
 
 		Array.from(this._players.keys()).forEach( function (playerName) {
 			let player = this._players.get(playerName);
@@ -284,7 +284,7 @@ module.exports = class Game extends EventEmitter
 
 	kickHumanPlayerOut(player)
 	{
-		//console.log('Kicking out '+player.Name);
+		console.log('Kicking out '+player.Name);
 		player.removeListener("playerAddAIFromWaitPage", this.onPlayerAddAIFromWaitPage.bind(this));
 		player.removeListener("playerEndGameFromWaitPage", this.onPlayerEndGameFromWaitPage.bind(this));
 		player.removeListener("playerStartGameWithCurrentPlayers", this.onPlayerStartGameWithCurrentPlayers.bind(this));
@@ -298,7 +298,7 @@ module.exports = class Game extends EventEmitter
 
 	kickSpectatorOut(spectator)
 	{
-		//console.log('Kicking out spectator with socket id '+spectator.Socket.id);
+		console.log('Kicking out spectator with socket id '+spectator.Socket.id);
 		spectator.removeListener('spectatorQuitGame', this.onSpectatorQuitGame.bind(this));
 		spectator.removeListener('playerOrSpectatorDoneDisplayingRound', this.onPlayerOrSpectatorDoneDisplayingRound.bind(this));
 		spectator.kickOut();
@@ -324,11 +324,11 @@ module.exports = class Game extends EventEmitter
 		// human players or spectators left
 		if (playerWhoEndedTheGame)
 		{
-			//console.log('Notify every player and spectator that the game is being ended.');
+			console.log('Notify every player and spectator that the game is being ended.');
 			this.tellAllPlayersAndSpectatorsThatTheGameGotTerminated(playerWhoEndedTheGame.Name);
 		}
 
-		//console.log('Deleting all the resources of game '+this._gameCode);
+		console.log('Deleting all the resources of game '+this._gameCode);
 		this._players.forEach( function (p) {
 			p.removeAllListeners();
 		});
@@ -394,7 +394,7 @@ module.exports = class Game extends EventEmitter
 
 	startANewIteration()
 	{
-		//console.log("new iteration started");
+		console.log("new iteration started");
 		this._table.reset();
 		this._deck.reset();
 		this.initializePlayerHands();
@@ -407,9 +407,9 @@ module.exports = class Game extends EventEmitter
 	{
 		if (this._scoreboard.anyPlayerHasReachedPts(66))
 		{
-			//console.log("The winners are:");
+			console.log("The winners are:");
 			let winners = this._scoreboard.lowestScores();
-			//console.log(winners);
+			console.log(winners);
 			// just send out the winner list. The game will be deleted once all
 			// the players and spectators disconnect
 			this.tellAllPlayersAndSpectatorsTheWinners(winners);
@@ -459,7 +459,7 @@ module.exports = class Game extends EventEmitter
 
 	makeEveryPlayerAndSpectatorRewatchRound()
 	{
-		//console.log(`Starting round replay`);
+		console.log(`Starting round replay`);
 		this._state = GameStates.RoundAnimationInProgress;
 		this._players.forEach((player) => {player.State = PlayerStates.RoundAnimationInProgress});
 		this._spectators.forEach((spectator) => {spectator.State = SpectatorStates.RoundAnimationInProgress});
@@ -562,7 +562,7 @@ module.exports = class Game extends EventEmitter
 	{
 		if (this._state != GameStates.WaitForPlayers)
 		{
-			//console.log("playerEndGameFromWaitPage message received at unexpected time. Ignored.");
+			console.log("playerEndGameFromWaitPage message received at unexpected time. Ignored.");
 			return;
 		}
 		this.endGame(player);
@@ -572,7 +572,7 @@ module.exports = class Game extends EventEmitter
 	{
 		if (this._state != GameStates.WaitForPlayers)
 		{
-			//console.log("playerAddAIFromWaitPage message received at unexpected time. Ignored.");
+			console.log("playerAddAIFromWaitPage message received at unexpected time. Ignored.");
 			return;
 		}
 		this.addArtificialPlayer();
@@ -587,7 +587,7 @@ module.exports = class Game extends EventEmitter
 		}
 		else
 		{
-			//console.log("playerStartGameWithCurrentPlayers message received at unexpected time. Ignored.");
+			console.log("playerStartGameWithCurrentPlayers message received at unexpected time. Ignored.");
 			return;
 		}
 	}
@@ -598,7 +598,7 @@ module.exports = class Game extends EventEmitter
 	{
 		if (!this._players)
 		{
-			//console.log('A player tried to quit the game, but the game was already deleted. Ignore.');
+			console.log('A player tried to quit the game, but the game was already deleted. Ignore.');
 			return;
 		}
 		if (this._state == GameStates.WaitForPlayers)
@@ -617,7 +617,7 @@ module.exports = class Game extends EventEmitter
 
 			if (!this.gameHasHumanPlayersLeft() && !this.gameHasSpectatorsLeft())
 			{
-				//console.log('there are no human players or spectators left');
+				console.log('there are no human players or spectators left');
 				this.endGame(player);
 			}
 			else
@@ -629,24 +629,24 @@ module.exports = class Game extends EventEmitter
 	{
 		if (!this._players)
 		{
-			//console.log('A player tried to play a card but this game was already deleted. Ignore.');
+			console.log('A player tried to play a card but this game was already deleted. Ignore.');
 			return;
 		}
 		if (this._state != GameStates.WaitForAllPlayersToChooseTheirCard)
 		{
-			//console.log("playerPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
+			console.log("playerPlayCard was received at an unexpected time or sent a card that the player does not have. Ignored.");
 			return;
 		}
 		this._upcomingCards.playCard(data.playedCard, data.player.Name);
 		data.player.State = PlayerStates.WaitForRestToPlayTheirCard;
-		//console.log(`Player ${data.player.Name} in game ${this._gameCode} has played card ${data.playedCard}`);
+		console.log(`Player ${data.player.Name} in game ${this._gameCode} has played card ${data.playedCard}`);
 		this.updateAllPlayersAndSpectatorsWithUpcomingCards();
 
 		// if every player has played their card
 		if (this._upcomingCards.Size == this._players.size && 
 			this.everyPlayerInState(PlayerStates.WaitForRestToPlayTheirCard))
 		{
-			//console.log(`Every player in game ${this._gameCode} has played their card`);
+			console.log(`Every player in game ${this._gameCode} has played their card`);
 			this.startOrResumeDisplayingRound(true);
 		}
 	}
@@ -655,10 +655,10 @@ module.exports = class Game extends EventEmitter
 	{
 		if (!this._players)
 		{
-			//console.log('A player tried to choose a row to take but this game was already deleted. Ignore.');
+			console.log('A player tried to choose a row to take but this game was already deleted. Ignore.');
 			return;
 		}
-		//console.log( data.player.Name + " has chosen which row to take.");
+		console.log( data.player.Name + " has chosen which row to take.");
 		data.player.State = PlayerStates.RoundAnimationInProgress;
 		this.startOrResumeDisplayingRound(false, data.rowToTakeIndex, data.player.Name);
 	}
@@ -670,16 +670,16 @@ module.exports = class Game extends EventEmitter
 		let participant = data.participant;
 		if (!this._players)
 		{
-			//console.log('A participant tried to say they are done displaying round, but the game was already deleted. Ignore.');
+			console.log('A participant tried to say they are done displaying round, but the game was already deleted. Ignore.');
 			return;
 		}
 		if (this._state != GameStates.RoundAnimationInProgress)
 		{
-			//console.log("playerOrSpectatorDoneDisplayingRound was received at an unexpected time. Ignored.");
+			console.log("playerOrSpectatorDoneDisplayingRound was received at an unexpected time. Ignored.");
 			return;
 		}
 
-		//console.log("Game notified that a participant is done displaying round");
+		console.log("Game notified that a participant is done displaying round");
 
 		if (participant instanceof Player && data.bWatchAgain)
 			this._repeatRoundFlag = true;
@@ -705,7 +705,7 @@ module.exports = class Game extends EventEmitter
 		if (this.everyPlayerInState(PlayerStates.DoneDisplayingRoundAnimation) && 
 			this._spectators.every( (s) => s.State == SpectatorStates.DoneDisplayingRoundAnimation))
 		{
-			//console.log("Every participant is done displaying the round.");
+			console.log("Every participant is done displaying the round.");
 			clearTimeout(this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout);
 			this._kickOutParticipantsWhoHaventFinishedDisplayingRoundTimeout = undefined;
 			if (this._repeatRoundFlag)
@@ -723,11 +723,11 @@ module.exports = class Game extends EventEmitter
 		}
 		else
 		{
-			//console.log("The players not done displaying the animation are:");
-			//console.log(this.listOfPlayerNamesNotInState(PlayerStates.DoneDisplayingRoundAnimation));
+			console.log("The players not done displaying the animation are:");
+			console.log(this.listOfPlayerNamesNotInState(PlayerStates.DoneDisplayingRoundAnimation));
 
-			//console.log("The spectators not done displaying the animation are:");
-			//console.log(this.listOfSpectatorSocketIDsNotInState(SpectatorStates.DoneDisplayingRoundAnimation));
+			console.log("The spectators not done displaying the animation are:");
+			console.log(this.listOfSpectatorSocketIDsNotInState(SpectatorStates.DoneDisplayingRoundAnimation));
 		}
 	}
 
@@ -735,7 +735,7 @@ module.exports = class Game extends EventEmitter
 	{
 		if (!this._spectators)
 		{
-			//console.log('A spectator tried to quit the game, but the game was already deleted. Ignore.');
+			console.log('A spectator tried to quit the game, but the game was already deleted. Ignore.');
 			return;
 		}
 		this.removeSpectator(spectator);
@@ -748,11 +748,11 @@ module.exports = class Game extends EventEmitter
 			// No need to pass in the parameter. We just want that funciton to check if all the remaining players and spectators
 			// have finished.
 			this.onPlayerOrSpectatorDoneDisplayingRound({participant: spectator, bWatchAgain: false});
-			//console.log("A spectator has quit while game in state RoundAnimationInProgress");
+			console.log("A spectator has quit while game in state RoundAnimationInProgress");
 		}
 		if (!this.gameHasHumanPlayersLeft() && !this.gameHasSpectatorsLeft())
 		{
-			//console.log('there are no human players or spectators left');
+			console.log('there are no human players or spectators left');
 			this.endGame(spectator);
 		}
 		else

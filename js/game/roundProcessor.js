@@ -254,7 +254,7 @@ module.exports = class RoundProcessor
 			let upcomingCardToPlace = upcomingCardsAtThisPoint.Cards[upcomingCardIndex];
 			if (tableAtThisPoint.cardSmallerThanLastCardInFirstRow(upcomingCardToPlace.number))
 			{
-				//console.log("Card smaller than last card in first row...");
+				console.log("Card smaller than last card in first row...");
 				needToAskThisPlayerForARowToTake = upcomingCardToPlace.name;
 				roundStepSequence.push(
 				{

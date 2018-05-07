@@ -41,6 +41,6 @@ module.exports = class GameManager
 
 	deleteGame(gameCode){
 		this._games.delete(gameCode);
-		//console.log("deleted game " + gameCode + ". " + this._games.size + " game(s) left active.");
+		console.log("deleted game " + gameCode + ". " + this._games.size + " game(s) left active.");
 	}
 }

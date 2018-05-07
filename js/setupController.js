@@ -12,10 +12,10 @@ module.exports = function (IO){
 }
 
 function onConnection(socket) {
-	//console.log('A user connected');
+	console.log('A user connected');
  
 	socket.on('disconnect', function () {
-	   //console.log('A user disconnected');
+	   console.log('A user disconnected');
 	   this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents = false;
 	});
 
@@ -32,10 +32,10 @@ function onConnection(socket) {
 function onClientNewGame(data){
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
 	{
-		//console.log("clientNewGame received at unexpected time. Ignored.");
+		console.log("clientNewGame received at unexpected time. Ignored.");
 		return;
 	}
-	//console.log("New game started");
+	console.log("New game started");
 	let nickName = StringFunctions.capitalizeNickName(data.nickName);
 	let nameValid = false;
 	let gameCode = undefined;
@@ -56,7 +56,7 @@ function onClientNewGame(data){
 function onClientJoinGame(data){
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
 	{
-		//console.log("clientJoinGame received at unexpected time. Ignored.");
+		console.log("clientJoinGame received at unexpected time. Ignored.");
 		return;
 	}
 	let codeValid = false;
@@ -95,7 +95,7 @@ function onClient1v1vsAI(data)
 {
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
 	{
-		//console.log("client1v1vsAI received at unexpected time. Ignored.");
+		console.log("client1v1vsAI received at unexpected time. Ignored.");
 		return;
 	}
 	let nickName = StringFunctions.capitalizeNickName(data.nickName);
@@ -114,7 +114,7 @@ function onClientSpectateGame(data)
 {
 	if (this.thisSocketIsInTheMiddleOfAGameAsAPlayerOrSpectator_IgnoreHomePageEvents)
 	{
-		//console.log("clientSpectateGame received at unexpected time. Ignored.");
+		console.log("clientSpectateGame received at unexpected time. Ignored.");
 		return;
 	}
 	let codeValid = false;
