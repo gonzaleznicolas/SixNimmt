@@ -15,6 +15,30 @@ module.exports = class ProbabilityCalculator
 		if (nCardsWhichIHaveNotSeen < nPlayersOtherThanMe * nCardsLeftInEachPlayersHand)
 			throw "Error: You have seen more cards than everything other than whats in the others' hands? Impossible"
 		
+
+		/*
+		The problem we are trying to solve is this:
+		What is the probability that exactly H players have a killer card.
+		We know:
+			- the number of cards out there we havent seen
+			- how many of those are killer cards (would go on this row before mine)
+			- how many cards each player has in their hand
+			- number of players other than me
+
+		It is easier to think of this problem as a problem of balls in a bag.
+		Suppose these are the input numbers:
+			- the number of cards out there we havent seen (50)
+			- how many of those are killer cards (would go on this row before mine) (5)
+			- how many cards each player has in their hand (6)
+			- number of players other than me (4)
+			- H (3)
+		
+		Then think of the problem like this:
+		There are 50 balls in a bag. 5 of those are red, and the rest are blue. There are 4 bins. We are to pick balls
+		at random out of the bag and fill the bins with 6 balls each, one by one.
+		What is the probability that exactly 3 out of the 4 bins will have at least one red ball?
+		*/
+
 		this._nBallsInBag = nCardsWhichIHaveNotSeen;
 		this._nRedBallsInBag = nCardsWhichWouldGoOnThisRowBeforeMine;
 		this._nBlueBallsInBag = this._nBallsInBag - this._nRedBallsInBag;
@@ -38,6 +62,17 @@ module.exports = class ProbabilityCalculator
 		return Math.min(this._p_H_playersHaveKillerCard, 1);
 	}
 
+	/*
+	This function will find all the ways in which the bins can be filled such that exactly H have at least one red.
+	For each of those ways, it will calculate the probability of that happening, and add all of the cases up.
+
+	Note: the version of this function that found ALL the combinations was too slow. Eg: [0, 1, 1], [1, 0, 1], [1, 1, 0]
+	would all be different cases and their probability would be calculated separately.
+	An optimization was made. I found that the probability of those three cases was almost the same (varied by less than 0.00000000001)
+	So, the function now only finds combinations that are in increasing order. I.e. from the example above, it would only find [0, 1, 1],
+	and then it multiplies that probability by 3.
+	The nRedInPreviousBin parameter is whats used to enforce the increasing order condition.
+	*/
 	recursiveHelper(currentDepth, sequence, nRedInPreviousBin)
 	{
 		// "this one" is a bin
