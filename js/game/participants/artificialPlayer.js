@@ -29,9 +29,20 @@ module.exports = class ArtificialPlayer extends Player
 			tableObj.Table = table2dArray;
 			let rowsWithFewestCows = tableObj.listOfRowsWithFewestCows();
 
-			console.log(rowsWithFewestCows);
+			// remove whichever of the rows i have the least cards for
+			let cardsInRow = rowsWithFewestCows.map(function(rowI){
+				return {rowI: rowI, nCards: this._hand.numberOfCardsInRange(tableObj.rowRange(rowI))};
+			}.bind(this));
 
-			rowToTakeIndex = rowsWithFewestCows[0];
+			let index = cardsInRow.length - 1;
+			for (let i = cardsInRow.length - 1; i >= 0; i--)
+			{
+				if (cardsInRow[i].nCards < cardsInRow[index].nCards)
+					index = i;
+			}
+			let rowWithFewestCowsForWhichIHaveTheFewestCards = cardsInRow[index].rowI;
+
+			rowToTakeIndex = rowsWithFewestCows[rowWithFewestCowsForWhichIHaveTheFewestCards];
 
 			console.log(rowToTakeIndex);
 
