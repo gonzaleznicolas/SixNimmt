@@ -12,6 +12,16 @@ body{
 	background: rgba(0,0,0,0.1);
 }
 
+.rowFlexbox{
+	display: flex;
+	flex-direction: row;
+}
+
+#boxImg{
+	width: 180px;
+	height: 180px;
+}
+
 h1{
 	font-size: 8em;
 	margin: 10px 20px;
@@ -34,12 +44,7 @@ p, li{
 	font-family: 'Boogaloo';
 }
 
-img{
-	display: block;
-	margin: auto;
-}
-
-iframe{
+.centeredMedia{
 	display: block;
 	margin: auto;
 }
