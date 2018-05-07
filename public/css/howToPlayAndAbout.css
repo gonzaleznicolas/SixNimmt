@@ -22,6 +22,10 @@ body{
 	height: 180px;
 }
 
+a{
+	color: white;
+}
+
 h1{
 	font-size: 8em;
 	margin: 10px 20px;
