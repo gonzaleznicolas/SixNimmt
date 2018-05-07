@@ -82,6 +82,23 @@ module.exports = class Table
 		return totalCows;
 	}
 
+	// the 6th spot does not count as an open space
+	numberOfOpenSpacesOnRow(rowI)
+	{
+		return 5 - this.numberOfCardsInRow(rowI);
+	}
+
+	numberOfOpenSpacesOnTable()
+	{
+		let count = 0;
+		for (let rowI = 0; rowI < NUMBER_OF_ROWS; rowI++)
+		{
+			count += this.numberOfOpenSpacesOnRow(rowI);
+		}
+
+		return count;
+	}
+
 	rowCardWouldGoOn(card)
 	{
 		let rowToPlaceThisCardIn;
@@ -97,13 +114,18 @@ module.exports = class Table
 		return rowToPlaceThisCardIn;
 	}
 
-	// returns an array of row indices. Any index in this array, that row is tied for having least cows
-	listOfRowsWithFewestCows()
+	minNumberOfCowsInARow()
 	{
 		let cowsInEachRow = [0, 1, 2, 3].map( function(rowI) {
 			return this.cowsInRow(rowI);
 		}.bind(this));
-		let minNumberOfCowsInARow = Math.min.apply(null, cowsInEachRow);
+		return Math.min.apply(null, cowsInEachRow);
+	}
+
+	// returns an array of row indices. Any index in this array, that row is tied for having least cows
+	listOfRowsWithFewestCows()
+	{
+		let minNumberOfCowsInARow = this.minNumberOfCowsInARow();
 
 		let listOfRowIndicesTiedForFewestCows = [0, 1, 2, 3].filter( function(rowI){
 			return this.cowsInRow(rowI) == minNumberOfCowsInARow;

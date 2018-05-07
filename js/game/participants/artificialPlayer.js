@@ -62,6 +62,7 @@ module.exports = class ArtificialPlayer extends Player
 
 		this._scenariosForThisRound = [];
 		this.tableAtStartOfThisRound = table;
+		this.calculateScenariosWhereIPlaySmallerThanTheLastOnFirstRow();
 		this.calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th();
 		this.calculateScenariosWhereITryToPlaceACardOnARowAfterSomeoneTakesTheRow();
 		console.log(`${this._name}: my scenarios for this round: `);
@@ -81,6 +82,10 @@ module.exports = class ArtificialPlayer extends Player
 		this._scenariosForThisRound.sort( function(a,b){
 			if (a.expectedNumCows != b.expectedNumCows)
 				return a.expectedNumCows - b.expectedNumCows;
+			else if (a.nKillerCardsThatCouldBePlayed == undefined)
+				return 1;
+			else if (b.nKillerCardsThatCouldBePlayed == undefined)
+				return -1;
 			else if (a.nKillerCardsThatCouldBePlayed != b.nKillerCardsThatCouldBePlayed)
 				return a.nKillerCardsThatCouldBePlayed - b.nKillerCardsThatCouldBePlayed;
 			else
@@ -91,6 +96,86 @@ module.exports = class ArtificialPlayer extends Player
 
 		console.log(`${this._name}: Best card to play is ${bestCardToPlay}`);
 		return bestCardToPlay;
+	}
+
+	calculateScenariosWhereIPlaySmallerThanTheLastOnFirstRow()
+	{
+		let myCard = this._hand.smallestCardInRange(this.tableAtStartOfThisRound.smallerThanLastCardOnFirstRowRange());
+
+		if (myCard == undefined)
+			return;
+
+		// we need to calculate these two variables
+		let pIllHaveToChooseRow;
+		let nCowsIdTakeIfIHaveToChooseRow; // nCows in row with least cows (row id choose to take)
+
+		pIllHaveToChooseRow = this.calculatePIllHaveToChooseRow(myCard);
+		nCowsIdTakeIfIHaveToChooseRow = this.tableAtStartOfThisRound.minNumberOfCowsInARow();
+
+		this._scenariosForThisRound.push({
+			cardToPlay: myCard,
+			pIllHaveToChooseRow: pIllHaveToChooseRow,
+			nCowsIdTakeIfIHaveToChooseRow: nCowsIdTakeIfIHaveToChooseRow,
+			expectedNumCows: pIllHaveToChooseRow*nCowsIdTakeIfIHaveToChooseRow
+		});
+	}
+
+	calculatePIllHaveToChooseRow(cardPlayed)
+	{
+		let pSomeonePlaysSomethingSmaller;
+
+		let listOfSmallerCards = [];
+		for (let c = 1; c < cardPlayed; c++)
+			listOfSmallerCards.push(c);
+
+		// remove from listOfSmallerCards any card that has already been played.
+		// i.e. any cards that i know no other player can play
+		let listOfSmallerCardsThatCouldBePlayedThisRound =
+			listOfSmallerCards.filter( function(card) {
+				return !this._setOfCardsIveSeenAlready.has(card);
+			}.bind(this));
+		
+		let nPlayersOtherThanMe = this._totalNumberOfPlayersInGameImInIncludingMyself - 1;
+		let max_n_PlayersWhoCanHaveASmallerCard = 
+			Math.min(listOfSmallerCardsThatCouldBePlayedThisRound.length,
+				nPlayersOtherThanMe );
+		
+		// in order for someone to play something smaller, between 1 and nPlayersOtherThanMe need to have a smallerCard
+		// in any case at least one needs to play that smaller card
+
+		pSomeonePlaysSomethingSmaller = 0;
+
+		// nPWHSC is the number of players who have a smaller card
+		for (let nPWHSC = 1;
+			nPWHSC <= max_n_PlayersWhoCanHaveASmallerCard;
+			nPWHSC++)
+		{
+			// calculate the probability that exactly nPWHKK players have a card that would go before mine.
+			let p_nPWHSC_playersHaveSmallerCard = this._probabilityCalculator.calc_p_H_playersHaveSpecialCard(
+				104 - this._setOfCardsIveSeenAlready.size,
+				listOfSmallerCardsThatCouldBePlayedThisRound.length,
+				this._hand.Size,
+				nPlayersOtherThanMe,
+				nPWHSC
+			);
+
+			// calculate the probability that at least 1 player
+			// out of the nPWHSC who have a smaller card play the smaller card that they have
+
+			let pAGivenPlayerPlaysTheCard = 0.1;
+			let pNoOnePlaysCard = Math.pow(1-pAGivenPlayerPlaysTheCard, nPWHSC);
+			let p_atLeastOnePlaysCard = 1 - pNoOnePlaysCard;
+
+			// a is the probability that nPWHSC players have smaller card card, and at least one plays it
+			let a = p_nPWHSC_playersHaveSmallerCard*p_atLeastOnePlaysCard;
+
+			pSomeonePlaysSomethingSmaller += a;
+		}
+
+		let pIllHaveToChooseRow = 1 - pSomeonePlaysSomethingSmaller;
+
+		return pIllHaveToChooseRow;
+		
 	}
 
 	calculateScenariosWhereITryToPlaceACardOnARowBeforeThe6th()
@@ -202,13 +287,13 @@ module.exports = class ArtificialPlayer extends Player
 
 		pMyCardWillBeThe6th = 0;
 
-		// i is the number of players who have a killer card
+		// nPWHKK is the number of players who have a killer card
 		for (let nPWHKK = nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th;
 			nPWHKK <= max_n_PlayersWhoCanHaveAKillerCard;
 			nPWHKK++)
 		{
 			// calculate the probability that exactly nPWHKK players have a card that would go before mine.
-			let p_nPWHLL_playersHaveKillerCard = this._probabilityCalculator.calc_p_H_playersHaveKillerCard(
+			let p_nPWHKK_playersHaveKillerCard = this._probabilityCalculator.calc_p_H_playersHaveSpecialCard(
 				104 - this._setOfCardsIveSeenAlready.size,
 				nKillerCardsThtCouldBePlayedThisRound,
 				this._hand.Size,
@@ -230,7 +315,7 @@ module.exports = class ArtificialPlayer extends Player
 
 			// a is the probability that nPWHKK players have killer card, and exactly nCardsThatWouldHaveToBePlacedBeforeMineToMakeMineThe6th
 			// play it
-			let a = p_nPWHLL_playersHaveKillerCard*p_exactly_necessaryPlayersToMakeMine6thPlayTheirKillerCard;
+			let a = p_nPWHKK_playersHaveKillerCard*p_exactly_necessaryPlayersToMakeMine6thPlayTheirKillerCard;
 
 			pMyCardWillBeThe6th += a;
 		}

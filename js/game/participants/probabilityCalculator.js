@@ -4,9 +4,9 @@ module.exports = class ProbabilityCalculator
 {
 	constructor(){}
 
-	calc_p_H_playersHaveKillerCard(
+	calc_p_H_playersHaveSpecialCard(
 		nCardsWhichIHaveNotSeen, // this includes all the cards that were not used for this iteration. (eg if there are only 2 players, each is delt 10, 4 are placed on the table, so only 24/104 cards are used)
-		nCardsWhichWouldGoOnThisRowBeforeMine,
+		nSpecialCards,
 		nCardsLeftInEachPlayersHand,
 		nPlayersOtherThanMe,
 		h
@@ -18,17 +18,17 @@ module.exports = class ProbabilityCalculator
 
 		/*
 		The problem we are trying to solve is this:
-		What is the probability that exactly H players have a killer card.
+		What is the probability that exactly H players have a special card.
 		We know:
 			- the number of cards out there we havent seen
-			- how many of those are killer cards (would go on this row before mine)
+			- how many of those are special cards (would go on this row before mine)
 			- how many cards each player has in their hand
 			- number of players other than me
 
 		It is easier to think of this problem as a problem of balls in a bag.
 		Suppose these are the input numbers:
 			- the number of cards out there we havent seen (50)
-			- how many of those are killer cards (would go on this row before mine) (5)
+			- how many of those are special cards (would go on this row before mine) (5)
 			- how many cards each player has in their hand (6)
 			- number of players other than me (4)
 			- H (3)
@@ -40,7 +40,7 @@ module.exports = class ProbabilityCalculator
 		*/
 
 		this._nBallsInBag = nCardsWhichIHaveNotSeen;
-		this._nRedBallsInBag = nCardsWhichWouldGoOnThisRowBeforeMine;
+		this._nRedBallsInBag = nSpecialCards;
 		this._nBlueBallsInBag = this._nBallsInBag - this._nRedBallsInBag;
 		this._nBallsPerBin = nCardsLeftInEachPlayersHand;
 		this._nBins = nPlayersOtherThanMe;
@@ -49,7 +49,7 @@ module.exports = class ProbabilityCalculator
 		
 		this._total_n_waysToFillBins = this.calc_total_nWaysToFillBins();
 		
-		this._p_H_playersHaveKillerCard = 0;
+		this._p_H_playersHaveSpecialCard = 0;
 		
 		this._max_n_redsABinCanHave = Math.min(this._nRedBallsInBag - this._nBinsWithAtLeastOneRed + 1, this._nBallsPerBin);
 		this._lastDepth = this._nBins;
@@ -59,7 +59,7 @@ module.exports = class ProbabilityCalculator
 		
 		this.recursiveHelper( 1, [], 0);
 		
-		return Math.min(this._p_H_playersHaveKillerCard, 1);
+		return Math.min(this._p_H_playersHaveSpecialCard, 1);
 	}
 
 	/*
@@ -124,7 +124,7 @@ module.exports = class ProbabilityCalculator
 						nDistinctPermutationsOfNewSequence = nDistinctPermutationsOfNewSequence/factorial(nOccurrencesOfValInNewSequence);
 					});
 					
-					this._p_H_playersHaveKillerCard += (pBinsAreFilledAccordingToNewSequence * nDistinctPermutationsOfNewSequence);
+					this._p_H_playersHaveSpecialCard += (pBinsAreFilledAccordingToNewSequence * nDistinctPermutationsOfNewSequence);
 					//console.log(newSequence);
 					//console.log(pBinsAreFilledAccordingToNewSequence);
 				}
