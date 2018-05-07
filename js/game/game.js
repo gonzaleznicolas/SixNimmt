@@ -253,7 +253,7 @@ module.exports = class Game extends EventEmitter
 			if (humanPlayerToReplace.State == PlayerStates.RoundAnimationInProgress_ExpectedToSendRowToTake)
 			{
 				//console.log(`${humanPlayerToReplace.Name} was supposed to pick a row to take but quit, so ${artificialPlayerReplacement.Name} will pick a row`);
-				artificialPlayerReplacement.chooseARowToTake();
+				artificialPlayerReplacement.chooseARowToTake(this._table.Table);
 			}
 			else
 			{
@@ -337,19 +337,24 @@ module.exports = class Game extends EventEmitter
 		this._spectators.forEach( function (s) {
 			s.removeAllListeners();
 		});
-		
-		delete this._deck;
-		delete this._upcomingCards;
-		delete this._scoreboard;
-		delete this._players;
-		delete this._spectators;
-		delete this._table;
-		delete this._roundProcessor;
-		delete this._state;
-		delete this._roundNumberOfCurrentIteration;
 
 		// tell the gameManager to remove this game
 		this.emit("gameEnded", this._gameCode);
+
+		// wait a bit before deleting all the resources to avoid some bugs where an artificial player was still using
+		// some resources
+		setTimeout(function(){
+			console.log("deleting all the resources of game "+this._gameCode);
+			delete this._deck;
+			delete this._upcomingCards;
+			delete this._scoreboard;
+			delete this._players;
+			delete this._spectators;
+			delete this._table;
+			delete this._roundProcessor;
+			delete this._state;
+			delete this._roundNumberOfCurrentIteration;
+		}.bind(this), 10*1000);
 	}
 
 	logGame()
