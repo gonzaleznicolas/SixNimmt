@@ -117,6 +117,8 @@ module.exports = class ArtificialPlayer extends Player
 				myCardForRowI = this._hand.smallestCardInRange(this.tableAtStartOfThisRound.rowRange(rowI));
 			else
 			{
+				if (this.tableAtStartOfThisRound.numberOfCardsInRow(rowI) < 5)
+					continue;
 				myCardForRowI = this._hand.largestCardInRange(this.tableAtStartOfThisRound.rowRange(rowI));
 				// if i also have the card immediately before this one, then i might as well play that smaller one. It
 				// has the same chance of everything, but it sets me up better for the next turn
