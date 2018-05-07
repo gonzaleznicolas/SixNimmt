@@ -35,7 +35,7 @@ module.exports = class ProbabilityCalculator
 		
 		this.recursiveHelper( 1, [], 0);
 		
-		return this._p_H_playersHaveKillerCard;
+		return Math.min(this._p_H_playersHaveKillerCard, 1);
 	}
 
 	recursiveHelper(currentDepth, sequence, nRedInPreviousBin)
