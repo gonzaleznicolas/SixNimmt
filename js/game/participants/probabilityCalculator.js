@@ -33,12 +33,12 @@ module.exports = class ProbabilityCalculator
 		this._nRedBins = this._nBinsWithAtLeastOneRed;
 		this._totalRedAvailable = this._nRedBallsInBag;
 		
-		this.recursiveHelper( 1, []);
+		this.recursiveHelper( 1, [], 0);
 		
 		return this._p_H_playersHaveKillerCard;
 	}
 
-	recursiveHelper(currentDepth, sequence)
+	recursiveHelper(currentDepth, sequence, nRedInPreviousBin)
 	{
 		// "this one" is a bin
 		// remaining means after this one
@@ -50,7 +50,7 @@ module.exports = class ProbabilityCalculator
 		let nRedBinsSoFar = sequence.filter( n => n > 0).length;
 		let sequenceSumSoFar = this.sequenceSum(sequence);
 		
-		for (let nRedForThisBin = 0; nRedForThisBin <= this._max_n_redsABinCanHave; nRedForThisBin++)
+		for (let nRedForThisBin = nRedInPreviousBin; nRedForThisBin <= this._max_n_redsABinCanHave; nRedForThisBin++)
 		{
 			let thisOneIsRed = false;
 			let thisOneIsBlue = false;
@@ -82,12 +82,20 @@ module.exports = class ProbabilityCalculator
 				if (this.thereAreEnoughRedAndBlueBallsForSequence(newSequence))
 				{
 					let pBinsAreFilledAccordingToNewSequence = this.calc_nWaysToFillBinsAccordingToSequence(newSequence) / this._total_n_waysToFillBins;
-					this._p_H_playersHaveKillerCard += pBinsAreFilledAccordingToNewSequence;
+					let nDistinctPermutationsOfNewSequence = factorial(newSequence.length);
+					let distinctValuesInNewSequence = removeDuplicatesFromSortedArray(newSequence);
+					distinctValuesInNewSequence.forEach( function (val){
+						let nOccurrencesOfValInNewSequence = countOccurencesInArray(newSequence, val);
+						nDistinctPermutationsOfNewSequence = nDistinctPermutationsOfNewSequence/factorial(nOccurrencesOfValInNewSequence);
+					});
+					
+					this._p_H_playersHaveKillerCard += (pBinsAreFilledAccordingToNewSequence * nDistinctPermutationsOfNewSequence);
 					//console.log(newSequence);
+					//console.log(pBinsAreFilledAccordingToNewSequence);
 				}
 			}
 			else
-				this.recursiveHelper(currentDepth + 1, newSequence);
+				this.recursiveHelper(currentDepth + 1, newSequence, nRedForThisBin);
 		}
 	}
 
@@ -180,4 +188,31 @@ function C(n, r)
 	if (n < r)
 		throw "Error: It is not the case that n >= r >= 0";
 	return Math.round(factorial(n)/(factorial(r)*factorial(n-r)));
+}
+
+// does not modify array passed in, returns a new array
+function removeDuplicatesFromSortedArray(original)
+{
+	let copy = original.slice();
+	let i = 0;
+	while (i < copy.length)
+	{
+		if (copy[i+1] == copy[i])
+			copy.splice(i, 1);
+		else
+			i++;
+	}
+	
+	return copy;
+}
+
+function countOccurencesInArray(array, element)
+{
+	let count = 0;
+	array.forEach( (e) => {
+		if (e == element)
+			count++;
+	});
+	
+	return count;
 }
