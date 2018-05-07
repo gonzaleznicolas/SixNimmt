@@ -1,1 +1,1 @@
-SixNimmt
+This game is live at www.nimmt.ca
