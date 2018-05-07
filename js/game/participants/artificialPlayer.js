@@ -78,6 +78,9 @@ module.exports = class ArtificialPlayer extends Player
 		let bestCardToPlay = Math.min.apply(null , Array.from(this._hand.Set));
 		if (!this._scenariosForThisRound || this._scenariosForThisRound.length < 1)
 			return bestCardToPlay;
+		 
+		if (bestCardToPlay < 7 &&  this.tableAtStartOfThisRound.minNumberOfCowsInARow() == 1)
+			return bestCardToPlay; // get rid of small cards when there is a small row to take
 		
 		this._scenariosForThisRound.sort( function(a,b){
 			if (a.expectedNumCows != b.expectedNumCows)
