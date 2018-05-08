@@ -122,7 +122,7 @@ function onClientSpectateGame(data)
 	if (StringFunctions.isPossibleCode(data.gameCode))
 	{
 		gc = parseInt(data.gameCode);
-		if (gameManager.gameExists(gc))
+		if (gameManager.gameExists(gc) && gameManager.getGame(gc).Open)
 		{
 			gameManager.getGame(gc).addSpectator(this);
 			codeValid = true;
