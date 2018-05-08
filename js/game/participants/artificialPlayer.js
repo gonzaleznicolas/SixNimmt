@@ -40,9 +40,7 @@ module.exports = class ArtificialPlayer extends Player
 				if (cardsInRow[i].nCards < cardsInRow[index].nCards)
 					index = i;
 			}
-			let rowWithFewestCowsForWhichIHaveTheFewestCards = cardsInRow[index].rowI;
-
-			rowToTakeIndex = rowsWithFewestCows[rowWithFewestCowsForWhichIHaveTheFewestCards];
+			rowToTakeIndex = cardsInRow[index].rowI;
 
 			console.log(rowToTakeIndex);
 
