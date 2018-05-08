@@ -42,7 +42,8 @@ class GameController {
 		socket.on("serverGameOverTheseAreTheWinners", this.onServerGameOverTheseAreTheWinners.bind(this));
 		socket.on("serverKickClientOut", this.onServerKickClientOut.bind(this));
 
-		dialog.set(initialInstructionsStr, okStr, function(){});
+		if (!bSpectatorMode)
+			dialog.set(initialInstructionsStr, okStr, function(){});
 	}
 
 	// FUNCTIONS CALLED WITHING THE GAME CONTROLLER
