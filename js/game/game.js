@@ -344,7 +344,7 @@ module.exports = class Game extends EventEmitter
 		// wait a bit before deleting all the resources to avoid some bugs where an artificial player was still using
 		// some resources
 		setTimeout(function(){
-			console.log("deleting all the resources of game "+this._gameCode);
+			console.log("free the memory used by the objects of game "+this._gameCode);
 			delete this._deck;
 			delete this._upcomingCards;
 			delete this._scoreboard;
