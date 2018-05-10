@@ -163,12 +163,12 @@ function translateToSpanish()
 
 	thisGameHasBeenTerminatedStr = "Este juego ha sido terminado por ";
 
-	selectARowStr = "Elija una fila para llevarse";
+	selectARowStr = "Elige una fila para llevarte";
 	selectRowStr = "elegir fila";
 	waitingForStr = "Esperando a que";
 	toPickARowStr = "elija una fila";
 
-	selectedRowStr = "elijio la fila";
+	selectedRowStr = "eligió la fila";
 
 	selectACardToPlayStr = "Por favor elige una carta";
 
@@ -189,5 +189,5 @@ function translateToSpanish()
 
 	youGotKickedOutStr = "Te demoraste demasiado en responder y te han sacado del juego.";
 
-	initialInstructionsStr = "Durante el juego, por favor no minimizes esta ventana o abras otras ventanas. Puedes perder conección al servidor";
+	initialInstructionsStr = "Durante el juego, por favor no minimizes esta ventana o abras otras ventanas. Puedes perder conexión al servidor";
 }
