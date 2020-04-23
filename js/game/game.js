@@ -369,22 +369,22 @@ module.exports = class Game extends EventEmitter
 		this._pool.getConnection( function(err, con) {
 			if (err){
 				console.log("An error occured connectin to the database.");
-				console.log(error);
+				console.log(err);
 			}
 
 			con.query("CREATE TABLE IF NOT EXISTS `games_played` (`id` int(11) NOT NULL AUTO_INCREMENT, `date` datetime DEFAULT NULL, `code` int(11) DEFAULT NULL, `player_list` varchar(100) DEFAULT NULL, PRIMARY KEY (`id`))",
 				function(err){
 					if (err){
 						console.log("An error occured creating the table games_played.");
-						console.log(error);
+						console.log(err);
 					}
 
 					con.query("INSERT INTO games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
 						[new Date(), this._gameCode, Array.from(this._players.keys()).toString()],
 						function (err) {
-							if (error){
+							if (err){
 								console.log("An error occured logging the game to the database.");
-								console.log(error);
+								console.log(err);
 							}
 							else
 								console.log(`Successfully logged game ${this._gameCode} to the database.`);
