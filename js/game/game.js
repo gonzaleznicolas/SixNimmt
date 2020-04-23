@@ -369,7 +369,7 @@ module.exports = class Game extends EventEmitter
 
 		connection.connect();
 
-		connection.query( "CREATE TABLE IF NOT EXISTS `games_played` (`id` int(11) NOT NULL AUTO_INCREMENT, `date` datetime DEFAULT NULL, `code` int(11) DEFAULT NULL, `player_list` varchar(100) DEFAULT NULL, PRIMARY KEY (`id`)",
+		connection.query( "CREATE TABLE IF NOT EXISTS `games_played` (`id` int(11) NOT NULL AUTO_INCREMENT, `date` datetime DEFAULT NULL, `code` int(11) DEFAULT NULL, `player_list` varchar(100) DEFAULT NULL, PRIMARY KEY (`id`))",
 			function(error){
 				if (error){
 					console.log("An error occured creating the table games_played.");
