@@ -28,6 +28,12 @@ module.exports = class Game extends EventEmitter
 	constructor(gameCode, firstPlayerName, firstPlayerSocket)
 	{
 		super();
+		this._pool = {
+			host: process.env.DB_HOST,
+			database: process.env.DATABASE,
+			user: process.env.DB_USER,
+			password: process.env.DB_PASSWORD
+		}
 		this._state = GameStates.WaitForPlayers;
 		this._gameCode = gameCode;
 		this._open = true;
@@ -360,38 +366,36 @@ module.exports = class Game extends EventEmitter
 
 	logGame()
 	{
-		let connection = mysql.createConnection({
-			user: process.env.DB_USER,
-			password: process.env.DB_PASSWORD,
-			database: process.env.DATABASE,
-			host: process.env.DB_HOST
-		});
+		this._pool.getConnection( function(err, con) {
+			if (err){
+				console.log("An error occured connectin to the database.");
+				console.log(error);
+			}
 
-		connection.connect();
-
-		connection.query( "CREATE TABLE IF NOT EXISTS `games_played` (`id` int(11) NOT NULL AUTO_INCREMENT, `date` datetime DEFAULT NULL, `code` int(11) DEFAULT NULL, `player_list` varchar(100) DEFAULT NULL, PRIMARY KEY (`id`))",
-			function(error){
-				if (error){
-					console.log("An error occured creating the table games_played.");
-					console.log(error);
-				}
-
-				connection.query({
-					sql: "INSERT INTO games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
-					values: [new Date(), this._gameCode, Array.from(this._players.keys()).toString()]
-				}, function (error) {
-					if (error){
-						console.log("An error occured logging the game to the database.");
+			con.query("CREATE TABLE IF NOT EXISTS `games_played` (`id` int(11) NOT NULL AUTO_INCREMENT, `date` datetime DEFAULT NULL, `code` int(11) DEFAULT NULL, `player_list` varchar(100) DEFAULT NULL, PRIMARY KEY (`id`))",
+				function(err){
+					if (err){
+						console.log("An error occured creating the table games_played.");
 						console.log(error);
 					}
-					else
-						console.log(`Successfully logged game ${this._gameCode} to the database.`);
-				}.bind(this));
 
+					con.query("INSERT INTO games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
+						[new Date(), this._gameCode, Array.from(this._players.keys()).toString()],
+						function (err) {
+							if (error){
+								console.log("An error occured logging the game to the database.");
+								console.log(error);
+							}
+							else
+								console.log(`Successfully logged game ${this._gameCode} to the database.`);
+							
+							con.release();
+						}.bind(this)
+					);
+				}.bind(this)
+			);
 
-			}.bind(this));
-
-		connection.end();
+		}.bind(this));
 	}
 
 	startGame()
