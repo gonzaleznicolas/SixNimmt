@@ -361,16 +361,16 @@ module.exports = class Game extends EventEmitter
 	logGame()
 	{
 		let connection = mysql.createConnection({
-			user: "",
-			password: "",
-			database: "",
-			host: ""
+			user: process.env.DB_USER,
+			password: process.env.DB_PASSWORD,
+			database: process.env.DATABASE,
+			host: process.env.DB_HOST
 		});
 
 		connection.connect();
 
 		connection.query({
-				sql: "INSERT INTO six-nimmt.games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
+				sql: "INSERT INTO games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
 				values: [new Date(), this._gameCode, Array.from(this._players.keys()).toString()]
 			}, function (error) {
 				if (error){
