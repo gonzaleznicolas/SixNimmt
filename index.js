@@ -12,7 +12,9 @@ app.get('/', function(req, res){
 	res.sendFile( __dirname + "/index.html" );
 });
 
-http.listen(80, function() {
-	console.log("Listening on port 80.");
+// Listen to the App Engine-specified port, or 8080 otherwise
+const PORT = 5000;
+http.listen(PORT, function() {
+	console.log(`Server listening on port ${PORT}...`);
 });
 

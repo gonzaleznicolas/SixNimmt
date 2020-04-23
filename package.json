@@ -19,6 +19,7 @@
   "homepage": "https://github.com/gonzaleznicolas/SixNimmt#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "mysql": "^2.18.1",
     "socket.io": "^2.1.0"
   }
 }

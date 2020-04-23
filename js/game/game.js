@@ -1,5 +1,6 @@
 'use strict';
 
+const mysql = require('mysql');
 const Player = require('./participants/player.js');
 const ArtificialPlayer = require('./participants/artificialPlayer.js');
 const HumanPlayer = require('./participants/humanPlayer.js');
@@ -359,18 +360,28 @@ module.exports = class Game extends EventEmitter
 
 	logGame()
 	{
-		let currentdate = new Date();
-		let strToLog = currentdate.getDate() + "/" +
-			(currentdate.getMonth()+1)  + "/" +
-			currentdate.getFullYear() + " @ " +
-			currentdate.getHours() + ":" +
-			currentdate.getMinutes() + ":" +
-			currentdate.getSeconds() +
-			"    " +
-			"game code: " + this._gameCode +
-			"  player list: " + Array.from(this._players.keys()).toString() +
-			"\n";
-		fs.appendFile('gameLog.txt', strToLog , 'utf8', function(err) {});
+		let connection = mysql.createConnection({
+			user: "",
+			password: "",
+			database: "",
+			host: ""
+		});
+
+		connection.connect();
+
+		connection.query({
+				sql: "INSERT INTO six_nimmt_db.games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
+				values: [new Date(), this._gameCode, Array.from(this._players.keys()).toString()]
+			}, function (error) {
+				if (error){
+					console.log("An error occured logging the game to the database.");
+					console.log(error);
+				}
+				else
+					console.log(`Successfully logged game ${this._gameCode} to the database.`);
+		}.bind(this));
+
+		connection.end();
 	}
 
 	startGame()
