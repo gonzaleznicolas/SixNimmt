@@ -370,7 +370,7 @@ module.exports = class Game extends EventEmitter
 		connection.connect();
 
 		connection.query({
-				sql: "INSERT INTO six_nimmt_db.games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
+				sql: "INSERT INTO six-nimmt.games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
 				values: [new Date(), this._gameCode, Array.from(this._players.keys()).toString()]
 			}, function (error) {
 				if (error){
