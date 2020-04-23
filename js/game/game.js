@@ -28,12 +28,12 @@ module.exports = class Game extends EventEmitter
 	constructor(gameCode, firstPlayerName, firstPlayerSocket)
 	{
 		super();
-		this._pool = {
+		this._pool = mysql.createPool({
 			host: process.env.DB_HOST,
 			database: process.env.DATABASE,
 			user: process.env.DB_USER,
 			password: process.env.DB_PASSWORD
-		}
+		});
 		this._state = GameStates.WaitForPlayers;
 		this._gameCode = gameCode;
 		this._open = true;
