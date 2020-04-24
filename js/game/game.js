@@ -29,10 +29,10 @@ module.exports = class Game extends EventEmitter
 	{
 		super();
 		this._pool = mysql.createPool({
-			host: process.env.DB_HOST,
-			database: process.env.DATABASE,
-			user: process.env.DB_USER,
-			password: process.env.DB_PASSWORD
+			host: process.env.NIMMT_DB_HOST,
+			database: process.env.NIMMT_DB_NAME,
+			user: process.env.NIMMT_DB_USER,
+			password: process.env.NIMMT_DB_PASSWORD
 		});
 		this._state = GameStates.WaitForPlayers;
 		this._gameCode = gameCode;
