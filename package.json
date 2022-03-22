@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/gonzaleznicolas/SixNimmt#readme",
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "express": "^4.16.3",
+    "dotenv": "^8.6.0",
+    "express": "^4.17.3",
     "mysql": "^2.18.1",
-    "socket.io": "^2.1.0"
+    "socket.io": "^2.4.1"
   }
 }

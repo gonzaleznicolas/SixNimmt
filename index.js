@@ -15,7 +15,7 @@ app.get('/', function(req, res){
 	res.sendFile( __dirname + "/index.html" );
 });
 
-// Listen to the App Engine-specified port, or 8080 otherwise
+// Listen to the App Engine-specified port, or 5000 otherwise
 const PORT = process.env.NIMMT_PORT || 5000;
 http.listen(PORT, function() {
 	console.log(`Server listening on port ${PORT}...`);
