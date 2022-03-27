@@ -28,12 +28,12 @@ module.exports = class Game extends EventEmitter
 	constructor(gameCode, firstPlayerName, firstPlayerSocket)
 	{
 		super();
-		this._pool = undefined; /* mysql.createPool({
+		this._pool = mysql.createPool({
 			host: process.env.NIMMT_DB_HOST,
 			database: process.env.NIMMT_DB_NAME,
 			user: process.env.NIMMT_DB_USER,
 			password: process.env.NIMMT_DB_PASSWORD
-		}); */
+		});
 		this._state = GameStates.WaitForPlayers;
 		this._gameCode = gameCode;
 		this._open = true;
@@ -400,7 +400,7 @@ module.exports = class Game extends EventEmitter
 
 	startGame()
 	{
-		// this.logGame();
+		this.logGame();
 		this._open = false;
 		this._scoreboard.initScoreboardWithThesePlayers(Array.from(this._players.keys()));
 		this._state = GameStates.WaitForAllPlayersToChooseTheirCard;
