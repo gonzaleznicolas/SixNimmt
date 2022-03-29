@@ -33,6 +33,7 @@ function initStrings()
 	// home
 	$('#howToPlay')[0].innerHTML = "How to Play";
 	$('#about')[0].innerHTML = "About";
+	$('#gameLog')[0].innerHTML = "Game Log";
 
 	$('#newGame')[0].innerHTML = "New Game";
 	$('#vsAI')[0].innerHTML = "1v1 vs Computer";
