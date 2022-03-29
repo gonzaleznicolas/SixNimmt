@@ -1,7 +1,5 @@
 "use strict";
 
-let bSpanish = false;
-
 // strings
 let areYouSureYouWantToLeaveStr;
 let leaveStr;
@@ -30,15 +28,11 @@ let gameOverHeaderStr;
 let youGotKickedOutStr;
 let initialInstructionsStr;
 
-function translateToEnglish()
-{
-	bSpanish = false;
-	
+function initStrings()
+{	
 	// home
 	$('#howToPlay')[0].innerHTML = "How to Play";
-	$('#howToPlay').attr("href", "howToPlayEn.html");
 	$('#about')[0].innerHTML = "About";
-	$('#about').attr("href", "aboutEn.html");
 
 	$('#newGame')[0].innerHTML = "New Game";
 	$('#vsAI')[0].innerHTML = "1v1 vs Computer";
@@ -109,85 +103,4 @@ function translateToEnglish()
 	youGotKickedOutStr = "You took too long to respond and have been kicked out of the game.";
 
 	initialInstructionsStr = "For the duration of this game, please do not minimize this tab or switch to other tabs. You may lose connection to the server and be kicked out of the game.";
-}
-
-function translateToSpanish()
-{
-	bSpanish = true;
-	
-	// home
-	$('#howToPlay')[0].innerHTML = "Cómo Jugar";
-	$('#howToPlay').attr("href", "howToPlayEs.html");
-	$('#about')[0].innerHTML = "Acerca De...";
-	$('#about').attr("href", "aboutEs.html");
-
-	$('#newGame')[0].innerHTML = "Iniciar juego nuevo";
-	$('#vsAI')[0].innerHTML = "Jugar contra computador";
-	$('#joinGame')[0].innerHTML = "Unirse a juego";
-	$('#spectateGame')[0].innerHTML = "Ver juego";
-
-	$('#nickNamePrompt')[0].innerHTML = "Tu apodo:";
-	$('#codePrompt')[0].innerHTML = "Código del juego:";
-
-	$('#nickNameError')[0].innerHTML = "Ese apodo no esta disponible o es invalido.<br>Elige un apodo alfanumerico con 1-6 caracteres.";
-	$('#codeError')[0].innerHTML = "Ese codigo no corresponde a un juego activo.";
-
-	$('#nickNameTextBox').attr("placeholder", "max 6 caracteres");
-	$('#codeTextBox').attr("placeholder", "codigo de 4 digitos");
-	$('#submitButton')[0].innerHTML = "Enviar";
-	
-	// wait
-	$('#theCodeIs')[0].innerHTML = "El código del juego es";
-	$('#playerAllowance')[0].innerHTML = "2-10 jugadores permitidos";
-	$('#endGameBtn')[0].innerHTML = "Terminar juego";
-	$('#quitGameBtn')[0].innerHTML = "Salir";
-	$('#startGameBtn')[0].innerHTML = "Comenzar con estos jugadores";
-	$("#needMorePlayers")[0].innerHTML = "Se necesitan más jugadores";
-	$('#addAIBtn')[0].innerHTML = "Agregar jugador artificial";
-	
-	// game
-	$('#playCardButton')[0].innerHTML = "Poner Carta";
-	$('#selectCardMessage')[0].innerHTML = "Por favor elige una carta";
-	$('#notTimeToPlayCardMessage')[0].innerHTML = "No es hora de elegir una carta";
-
-	// menu
-	$('#quitMenuOption')[0].innerHTML = "Terminar Juego";
-
-	areYouSureYouWantToLeaveStr = "Seguro que quires salir?";
-	leaveStr = "Salirme";
-	stayStr = "Quedarme";
-
-	areYouSureYouWantToEndGameStr = "Seguro que quieres terminar este juego para todos los conectados?";
-	endGameStr = "Terminar juego";
-	cancelStr = "Cancelar";
-
-	thisGameHasBeenTerminatedStr = "Este juego ha sido terminado por ";
-
-	selectARowStr = "Elige una fila para llevarte";
-	selectRowStr = "elegir fila";
-	waitingForStr = "Esperando a que";
-	toPickARowStr = "elija una fila";
-
-	selectedRowStr = "eligió la fila";
-
-	selectACardToPlayStr = "Por favor elige una carta";
-
-	waitingForOthersToFinishDisplayingRoundStr = "Esperando a que todos terminen de mostrar la ronda";
-
-	doYouWantToRewatchRoundStr = 'Quieres repetir esta ronda? (tienes 10 segundos para responder)';
-	rewatchStr = 'Repetir';
-	continueStr = 'Continuar';
-
-	someoneWantedToRewatchStr = 'Alguien quizo repetir el turno';
-
-	dontShowDialogStr = "No me vuelvas a preguntar";
-
-	gameOverStr = "El juego ha terminado (alguien alcanzo 66 puntos)! ";
-	theWinnerIsStr = "El ganador es ";
-	theWinnersAreStr = "Los ganadores son ";
-	gameOverHeaderStr = "El juego ha terminado!";
-
-	youGotKickedOutStr = "Te demoraste demasiado en responder y te han sacado del juego.";
-
-	initialInstructionsStr = "Durante el juego, por favor no minimizes esta ventana o abras otras ventanas. Puedes perder conexión al servidor";
 }

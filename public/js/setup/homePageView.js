@@ -2,28 +2,12 @@
 
 function startHomePageUI(){
 	drawCow($("#homeCow")[0]);
-	$('#english')[0].addEventListener("click", onUKClicked, false);
-	$('#espanol')[0].addEventListener("click", onSpainClicked, false);
+	initStrings();
 	$('#newGame')[0].addEventListener("click", onNewGameClicked, false);
 	$('#vsAI')[0].addEventListener("click", onVsAIClicked, false);
 	$('#joinGame')[0].addEventListener("click", onJoinGameClicked, false);
 	$('#spectateGame')[0].addEventListener("click", onSpectateGameClicked, false);
 	$('#submitButton')[0].addEventListener("click", onSubmitFormClicked, false);
-}
-
-function onUKClicked() {
-	translateToEnglish();
-	languageClicked();
-}
-
-function onSpainClicked() {
-	translateToSpanish();
-	languageClicked();
-}
-
-function languageClicked() {
-	$('#howToPlayAndAboutSection').css("visibility", "visible");
-	$('#gameOptionsSection').css("visibility", "visible");
 }
 
 function onNewGameClicked() {
