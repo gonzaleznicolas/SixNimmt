@@ -360,14 +360,7 @@ module.exports = class Game extends EventEmitter
 	logGame()
 	{
 		const dbConnection = DbManager.getConnection();
-		dbConnection.connect(err => {
-			if (err) {
-				console.error(`Error connecting to db.`);
-				console.error(err);
-				return;
-			}
-			console.log("Connected to db.");
-		});
+		DbManager.connect(dbConnection);
 
 		dbConnection.query(
 			"INSERT INTO games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
@@ -382,14 +375,7 @@ module.exports = class Game extends EventEmitter
 			}
 		);
 
-		dbConnection.end(err => {
-			if (err) {
-				console.error("An error occured ending the database connection.");
-				console.error(err);
-				return;
-			}
-			console.log("Successfully closed database connection");
-		});
+		DbManager.end(dbConnection);
 	}
 
 	startGame()

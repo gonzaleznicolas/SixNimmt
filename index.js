@@ -4,9 +4,9 @@ let express = require('express');
 let app = express();
 let http = require('http').Server(app);
 const dotenv = require('dotenv');
+dotenv.config();
 require('./js/setupController.js')(require('socket.io')(http));
 
-dotenv.config();
 
 // allow files in public directory to be served as static files
 app.use(express.static('public'));

@@ -2,7 +2,9 @@
 
 let StringFunctions = require('./stringFunctions.js');
 let GameManager = require('./gameManager.js');
+const DbManager = require('./dbManager.js');
 
+createGamesPlayedTableIfNotExists();
 let io;
 let gameManager = new GameManager();
 
@@ -131,4 +133,24 @@ function onClientSpectateGame(data)
 	}
 
 	this.emit("serverSpectateGameFormResult", {codeValid: codeValid, gameCode: data.gameCode});
+}
+
+// DATABASE
+function createGamesPlayedTableIfNotExists() {
+	const dbConnection = DbManager.getConnection();
+	DbManager.connect(dbConnection);
+
+	dbConnection.query(
+		"CREATE TABLE IF NOT EXISTS `games_played` (`id` int(11) NOT NULL AUTO_INCREMENT, `date` datetime DEFAULT NULL, `code` int(11) DEFAULT NULL, `player_list` varchar(100) DEFAULT NULL, PRIMARY KEY (`id`))",
+		err => {
+			if (err){
+				console.error("An error occured creating the table games_played.");
+				console.error(err);
+				return;
+			}
+			console.log(`Successfully created (if not exists) the table games_played.`);
+		}
+	);
+
+	DbManager.end(dbConnection);
 }
