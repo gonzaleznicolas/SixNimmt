@@ -1,16 +1,29 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8"/>
-	<title>6 Nimmt!</title>
-	<link rel="icon" href="img/favicon.png">
-    <script>
-        console.log("hello");
-    </script>
-</head>
-<body>
-    <div>
-        Hi
-	</div>
-</body>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>6 Nimmt!</title>
+		<link rel="icon" href="img/favicon.png">
+		<link rel="stylesheet" type="text/css" href="libraries/gridjs/mermaid.min.css"/>
+		<script src="libraries/gridjs/gridjs.umd.js"></script>
+		<script src='libraries/jquery-3.6.0.js'></script>
+		<script>
+			$(function () {
+				new gridjs.Grid({
+					columns: ["Name", "Email", "Phone Number"],
+					data: [
+						["John", "johnf@example.com", "(353) 01 222 3333"],
+						["Mark", "mark@gmail.com", "(01) 22 888 4444"],
+						["Eoin", "eoin@gmail.com", "0097 22 654 00033"],
+						["Sarah", "sarahcdd@gmail.com", "+322 876 1233"],
+						["Afshin", "afshin@mail.com", "(353) 22 87 8356"]
+					]
+					}).render(document.getElementById("wrapper"));
+			});
+		</script>
+	</head>
+	<body>
+		<div id="wrapper"></div>
+		ho
+	</body>
 </html>
