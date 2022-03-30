@@ -1,6 +1,5 @@
 'use strict';
 
-const mysql = require('mysql');
 const Player = require('./participants/player.js');
 const ArtificialPlayer = require('./participants/artificialPlayer.js');
 const HumanPlayer = require('./participants/humanPlayer.js');
@@ -14,7 +13,7 @@ const Table = require('./table.js');
 const UpcomingCards = require('./upcomingCards.js');
 const RoundProcessor = require('./roundProcessor.js');
 const Scoreboard = require('./scoreboard.js');
-const fs = require('fs');
+const DbManager = require('../dbManager.js');
 
 /*************************************************************
  * A turn is one card being moved to its spot on the table
@@ -28,12 +27,6 @@ module.exports = class Game extends EventEmitter
 	constructor(gameCode, firstPlayerName, firstPlayerSocket)
 	{
 		super();
-		this._pool = mysql.createPool({
-			host: process.env.NIMMT_DB_HOST,
-			database: process.env.NIMMT_DB_NAME,
-			user: process.env.NIMMT_DB_USER,
-			password: process.env.NIMMT_DB_PASSWORD
-		});
 		this._state = GameStates.WaitForPlayers;
 		this._gameCode = gameCode;
 		this._open = true;
@@ -366,36 +359,37 @@ module.exports = class Game extends EventEmitter
 
 	logGame()
 	{
-		this._pool.getConnection( function(err, con) {
-			if (err){
-				console.log("An error occured connectin to the database.");
-				console.log(err);
+		const dbConnection = DbManager.getConnection();
+		dbConnection.connect(err => {
+			if (err) {
+				console.error(`Error connecting to db.`);
+				console.error(err);
+				return;
 			}
+			console.log("Connected to db.");
+		});
 
-			con.query("CREATE TABLE IF NOT EXISTS `games_played` (`id` int(11) NOT NULL AUTO_INCREMENT, `date` datetime DEFAULT NULL, `code` int(11) DEFAULT NULL, `player_list` varchar(100) DEFAULT NULL, PRIMARY KEY (`id`))",
-				function(err){
-					if (err){
-						console.log("An error occured creating the table games_played.");
-						console.log(err);
-					}
+		dbConnection.query(
+			"INSERT INTO games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
+			[new Date(), this._gameCode, Array.from(this._players.keys()).toString()],
+			err => {
+				if (err){
+					console.error("An error occured logging the game to the database.");
+					console.error(err);
+					return;
+				}
+				console.log(`Successfully logged game ${this._gameCode} to the database.`);
+			}
+		);
 
-					con.query("INSERT INTO games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
-						[new Date(), this._gameCode, Array.from(this._players.keys()).toString()],
-						function (err) {
-							if (err){
-								console.log("An error occured logging the game to the database.");
-								console.log(err);
-							}
-							else
-								console.log(`Successfully logged game ${this._gameCode} to the database.`);
-							
-							con.release();
-						}.bind(this)
-					);
-				}.bind(this)
-			);
-
-		}.bind(this));
+		dbConnection.end(err => {
+			if (err) {
+				console.error("An error occured ending the database connection.");
+				console.error(err);
+				return;
+			}
+			console.log("Successfully closed database connection");
+		});
 	}
 
 	startGame()
