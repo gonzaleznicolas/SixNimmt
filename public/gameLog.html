@@ -5,6 +5,10 @@
 		<title>6 Nimmt!</title>
 		<link rel="icon" href="img/favicon.png">
 		<link rel="stylesheet" type="text/css" href="libraries/gridjs/mermaid.min.css"/>
+		<link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet'>
+		<link href='https://fonts.googleapis.com/css?family=Boogaloo' rel='stylesheet'>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/secondaryPages.css"/>
 		<script src="libraries/gridjs/gridjs.umd.js"></script>
 		<script src='libraries/jquery-3.6.0.js'></script>
 		<script>
@@ -18,12 +22,15 @@
 						["Sarah", "sarahcdd@gmail.com", "+322 876 1233"],
 						["Afshin", "afshin@mail.com", "(353) 22 87 8356"]
 					]
-					}).render(document.getElementById("wrapper"));
+					}).render(document.getElementById("gridWrapper"));
 			});
 		</script>
 	</head>
 	<body>
-		<div id="wrapper"></div>
-		ho
+		<div id="contentWrapper">
+			<h1>6 Nimmt!</h1>
+			<h2>Game Log</h2>
+			<div id="gridWrapper"></div>
+		</div>
 	</body>
 </html>

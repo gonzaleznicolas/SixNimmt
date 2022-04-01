@@ -29,6 +29,7 @@ a{
 h1{
 	font-size: 8em;
 	margin: 10px 20px;
+	text-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 h2{
@@ -51,4 +52,8 @@ p, li{
 .centeredMedia{
 	display: block;
 	margin: auto;
+}
+
+#gridWrapper {
+	font-family: 'Boogaloo';
 }
