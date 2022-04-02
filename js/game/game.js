@@ -371,9 +371,9 @@ module.exports = class Game extends EventEmitter
 				if (err){
 					console.error("An error occured logging the game to the database.");
 					console.error(err);
-					return;
+				} else {
+					console.log(`Successfully logged game ${this._gameCode} to the database.`);
 				}
-				console.log(`Successfully logged game ${this._gameCode} to the database.`);
 			}
 		);
 

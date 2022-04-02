@@ -146,9 +146,9 @@ function createGamesPlayedTableIfNotExists() {
 			if (err){
 				console.error("An error occured creating the table games_played.");
 				console.error(err);
-				return;
+			} else {
+				console.log(`Successfully created (if not exists) the table games_played.`);
 			}
-			console.log(`Successfully created (if not exists) the table games_played.`);
 		}
 	);
 

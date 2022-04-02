@@ -18,9 +18,9 @@ module.exports = class DbManager
 			if (err) {
 				console.error(`Error connecting to db.`);
 				console.error(err);
-				return;
+			} else {
+				console.log("Successfully connected to db.");
 			}
-			console.log("Successfully connected to db.");
 		});
 	}
 
@@ -29,9 +29,9 @@ module.exports = class DbManager
 			if (err) {
 				console.error("An error occured ending the database connection.");
 				console.error(err);
-				return;
+			} else {
+				console.log("Successfully closed database connection.");
 			}
-			console.log("Successfully closed database connection.");
 		});
 	}
 }
