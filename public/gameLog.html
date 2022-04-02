@@ -6,26 +6,49 @@
 		<link rel="icon" href="img/favicon.png">
 
 		<!--FONTS-->
-		<link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet'>
-		<link href='https://fonts.googleapis.com/css?family=Boogaloo' rel='stylesheet'>
+		<link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Boogaloo" rel="stylesheet">
 
 		<!--LIBRARIES-->
 		<link rel="stylesheet" type="text/css" href="libraries/gridjs/mermaid.min.css"/>
 		<script src="libraries/gridjs/gridjs.umd.js"></script>
 
-		<script src='libraries/jquery-3.6.0.js'></script>
+		<script src="libraries/jquery-3.6.0.js"></script>
 
 		<!--STYLES-->
 		<link rel="stylesheet" type="text/css" href="css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/secondaryPages.css"/>
 
 		<!--JS-->
-		<script src="js/gameLog.js"></script>
+		<script>
+			const dateTimeFormat = new Intl.DateTimeFormat("en-US", {year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", timeZoneName: "short"});
+			$(function () {
+				new gridjs.Grid({
+					columns: ["Date", "Players"],
+  					fixedHeader: true,
+					height: "60vh",
+					width: "700px",
+					pagination: {
+					enabled: true,
+					limit: 20,
+					server: {
+						url: (prev, page, limit) => `${prev}?offset=${page * limit}&limit=${limit}`
+					}
+					},
+					server: {
+					url: "/gameLog",
+					then: data => data.results.map(game =>
+						[dateTimeFormat.format(new Date(`${game.date} UTC`)),
+						game.player_list]),
+					total: data => data.count
+					} 
+				}).render($("#gridWrapper")[0]);
+			});
+		</script>
 	</head>
 	<body>
 		<div id="contentWrapper">
 			<h1>6 Nimmt!</h1>
-			<h2>Game Log</h2>
 			<div id="gridWrapper"></div>
 		</div>
 	</body>
