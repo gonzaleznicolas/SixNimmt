@@ -362,9 +362,11 @@ module.exports = class Game extends EventEmitter
 		const dbConnection = DbManager.getConnection();
 		DbManager.connect(dbConnection);
 
+		const now = new Date();
+		const nowUtcDateTimeString = `${now.getUTCFullYear()}-${now.getUTCMonth()+1}-${now.getUTCDate()} ${now.getUTCHours()}:${now.getUTCMinutes()}`;
 		dbConnection.query(
-			"INSERT INTO games_played (`id`, `date`, `code`, `player_list`) VALUES (null, ?, ?, ?)",
-			[new Date(), this._gameCode, Array.from(this._players.keys()).toString()],
+			"INSERT INTO games_played (`date`, `code`, `player_list`) VALUES (?, ?, ?)",
+			[nowUtcDateTimeString, this._gameCode, Array.from(this._players.keys()).toString()],
 			err => {
 				if (err){
 					console.error("An error occured logging the game to the database.");

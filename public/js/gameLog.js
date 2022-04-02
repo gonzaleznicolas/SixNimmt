@@ -1,12 +1,8 @@
 $(function () {
 	new gridjs.Grid({
-		columns: ["Name", "Email", "Phone Number"],
+		columns: ["Date", "Players"],
 		data: [
-			["John", "johnf@example.com", "(353) 01 222 3333"],
-			["Mark", "mark@gmail.com", "(01) 22 888 4444"],
-			["Eoin", "eoin@gmail.com", "0097 22 654 00033"],
-			["Sarah", "sarahcdd@gmmail.com", "+322 876 1233"],
-			["Afshin", "afshin@mail.com", "(353) 22 87 8356"]
+			["1/3/4023 10:89 UTC", "Nico, Nata, Cata, Kelsey, Papa, Mama, jfjf, dfjdljdffffffffffffff, ffffffffffffffffffffff, ffffffffffhfffffffffffffffffff"]
 		]
 		}).render($("#gridWrapper")[0]);
 });
