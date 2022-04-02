@@ -24,10 +24,10 @@ app.get('/gameLog', function(req, res, next){
 		err.statusCode = 400;
 		next(err);
 	} else {
-		const dbConnection = DbManager.getConnection();
-		DbManager.connect(dbConnection);
+		const countConnection = DbManager.getConnection();
+		DbManager.connect(countConnection);
 		let count;
-		dbConnection.query("SELECT COUNT(id) as count FROM games_played;", (err, results) => {
+		countConnection.query("SELECT COUNT(id) as count FROM games_played;", (err, results) => {
 			if (err){
 				const msg = "An error occured fetching games_played count from the database.";
 				console.error(msg);
@@ -35,27 +35,30 @@ app.get('/gameLog', function(req, res, next){
 				next(new Error(msg));
 			} else {
 				count = results[0].count;
+				const rowsConnection = DbManager.getConnection();
+				DbManager.connect(rowsConnection);
+				rowsConnection.query(
+					`SELECT date, player_list FROM games_played ORDER BY date DESC LIMIT ?, ?;`,
+					[offset, limit],
+					(err, results) => {
+						if (err){
+							const msg = "An error occured fetching games played from the database.";
+							console.error(msg);
+							console.error(err);
+							next(new Error(msg));
+						} else {
+							console.log(`Successfully read game log with offset ${offset} and limit ${limit}`);
+							res.json({
+								count,
+								results
+							});
+						}
+					}
+				);
+				DbManager.end(rowsConnection);
 			}
 		});
-		dbConnection.query(
-			`SELECT date, player_list FROM games_played ORDER BY date DESC LIMIT ?, ?;`,
-			[offset, limit],
-			(err, results) => {
-				if (err){
-					const msg = "An error occured fetching games played from the database.";
-					console.error(msg);
-					console.error(err);
-					next(new Error(msg));
-				} else {
-					console.log(`Successfully read game log with offset ${offset} and limit ${limit}`);
-					res.json({
-						count,
-						results
-					});
-				}
-			}
-		);
-		DbManager.end(dbConnection);
+		DbManager.end(countConnection);
 	}
 });
 
