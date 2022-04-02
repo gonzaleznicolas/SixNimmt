@@ -26,6 +26,17 @@ app.get('/gameLog', function(req, res, next){
 	} else {
 		const dbConnection = DbManager.getConnection();
 		DbManager.connect(dbConnection);
+		let count;
+		dbConnection.query("SELECT COUNT(id) as count FROM games_played;", (err, results) => {
+			if (err){
+				const msg = "An error occured fetching games_played count from the database.";
+				console.error(msg);
+				console.error(err);
+				next(new Error(msg));
+			} else {
+				count = results[0].count;
+			}
+		});
 		dbConnection.query(
 			`SELECT date, player_list FROM games_played ORDER BY date DESC LIMIT ?, ?;`,
 			[offset, limit],
@@ -38,8 +49,8 @@ app.get('/gameLog', function(req, res, next){
 				} else {
 					console.log(`Successfully read game log with offset ${offset} and limit ${limit}`);
 					res.json({
-						count: 100,
-						results: results
+						count,
+						results
 					});
 				}
 			}
