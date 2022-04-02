@@ -4,27 +4,23 @@
 		<meta charset="utf-8"/>
 		<title>6 Nimmt!</title>
 		<link rel="icon" href="img/favicon.png">
-		<link rel="stylesheet" type="text/css" href="libraries/gridjs/mermaid.min.css"/>
+
+		<!--FONTS-->
 		<link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet'>
 		<link href='https://fonts.googleapis.com/css?family=Boogaloo' rel='stylesheet'>
+
+		<!--LIBRARIES-->
+		<link rel="stylesheet" type="text/css" href="libraries/gridjs/mermaid.min.css"/>
+		<script src="libraries/gridjs/gridjs.umd.js"></script>
+
+		<script src='libraries/jquery-3.6.0.js'></script>
+
+		<!--STYLES-->
 		<link rel="stylesheet" type="text/css" href="css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="css/secondaryPages.css"/>
-		<script src="libraries/gridjs/gridjs.umd.js"></script>
-		<script src='libraries/jquery-3.6.0.js'></script>
-		<script>
-			$(function () {
-				new gridjs.Grid({
-					columns: ["Name", "Email", "Phone Number"],
-					data: [
-						["John", "johnf@example.com", "(353) 01 222 3333"],
-						["Mark", "mark@gmail.com", "(01) 22 888 4444"],
-						["Eoin", "eoin@gmail.com", "0097 22 654 00033"],
-						["Sarah", "sarahcdd@gmail.com", "+322 876 1233"],
-						["Afshin", "afshin@mail.com", "(353) 22 87 8356"]
-					]
-					}).render(document.getElementById("gridWrapper"));
-			});
-		</script>
+
+		<!--JS-->
+		<script src="js/gameLog.js"></script>
 	</head>
 	<body>
 		<div id="contentWrapper">
