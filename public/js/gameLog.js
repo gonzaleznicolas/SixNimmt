@@ -8,5 +8,5 @@ $(function () {
 			["Sarah", "sarahcdd@gmmail.com", "+322 876 1233"],
 			["Afshin", "afshin@mail.com", "(353) 22 87 8356"]
 		]
-		}).render(document.getElementById("gridWrapper"));
+		}).render($("#gridWrapper")[0]);
 });
