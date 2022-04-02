@@ -18,8 +18,8 @@ app.get('/', function(req, res){
 
 app.get('/gameLog', function(req, res, next){
 	const offset = parseInt(req.query.offset);
-	const rowCount = parseInt(req.query.rowCount);
-	if (Number.isNaN(offset) || Number.isNaN(rowCount)) {
+	const limit = parseInt(req.query.limit);
+	if (Number.isNaN(offset) || Number.isNaN(limit)) {
 		const err = new Error("Bad parameters");
 		err.statusCode = 400;
 		next(err);
@@ -27,8 +27,8 @@ app.get('/gameLog', function(req, res, next){
 		const dbConnection = DbManager.getConnection();
 		DbManager.connect(dbConnection);
 		dbConnection.query(
-			`SELECT date, player_list FROM games_played LIMIT ?, ?`,
-			[offset, rowCount],
+			`SELECT date, player_list FROM games_played ORDER BY date DESC LIMIT ?, ?;`,
+			[offset, limit],
 			(err, results) => {
 				if (err){
 					const msg = "An error occured fetching games played from the database.";
@@ -36,8 +36,11 @@ app.get('/gameLog', function(req, res, next){
 					console.error(err);
 					next(new Error(msg));
 				} else {
-					console.log(`Successfully read game log with offset ${offset} and rowCount ${rowCount}`);
-					res.json(results);
+					console.log(`Successfully read game log with offset ${offset} and limit ${limit}`);
+					res.json({
+						count: 100,
+						results: results
+					});
 				}
 			}
 		);

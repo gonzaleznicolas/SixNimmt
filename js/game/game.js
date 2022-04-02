@@ -365,7 +365,7 @@ module.exports = class Game extends EventEmitter
 		const now = new Date();
 		const nowUtcDateTimeString = `${now.getUTCFullYear()}-${now.getUTCMonth()+1}-${now.getUTCDate()} ${now.getUTCHours()}:${now.getUTCMinutes()}`;
 		dbConnection.query(
-			"INSERT INTO games_played (`date`, `code`, `player_list`) VALUES (?, ?, ?)",
+			"INSERT INTO games_played (`date`, `code`, `player_list`) VALUES (?, ?, ?);",
 			[nowUtcDateTimeString, this._gameCode, Array.from(this._players.keys()).toString()],
 			err => {
 				if (err){
