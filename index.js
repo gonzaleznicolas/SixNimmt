@@ -16,7 +16,19 @@ app.get('/', function(req, res){
 	res.sendFile( __dirname + "/index.html" );
 });
 
-app.get('/gameLog', function(req, res, next){
+app.get('/about', function(req, res){
+	res.sendFile( __dirname + "/about.html" );
+});
+
+app.get('/howToPlay', function(req, res){
+	res.sendFile( __dirname + "/howToPlay.html" );
+});
+
+app.get('/gameLog', function(req, res){
+	res.sendFile( __dirname + "/gameLog.html" );
+});
+
+app.get('/gameLogPage', function(req, res, next){
 	const offset = parseInt(req.query.offset);
 	const limit = parseInt(req.query.limit);
 	if (Number.isNaN(offset) || Number.isNaN(limit)) {
