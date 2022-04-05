@@ -1,3 +1,5 @@
+"use strict";
+
 const dateTimeFormat = new Intl.DateTimeFormat("en-US", {year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", timeZoneName: "short"});
 $(function () {
 	new gridjs.Grid({
