@@ -359,25 +359,54 @@ module.exports = class Game extends EventEmitter
 
 	logGame()
 	{
-		const dbConnection = DbManager.getConnection();
-		DbManager.connect(dbConnection);
+		const gameConnection = DbManager.getConnection();
+		DbManager.connect(gameConnection);
 
 		const now = new Date();
 		const nowUtcDateTimeString = `${now.getUTCFullYear()}-${now.getUTCMonth()+1}-${now.getUTCDate()} ${now.getUTCHours()}:${now.getUTCMinutes()}`;
-		dbConnection.query(
-			"INSERT INTO games_played (`date`, `code`, `player_list`) VALUES (?, ?, ?);",
-			[nowUtcDateTimeString, this._gameCode, Array.from(this._players.keys()).toString()],
-			err => {
+		gameConnection.query(
+			"INSERT INTO `game` (`date`) VALUES (?);",
+			[nowUtcDateTimeString],
+			(err, results) => {
 				if (err){
 					console.error("An error occured logging the game to the database.");
 					console.error(err);
 				} else {
 					console.log(`Successfully logged game ${this._gameCode} to the database.`);
+					const playerConnection = DbManager.getConnection();
+					DbManager.connect(playerConnection);
+			
+					const playersToInsert = [];
+					this._players.forEach(player => {
+						if (player instanceof Player) {
+							let isBot = false;
+							if (player instanceof ArtificialPlayer) {
+								isBot = true;
+							}
+							playersToInsert.push([results.insertId, player.Name, isBot]);
+						}
+					});
+
+					playerConnection.query(
+						"INSERT INTO `player` (\`game_id\`, \`name\`, \`is_bot\`) VALUES ?;",
+						[playersToInsert],
+						(err, results) => {
+							if (err){
+								console.error(`An error occured logging the players of game ${this._gameCode} to the database.`);
+								console.error(err);
+							} else {
+								console.log(`Successfully logged the players of game ${this._gameCode} to the database.`);
+			
+							}
+						}
+					);
+			
+					DbManager.end(playerConnection);
 				}
 			}
 		);
 
-		DbManager.end(dbConnection);
+		DbManager.end(gameConnection);
 	}
 
 	startGame()

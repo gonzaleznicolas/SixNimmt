@@ -39,7 +39,7 @@ app.get('/gameLogPage', function(req, res, next){
 		const countConnection = DbManager.getConnection();
 		DbManager.connect(countConnection);
 		let count;
-		countConnection.query("SELECT COUNT(id) as count FROM games_played;", (err, results) => {
+		countConnection.query("SELECT COUNT(id) as count FROM game;", (err, results) => {
 			if (err){
 				const msg = "An error occured fetching games_played count from the database.";
 				console.error(msg);
