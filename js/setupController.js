@@ -141,13 +141,35 @@ function createGamesPlayedTableIfNotExists() {
 	DbManager.connect(dbConnection);
 
 	dbConnection.query(
-		"CREATE TABLE IF NOT EXISTS `games_played` (`id` int(11) NOT NULL AUTO_INCREMENT, `date` datetime DEFAULT NULL, `code` int(11) DEFAULT NULL, `player_list` varchar(100) DEFAULT NULL, PRIMARY KEY (`id`));",
+		`CREATE TABLE IF NOT EXISTS \`game\` (
+			\`id\` int(11) NOT NULL AUTO_INCREMENT,
+			\`date\` datetime NOT NULL,
+			PRIMARY KEY (\`id\`)
+		  ) ENGINE=InnoDB AUTO_INCREMENT=2214 DEFAULT CHARSET=latin1;`,
 		err => {
 			if (err){
-				console.error("An error occured creating the table games_played.");
+				console.error("An error occured creating the game table.");
 				console.error(err);
 			} else {
-				console.log(`Successfully created (if not exists) the table games_played.`);
+				console.log(`Successfully created (if not exists) the game table.`);
+			}
+		}
+	);
+
+	dbConnection.query(
+		`CREATE TABLE IF NOT EXISTS \`player\` (
+			\`game_id\` int(11) NOT NULL,
+			\`name\` varchar(6) NOT NULL,
+			\`is_bot\` tinyint(4) NOT NULL,
+			PRIMARY KEY (\`game_id\`,\`name\`),
+			CONSTRAINT \`fk_player_game_game_id\` FOREIGN KEY (\`game_id\`) REFERENCES \`game\` (\`id\`) ON DELETE CASCADE ON UPDATE CASCADE
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;`,
+		err => {
+			if (err){
+				console.error("An error occured creating the player table.");
+				console.error(err);
+			} else {
+				console.log(`Successfully created (if not exists) the player table.`);
 			}
 		}
 	);
