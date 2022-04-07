@@ -50,7 +50,13 @@ app.get('/gameLogPage', function(req, res, next){
 				const rowsConnection = DbManager.getConnection();
 				DbManager.connect(rowsConnection);
 				rowsConnection.query(
-					`SELECT date, player_list FROM games_played ORDER BY date DESC LIMIT ?, ?;`,
+					`SELECT \`date\`, GROUP_CONCAT(\`player\`.\`name\` SEPARATOR ', ') as \`players\`
+					FROM \`six-nimmt\`.\`game\`
+					JOIN \`six-nimmt\`.\`player\`
+					ON \`game\`.\`id\` = \`player\`.\`game_id\`
+					GROUP BY \`game\`.\`id\`
+					ORDER BY \`date\` DESC
+					LIMIT ?, ?;`,
 					[offset, limit],
 					(err, results) => {
 						if (err){
@@ -72,6 +78,36 @@ app.get('/gameLogPage', function(req, res, next){
 		});
 		DbManager.end(countConnection);
 	}
+});
+
+app.get('/migrate', function(req, res, next){
+	const gamesPlayedConnection = DbManager.getConnection();
+	DbManager.connect(gamesPlayedConnection);
+	let count;
+	gamesPlayedConnection.query("SELECT * FROM games_played;", (err, results) => {
+		if (err){
+			const msg = "An error occured fetching games_played from the database.";
+			console.error(msg);
+			console.error(err);
+			next(new Error(msg));
+		} else {
+			// let sqlQuery = "";
+			// results.forEach(game => {
+			// 	sqlQuery = sqlQuery + `INSERT INTO \`six-nimmt\`.game (\`id\`, \`date\`) VALUES (${game.id}, '${game.date}');`;
+			// });
+			// res.json(sqlQuery);
+
+			let sqlQuery = `INSERT INTO \`six-nimmt-test\`.player (\`game_id\`, \`name\`, \`is_bot\`) VALUES `
+			results.forEach(game => {
+				const listOfPlayers = game.player_list.split(",");
+				listOfPlayers.forEach(player => {
+					sqlQuery = sqlQuery + `(${game.id}, '${player}', ${Number(player.includes("Bot"))}), `;
+				});
+			});
+			res.json(sqlQuery);
+		}
+	});
+	DbManager.end(gamesPlayedConnection);
 });
 
 // Listen to the App Engine-specified port, or 5000 otherwise

@@ -18,7 +18,7 @@ $(function () {
 		url: "/gameLogPage",
 		then: data => data.results.map(game =>
 			[dateTimeFormat.format(new Date(`${game.date} UTC`)),
-			game.player_list]),
+			game.players]),
 		total: data => data.count
 		} 
 	}).render($("#gridWrapper")[0]);
